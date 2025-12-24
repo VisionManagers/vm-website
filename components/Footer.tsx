@@ -15,7 +15,7 @@ const Footer: React.FC = () => {
               <span className="font-serif text-xl text-vmNavy tracking-tight">Vision Managers</span>
             </Link>
             <p className="text-sm text-slate-500 leading-relaxed max-w-sm">
-              Securing the future of high-trust business through Operational AI and rigorous governance. We bridge the gap between enterprise strategy and verifiable revenue outcomes.
+              Securing the future of high-trust businesses through Operational AI solutions and rigorous governance. We bridge the gap between  strategy and revenue.
             </p>
           </div>
           
