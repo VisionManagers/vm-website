@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { HashRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
 import Home from './pages/Home';
@@ -14,7 +13,6 @@ import PrivacyPolicy from './pages/PrivacyPolicy';
 import About from './pages/About';
 import Header from './components/Header';
 import Footer from './components/Footer';
-import FloatingChat from './components/FloatingChat';
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -48,9 +46,6 @@ const App: React.FC = () => {
         </main>
 
         <Footer />
-        
-        {/* Persistent Floating Chat CTA */}
-        <FloatingChat />
       </div>
     </Router>
   );
