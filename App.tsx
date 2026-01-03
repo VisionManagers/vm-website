@@ -1,6 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { HashRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
+import { Analytics } from '@vercel/analytics/react';
 import Home from './pages/Home';
 import StartHere from './pages/StartHere';
 import Solutions from './pages/Solutions';
@@ -51,6 +52,9 @@ const App: React.FC = () => {
         
         {/* Persistent Floating Chat CTA */}
         <FloatingChat />
+        
+        {/* Vercel Web Analytics */}
+        <Analytics />
       </div>
     </Router>
   );
