@@ -14,7 +14,7 @@ const LegalAIDeployment: React.FC = () => {
         <header className="mb-16">
           <span className="text-vmTeal font-black text-xs uppercase tracking-[0.3em] mb-4 block">Field Notes</span>
           <h1 className="text-5xl md:text-6xl font-serif text-vmNavy mb-8 leading-tight">Navigating the Trust Gap in Legal AI.</h1>
-          <p className="text-xl text-slate-500 font-light italic">Published JAN 12, 2025</p>
+          <p className="text-xl text-slate-500 font-light italic">Published JAN 12, 2026</p>
         </header>
 
         <article className="prose prose-slate max-w-none text-slate-700 leading-relaxed font-light space-y-8">
