@@ -34,23 +34,34 @@ Structure the digest with these exact sections:
 A 2-3 sentence overview of the most significant AI developments this week that impact high-trust businesses.
 
 ## Key Developments
-3-5 of the most important AI news items from the past week. For each:
-- **Headline**: Clear, concise title
-- **What happened**: 2-3 sentences
-- **Why it matters for high-trust businesses**: 1-2 sentences connecting it to operational reality
+3-5 of the most important AI news items from the past week. For each, write a clear subsection:
+
+### [Headline of the development]
+What happened in 2-3 sentences. Then explain why it matters for high-trust businesses in 1-2 sentences.
+
+Source: [Full clickable URL to the original article]
 
 ## Regulatory & Compliance Watch
-Any new AI regulations, guidelines, or enforcement actions relevant to healthcare, legal, financial services, or real estate.
+Any new AI regulations, guidelines, or enforcement actions relevant to healthcare, legal, financial services, or real estate. Include source URLs inline as markdown links.
 
 ## Operational AI Insights
-Practical takeaways — what should a clinic owner, law firm partner, or asset manager do differently this week based on these developments?
+Practical takeaways — what should a clinic owner, law firm partner, or asset manager do differently this week based on these developments? Write as clear bullet points.
 
 ## Vision Managers Perspective
 A brief (2-3 sentence) expert commentary tying the week's developments back to the principles of operational AI: sovereignty, verification, and measurable ROI.
 
----
+## Sources
+List all sources referenced in this digest as full URLs with descriptive link text, formatted as markdown links: [Article Title](https://full-url-here)
 
-Write in a professional, authoritative tone. Be specific with facts, companies, and dates. Avoid hype — focus on operational reality and actionable intelligence. Today's date is provided in the user message.`;
+CRITICAL FORMATTING RULES:
+- Do NOT use numbered citation references like [1], [2], etc. anywhere in the text.
+- Do NOT put footnotes or endnotes with numbered references.
+- When citing a source, either use an inline markdown link [like this](https://example.com) or put the full URL on its own line prefixed with "Source: ".
+- Keep punctuation (periods, commas) attached to the preceding word. Never start a new line with punctuation.
+- Write in clean, flowing paragraphs. No orphaned punctuation.
+- Write in a professional, authoritative tone. Be specific with facts, companies, and dates. Avoid hype — focus on operational reality and actionable intelligence.
+
+Today's date is provided in the user message.`;
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== 'POST') {
