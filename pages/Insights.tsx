@@ -45,7 +45,7 @@ const Insights: React.FC = () => {
       path: '/insights/sovereign-intelligence',
       title: 'The Sovereign Intelligence Mandate: Why 2025 is the Year of Local Data.',
       summary: 'A deep dive into why regulatory pressure is forcing a move away from multi-tenant LLM architectures in high-trust sectors.',
-      date: 'JAN 05, 2025'
+      date: 'JAN 05, 2026'
     },
     {
       type: 'Field Notes',
@@ -53,7 +53,7 @@ const Insights: React.FC = () => {
       path: '/insights/legal-ai-deployment',
       title: 'Observations from the Front Lines of Legal AI Deployment.',
       summary: 'How leading firms are navigating the "Trust Gap" between human practitioners and autonomous synthesis agents.',
-      date: 'JAN 12, 2025'
+      date: 'JAN 12, 2026'
     },
     {
       type: '1-Page Memo',
@@ -61,7 +61,7 @@ const Insights: React.FC = () => {
       path: '/insights/bottlenecks-roi',
       title: '3 Bottlenecks Killing Your AI ROI (and how to fix them).',
       summary: 'Practical tactics for leaders to unblock operational friction and move from demo to deployment.',
-      date: 'JAN 15, 2025'
+      date: 'JAN 15, 2026'
     }
   ];
 
