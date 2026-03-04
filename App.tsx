@@ -16,6 +16,7 @@ import Footer from './components/Footer';
 const AdminLogin = React.lazy(() => import('./pages/admin/Login'));
 const AdminPostList = React.lazy(() => import('./pages/admin/PostList'));
 const AdminPostEditor = React.lazy(() => import('./pages/admin/PostEditor'));
+const AdminDigestSettings = React.lazy(() => import('./pages/admin/DigestSettings'));
 
 // Lazy-load digest page
 const Digest = React.lazy(() => import('./pages/insights/Digest'));
@@ -58,6 +59,7 @@ const App: React.FC = () => {
               <Route path="/admin/posts" element={<AdminPostList />} />
               <Route path="/admin/posts/new" element={<AdminPostEditor />} />
               <Route path="/admin/posts/:id" element={<AdminPostEditor />} />
+              <Route path="/admin/digest-settings" element={<AdminDigestSettings />} />
             </Routes>
           </React.Suspense>
         </main>

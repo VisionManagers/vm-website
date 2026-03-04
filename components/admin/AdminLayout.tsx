@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { LogOut, FileText } from 'lucide-react';
+import { LogOut, FileText, Settings } from 'lucide-react';
 import { useAuth } from '../../lib/AuthContext';
 
 const AdminLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -19,6 +19,9 @@ const AdminLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
           <div className="flex items-center gap-6">
             <Link to="/admin/posts" className="flex items-center gap-2 text-vmNavy font-bold text-sm uppercase tracking-widest">
               <FileText className="w-4 h-4" /> Posts
+            </Link>
+            <Link to="/admin/digest-settings" className="flex items-center gap-2 text-vmNavy font-bold text-sm uppercase tracking-widest">
+              <Settings className="w-4 h-4" /> Digest
             </Link>
           </div>
           <div className="flex items-center gap-4">
