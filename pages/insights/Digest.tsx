@@ -1,18 +1,17 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, Zap, Loader2, Download, RefreshCw } from 'lucide-react';
+import { ArrowLeft, Zap, Loader2, Download, RefreshCw, CheckCircle2 } from 'lucide-react';
+import { supabase } from '../../lib/supabase';
 
 function renderMarkdown(md: string): string {
-  // Normalize line endings
   let text = md.replace(/\r\n/g, '\n');
 
-  // Remove numbered citation refs like [1], [2] etc.
+  // Remove numbered citation refs like [1], [2]
   text = text.replace(/\[(\d+)\]/g, '');
 
-  // Clean up orphaned punctuation (period/comma at start of line)
+  // Clean up orphaned punctuation
   text = text.replace(/\n\s*([.,;:!?])/g, '$1');
 
-  // Split into lines for block-level processing
   const lines = text.split('\n');
   const htmlParts: string[] = [];
   let inList = false;
@@ -28,88 +27,51 @@ function renderMarkdown(md: string): string {
 
   const inlineFormat = (line: string): string => {
     return line
-      // Links: [text](url)
       .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" class="text-vmTeal underline underline-offset-2 hover:text-vmNavy transition-colors">$1</a>')
-      // Bold
       .replace(/\*\*(.+?)\*\*/g, '<strong class="text-vmNavy font-medium">$1</strong>')
-      // Italic
       .replace(/(?<!\*)\*(?!\*)(.+?)(?<!\*)\*(?!\*)/g, '<em>$1</em>')
-      // Bare URLs on "Source:" lines
       .replace(/^(Source:\s*)(https?:\/\/\S+)/gi, '$1<a href="$2" target="_blank" rel="noopener noreferrer" class="text-vmTeal underline underline-offset-2 hover:text-vmNavy transition-colors break-all">$2</a>');
   };
 
   for (let i = 0; i < lines.length; i++) {
-    const line = lines[i];
-    const trimmed = line.trim();
+    const trimmed = lines[i].trim();
 
-    // Empty line
-    if (!trimmed) {
-      closePendingList();
-      continue;
-    }
+    if (!trimmed) { closePendingList(); continue; }
 
-    // H2
     if (trimmed.startsWith('## ')) {
       closePendingList();
-      const heading = inlineFormat(trimmed.slice(3));
-      htmlParts.push(`<h2 class="text-2xl font-serif text-vmNavy mt-12 mb-4 pb-2 border-b border-slate-100">${heading}</h2>`);
+      htmlParts.push(`<h2 class="text-2xl font-serif text-vmNavy mt-12 mb-4 pb-2 border-b border-slate-100">${inlineFormat(trimmed.slice(3))}</h2>`);
       continue;
     }
-
-    // H3
     if (trimmed.startsWith('### ')) {
       closePendingList();
-      const heading = inlineFormat(trimmed.slice(4));
-      htmlParts.push(`<h3 class="text-xl font-serif text-vmNavy mt-8 mb-3">${heading}</h3>`);
+      htmlParts.push(`<h3 class="text-xl font-serif text-vmNavy mt-8 mb-3">${inlineFormat(trimmed.slice(4))}</h3>`);
       continue;
     }
-
-    // Horizontal rule
     if (/^---+$/.test(trimmed)) {
       closePendingList();
       htmlParts.push('<hr class="my-10 border-slate-200" />');
       continue;
     }
-
-    // Unordered list item
     if (/^[-*]\s/.test(trimmed)) {
-      if (!inList || listType !== 'ul') {
-        closePendingList();
-        htmlParts.push('<ul class="space-y-2 my-4 ml-1">');
-        inList = true;
-        listType = 'ul';
-      }
-      const content = inlineFormat(trimmed.replace(/^[-*]\s+/, ''));
-      htmlParts.push(`<li class="flex items-start gap-2"><span class="text-vmTeal mt-1.5 shrink-0">•</span><span>${content}</span></li>`);
+      if (!inList || listType !== 'ul') { closePendingList(); htmlParts.push('<ul class="space-y-2 my-4 ml-1">'); inList = true; listType = 'ul'; }
+      htmlParts.push(`<li class="flex items-start gap-2"><span class="text-vmTeal mt-1.5 shrink-0">&bull;</span><span>${inlineFormat(trimmed.replace(/^[-*]\s+/, ''))}</span></li>`);
       continue;
     }
-
-    // Ordered list item
     if (/^\d+\.\s/.test(trimmed)) {
-      if (!inList || listType !== 'ol') {
-        closePendingList();
-        htmlParts.push('<ol class="space-y-2 my-4 ml-1 list-none">');
-        inList = true;
-        listType = 'ol';
-      }
+      if (!inList || listType !== 'ol') { closePendingList(); htmlParts.push('<ol class="space-y-2 my-4 ml-1 list-none">'); inList = true; listType = 'ol'; }
       const num = trimmed.match(/^(\d+)\./)?.[1] || '';
-      const content = inlineFormat(trimmed.replace(/^\d+\.\s+/, ''));
-      htmlParts.push(`<li class="flex items-start gap-3"><span class="text-vmTeal font-bold shrink-0">${num}.</span><span>${content}</span></li>`);
+      htmlParts.push(`<li class="flex items-start gap-3"><span class="text-vmTeal font-bold shrink-0">${num}.</span><span>${inlineFormat(trimmed.replace(/^\d+\.\s+/, ''))}</span></li>`);
       continue;
     }
-
-    // Source line
     if (/^source:\s/i.test(trimmed)) {
       closePendingList();
-      const content = inlineFormat(trimmed);
-      htmlParts.push(`<p class="text-xs text-slate-400 mb-6 break-all">${content}</p>`);
+      htmlParts.push(`<p class="text-xs text-slate-400 mb-6 break-all">${inlineFormat(trimmed)}</p>`);
       continue;
     }
 
-    // Regular paragraph
     closePendingList();
-    const content = inlineFormat(trimmed);
-    htmlParts.push(`<p class="mb-4 leading-relaxed">${content}</p>`);
+    htmlParts.push(`<p class="mb-4 leading-relaxed">${inlineFormat(trimmed)}</p>`);
   }
 
   closePendingList();
@@ -117,7 +79,6 @@ function renderMarkdown(md: string): string {
 }
 
 function renderDownloadHtml(digest: string): string {
-  // Simpler HTML conversion for the download file
   let html = digest
     .replace(/\r\n/g, '\n')
     .replace(/\[(\d+)\]/g, '')
@@ -131,12 +92,11 @@ function renderDownloadHtml(digest: string): string {
     .replace(/^---+$/gm, '<hr>')
     .replace(/^source:\s*(https?:\/\/\S+)/gim, '<p style="font-size:12px;color:#94a3b8;">Source: <a href="$1" style="color:#0B4C83;">$1</a></p>');
 
-  // Wrap loose text in paragraphs
   html = html.split('\n\n').map(block => {
-    const trimmed = block.trim();
-    if (!trimmed) return '';
-    if (/^<[h123olup]|^<li|^<hr/i.test(trimmed)) return trimmed;
-    return `<p>${trimmed}</p>`;
+    const t = block.trim();
+    if (!t) return '';
+    if (/^<[h123olup]|^<li|^<hr/i.test(t)) return t;
+    return `<p>${t}</p>`;
   }).join('\n');
 
   return html;
@@ -146,13 +106,33 @@ const Digest: React.FC = () => {
   const [digest, setDigest] = useState('');
   const [generatedAt, setGeneratedAt] = useState('');
   const [loading, setLoading] = useState(false);
+  const [pageLoading, setPageLoading] = useState(true);
   const [error, setError] = useState('');
   const digestRef = useRef<HTMLDivElement>(null);
+
+  // Download email gate
+  const [downloadEmail, setDownloadEmail] = useState('');
+  const [emailUnlocked, setEmailUnlocked] = useState(false);
+
+  // Load latest digest from Supabase on mount
+  useEffect(() => {
+    supabase
+      .from('digests')
+      .select('content, generated_at')
+      .order('generated_at', { ascending: false })
+      .limit(1)
+      .then(({ data }) => {
+        if (data && data.length > 0) {
+          setDigest(data[0].content);
+          setGeneratedAt(data[0].generated_at);
+        }
+      })
+      .finally(() => setPageLoading(false));
+  }, []);
 
   const generateDigest = async () => {
     setLoading(true);
     setError('');
-    setDigest('');
 
     try {
       const response = await fetch('/api/generate-digest', {
@@ -163,12 +143,7 @@ const Digest: React.FC = () => {
 
       if (!response.ok) {
         let message = 'Failed to generate digest';
-        try {
-          const data = await response.json();
-          message = data.error || message;
-        } catch {
-          // Response wasn't JSON
-        }
+        try { const data = await response.json(); message = data.error || message; } catch {}
         throw new Error(message);
       }
 
@@ -177,6 +152,7 @@ const Digest: React.FC = () => {
       const data = JSON.parse(text);
       setDigest(data.digest);
       setGeneratedAt(data.generated_at);
+      setEmailUnlocked(false);
     } catch (err: any) {
       setError(err.message || 'Something went wrong. Please try again.');
     } finally {
@@ -184,7 +160,27 @@ const Digest: React.FC = () => {
     }
   };
 
-  const handleDownload = () => {
+  const handleDownloadUnlock = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!downloadEmail.trim()) return;
+
+    try {
+      await fetch('https://services.leadconnectorhq.com/hooks/q4adJN1peFzHlHvxv37q/webhook-trigger/5f2a6926-db9d-45df-bc6f-2bc97f872458', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: downloadEmail,
+          source: 'AI Intelligence Digest Download',
+          submittedAt: new Date().toISOString(),
+        }),
+      });
+    } catch {}
+
+    setEmailUnlocked(true);
+    triggerDownload();
+  };
+
+  const triggerDownload = () => {
     const today = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
     const html = `<!DOCTYPE html>
 <html lang="en">
@@ -223,6 +219,10 @@ const Digest: React.FC = () => {
     URL.revokeObjectURL(url);
   };
 
+  const formattedDate = generatedAt
+    ? new Date(generatedAt).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
+    : '';
+
   return (
     <div className="pt-40 pb-20 px-6 min-h-screen bg-white">
       <div className="max-w-4xl mx-auto">
@@ -236,26 +236,36 @@ const Digest: React.FC = () => {
             <Zap className="w-8 h-8 text-vmTeal" />
           </div>
           <span className="text-vmTeal font-black text-xs uppercase tracking-[0.3em] mb-4 block">AI-Powered Intelligence</span>
-          <h1 className="text-5xl md:text-6xl font-serif text-vmNavy mb-8 leading-tight italic">Intelligence Digest.</h1>
-          <p className="text-xl text-slate-500 font-light max-w-2xl mx-auto">
+          <h1 className="text-5xl md:text-6xl font-serif text-vmNavy mb-6 leading-tight italic">Intelligence Digest.</h1>
+          <p className="text-xl text-slate-500 font-light max-w-2xl mx-auto mb-4">
             Real-time executive briefing powered by AI web research. The latest AI developments analyzed through the lens of high-trust business operations.
+          </p>
+          <p className="text-sm text-slate-400 max-w-xl mx-auto">
+            This report is refreshed on-demand. You're viewing the latest digest — click "Generate New Report" to pull the freshest intelligence. Enter your email below the report to download a formatted copy.
           </p>
         </header>
 
-        {/* Generate button */}
-        {!digest && !loading && !error && (
-          <div className="max-w-lg mx-auto mb-20 text-center">
-            <button
-              onClick={generateDigest}
-              className="inline-flex items-center gap-3 px-10 py-5 bg-vmNavy text-white font-bold uppercase tracking-widest text-xs rounded-sm hover:bg-vmTeal hover:text-vmNavy transition-all group"
-            >
-              <Zap className="w-5 h-5" /> Generate This Week's Digest
-            </button>
-            <p className="text-slate-400 text-sm mt-4">Takes 30-60 seconds. Powered by real-time AI web research.</p>
+        {/* Page loading state */}
+        {pageLoading && (
+          <div className="flex justify-center py-20">
+            <Loader2 className="w-8 h-8 text-vmTeal animate-spin" />
           </div>
         )}
 
-        {/* Loading state */}
+        {/* No digest yet — prompt to generate */}
+        {!pageLoading && !digest && !loading && !error && (
+          <div className="max-w-lg mx-auto mb-20 text-center">
+            <p className="text-slate-500 mb-8">No digest has been generated yet.</p>
+            <button
+              onClick={generateDigest}
+              className="inline-flex items-center gap-3 px-10 py-5 bg-vmNavy text-white font-bold uppercase tracking-widest text-xs rounded-sm hover:bg-vmTeal hover:text-vmNavy transition-all"
+            >
+              <Zap className="w-5 h-5" /> Generate First Report
+            </button>
+          </div>
+        )}
+
+        {/* Generating state */}
         {loading && (
           <div className="max-w-lg mx-auto mb-20">
             <div className="bg-vmSlate p-12 rounded-sm text-center">
@@ -293,37 +303,66 @@ const Digest: React.FC = () => {
         )}
 
         {/* Digest display */}
-        {digest && (
+        {digest && !loading && (
           <div ref={digestRef}>
-            <div className="flex items-center justify-between mb-8">
+            {/* Report header + actions */}
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8 gap-4">
               <div>
-                <span className="text-vmTeal font-black text-[10px] uppercase tracking-widest block mb-1">Generated Report</span>
-                {generatedAt && (
-                  <span className="text-xs text-slate-400">
-                    {new Date(generatedAt).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
-                  </span>
-                )}
+                <span className="text-vmTeal font-black text-[10px] uppercase tracking-widest block mb-1">Current Report</span>
+                {formattedDate && <span className="text-xs text-slate-400">{formattedDate}</span>}
               </div>
-              <div className="flex items-center gap-3">
-                <button
-                  onClick={generateDigest}
-                  className="inline-flex items-center gap-2 px-4 py-2 border border-slate-200 text-slate-500 font-bold uppercase tracking-widest text-[10px] rounded-sm hover:border-vmTeal hover:text-vmNavy transition-all"
-                >
-                  <RefreshCw className="w-3 h-3" /> Regenerate
-                </button>
-                <button
-                  onClick={handleDownload}
-                  className="inline-flex items-center gap-2 px-4 py-2 bg-vmNavy text-white font-bold uppercase tracking-widest text-[10px] rounded-sm hover:bg-vmTeal hover:text-vmNavy transition-all"
-                >
-                  <Download className="w-3 h-3" /> Download
-                </button>
-              </div>
+              <button
+                onClick={generateDigest}
+                disabled={loading}
+                className="inline-flex items-center gap-2 px-5 py-2.5 border border-slate-200 text-slate-500 font-bold uppercase tracking-widest text-[10px] rounded-sm hover:border-vmTeal hover:text-vmNavy transition-all"
+              >
+                <RefreshCw className="w-3 h-3" /> Generate New Report
+              </button>
             </div>
 
+            {/* Report content */}
             <div
               className="bg-white border border-slate-200 rounded-sm p-8 md:p-12 text-slate-700 leading-relaxed font-light"
               dangerouslySetInnerHTML={{ __html: renderMarkdown(digest) }}
             />
+
+            {/* Download — email required */}
+            <div className="mt-10 p-8 bg-vmSlate rounded-sm">
+              {emailUnlocked ? (
+                <div className="text-center">
+                  <CheckCircle2 className="w-10 h-10 text-vmTeal mx-auto mb-3" />
+                  <p className="text-vmNavy font-serif text-lg mb-4">Report downloaded.</p>
+                  <button
+                    onClick={triggerDownload}
+                    className="inline-flex items-center gap-2 text-vmNavy font-bold text-xs uppercase tracking-widest hover:text-vmTeal transition-colors"
+                  >
+                    <Download className="w-4 h-4" /> Download Again
+                  </button>
+                </div>
+              ) : (
+                <div className="text-center">
+                  <Download className="w-8 h-8 text-vmTeal mx-auto mb-4" />
+                  <h3 className="text-xl font-serif text-vmNavy mb-2">Download this report</h3>
+                  <p className="text-slate-500 text-sm mb-6">Enter your email to receive a formatted copy of this digest.</p>
+                  <form onSubmit={handleDownloadUnlock} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+                    <input
+                      required
+                      type="email"
+                      placeholder="executive@company.com"
+                      className="flex-grow p-4 border border-slate-200 outline-none focus:border-vmTeal rounded-sm text-sm"
+                      value={downloadEmail}
+                      onChange={(e) => setDownloadEmail(e.target.value)}
+                    />
+                    <button
+                      type="submit"
+                      className="px-8 py-4 bg-vmNavy text-white font-bold uppercase tracking-widest text-[10px] rounded-sm hover:bg-vmTeal hover:text-vmNavy transition-all flex items-center justify-center gap-2"
+                    >
+                      <Download className="w-4 h-4" /> Download
+                    </button>
+                  </form>
+                </div>
+              )}
+            </div>
           </div>
         )}
       </div>

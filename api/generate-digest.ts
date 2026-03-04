@@ -1,6 +1,9 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
+import { createClient } from '@supabase/supabase-js';
 
 const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY;
+const SUPABASE_URL = process.env.VITE_SUPABASE_URL;
+const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
 // Simple in-memory rate limiting (resets on cold start)
 const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
@@ -125,9 +128,25 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const textBlocks = data.content?.filter((block: any) => block.type === 'text') || [];
     const digestText = textBlocks.map((block: any) => block.text).join('\n\n');
 
+    const generatedAt = new Date().toISOString();
+
+    // Save to Supabase if service key is configured
+    if (SUPABASE_URL && SUPABASE_SERVICE_KEY) {
+      try {
+        const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY);
+        await supabase.from('digests').insert({
+          content: digestText,
+          generated_at: generatedAt,
+        });
+      } catch (saveErr) {
+        console.error('Failed to save digest to Supabase:', saveErr);
+        // Don't block the response — still return the digest
+      }
+    }
+
     return res.status(200).json({
       digest: digestText,
-      generated_at: new Date().toISOString(),
+      generated_at: generatedAt,
     });
   } catch (err) {
     console.error('Digest generation error:', err);
