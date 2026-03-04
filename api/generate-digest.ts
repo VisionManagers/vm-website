@@ -27,7 +27,7 @@ function isRateLimited(ip: string): boolean {
   return false;
 }
 
-const DIGEST_PROMPT = `You are an elite AI intelligence analyst for Vision Managers, a consulting firm specializing in Operational AI for high-trust businesses (medical clinics, legal firms, asset managers, real estate).
+const DEFAULT_DIGEST_PROMPT = `You are an elite AI intelligence analyst for Vision Managers, a consulting firm specializing in Operational AI for high-trust businesses (medical clinics, legal firms, asset managers, real estate).
 
 Generate a comprehensive "AI Intelligence Digest" — a real-time executive briefing. Use web search to find the latest developments.
 
@@ -66,6 +66,24 @@ CRITICAL FORMATTING RULES:
 
 Today's date is provided in the user message.`;
 
+async function getDigestPrompt(): Promise<string> {
+  if (!SUPABASE_URL || !SUPABASE_SERVICE_KEY) return DEFAULT_DIGEST_PROMPT;
+
+  try {
+    const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY);
+    const { data, error } = await supabase
+      .from('digest_settings')
+      .select('prompt')
+      .limit(1)
+      .single();
+
+    if (error || !data?.prompt) return DEFAULT_DIGEST_PROMPT;
+    return data.prompt;
+  } catch {
+    return DEFAULT_DIGEST_PROMPT;
+  }
+}
+
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
@@ -89,6 +107,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       day: 'numeric',
     });
 
+    const digestPrompt = await getDigestPrompt();
+
     const response = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
       headers: {
@@ -106,7 +126,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
             max_uses: 10,
           },
         ],
-        system: DIGEST_PROMPT,
+        system: digestPrompt,
         messages: [
           {
             role: 'user',
