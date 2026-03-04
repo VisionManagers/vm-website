@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ChevronRight, FileText, ClipboardList, PenTool, CheckCircle2, Loader2, Send } from 'lucide-react';
+import { ChevronRight, FileText, ClipboardList, PenTool, CheckCircle2, Loader2, Send, Lock } from 'lucide-react';
 import { getPublishedPosts } from '../lib/posts';
+import { useAuth } from '../lib/AuthContext';
 import type { InsightPost } from '../types';
 import type { LucideIcon } from 'lucide-react';
 
@@ -18,6 +19,7 @@ const TYPE_LABELS: Record<string, string> = {
 };
 
 const Insights: React.FC = () => {
+  const { user } = useAuth();
   const [email, setEmail] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -77,11 +79,19 @@ const Insights: React.FC = () => {
             <h1 className="text-5xl font-serif text-vmNavy mb-8 leading-tight">Thinking for the <br /><span className="italic">Verifiable Enterprise.</span></h1>
             <p className="text-xl text-slate-600 font-light">Grounding AI in operational reality. Precise, executive-level intelligence.</p>
           </div>
-          <div className="hidden md:block">
+          <div className="hidden md:block text-right">
             <div className="flex gap-2 mb-2">
               {[...Array(30)].map((_, i) => <div key={i} className="w-[2px] h-10 bg-vmSlate group-hover:bg-vmTeal transition-colors" />)}
             </div>
             <span className="text-[10px] text-slate-300 font-bold uppercase tracking-[0.3em]">Thought Leadership Archive</span>
+            <div className="mt-4">
+              <Link
+                to={user ? '/admin/posts' : '/admin/login'}
+                className="inline-flex items-center gap-1.5 text-[10px] text-slate-300 hover:text-vmTeal font-bold uppercase tracking-widest transition-colors"
+              >
+                <Lock className="w-3 h-3" /> {user ? 'Manage Posts' : 'Admin'}
+              </Link>
+            </div>
           </div>
         </header>
 
