@@ -9,6 +9,7 @@ import PostDetail from './pages/insights/PostDetail';
 import Contact from './pages/Contact';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import About from './pages/About';
+import AIVoice from './pages/AIVoice';
 import Header from './components/Header';
 import Footer from './components/Footer';
 
@@ -53,6 +54,7 @@ const App: React.FC = () => {
               <Route path="/contact" element={<Contact />} />
               <Route path="/privacy" element={<PrivacyPolicy />} />
               <Route path="/about" element={<About />} />
+              <Route path="/ai-voice" element={<AIVoice />} />
 
               {/* Admin routes — no public nav links */}
               <Route path="/admin/login" element={<AdminLogin />} />
