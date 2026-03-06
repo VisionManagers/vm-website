@@ -18,7 +18,8 @@ import {
   RefreshCw,
   ArrowRight,
   Activity,
-  Terminal
+  Terminal,
+  Phone
 } from 'lucide-react';
 
 const Home: React.FC = () => {
@@ -120,6 +121,28 @@ const Home: React.FC = () => {
               ))}
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* AI Voice CTA Banner */}
+      <section className="py-16 bg-vmNavy relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-vmNavy via-vmNavy to-vmTeal/20" />
+        <div className="max-w-7xl mx-auto px-6 relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
+          <div className="flex items-center gap-5">
+            <div className="w-14 h-14 rounded-full bg-vmTeal/20 flex items-center justify-center flex-shrink-0">
+              <Phone className="w-7 h-7 text-vmTeal" />
+            </div>
+            <div>
+              <h3 className="text-xl font-serif text-white mb-1">Losing patients to voicemail after hours?</h3>
+              <p className="text-white/60 text-sm font-light">Our AI voice agents answer every call, 24/7 — so your practice never misses another lead.</p>
+            </div>
+          </div>
+          <Link
+            to="/ai-voice"
+            className="flex-shrink-0 px-8 py-4 bg-vmTeal text-vmNavy font-bold rounded-sm hover:bg-white transition-all flex items-center gap-2 group shadow-lg"
+          >
+            See How It Works <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+          </Link>
         </div>
       </section>
 
