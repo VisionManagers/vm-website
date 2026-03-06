@@ -1,6 +1,7 @@
 
 import React from 'react';
-import { Shield, Zap, ShieldCheck, HeartPulse, Workflow, Database, Check, ArrowRight, ChevronRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Shield, Zap, ShieldCheck, HeartPulse, Workflow, Database, Check, ArrowRight, ChevronRight, Phone } from 'lucide-react';
 
 const Solutions: React.FC = () => {
   const bookingLink = "https://api.leadconnectorhq.com/widget/booking/SrykTWRlxCfGTJxswRqv";
@@ -227,6 +228,7 @@ const Solutions: React.FC = () => {
           </div>
         </div>
 
+{/* AI Voice Solutions CTA */}        <div className="bg-vmNavy rounded-sm p-10 md:p-12 mb-32 flex flex-col md:flex-row items-center justify-between gap-8 relative overflow-hidden">          <div className="absolute inset-0 bg-gradient-to-r from-vmNavy via-vmNavy to-vmTeal/20" />          <div className="relative z-10 flex items-center gap-5">            <div className="w-14 h-14 rounded-full bg-vmTeal/20 flex items-center justify-center flex-shrink-0">              <Phone className="w-7 h-7 text-vmTeal" />            </div>            <div>              <span className="text-vmTeal font-black text-xs uppercase tracking-[0.3em] mb-1 block">For Medical Practices</span>              <h3 className="text-xl font-serif text-white mb-1">Stop losing patients to voicemail</h3>              <p className="text-white/60 text-sm font-light">AI voice agents that answer every call — dental, optometry, dermatology, and more. Live in days.</p>            </div>          </div>          <Link            to="/ai-voice"            className="relative z-10 flex-shrink-0 px-8 py-4 bg-vmTeal text-vmNavy font-bold rounded-sm hover:bg-white transition-all flex items-center gap-2 group shadow-lg"          >            Learn More <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />          </Link>        </div>
         {/* Final CTA Section */}
         <div className="max-w-4xl mx-auto py-20 px-8 bg-vmSlate border border-slate-100 rounded-sm text-center">
           <h2 className="text-4xl font-serif text-vmNavy mb-6 italic">Secure your transformation today.</h2>
