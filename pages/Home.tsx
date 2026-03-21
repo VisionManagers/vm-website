@@ -63,7 +63,7 @@ const Home: React.FC = () => {
         '@type': 'Organization',
         name: 'Vision Managers',
         url: 'https://visionmanagers.com',
-        logo: 'https://storage.googleapis.com/vm-brand-assets/vm-logo%402x.png',
+        logo: 'https://storage.googleapis.com/vm-website/web%20images/vm-logo%402x.png',
         description: 'AI for high-trust businesses. Secure AI systems for intake, follow-up, and data.',
         email: 'advisor@visionmanagers.com',
         telephone: '+1-800-868-7878',
