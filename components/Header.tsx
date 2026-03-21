@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { IMAGES } from '../constants';
+import { IMAGES, BOOKING_URLS } from '../constants';
 import { Menu, X } from 'lucide-react';
 
 const Header: React.FC = () => {
@@ -43,9 +43,9 @@ const Header: React.FC = () => {
   }, [location.pathname]);
 
   const navLinks = [
+    { name: 'AI Voice', path: '/ai-voice' },
     { name: 'Solutions', path: '/solutions' },
     { name: 'The Lab', path: '/lab' },
-    { name: 'Insights', path: '/insights' },
   ];
 
   const isActive = (path: string) => location.pathname === path;
@@ -80,12 +80,14 @@ const Header: React.FC = () => {
               )}
             </Link>
           ))}
-          <Link
-            to="/start"
+          <a
+            href={BOOKING_URLS.DISCOVERY}
+            target="_blank"
+            rel="noopener noreferrer"
             className="bg-vmNavy text-white px-8 py-3 rounded-sm text-sm font-semibold hover:bg-vmNavy/90 transition-all hover:shadow-lg active:scale-95"
           >
-            Start Assessment
-          </Link>
+            Book a Call
+          </a>
         </nav>
 
         {/* Mobile Toggle */}
@@ -145,12 +147,14 @@ const Header: React.FC = () => {
                 }`}
                 style={{ transitionDelay: `${250 + navLinks.length * 60}ms` }}
               >
-                <Link
-                  to="/start"
+                <a
+                  href={BOOKING_URLS.DISCOVERY}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="block w-full bg-vmNavy text-white py-5 rounded-sm text-center font-bold tracking-[0.2em] uppercase text-[11px] shadow-2xl active:scale-95 hover:bg-vmNavy/95 transition-all"
                 >
-                  Start Assessment
-                </Link>
+                  Book a Call
+                </a>
                 
                 <div className="mt-12 flex flex-col items-center gap-4 border-t border-slate-100 pt-10">
                   <p className="text-[10px] text-slate-400 font-bold uppercase tracking-[0.3em] mb-2">Direct Access</p>

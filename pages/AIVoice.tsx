@@ -146,7 +146,7 @@ const AIVoice: React.FC = () => {
     <>
     <SEO
       title="AI Voice Agents"
-      description="Stop losing patients to voicemail. 24/7 AI voice reception for dental, optometry, and medical practices. Natural-sounding, HIPAA-conscious, live in days."
+      description="Stop losing patients to voicemail. 24/7 AI voice reception for dental, optometry, chiropractic, and med spa practices. Natural-sounding, HIPAA-conscious, live in 14 days."
       path="/ai-voice"
       jsonLd={{
         '@context': 'https://schema.org',

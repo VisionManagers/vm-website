@@ -2,36 +2,40 @@
 
 > AI for High-Trust Businesses
 
-Vision Managers builds secure AI systems for intake, follow-up, and data. We help dentists, optometrists, real estate agents, and other high-trust businesses recover revenue through autonomous AI agents.
+Vision Managers builds and deploys Voice AI concierge systems for healthcare practices, offers hands-on AI training for individuals and teams, and helps businesses discover where AI and automation create the most value.
 
 ## Services
 
-- **AI Voice Agents**: 24/7 AI-powered phone reception for medical practices. Answers every call, books appointments, HIPAA-conscious design.
-- **AI Audit**: Deep-dive analysis of business workflows to identify revenue leakage and design AI guardrails.
-- **AI Pilot & Deployment**: End-to-end implementation of AI systems from pilot through full deployment and ongoing maintenance.
+- **Voice AI Concierge** (Primary): 24/7 AI-powered phone reception for healthcare practices. Answers every call, books appointments, handles patient FAQs, and escalates to staff. HIPAA-conscious, natural-sounding, live in 10–14 days. Flat monthly fee, no per-call charges.
+- **AI Training**: Practical, hands-on AI training that takes people from zero to AI-native in 3 hours. 1-on-1, group workshops, or corporate training. Guaranteed outcomes.
+- **Free Discovery Call**: 20-minute call to map your workflows, identify where AI saves time and money, and get a clear next step. No commitment.
 
 ## Industries Served
 
 - Dental practices
 - Optometry practices
-- Dermatology practices
-- Real estate agencies
-- Private equity / portfolio operators
-- Specialty contractors
+- Chiropractic offices
+- Med spas and dermatology
+- Other healthcare practices
+- Individuals and teams seeking AI training
+
+## Proven Results
+
+- Seattle-area optometry practice: 5 new patient appointments booked in week one, $4,300+ in scheduled visit value
 
 ## Key Pages
 
-- [Home](https://visionmanagers.com/): Overview of services and approach
-- [Solutions](https://visionmanagers.com/solutions): Detailed engagement model (Audit → Pilot → Deploy → Maintain)
-- [AI Voice](https://visionmanagers.com/ai-voice): AI voice reception product for medical practices
-- [About](https://visionmanagers.com/about): Company background and leadership
-- [The Lab](https://visionmanagers.com/lab): Case studies and ROI data
+- [Home](https://visionmanagers.com/): Overview of Voice AI, training, and discovery services
+- [AI Voice](https://visionmanagers.com/ai-voice): Voice AI concierge product details
+- [Solutions](https://visionmanagers.com/solutions): Engagement model (Audit → Pilot → Deploy → Maintain)
+- [About](https://visionmanagers.com/about): Company background and founder
+- [The Lab](https://visionmanagers.com/lab): ROI calculator and AI guardrails
 - [Insights](https://visionmanagers.com/insights): Thought leadership and executive briefings
-- [Start Here](https://visionmanagers.com/start): Free strategic assessment
-- [Contact](https://visionmanagers.com/contact): Direct consultation
+- [Contact](https://visionmanagers.com/contact): Book a discovery call or send a message
 
 ## Contact
 
 - Email: sukhneet@visionmanagers.com
 - Phone: (425) 494-4489
 - Website: https://visionmanagers.com
+- Book a call: https://api.leadconnectorhq.com/widget/booking/Fl8PjcBk3EG88tCPMwbn

@@ -39,7 +39,7 @@ const About: React.FC = () => {
 
         <div className="mt-16 flex flex-col sm:flex-row items-center gap-6">
           <a 
-            href="https://api.leadconnectorhq.com/widget/booking/SrykTWRlxCfGTJxswRqv" 
+            href="https://api.leadconnectorhq.com/widget/booking/Fl8PjcBk3EG88tCPMwbn" 
             target="_blank"
             rel="noopener noreferrer"
             className="w-full sm:w-auto px-12 py-5 bg-vmNavy text-white rounded-sm font-semibold hover:shadow-2xl hover:-translate-y-1 transition-all flex items-center justify-center gap-2 group"
