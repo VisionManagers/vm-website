@@ -65,8 +65,8 @@ const Home: React.FC = () => {
         url: 'https://visionmanagers.com',
         logo: 'https://storage.googleapis.com/vm-website/web%20images/vm-logo%402x.png',
         description: 'AI for high-trust businesses. Secure AI systems for intake, follow-up, and data.',
-        email: 'advisor@visionmanagers.com',
-        telephone: '+1-800-868-7878',
+        email: 'sukhneet@visionmanagers.com',
+        telephone: '+1-425-494-4489',
         areaServed: 'US',
         serviceType: ['AI Voice Agents', 'AI Consulting', 'AI Audit', 'Business Process Automation'],
       }}

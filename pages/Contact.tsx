@@ -41,7 +41,7 @@ const Contact: React.FC = () => {
     <>
     <SEO
       title="Contact"
-      description="Speak with Vision Managers about AI implementation for your business. Email advisor@visionmanagers.com or call +1 (800) VM-TRUST."
+      description="Speak with Vision Managers about AI implementation for your business. Email sukhneet@visionmanagers.com or call (425) 494-4489."
       path="/contact"
       jsonLd={{
         '@context': 'https://schema.org',
@@ -64,13 +64,13 @@ const Contact: React.FC = () => {
               <div className="w-10 h-10 bg-vmSlate rounded-full flex items-center justify-center text-vmNavy">
                 <Mail className="w-5 h-5" />
               </div>
-              <span className="text-slate-600">advisor@visionmanagers.com</span>
+              <span className="text-slate-600">sukhneet@visionmanagers.com</span>
             </div>
             <div className="flex items-center gap-4">
               <div className="w-10 h-10 bg-vmSlate rounded-full flex items-center justify-center text-vmNavy">
                 <Phone className="w-5 h-5" />
               </div>
-              <span className="text-slate-600">+1 (800) VM-TRUST</span>
+              <span className="text-slate-600">(425) 494-4489</span>
             </div>
           </div>
         </div>

@@ -52,7 +52,7 @@ const PrivacyPolicy: React.FC = () => {
           <section className="space-y-4">
             <h2 className="text-2xl font-serif text-vmNavy">5. Contact Information</h2>
             <p>
-              For inquiries regarding our privacy standards or to request a detailed security audit brief, please contact our Safeguard Officer at advisor@visionmanagers.com.
+              For inquiries regarding our privacy standards or to request a detailed security audit brief, please contact our Safeguard Officer at sukhneet@visionmanagers.com.
             </p>
           </section>
         </div>

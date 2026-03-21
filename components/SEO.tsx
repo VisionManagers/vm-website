@@ -32,8 +32,8 @@ const SEO: React.FC<SEOProps> = ({
     url: SITE_URL,
     logo: 'https://storage.googleapis.com/vm-website/web%20images/vm-logo%402x.png',
     description: DEFAULT_DESCRIPTION,
-    email: 'advisor@visionmanagers.com',
-    telephone: '+1-800-868-7878',
+    email: 'sukhneet@visionmanagers.com',
+    telephone: '+1-425-494-4489',
     sameAs: [
       'https://linkedin.com/in/sukhneetsingh/',
     ],
