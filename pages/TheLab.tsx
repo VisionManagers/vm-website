@@ -5,53 +5,20 @@ import { Calculator, Check, ArrowRight, TrendingUp, Clock, Users } from 'lucide-
 import { IMAGES } from '../constants';
 import type { CaseStudy } from '../types';
 
-const CASE_STUDIES: CaseStudy[] = [
-  {
-    id: 'dental-intake',
-    title: 'AI Voice Reception for Multi-Location Dental Group',
-    client: 'Regional Dental Network',
-    industry: 'Healthcare',
-    challenge: 'Missed 22% of after-hours calls, losing an estimated $47K/month in new patient revenue across 5 locations.',
-    solution: 'Deployed 24/7 AI voice agent with real-time insurance verification, appointment booking, and CRM write-back.',
-    results: [
-      'Reduced missed calls from 22% to under 3%',
-      'Captured $41K/month in previously lost revenue',
-      'Staff freed 14 hours/week from phone duty per location',
-    ],
-    metric: '87%',
-    metricLabel: 'Call Capture Rate Increase',
-  },
-  {
-    id: 'legal-synthesis',
-    title: 'Document Synthesis for Mid-Market Law Firm',
-    client: 'Regional Legal Practice',
-    industry: 'Legal',
-    challenge: 'Partners spent 4+ hours daily reviewing AI-generated summaries that lacked verifiable source citations.',
-    solution: 'Built Lineage-First Synthesis protocol with audit logs, negative constraint training, and multi-stage validation.',
-    results: [
-      'Review time per document cut from 20 min to 4 min',
-      'Partner trust in AI outputs increased from 35% to 89%',
-      'Firm-wide efficiency gain of 120 billable hours/month',
-    ],
-    metric: '80%',
-    metricLabel: 'Review Time Reduction',
-  },
-  {
-    id: 'real-estate-leads',
-    title: 'Lead Re-Engagement Pipeline for Real Estate Portfolio',
-    client: 'Private Equity Real Estate Group',
-    industry: 'Real Estate',
-    challenge: 'CRM held 12,000+ stale leads with no standardized follow-up process. Manual outreach was inconsistent.',
-    solution: 'Automated multi-channel re-engagement with brand-voice-aligned messaging and human escalation triggers.',
-    results: [
-      '8.4% of dormant leads re-engaged within 30 days',
-      '34 qualified appointments booked in first month',
-      '$2.1M in pipeline attributed to re-activated leads',
-    ],
-    metric: '$2.1M',
-    metricLabel: 'Pipeline Recovered',
-  },
-];
+// Case studies — add real engagements here as they're completed.
+// Template:
+// {
+//   id: 'short-slug',
+//   title: 'What Was Built',
+//   client: 'Client Name or "Practice Name, City, ST"',
+//   industry: 'Healthcare' | 'Real Estate' | 'Legal' | etc.,
+//   challenge: '1-2 sentences: the pain point before VM.',
+//   solution: '1-2 sentences: what VM deployed.',
+//   results: ['Metric-driven result 1', 'Metric-driven result 2', 'Metric-driven result 3'],
+//   metric: 'The headline number (e.g. "$4,300+", "87%", "5")',
+//   metricLabel: 'Short label for the metric (e.g. "Revenue Booked Week One")',
+// }
+const CASE_STUDIES: CaseStudy[] = [];
 
 const TheLab: React.FC = () => {
   // ROI State
@@ -67,7 +34,7 @@ const TheLab: React.FC = () => {
     <>
     <SEO
       title="The Lab"
-      description="Real case studies, ROI data, and proven AI guardrails. See how high-trust businesses deploy AI to capture revenue, reduce friction, and scale with confidence."
+      description="ROI calculator and AI safety guardrails. See the frameworks high-trust businesses use to deploy AI with confidence."
       path="/lab"
     />
     <div className="pt-40 pb-20 px-6 min-h-screen bg-white">
@@ -79,7 +46,8 @@ const TheLab: React.FC = () => {
         </header>
 
         <div className="space-y-20">
-          {/* Case Studies Section */}
+          {/* Case Studies Section — renders only when real case studies exist */}
+          {CASE_STUDIES.length > 0 && (
           <section>
             <div className="text-center mb-16">
               <span className="text-vmTeal font-black text-[10px] uppercase tracking-widest mb-4 block">Proven Results</span>
@@ -139,6 +107,7 @@ const TheLab: React.FC = () => {
               </Link>
             </div>
           </section>
+          )}
 
           {/* ROI Calculator Section */}
           <section className="py-12">
