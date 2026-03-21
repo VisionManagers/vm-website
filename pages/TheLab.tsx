@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import SEO from '../components/SEO';
 import { Calculator, Check, ArrowRight, TrendingUp, Clock, Users } from 'lucide-react';
 import { IMAGES } from '../constants';
 import type { CaseStudy } from '../types';
@@ -63,12 +64,18 @@ const TheLab: React.FC = () => {
   const annualImpact = monthlyRevenueAtRisk * 12;
 
   return (
+    <>
+    <SEO
+      title="The Lab"
+      description="Real case studies, ROI data, and proven AI guardrails. See how high-trust businesses deploy AI to capture revenue, reduce friction, and scale with confidence."
+      path="/lab"
+    />
     <div className="pt-40 pb-20 px-6 min-h-screen bg-white">
       <div className="max-w-7xl mx-auto">
         <header className="mb-24 text-center max-w-4xl mx-auto">
           <span className="text-vmTeal font-black tracking-[0.4em] uppercase text-[10px] mb-6 inline-block bg-vmTeal/10 px-4 py-1.5 rounded-full">Vision Managers Interactive</span>
           <h1 className="text-5xl md:text-6xl font-serif text-vmNavy mb-8 leading-tight italic">The Lab.</h1>
-          <p className="text-slate-600 text-xl font-light">Proof of results. Real engagements, measurable outcomes, and the operational AI frameworks behind them.</p>
+          <p className="text-slate-600 text-xl font-light">Proof of results. Real engagements, measurable outcomes, and the AI frameworks behind them.</p>
         </header>
 
         <div className="space-y-20">
@@ -77,7 +84,7 @@ const TheLab: React.FC = () => {
             <div className="text-center mb-16">
               <span className="text-vmTeal font-black text-[10px] uppercase tracking-widest mb-4 block">Proven Results</span>
               <h2 className="text-4xl font-serif text-vmNavy mb-4">Case Studies</h2>
-              <p className="text-slate-600 max-w-2xl mx-auto">How high-trust businesses are deploying operational AI to capture revenue, reduce friction, and scale with confidence.</p>
+              <p className="text-slate-600 max-w-2xl mx-auto">How high-trust businesses are deploying AI to capture revenue, reduce friction, and scale with confidence.</p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -241,7 +248,7 @@ const TheLab: React.FC = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
                   {[
                     { title: "Standardized Tone", desc: "Agents that sound like your best receptionist." },
-                    { title: "Operational Sync", desc: "Secure real-time verification standards." },
+                    { title: "Data Sync", desc: "Secure real-time verification standards." },
                     { title: "Safety Buffer", desc: "Human-in-the-loop for complex queries." },
                     { title: "Drift Control", desc: "Continuous monitoring for alignment." }
                   ].map((item, i) => (
@@ -273,6 +280,7 @@ const TheLab: React.FC = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

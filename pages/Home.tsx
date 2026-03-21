@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
+import SEO from '../components/SEO';
 import { IMAGES, SOLUTIONS, TESTIMONIALS } from '../constants';
 import { 
   ChevronRight, 
@@ -52,6 +53,24 @@ const Home: React.FC = () => {
   ];
 
   return (
+    <>
+    <SEO
+      title="Home"
+      description="Vision Managers builds secure AI systems for intake, follow-up, and data. Capture more demand and convert it faster — for dentists, optometrists, and real estate agents."
+      path="/"
+      jsonLd={{
+        '@context': 'https://schema.org',
+        '@type': 'Organization',
+        name: 'Vision Managers',
+        url: 'https://visionmanagers.com',
+        logo: 'https://storage.googleapis.com/vm-brand-assets/vm-logo%402x.png',
+        description: 'AI for high-trust businesses. Secure AI systems for intake, follow-up, and data.',
+        email: 'advisor@visionmanagers.com',
+        telephone: '+1-800-868-7878',
+        areaServed: 'US',
+        serviceType: ['AI Voice Agents', 'AI Consulting', 'AI Audit', 'Business Process Automation'],
+      }}
+    />
     <div className="w-full">
       {/* 1. Hero Section - Refined Minimalist Approach */}
       <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden pt-32 pb-20 bg-white">
@@ -60,7 +79,7 @@ const Home: React.FC = () => {
             AI, designed around people
           </span>
           <h1 className="text-5xl md:text-8xl font-serif text-vmNavy mb-10 leading-[1.05] animate-in fade-in slide-in-from-bottom-4 duration-1000">
-            Operational AI for <br />
+            AI for <br />
             <span className="italic font-normal"> High-Trust Businesses.</span>
           </h1>
           <p className="text-xl md:text-2xl text-slate-600 mb-14 max-w-4xl mx-auto font-light leading-relaxed animate-in fade-in slide-in-from-bottom-6 duration-1000">
@@ -153,7 +172,7 @@ const Home: React.FC = () => {
             <h2 className="text-xs font-black text-vmTeal tracking-[0.4em] uppercase mb-6">Execution Methodology</h2>
             <h3 className="text-4xl md:text-5xl font-serif text-vmNavy mb-4">The VM Process</h3>
             <p className="text-slate-500 max-w-xl mx-auto font-light">
-              We replace chaos with a verifiable sequence of operational improvements.
+              We replace chaos with a verifiable sequence of improvements.
             </p>
           </div>
 
@@ -244,7 +263,7 @@ const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* 5. Lab Preview: Operational Intelligence Placeholder */}
+      {/* 5. Lab Preview */}
       <section className="py-32 bg-vmNavy text-white relative overflow-hidden">
         <div className="absolute top-0 right-0 w-1/3 h-full opacity-10 pointer-events-none">
           <img src={IMAGES.SKYLINE} alt="" className="w-full h-full object-cover grayscale" />
@@ -351,6 +370,7 @@ const Home: React.FC = () => {
         </div>
       </section>
     </div>
+    </>
   );
 };
 

@@ -1,9 +1,23 @@
 
 import React from 'react';
+import SEO from '../components/SEO';
 import { ChevronRight } from 'lucide-react';
 
 const About: React.FC = () => {
   return (
+    <>
+    <SEO
+      title="About"
+      description="Vision Managers brings 10+ years of UX research and AI expertise to high-trust sectors — healthcare, real estate, and private equity. We build AI that understands your clients."
+      path="/about"
+      jsonLd={{
+        '@context': 'https://schema.org',
+        '@type': 'AboutPage',
+        name: 'About Vision Managers',
+        description: 'AI consulting firm specializing in AI and data solutions for high-trust businesses.',
+        url: 'https://visionmanagers.com/about',
+      }}
+    />
     <div className="pt-40 pb-24 px-6 min-h-screen bg-white">
       <div className="max-w-4xl mx-auto">
         <span className="text-vmTeal font-black text-xs uppercase tracking-[0.3em] mb-6 block">The Firm</span>
@@ -15,7 +29,7 @@ const About: React.FC = () => {
           </p>
 
           <p>
-            Suk brings an unusual combination of enterprise research rigor and hands-on operational experience. His background includes UX research leadership at Facebook and CVS Health, where his work expanded team capacity and shaped experiences for over a million monthly users. He's also run a fire mitigation company, led a nursing home through COVID, and grew a family optometry practice 200% in under a year. This blend of big-company methodology and founder-level scrappiness means Vision Managers delivers solutions built for how businesses actually operate—not how they look on a whiteboard.
+            Suk brings an unusual combination of enterprise research rigor and hands-on experience. His background includes UX research leadership at Facebook and CVS Health, where his work expanded team capacity and shaped experiences for over a million monthly users. He's also run a fire mitigation company, led a nursing home through COVID, and grew a family optometry practice 200% in under a year. This blend of big-company methodology and founder-level scrappiness means Vision Managers delivers solutions built for how businesses actually operate—not how they look on a whiteboard.
           </p>
 
           <p>
@@ -36,6 +50,7 @@ const About: React.FC = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

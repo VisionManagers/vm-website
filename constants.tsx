@@ -16,7 +16,7 @@ export const COLORS = {
 
 export const SOLUTIONS = [
   {
-    title: "Operational Guardrails",
+    title: "AI Guardrails",
     who: "Clinics & High-Trust SMBs",
     replaces: "Missed calls, manual follow-ups, and fragmented booking",
     includes: ["24/7 Voice Reception", "Auto-Reschedule Engine", "Insurance Verification"],

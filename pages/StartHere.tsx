@@ -1,5 +1,6 @@
 
 import React, { useState } from 'react';
+import SEO from '../components/SEO';
 import { ChevronRight, ArrowLeft, Send, CheckCircle2, Loader2, AlertCircle } from 'lucide-react';
 
 const StartHere: React.FC = () => {
@@ -163,6 +164,12 @@ const StartHere: React.FC = () => {
   }
 
   return (
+    <>
+    <SEO
+      title="Start Here"
+      description="Take the Vision Managers strategic assessment. Get a custom AI roadmap for your business — zero pressure, pure utility. 3 steps, 5 minutes."
+      path="/start"
+    />
     <div className="pt-32 pb-20 px-6 min-h-screen bg-vmSlate">
       <div className="max-w-3xl mx-auto">
         <div className="mb-12">
@@ -489,6 +496,7 @@ const StartHere: React.FC = () => {
         <p className="mt-6 text-center text-xs text-slate-400">Fields marked with * are required.</p>
       </div>
     </div>
+    </>
   );
 };
 

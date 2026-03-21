@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import SEO from '../components/SEO';
 import { ChevronRight, FileText, ClipboardList, PenTool, CheckCircle2, Loader2, Send, Lock } from 'lucide-react';
 import { getPublishedPosts } from '../lib/posts';
 import { useAuth } from '../lib/AuthContext';
@@ -72,12 +73,18 @@ const Insights: React.FC = () => {
   };
 
   return (
+    <>
+    <SEO
+      title="Insights"
+      description="Executive-level intelligence on AI for high-trust businesses. Curated briefings, field notes, and analysis grounding AI in business reality."
+      path="/insights"
+    />
     <div className="pt-32 pb-20 px-6 min-h-screen bg-white">
       <div className="max-w-7xl mx-auto">
         <header className="mb-24 flex flex-col md:flex-row justify-between items-end gap-12">
           <div className="max-w-2xl">
             <h1 className="text-5xl font-serif text-vmNavy mb-8 leading-tight">Thinking for the <br /><span className="italic">Verifiable Enterprise.</span></h1>
-            <p className="text-xl text-slate-600 font-light">Grounding AI in operational reality. Precise, executive-level intelligence.</p>
+            <p className="text-xl text-slate-600 font-light">Grounding AI in reality. Precise, executive-level intelligence.</p>
           </div>
           <div className="hidden md:block text-right">
             <div className="flex gap-2 mb-2">
@@ -195,6 +202,7 @@ const Insights: React.FC = () => {
         </section>
       </div>
     </div>
+    </>
   );
 };
 

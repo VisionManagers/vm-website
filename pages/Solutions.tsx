@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
+import SEO from '../components/SEO';
 import { Shield, Zap, ShieldCheck, HeartPulse, Workflow, Database, Check, ArrowRight, ChevronRight, Phone } from 'lucide-react';
 
 const Solutions: React.FC = () => {
@@ -23,7 +24,7 @@ const Solutions: React.FC = () => {
       icon: Zap,
       fee: "Setup Fee",
       desc: "Deploy one high-impact workflow (e.g., Missed Call Recovery) to prove ROI fast.",
-      success: "Positive ROI proven through live operational data."
+      success: "Positive ROI proven through live data."
     },
     {
       id: "deployment",
@@ -46,6 +47,21 @@ const Solutions: React.FC = () => {
   ];
 
   return (
+    <>
+    <SEO
+      title="Solutions"
+      description="AI Audit, Pilot, Deployment, and Maintenance for high-trust businesses. Identify revenue leakage and build secure AI systems with fixed-fee, outcome-focused engagements."
+      path="/solutions"
+      jsonLd={{
+        '@context': 'https://schema.org',
+        '@type': 'Service',
+        name: 'Vision Managers AI Solutions',
+        provider: { '@type': 'Organization', name: 'Vision Managers' },
+        description: 'AI audit, pilot, and deployment services for high-trust businesses.',
+        url: 'https://visionmanagers.com/solutions',
+        serviceType: ['AI Audit', 'AI Deployment', 'Business Process Automation'],
+      }}
+    />
     <div className="pt-40 pb-20 px-6 min-h-screen bg-white">
       <div className="max-w-7xl mx-auto">
         <div className="max-w-3xl mb-24">
@@ -117,7 +133,7 @@ const Solutions: React.FC = () => {
                  <span className="text-xs font-black text-vmTeal uppercase tracking-widest">Clinics & High-Trust SMBs</span>
               </div>
               <h2 className="text-3xl font-serif text-vmNavy mb-6">AI Strategic Audit</h2>
-              <p className="text-slate-600 mb-8 leading-relaxed text-lg max-w-2xl">A comprehensive deep-dive into your operational infrastructure. We identify revenue leakage points and design the precise AI guardrails needed to secure your growth.</p>
+              <p className="text-slate-600 mb-8 leading-relaxed text-lg max-w-2xl">A comprehensive deep-dive into your infrastructure. We identify revenue leakage points and design the precise AI guardrails needed to secure your growth.</p>
               
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10">
                 {[
@@ -246,6 +262,7 @@ const Solutions: React.FC = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

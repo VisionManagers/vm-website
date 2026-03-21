@@ -15,7 +15,7 @@ const Footer: React.FC = () => {
               <span className="font-serif text-xl text-vmNavy tracking-tight">Vision Managers</span>
             </Link>
             <p className="text-sm text-slate-500 leading-relaxed max-w-sm">
-              Securing the future of high-trust businesses through Operational AI solutions and rigorous governance. We bridge the gap between  strategy and revenue.
+              Securing the future of high-trust businesses through AI and data solutions. We bridge the gap between strategy and revenue.
             </p>
           </div>
           
@@ -50,7 +50,7 @@ const Footer: React.FC = () => {
 
         <div className="pt-12 border-t border-slate-50 flex flex-col md:flex-row justify-between items-center gap-6">
           <div className="text-xs text-slate-400 flex flex-wrap items-center gap-3">
-            <span>© {new Date().getFullYear()} Vision Managers LLC. All operational data is encrypted.</span>
+            <span>© {new Date().getFullYear()} Vision Managers LLC. All data is encrypted.</span>
             <span className="text-slate-200 hidden sm:inline">|</span>
             <a 
                href="https://www.linkedin.com/in/sukhneetsingh/" 
