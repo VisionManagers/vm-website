@@ -46,6 +46,7 @@ const Header: React.FC = () => {
     { name: 'AI Voice', path: '/ai-voice' },
     { name: 'Solutions', path: '/solutions' },
     { name: 'The Lab', path: '/lab' },
+    { name: 'Insights', path: '/insights' },
   ];
 
   const isActive = (path: string) => location.pathname === path;
