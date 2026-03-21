@@ -5,7 +5,7 @@ import SEO from '../components/SEO';
 import { Shield, Zap, ShieldCheck, HeartPulse, Workflow, Database, Check, ArrowRight, ChevronRight, Phone } from 'lucide-react';
 
 const Solutions: React.FC = () => {
-  const bookingLink = "https://api.leadconnectorhq.com/widget/booking/SrykTWRlxCfGTJxswRqv";
+  const bookingLink = "https://api.leadconnectorhq.com/widget/booking/Fl8PjcBk3EG88tCPMwbn";
 
   const steps = [
     {

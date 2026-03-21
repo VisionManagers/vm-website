@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import SEO from '../components/SEO';
-import { supabase } from '../lib/supabase';
 import {
-  PhoneOff, Clock, TrendingDown, Clock4, CalendarCheck, Shield, Users,
+  PhoneOff, Clock, DollarSign, Clock4, CalendarCheck, Shield, Users,
   Rocket, Mic, BarChart3, Settings, CheckCircle2, ChevronDown, Star,
   Loader2
 } from 'lucide-react';
@@ -35,15 +34,19 @@ const AIVoice: React.FC = () => {
 
     setSubmitting(true);
     try {
-      const { error: dbError } = await supabase.from('leads').insert([{
-        full_name: formData.full_name.trim(),
-        email: formData.email.trim(),
-        phone: formData.phone.trim(),
-        company: formData.company.trim() || null,
-        challenge: formData.challenge || null,
-        source: 'ai-voice-medical-leadpage',
-      }]);
-      if (dbError) throw dbError;
+      const response = await fetch('https://services.leadconnectorhq.com/hooks/q4adJN1peFzHlHvxv37q/webhook-trigger/8c78e9a9-18e6-41a7-a8a8-016c115e58d0', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          full_name: formData.full_name.trim(),
+          email: formData.email.trim(),
+          phone: formData.phone.trim(),
+          company: formData.company.trim() || '',
+          challenge: formData.challenge || '',
+          source: 'ai-voice-medical-leadpage',
+        }),
+      });
+      if (!response.ok) throw new Error('Webhook failed');
       setSubmitted(true);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } catch {
@@ -146,7 +149,7 @@ const AIVoice: React.FC = () => {
     <>
     <SEO
       title="AI Voice Agents"
-      description="Stop losing patients to voicemail. 24/7 AI voice reception for dental, optometry, and medical practices. Natural-sounding, HIPAA-conscious, live in days."
+      description="Stop losing patients to voicemail. 24/7 AI voice reception for dental, optometry, chiropractic, and med spa practices. Natural-sounding, HIPAA-conscious, live in 14 days."
       path="/ai-voice"
       jsonLd={{
         '@context': 'https://schema.org',
@@ -195,8 +198,8 @@ const AIVoice: React.FC = () => {
           <div className="grid md:grid-cols-3 gap-8">
             {[
               { icon: PhoneOff, title: "After-Hours Calls Go Nowhere", desc: "40% of patient calls happen outside business hours. Every one that hits voicemail is a potential booking lost to a competitor who picks up." },
-              { icon: TrendingDown, title: "Front Desk Is Overwhelmed", desc: "Your staff juggles check-ins, insurance questions, and ringing phones. When they can't keep up, calls go unanswered and patients feel ignored." },
-              { icon: TrendingDown, title: "Revenue Walks Out the Door", desc: "A single missed new-patient call can mean $1,000+ in lifetime value gone. Multiply that across a month and the losses add up fast." },
+              { icon: Clock, title: "Front Desk Is Overwhelmed", desc: "Your staff juggles check-ins, insurance questions, and ringing phones. When they can't keep up, calls go unanswered and patients feel ignored." },
+              { icon: DollarSign, title: "Revenue Walks Out the Door", desc: "A single missed new-patient call can mean $1,000+ in lifetime value gone. Multiply that across a month and the losses add up fast." },
             ].map((item, i) => (
               <div key={i} className="bg-white rounded-xl p-8 border border-slate-200">
                 <div className="w-12 h-12 bg-red-50 rounded-lg flex items-center justify-center mb-4">
@@ -242,7 +245,7 @@ const AIVoice: React.FC = () => {
                 <p className="text-5xl font-bold text-vmNavy mb-2">85%</p>
                 <p className="text-slate-600 mb-8">of callers won't leave a voicemail — they'll just call the next practice</p>
                 <div className="border-t border-slate-200 pt-8">
-                  <p className="text-5xl font-bold text-vmNavy mb-2">$30K+</p>
+                  <p className="text-5xl font-bold text-vmNavy mb-2">$155K+</p>
                   <p className="text-slate-600">average annual revenue lost per practice from missed calls</p>
                 </div>
               </div>
