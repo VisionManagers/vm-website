@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
+import SEO from '../../components/SEO';
 import { ArrowLeft, ArrowRight, Loader2 } from 'lucide-react';
 import DOMPurify from 'dompurify';
 import { getPostBySlug } from '../../lib/posts';
@@ -60,6 +61,22 @@ const PostDetail: React.FC = () => {
   const sanitizedContent = DOMPurify.sanitize(post.content);
 
   return (
+    <>
+    <SEO
+      title={post.title}
+      description={post.summary || `${post.title} — Vision Managers Insights`}
+      path={`/insights/${post.slug}`}
+      type="article"
+      jsonLd={{
+        '@context': 'https://schema.org',
+        '@type': 'Article',
+        headline: post.title,
+        description: post.summary || post.title,
+        url: `https://visionmanagers.com/insights/${post.slug}`,
+        datePublished: post.published_at || undefined,
+        publisher: { '@type': 'Organization', name: 'Vision Managers' },
+      }}
+    />
     <div className="pt-40 pb-20 px-6 min-h-screen bg-white">
       <div className="max-w-4xl mx-auto">
         <Link to="/insights" className="inline-flex items-center gap-2 text-slate-400 hover:text-vmNavy transition-colors mb-12 text-xs font-bold uppercase tracking-widest">
@@ -116,6 +133,7 @@ const PostDetail: React.FC = () => {
         )}
       </div>
     </div>
+    </>
   );
 };
 

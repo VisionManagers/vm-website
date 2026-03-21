@@ -1,5 +1,6 @@
 
 import React, { useState } from 'react';
+import SEO from '../components/SEO';
 import { Send, CheckCircle2, Phone, Mail, User } from 'lucide-react';
 
 const Contact: React.FC = () => {
@@ -37,13 +38,25 @@ const Contact: React.FC = () => {
   }
 
   return (
+    <>
+    <SEO
+      title="Contact"
+      description="Speak with Vision Managers about AI implementation for your business. Email advisor@visionmanagers.com or call +1 (800) VM-TRUST."
+      path="/contact"
+      jsonLd={{
+        '@context': 'https://schema.org',
+        '@type': 'ContactPage',
+        name: 'Contact Vision Managers',
+        url: 'https://visionmanagers.com/contact',
+      }}
+    />
     <div className="pt-40 pb-20 px-6 min-h-screen bg-white">
       <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-20">
         <div>
           <span className="text-vmTeal font-black text-xs uppercase tracking-[0.3em] mb-4 block">Direct Connection</span>
           <h1 className="text-5xl font-serif text-vmNavy mb-8 leading-tight">Speak with <br /><span className="italic">Vision Managers.</span></h1>
           <p className="text-xl text-slate-600 font-light leading-relaxed mb-12">
-            Have a specific operational question? Our team is available for direct consultation regarding high-trust AI implementation.
+            Have a specific question? Our team is available for direct consultation on AI implementation.
           </p>
           
           <div className="space-y-8">
@@ -116,6 +129,7 @@ const Contact: React.FC = () => {
         </form>
       </div>
     </div>
+    </>
   );
 };
 

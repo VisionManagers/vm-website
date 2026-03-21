@@ -1,0 +1,37 @@
+# Vision Managers
+
+> AI for High-Trust Businesses
+
+Vision Managers builds secure AI systems for intake, follow-up, and data. We help dentists, optometrists, real estate agents, and other high-trust businesses recover revenue through autonomous AI agents.
+
+## Services
+
+- **AI Voice Agents**: 24/7 AI-powered phone reception for medical practices. Answers every call, books appointments, HIPAA-conscious design.
+- **AI Audit**: Deep-dive analysis of business workflows to identify revenue leakage and design AI guardrails.
+- **AI Pilot & Deployment**: End-to-end implementation of AI systems from pilot through full deployment and ongoing maintenance.
+
+## Industries Served
+
+- Dental practices
+- Optometry practices
+- Dermatology practices
+- Real estate agencies
+- Private equity / portfolio operators
+- Specialty contractors
+
+## Key Pages
+
+- [Home](https://visionmanagers.com/): Overview of services and approach
+- [Solutions](https://visionmanagers.com/solutions): Detailed engagement model (Audit → Pilot → Deploy → Maintain)
+- [AI Voice](https://visionmanagers.com/ai-voice): AI voice reception product for medical practices
+- [About](https://visionmanagers.com/about): Company background and leadership
+- [The Lab](https://visionmanagers.com/lab): Case studies and ROI data
+- [Insights](https://visionmanagers.com/insights): Thought leadership and executive briefings
+- [Start Here](https://visionmanagers.com/start): Free strategic assessment
+- [Contact](https://visionmanagers.com/contact): Direct consultation
+
+## Contact
+
+- Email: advisor@visionmanagers.com
+- Phone: +1 (800) VM-TRUST
+- Website: https://visionmanagers.com

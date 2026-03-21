@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import SEO from '../components/SEO';
 import { supabase } from '../lib/supabase';
 import {
   PhoneOff, Clock, TrendingDown, Clock4, CalendarCheck, Shield, Users,
@@ -142,6 +143,21 @@ const AIVoice: React.FC = () => {
 
   // ── Main Page ─────────────────────────────────────────────────────
   return (
+    <>
+    <SEO
+      title="AI Voice Agents"
+      description="Stop losing patients to voicemail. 24/7 AI voice reception for dental, optometry, and medical practices. Natural-sounding, HIPAA-conscious, live in days."
+      path="/ai-voice"
+      jsonLd={{
+        '@context': 'https://schema.org',
+        '@type': 'Service',
+        name: 'AI Voice Agents for Medical Practices',
+        provider: { '@type': 'Organization', name: 'Vision Managers' },
+        description: '24/7 AI-powered phone reception for healthcare practices. Answers every call, books appointments automatically.',
+        url: 'https://visionmanagers.com/ai-voice',
+        serviceType: ['AI Voice Agent', 'Virtual Receptionist', 'Medical Practice Automation'],
+      }}
+    />
     <div className="min-h-screen bg-white">
 
       {/* Hero */}
@@ -329,6 +345,7 @@ const AIVoice: React.FC = () => {
         </div>
       </section>
     </div>
+    </>
   );
 };
 

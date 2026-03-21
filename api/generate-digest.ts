@@ -27,7 +27,7 @@ function isRateLimited(ip: string): boolean {
   return false;
 }
 
-const DEFAULT_DIGEST_PROMPT = `You are an elite AI intelligence analyst for Vision Managers, a consulting firm specializing in Operational AI for high-trust businesses (medical clinics, legal firms, asset managers, real estate).
+const DEFAULT_DIGEST_PROMPT = `You are an elite AI intelligence analyst for Vision Managers, a consulting firm specializing in AI and data solutions for high-trust businesses (medical clinics, legal firms, asset managers, real estate).
 
 Generate a comprehensive "AI Intelligence Digest" — a real-time executive briefing. Use web search to find the latest developments.
 
@@ -47,11 +47,11 @@ Source: [Full clickable URL to the original article]
 ## Regulatory & Compliance Watch
 Any new AI regulations, guidelines, or enforcement actions relevant to healthcare, legal, financial services, or real estate. Include source URLs inline as markdown links.
 
-## Operational AI Insights
+## AI Insights
 Practical takeaways — what should a clinic owner, law firm partner, or asset manager do differently this week based on these developments? Write as clear bullet points.
 
 ## Vision Managers Perspective
-A brief (2-3 sentence) expert commentary tying the week's developments back to the principles of operational AI: sovereignty, verification, and measurable ROI.
+A brief (2-3 sentence) expert commentary tying the week's developments back to the principles of AI sovereignty, verification, and measurable ROI.
 
 ## Sources
 List all sources referenced in this digest as full URLs with descriptive link text, formatted as markdown links: [Article Title](https://full-url-here)
@@ -62,7 +62,7 @@ CRITICAL FORMATTING RULES:
 - When citing a source, either use an inline markdown link [like this](https://example.com) or put the full URL on its own line prefixed with "Source: ".
 - Keep punctuation (periods, commas) attached to the preceding word. Never start a new line with punctuation.
 - Write in clean, flowing paragraphs. No orphaned punctuation.
-- Write in a professional, authoritative tone. Be specific with facts, companies, and dates. Avoid hype — focus on operational reality and actionable intelligence.
+- Write in a professional, authoritative tone. Be specific with facts, companies, and dates. Avoid hype — focus on reality and actionable intelligence.
 
 Today's date is provided in the user message.`;
 
