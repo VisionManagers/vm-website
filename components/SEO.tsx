@@ -12,7 +12,7 @@ interface SEOProps {
 const SITE_NAME = 'Vision Managers';
 const SITE_URL = 'https://visionmanagers.com';
 const DEFAULT_DESCRIPTION = 'AI for high-trust businesses. We build secure AI systems for intake, follow-up, and data — helping dentists, optometrists, and real estate agents recover revenue.';
-const DEFAULT_IMAGE = 'https://storage.googleapis.com/vm-brand-assets/vm-og-image.png';
+const DEFAULT_IMAGE = 'https://storage.googleapis.com/vm-website/web%20images/logo-social.png';
 
 const SEO: React.FC<SEOProps> = ({
   title,
@@ -30,10 +30,10 @@ const SEO: React.FC<SEOProps> = ({
     '@type': 'Organization',
     name: 'Vision Managers',
     url: SITE_URL,
-    logo: 'https://storage.googleapis.com/vm-brand-assets/vm-logo%402x.png',
+    logo: 'https://storage.googleapis.com/vm-website/web%20images/vm-logo%402x.png',
     description: DEFAULT_DESCRIPTION,
-    email: 'advisor@visionmanagers.com',
-    telephone: '+1-800-868-7878',
+    email: 'sukhneet@visionmanagers.com',
+    telephone: '+1-425-494-4489',
     sameAs: [
       'https://linkedin.com/in/sukhneetsingh/',
     ],
