@@ -141,7 +141,7 @@ const Home: React.FC = () => {
                   <p className="text-white/50 text-[10px] font-black uppercase tracking-widest">Visit Value</p>
                 </div>
                 <div className="text-center">
-                  <div className="text-4xl font-bold text-vmTeal mb-2">7</div>
+                  <div className="text-4xl font-bold text-vmTeal mb-2">2</div>
                   <p className="text-white/50 text-[10px] font-black uppercase tracking-widest">Days</p>
                 </div>
               </div>
