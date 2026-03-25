@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build && node scripts/prerender.mjs",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -36,5 +36,8 @@
     "tailwindcss": "^4.2.1",
     "typescript": "~5.8.2",
     "vite": "^6.2.0"
+  },
+  "optionalDependencies": {
+    "puppeteer": "^24.40.0"
   }
 }
