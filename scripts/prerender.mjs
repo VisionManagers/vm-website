@@ -1,20 +1,19 @@
 /**
- * Post-build pre-rendering script.
- * Spins up a local server on the built dist/, uses Puppeteer to render each
- * public route, and writes the full HTML back so crawlers get real content.
+ * Post-build pre-rendering + sitemap generation script.
+ *
+ * 1. Fetches published post slugs from Supabase (works everywhere).
+ * 2. Generates an up-to-date sitemap.xml in dist/.
+ * 3. Attempts to pre-render every public route with Puppeteer so crawlers
+ *    get full HTML. If Chrome isn't available (e.g. Vercel CI), prerendering
+ *    is skipped gracefully — the SPA still works, and the sitemap is correct.
  *
  * Before overwriting dist/index.html (the SPA shell), it saves a copy as
  * dist/_shell.html so Vercel can still serve it as the SPA fallback for
  * dynamic routes like /insights/:slug.
- *
- * Also fetches published post slugs from Supabase so insight articles are
- * pre-rendered and discoverable by search engines, and generates a fresh
- * sitemap.xml that includes all routes with lastmod dates.
  */
 import { createServer } from 'http';
 import { readFileSync, writeFileSync, mkdirSync, existsSync, copyFileSync } from 'fs';
 import { join, extname } from 'path';
-import puppeteer from 'puppeteer';
 
 const DIST = join(process.cwd(), 'dist');
 const PORT = 4173;
@@ -119,7 +118,7 @@ async function fetchPostSlugs() {
     }
 
     const posts = await res.json();
-    console.log(`  Found ${posts.length} published post(s) to pre-render`);
+    console.log(`  Found ${posts.length} published post(s)`);
     return posts;
   } catch (err) {
     console.warn(`  ⚠ Could not reach Supabase — skipping dynamic post routes: ${err.message}`);
@@ -192,72 +191,99 @@ function startServer() {
 }
 
 /* ------------------------------------------------------------------ */
-/*  Main                                                               */
+/*  Puppeteer pre-rendering (may be unavailable in CI)                 */
 /* ------------------------------------------------------------------ */
-async function prerender() {
-  console.log('\n⚡ Pre-rendering routes for SEO...\n');
+async function prerenderRoutes(allRoutes) {
+  let puppeteer;
+  try {
+    puppeteer = (await import('puppeteer')).default;
+  } catch {
+    console.warn('  ⚠ Puppeteer not available — skipping pre-rendering');
+    return false;
+  }
 
-  // 1. Fetch dynamic post slugs from Supabase
-  const posts = await fetchPostSlugs();
-  const postRoutes = posts.map((p) => `/insights/${p.slug}`);
-
-  // 2. Combine static + dynamic routes
-  const allRoutes = [...STATIC_ROUTES, ...postRoutes];
-  console.log(`  ${allRoutes.length} total routes to pre-render\n`);
-
-  // 3. Preserve the original SPA shell before we overwrite index.html
+  // Save the SPA shell before overwriting index.html
   const shellSrc = join(DIST, 'index.html');
   const shellDst = join(DIST, '_shell.html');
   copyFileSync(shellSrc, shellDst);
   console.log('  Saved SPA shell as _shell.html\n');
 
-  // 4. Pre-render each route with Puppeteer
-  const server = await startServer();
-  const browser = await puppeteer.launch({
-    headless: true,
-    args: ['--no-sandbox', '--disable-setuid-sandbox'],
-  });
-
-  for (const route of allRoutes) {
-    const page = await browser.newPage();
-    const url = `http://localhost:${PORT}${route}`;
-
-    console.log(`  Rendering ${route}`);
-    await page.goto(url, { waitUntil: 'networkidle0', timeout: 30000 });
-
-    // Wait for React to finish rendering
-    await page.waitForSelector('#root > *', { timeout: 10000 });
-
-    const html = await page.content();
-    await page.close();
-
-    // Write the rendered HTML to the correct path in dist
-    const outDir = route === '/'
-      ? DIST
-      : join(DIST, route);
-
-    if (!existsSync(outDir)) {
-      mkdirSync(outDir, { recursive: true });
-    }
-
-    const outFile = join(outDir, 'index.html');
-    writeFileSync(outFile, html, 'utf-8');
-    console.log(`  ✓ Wrote ${outFile.replace(process.cwd(), '.')}`);
+  let browser;
+  try {
+    browser = await puppeteer.launch({
+      headless: true,
+      args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage'],
+    });
+  } catch (err) {
+    console.warn(`  ⚠ Could not launch Chrome — skipping pre-rendering: ${err.message}`);
+    return false;
   }
 
-  await browser.close();
-  server.close();
+  const server = await startServer();
 
-  // 5. Generate sitemap.xml with all routes (including dynamic posts)
-  console.log('\n  Generating sitemap.xml...');
-  const sitemap = generateSitemap(allRoutes, posts);
-  writeFileSync(join(DIST, 'sitemap.xml'), sitemap, 'utf-8');
-  console.log('  ✓ sitemap.xml updated with all routes');
+  try {
+    for (const route of allRoutes) {
+      const page = await browser.newPage();
+      const url = `http://localhost:${PORT}${route}`;
 
-  console.log(`\n✅ Pre-rendered ${allRoutes.length} routes.\n`);
+      console.log(`  Rendering ${route}`);
+      await page.goto(url, { waitUntil: 'networkidle0', timeout: 30000 });
+
+      // Wait for React to finish rendering
+      await page.waitForSelector('#root > *', { timeout: 10000 });
+
+      const html = await page.content();
+      await page.close();
+
+      // Write the rendered HTML to the correct path in dist
+      const outDir = route === '/'
+        ? DIST
+        : join(DIST, route);
+
+      if (!existsSync(outDir)) {
+        mkdirSync(outDir, { recursive: true });
+      }
+
+      const outFile = join(outDir, 'index.html');
+      writeFileSync(outFile, html, 'utf-8');
+      console.log(`  ✓ Wrote ${outFile.replace(process.cwd(), '.')}`);
+    }
+  } finally {
+    await browser.close();
+    server.close();
+  }
+
+  return true;
 }
 
-prerender().catch((err) => {
-  console.error('Pre-render failed:', err);
+/* ------------------------------------------------------------------ */
+/*  Main                                                               */
+/* ------------------------------------------------------------------ */
+async function main() {
+  console.log('\n⚡ Post-build: sitemap + pre-rendering...\n');
+
+  // 1. Fetch dynamic post slugs from Supabase
+  const posts = await fetchPostSlugs();
+  const postRoutes = posts.map((p) => `/insights/${p.slug}`);
+  const allRoutes = [...STATIC_ROUTES, ...postRoutes];
+
+  // 2. Generate sitemap.xml (always — no browser needed)
+  console.log(`\n  Generating sitemap.xml (${allRoutes.length} URLs)...`);
+  const sitemap = generateSitemap(allRoutes, posts);
+  writeFileSync(join(DIST, 'sitemap.xml'), sitemap, 'utf-8');
+  console.log('  ✓ sitemap.xml written\n');
+
+  // 3. Attempt pre-rendering (skips gracefully if Chrome unavailable)
+  const didPrerender = await prerenderRoutes(allRoutes);
+
+  if (didPrerender) {
+    console.log(`\n✅ Pre-rendered ${allRoutes.length} routes + sitemap generated.\n`);
+  } else {
+    console.log('\n✅ Sitemap generated. Pre-rendering skipped (no Chrome). SPA will serve all routes.\n');
+  }
+}
+
+main().catch((err) => {
+  console.error('Post-build script failed:', err);
   process.exit(1);
 });
