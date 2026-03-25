@@ -194,25 +194,44 @@ function startServer() {
 /*  Puppeteer pre-rendering (may be unavailable in CI)                 */
 /* ------------------------------------------------------------------ */
 async function prerenderRoutes(allRoutes) {
-  let puppeteer;
-  try {
-    puppeteer = (await import('puppeteer')).default;
-  } catch {
-    console.warn('  ⚠ Puppeteer not available — skipping pre-rendering');
-    return false;
-  }
+  // Resolve Chrome: on Vercel CI use @sparticuz/chromium (headless
+  // Chromium built for Lambda/CI), locally use puppeteer's bundled Chrome.
+  let puppeteer, chromiumArgs = [], executablePath;
+  const isCI = !!process.env.VERCEL || !!process.env.CI;
 
-  // Save the SPA shell before overwriting index.html
-  const shellSrc = join(DIST, 'index.html');
-  const shellDst = join(DIST, '_shell.html');
-  copyFileSync(shellSrc, shellDst);
-  console.log('  Saved SPA shell as _shell.html\n');
+  if (isCI) {
+    try {
+      const chromium = (await import('@sparticuz/chromium')).default;
+      // puppeteer-core is shipped inside puppeteer — import from there
+      puppeteer = (await import('puppeteer-core')).default
+                ?? (await import('puppeteer')).default;
+      executablePath = await chromium.executablePath();
+      chromiumArgs = chromium.args;
+      console.log('  Using @sparticuz/chromium for pre-rendering (CI)');
+    } catch (err) {
+      console.warn(`  ⚠ @sparticuz/chromium not available in CI — skipping pre-rendering: ${err.message}`);
+      return false;
+    }
+  } else {
+    try {
+      puppeteer = (await import('puppeteer')).default;
+      console.log('  Using bundled Puppeteer Chrome for pre-rendering');
+    } catch {
+      console.warn('  ⚠ Puppeteer not available — skipping pre-rendering');
+      return false;
+    }
+  }
 
   let browser;
   try {
     browser = await puppeteer.launch({
       headless: true,
-      args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage'],
+      ...(executablePath ? { executablePath } : {}),
+      args: [
+        '--no-sandbox',
+        '--disable-setuid-sandbox',
+        ...chromiumArgs,
+      ],
     });
   } catch (err) {
     console.warn(`  ⚠ Could not launch Chrome — skipping pre-rendering: ${err.message}`);
@@ -224,6 +243,23 @@ async function prerenderRoutes(allRoutes) {
   try {
     for (const route of allRoutes) {
       const page = await browser.newPage();
+
+      // Block external scripts (chat widgets, analytics) — they cause frame
+      // detach errors and aren't needed in the pre-rendered HTML. They'll
+      // still load at runtime for real visitors.
+      await page.setRequestInterception(true);
+      page.on('request', (req) => {
+        const url = req.url();
+        if (
+          req.resourceType() === 'script' &&
+          !url.startsWith(`http://localhost:${PORT}`)
+        ) {
+          req.abort();
+        } else {
+          req.continue();
+        }
+      });
+
       const url = `http://localhost:${PORT}${route}`;
 
       console.log(`  Rendering ${route}`);
@@ -267,13 +303,19 @@ async function main() {
   const postRoutes = posts.map((p) => `/insights/${p.slug}`);
   const allRoutes = [...STATIC_ROUTES, ...postRoutes];
 
-  // 2. Generate sitemap.xml (always — no browser needed)
-  console.log(`\n  Generating sitemap.xml (${allRoutes.length} URLs)...`);
+  // 2. Always create _shell.html (Vercel rewrites non-static routes here)
+  const shellSrc = join(DIST, 'index.html');
+  const shellDst = join(DIST, '_shell.html');
+  copyFileSync(shellSrc, shellDst);
+  console.log('  ✓ Saved SPA shell as _shell.html');
+
+  // 3. Generate sitemap.xml (always — no browser needed)
+  console.log(`  Generating sitemap.xml (${allRoutes.length} URLs)...`);
   const sitemap = generateSitemap(allRoutes, posts);
   writeFileSync(join(DIST, 'sitemap.xml'), sitemap, 'utf-8');
   console.log('  ✓ sitemap.xml written\n');
 
-  // 3. Attempt pre-rendering (skips gracefully if Chrome unavailable)
+  // 4. Attempt pre-rendering (skips gracefully if Chrome unavailable)
   const didPrerender = await prerenderRoutes(allRoutes);
 
   if (didPrerender) {
