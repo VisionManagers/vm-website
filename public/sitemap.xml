@@ -50,4 +50,5 @@
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
+  <!-- Dynamic insight post URLs are added automatically at build time -->
 </urlset>
