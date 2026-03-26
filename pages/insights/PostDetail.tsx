@@ -92,7 +92,7 @@ const PostDetail: React.FC = () => {
         </header>
 
         <article
-          className="prose prose-slate max-w-none text-slate-700 leading-relaxed font-light space-y-8"
+          className="vm-article"
           dangerouslySetInnerHTML={{ __html: sanitizedContent }}
         />
 
