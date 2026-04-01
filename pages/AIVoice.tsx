@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import SEO from '../components/SEO';
 import {
   PhoneOff, Clock, DollarSign, Clock4, CalendarCheck, Shield, Users,
-  Rocket, Mic, BarChart3, Settings, CheckCircle2, ChevronDown, Star,
+  Rocket, Mic, BarChart3, Settings, CheckCircle2, ChevronDown,
   Loader2
 } from 'lucide-react';
 
@@ -280,30 +280,10 @@ const AIVoice: React.FC = () => {
         </div>
       </section>
 
-      {/* Social Proof */}
-      <section className="py-20 md:py-28">
+      {/* Trust Badges */}
+      <section className="py-12">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-16">
-            <span className="text-vmTeal font-black text-xs uppercase tracking-[0.3em] mb-4 block">Results</span>
-            <h2 className="text-3xl md:text-4xl font-serif text-vmNavy">What Practice Owners Are Saying</h2>
-          </div>
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              { quote: "We were sending at least 15 calls a week to voicemail after 5pm. Within the first month, the AI agent captured 12 new patient bookings we would have lost.", name: "Dr. Sarah M.", title: "Dental Practice Owner" },
-              { quote: "My front desk staff was drowning in calls. Now the AI handles routine scheduling and they can actually focus on patients in the office. Game changer.", name: "Dr. James T.", title: "Optometry Practice" },
-              { quote: "I was skeptical about AI answering patient calls, but the quality blew me away. Patients have actually complimented how easy it was to schedule after hours.", name: "Dr. Priya K.", title: "Multi-Location Dermatology" },
-            ].map((t, i) => (
-              <div key={i} className="bg-vmSlate rounded-xl p-8 border border-slate-200">
-                <div className="flex gap-1 mb-4">
-                  {[...Array(5)].map((_, j) => <Star key={j} className="w-4 h-4 fill-yellow-400 text-yellow-400" />)}
-                </div>
-                <p className="text-slate-600 mb-6 italic">"{t.quote}"</p>
-                <p className="font-semibold text-sm text-vmNavy">{t.name}</p>
-                <p className="text-slate-400 text-sm">{t.title}</p>
-              </div>
-            ))}
-          </div>
-          <div className="flex flex-wrap justify-center gap-8 mt-12 text-slate-400 text-sm">
+          <div className="flex flex-wrap justify-center gap-8 text-slate-400 text-sm">
             <div className="flex items-center gap-2"><Shield className="w-4 h-4" /> HIPAA-Conscious</div>
             <div className="flex items-center gap-2"><Clock className="w-4 h-4" /> 24/7 Availability</div>
             <div className="flex items-center gap-2"><Rocket className="w-4 h-4" /> Setup in Days</div>
