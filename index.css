@@ -2,8 +2,14 @@
 
 @theme {
   --color-vmNavy: #0B4C83;
+  --color-vmInk: #0A3A63;
   --color-vmTeal: #00E5D1;
   --color-vmSlate: #F8FAFC;
+  /* Spring accents — one per aesthetic, never mixed on a page */
+  --color-vmTerracotta: #C4654A;
+  --color-vmMarigold: #E8A33D;
+  --color-vmSakura: #E89DA9;
+  --color-vmLeaf: #6FA35E;
   --font-sans: 'Inter', sans-serif;
   --font-serif: 'Playfair Display', serif;
 }
@@ -153,4 +159,98 @@
 /* Nested paragraphs inside list items (TipTap wraps li content in p) */
 .vm-article li > p {
   margin-bottom: 0;
+}
+
+/* ───────────────────────── Redesign 2026 ─────────────────────────
+   Invariant system + per-page ornament layer.
+   Aesthetics are applied with data-aesthetic on the page root:
+   "roman" | "indic" | "nihon" | "solar" — they swap the accent hue only. */
+
+[data-aesthetic] { --accent: var(--color-vmLeaf); }
+[data-aesthetic="roman"] { --accent: var(--color-vmTerracotta); }
+[data-aesthetic="indic"] { --accent: var(--color-vmMarigold); }
+[data-aesthetic="nihon"] { --accent: var(--color-vmSakura); }
+[data-aesthetic="solar"] { --accent: var(--color-vmLeaf); }
+
+.text-accent { color: var(--accent); }
+.bg-accent { background-color: var(--accent); }
+.border-accent { border-color: var(--accent); }
+.stroke-accent { stroke: var(--accent); }
+.fill-accent { fill: var(--accent); }
+
+/* Inscriptional eyebrow — the one label voice used sitewide */
+.eyebrow {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 0.6875rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+}
+
+/* Roman: thin double keyline ("entablature" rule) */
+.keyline-double {
+  border-top: 1px solid currentColor;
+  position: relative;
+  opacity: 0.35;
+}
+.keyline-double::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; top: 4px;
+  border-top: 1px solid currentColor;
+}
+
+/* Japanese: hairline rule */
+.hairline { border-top: 1px solid rgba(11, 76, 131, 0.14); }
+
+/* Vertical margin annotation (nihon pages) */
+.vertical-label {
+  writing-mode: vertical-rl;
+  letter-spacing: 0.5em;
+  text-transform: uppercase;
+  font-size: 0.625rem;
+  font-weight: 600;
+}
+
+/* Scroll reveal — opacity/transform only; removed under reduced motion */
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1), transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.reveal.is-visible { opacity: 1; transform: none; }
+
+/* SVG line art draws itself in ("growth as motion") */
+.draw-path {
+  stroke-dasharray: var(--path-len, 600);
+  stroke-dashoffset: var(--path-len, 600);
+  transition: stroke-dashoffset 1.4s cubic-bezier(0.22, 1, 0.36, 1) 0.15s;
+}
+.is-visible .draw-path { stroke-dashoffset: 0; }
+
+/* Quiet fade for nihon pages (longer, no translation) */
+.reveal-quiet {
+  opacity: 0;
+  transition: opacity 0.9s ease-out;
+}
+.reveal-quiet.is-visible { opacity: 1; }
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal, .reveal-quiet { opacity: 1; transform: none; transition: none; }
+  .draw-path { stroke-dashoffset: 0; transition: none; }
+  .animate-shimmer { animation: none; }
+}
+
+/* Warm light wash — sun through glass, tinted by the page accent */
+.light-wash {
+  background: linear-gradient(165deg, color-mix(in srgb, var(--accent) 7%, white) 0%, white 55%);
+}
+
+/* Sumi-ink duotone image treatment (nihon) */
+.ink-image { filter: grayscale(1) contrast(1.08) brightness(1.02); }
+
+/* Focus visibility floor */
+a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible {
+  outline: 2px solid var(--color-vmNavy);
+  outline-offset: 2px;
 }

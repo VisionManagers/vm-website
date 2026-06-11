@@ -2,265 +2,297 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import SEO from '../components/SEO';
-import { Shield, Zap, ShieldCheck, HeartPulse, Workflow, Database, Check, ArrowRight, ChevronRight, Phone } from 'lucide-react';
+import { BOOKING_URLS } from '../constants';
+import {
+  Reveal, Eyebrow, LaurelSprig, ColumnFlank,
+  buttonPrimary, buttonTealOnNavy,
+} from '../components/ornaments';
+import { ArrowRight, ChevronRight, Phone, Check, Minus } from 'lucide-react';
+
+/* NOTE FOR REVIEW (not rendered): tier pricing below comes from the researched
+   pricing playbook (70-Research/playbooks/pricing.md) and is NOT yet ratified
+   by Sukh. Adjust numbers here before any deploy. */
+
+const TIERS = [
+  {
+    name: 'AI Readiness Audit',
+    role: 'The entry point',
+    price: 'From $5,000',
+    cadence: 'Fixed scope · 2–4 weeks',
+    desc: 'A complete assessment of your practice or group: where AI earns its keep, which vendors to trust, what the compliance posture requires. You receive a prioritized 90-day roadmap and a leadership readout.',
+    includes: ['Workflow and bottleneck assessment', 'HIPAA-aware vendor and data review', 'Prioritized 90-day roadmap', 'Leadership readout session'],
+    featured: false,
+  },
+  {
+    name: 'Fractional AI Officer',
+    role: 'The core engagement',
+    price: '$6,000–$9,000 / month',
+    cadence: 'Quarterly commitment · monthly billing',
+    desc: 'A named executive who owns AI for your organization. Strategy, governance, vendor decisions, pilot oversight — with a monthly leadership cadence and measurable outcomes.',
+    includes: ['AI strategy owned and maintained', 'Governance and compliance framework', 'Vendor selection and accountability', 'Pilot oversight with measurement', 'Monthly executive readout'],
+    featured: true,
+  },
+  {
+    name: 'Officer + Implementation',
+    role: 'For multi-location groups',
+    price: 'From $12,000 / month',
+    cadence: 'Quarterly commitment',
+    desc: 'Everything in the core engagement, plus hands-on deployment: voice agents, workflow automation, staff training, and KPI dashboards across locations.',
+    includes: ['Everything in Fractional AI Officer', 'Hands-on deployment and builds', 'Staff training programs', 'KPI dashboards across locations'],
+    featured: false,
+  },
+];
+
+const FAQS = [
+  {
+    q: 'Is this just consulting with a different name?',
+    a: 'No. A consultant delivers a report and leaves. A fractional Chief AI Officer holds the role: the strategy stays owned, vendors stay accountable, and results get measured month after month. You leave the first 90 days with artifacts — a strategy document, a governance framework, and a live pilot — not a deck.',
+  },
+  {
+    q: 'We already have IT. Why would we need this?',
+    a: 'IT keeps systems running. The AI officer role decides which systems are worth running — what to adopt, what to skip, what the data rules are, and how to measure return. The two roles work together; they are not the same job.',
+  },
+  {
+    q: 'Is our patient data safe?',
+    a: 'Data handling is governed before anything is deployed: HIPAA-aware architecture, business associate agreements where required, and a written rule that your patient data never trains public models. Compliance posture is part of the audit, not an afterthought.',
+  },
+  {
+    q: 'What does it cost compared to hiring?',
+    a: 'A full-time AI executive runs $250,000+ a year, if you can find one. The fractional model gives you the same seniority at a fraction of that — and you can start with a fixed-scope audit before committing to anything ongoing.',
+  },
+  {
+    q: 'What happens after the strategy call?',
+    a: 'If the fit is right, we scope a readiness audit. If it is not, you still leave the call with two concrete next steps you can act on without us. The call is a working session, not a pitch.',
+  },
+];
 
 const Solutions: React.FC = () => {
-  const bookingLink = "https://api.leadconnectorhq.com/widget/booking/Fl8PjcBk3EG88tCPMwbn";
-
-  const steps = [
-    {
-      id: "audit",
-      title: "Audit",
-      duration: "2 Weeks",
-      icon: Shield,
-      fee: "Fixed-Fee",
-      desc: "A deep dive into your current bottlenecks resulting in a written strategic plan.",
-      success: "Written roadmap signed off by key stakeholders."
-    },
-    {
-      id: "pilot",
-      title: "Pilot",
-      duration: "1 Week",
-      icon: Zap,
-      fee: "Setup Fee",
-      desc: "Deploy one high-impact workflow (e.g., Missed Call Recovery) to prove ROI fast.",
-      success: "Positive ROI proven through live data."
-    },
-    {
-      id: "deployment",
-      title: "Deployment",
-      duration: "45 Days",
-      icon: ShieldCheck,
-      fee: "Full Production",
-      desc: "Production-ready systems for your entire office or organization + staff training.",
-      success: "Seamless integration with existing CRM/EHR systems."
-    },
-    {
-      id: "maintenance",
-      title: "Maintenance",
-      duration: "Monthly",
-      icon: HeartPulse,
-      fee: "Subscription",
-      desc: "Ongoing monitoring, safeguard audits, and continuous model iteration.",
-      success: "99.9% uptime and zero-drift brand alignment."
-    }
-  ];
-
   return (
     <>
     <SEO
-      title="Solutions"
-      description="AI Audit, Pilot, Deployment, and Maintenance for high-trust businesses. Identify revenue leakage and build secure AI systems with fixed-fee, outcome-focused engagements."
+      title="Fractional Chief AI Officer — Solutions"
+      description="Senior AI leadership for healthcare and dental organizations. Readiness audits from $5,000, fractional Chief AI Officer retainers, and full implementation for multi-location groups."
       path="/solutions"
       jsonLd={{
         '@context': 'https://schema.org',
         '@type': 'Service',
-        name: 'Vision Managers AI Solutions',
+        name: 'Fractional Chief AI Officer',
         provider: { '@type': 'Organization', name: 'Vision Managers' },
-        description: 'AI audit, pilot, and deployment services for high-trust businesses.',
+        description: 'Fractional Chief AI Officer engagements for healthcare and dental organizations: AI readiness audits, ongoing AI leadership retainers, and implementation.',
         url: 'https://visionmanagers.com/solutions',
-        serviceType: ['AI Audit', 'AI Deployment', 'Business Process Automation'],
+        serviceType: ['Fractional Chief AI Officer', 'AI Readiness Audit', 'AI Governance'],
       }}
     />
-    <div className="pt-40 pb-20 px-6 min-h-screen bg-white">
-      <div className="max-w-7xl mx-auto">
-        <div className="max-w-3xl mb-24">
-          <span className="text-vmTeal font-black text-xs uppercase tracking-[0.3em] mb-4 block">The Engagement Model</span>
-          <h1 className="text-5xl font-serif text-vmNavy mb-8 leading-tight">The <span className="italic underline decoration-vmTeal">AI Audit</span>: <br />The Foundation of Transformation.</h1>
-          <p className="text-xl text-slate-600 font-light leading-relaxed">
-            Every engagement starts with a comprehensive AI Audit. We don't bill by the hour; we bill by the transformation. Our structured pathway ensures you scale safely without breaking what already works.
-          </p>
+    {/* Roman classical: axial symmetry, engraved authority */}
+    <div className="pt-40 pb-24 bg-white" data-aesthetic="roman">
+
+      {/* ─── HERO — centered, inscriptional ─── */}
+      <section className="px-6 mb-12">
+        <div className="max-w-3xl mx-auto text-center">
+          <Reveal>
+            <Eyebrow className="text-accent mb-8">The engagement</Eyebrow>
+            <h1 className="font-serif text-vmNavy text-4xl md:text-6xl leading-[1.08] mb-8">
+              A Chief AI Officer for your practice.
+              <br /><span className="italic">Without the executive salary.</span>
+            </h1>
+            <p className="text-lg md:text-xl text-slate-600 leading-relaxed mb-10">
+              One accountable person who owns your AI strategy, governs the risk,
+              chooses the vendors, and answers for the results — embedded with your
+              leadership team on a fractional basis.
+            </p>
+            <a href={BOOKING_URLS.DISCOVERY} target="_blank" rel="noopener noreferrer" className={buttonPrimary}>
+              Book a 30-minute AI strategy call <ChevronRight className="w-4 h-4" />
+            </a>
+            <p className="mt-4 text-xs text-slate-400">No prep needed. You leave with two concrete next steps.</p>
+          </Reveal>
         </div>
+      </section>
 
-        {/* 4-Step Packaging */}
-        <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-6 mb-12">
-          {steps.map((step, i) => (
-            <div key={i} className="p-8 bg-vmSlate border border-slate-100 rounded-sm hover:bg-white hover:shadow-2xl transition-all group flex flex-col min-h-[460px]">
-              <div className="w-12 h-12 rounded-full bg-white flex items-center justify-center text-vmTeal mb-6 group-hover:scale-110 transition-transform shadow-sm">
-                <step.icon className="w-6 h-6" />
-              </div>
-              <h3 className="text-2xl font-serif text-vmNavy mb-4">{step.title}</h3>
-              
-              <div className="space-y-6 mb-6 flex-grow">
-                <div className="pb-4 border-b border-slate-200/50">
-                  <div className={`flex items-center mb-1 justify-between`}>
-                    <span className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Scope</span>
-                    <span className={`text-[10px] font-bold text-slate-600 uppercase tracking-widest text-right`}>{step.duration}</span>
-                  </div>
-                  <div className="text-center pt-2">
-                    <span className="text-[10px] font-black text-vmTeal uppercase tracking-[0.2em]">{step.fee}</span>
-                  </div>
-                </div>
-                
-                <div className="space-y-2">
-                  <span className="text-[10px] font-black text-vmNavy uppercase tracking-[0.2em] block">Deliverable</span>
-                  <p className="text-sm text-slate-500 leading-relaxed">{step.desc}</p>
-                </div>
-              </div>
+      <div className="max-w-4xl mx-auto px-6"><div className="keyline-double text-vmNavy" /></div>
 
-              <div className="pt-4 border-t border-slate-100">
-                <span className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] block mb-2">Success Criteria</span>
-                <p className="text-[11px] font-bold text-vmNavy leading-tight">{step.success}</p>
-              </div>
-            </div>
-          ))}
+      {/* ─── THE PROBLEM ─── */}
+      <section className="px-6 py-20">
+        <div className="max-w-3xl mx-auto text-center">
+          <Reveal>
+            <h2 className="text-3xl font-serif text-vmNavy mb-6">The expensive version of this problem</h2>
+            <p className="text-slate-600 leading-relaxed text-lg">
+              Without an owner, AI shows up anyway: staff paste patient information into free
+              chatbots, vendors oversell "HIPAA-compliant" tools nobody verifies, and pilots
+              die quietly because nobody measured them. The cost isn't the software —
+              it's the compliance exposure and the years of compounding advantage your
+              competitors bank while you evaluate.
+            </p>
+          </Reveal>
         </div>
+      </section>
 
-        {/* Top CTA Button */}
-        <div className="flex justify-center mb-32">
-          <a 
-            href={bookingLink}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="px-12 py-5 bg-vmNavy text-white font-bold uppercase tracking-widest text-xs rounded-sm hover:bg-vmTeal hover:text-vmNavy transition-all shadow-xl active:scale-95"
-          >
-            Request AI Audit
-          </a>
-        </div>
-
-        {/* Standardized Offerings */}
-        <div className="space-y-16 mb-32">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-serif text-vmNavy italic">Standardized Offerings</h2>
-          </div>
-          
-          {/* Card 1: AI Strategic Audit */}
-          <div className="bg-white p-12 rounded-sm border border-slate-100 shadow-sm hover:shadow-xl transition-all grid md:grid-cols-12 gap-12 group overflow-hidden relative">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-vmTeal/5 rounded-full -mr-16 -mt-16 group-hover:bg-vmTeal/10 transition-colors" />
-            
-            <div className="md:col-span-8">
-              <div className="flex items-center gap-4 mb-6">
-                 <span className="text-xs font-black text-vmTeal uppercase tracking-widest">Clinics & High-Trust SMBs</span>
-              </div>
-              <h2 className="text-3xl font-serif text-vmNavy mb-6">AI Strategic Audit</h2>
-              <p className="text-slate-600 mb-8 leading-relaxed text-lg max-w-2xl">A comprehensive deep-dive into your infrastructure. We identify revenue leakage points and design the precise AI guardrails needed to secure your growth.</p>
-              
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10">
-                {[
-                  "Bottleneck Identification",
-                  "Compliance Safety Review",
-                  "Implementation Roadmap",
-                  "ROI Projection Model"
-                ].map((item, idx) => (
-                  <div key={idx} className="flex items-center gap-3 text-sm text-slate-700">
-                    <Check className="w-4 h-4 text-vmTeal" />
-                    {item}
-                  </div>
-                ))}
-              </div>
-
-              <div className="flex flex-col sm:flex-row gap-8 pt-8 border-t border-slate-50">
-                 <div>
-                    <span className="text-[10px] text-slate-400 uppercase tracking-widest font-bold mb-2 block">Standard Deliverable</span>
-                    <span className="text-xs font-bold text-vmNavy px-3 py-1 bg-vmTeal/10 rounded-full">Strategic Assessment Brief</span>
-                 </div>
-                 <div>
-                    <span className="text-[10px] text-slate-400 uppercase tracking-widest font-bold mb-2 block">Fixed Timeline</span>
-                    <span className="text-xs font-bold text-vmNavy px-3 py-1 bg-vmTeal/10 rounded-full">2 Week Turnaround</span>
-                 </div>
-              </div>
-            </div>
-
-            <div className="md:col-span-4 bg-vmSlate p-10 rounded-sm flex flex-col justify-center items-center text-center">
-              <h4 className="text-xs font-black text-slate-400 uppercase tracking-widest mb-4">Implementation</h4>
-              <div className="text-3xl font-serif text-vmNavy mb-8 italic">2 Weeks</div>
-              <a 
-                href={bookingLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full py-5 bg-vmNavy text-white rounded-sm font-bold flex items-center justify-center gap-2 hover:bg-vmTeal hover:text-vmNavy transition-all shadow-lg"
-              >
-                Request AI Audit <ArrowRight className="w-4 h-4" />
-              </a>
-              <p className="mt-6 text-[10px] text-slate-400 uppercase tracking-widest font-bold">Foundation for all pilots</p>
-            </div>
-          </div>
-
-          {/* Card 2: Lead Recovery and Booking Engine */}
-          <div className="bg-white p-12 rounded-sm border border-slate-100 shadow-sm hover:shadow-xl transition-all grid md:grid-cols-12 gap-12 group overflow-hidden relative">
-            <div className="absolute -bottom-12 -left-12 w-48 h-48 bg-vmNavy/5 rounded-full group-hover:bg-vmNavy/10 transition-colors" />
-            
-            <div className="md:col-span-8">
-              <div className="flex items-center gap-4 mb-6">
-                 <span className="text-xs font-black text-vmNavy uppercase tracking-widest">Multi-Location & Growth Enterprise</span>
-                 <Workflow className="w-4 h-4 text-vmTeal" />
-              </div>
-              <h2 className="text-3xl font-serif text-vmNavy mb-6">Lead Recovery and Booking Engine</h2>
-              <p className="text-slate-600 mb-8 leading-relaxed text-lg max-w-2xl">
-                An audited automation layer for high-trust businesses that sell consults, appointments, or high-ticket services. We identify where leads drop, quantify the cost, then deploy the fixes with tight controls.
+      {/* ─── PROOF — column-flanked, engraved ─── */}
+      <section className="px-6 py-12 mb-8">
+        <div className="max-w-2xl mx-auto">
+          <Reveal className="text-vmNavy">
+            <ColumnFlank className="py-10 text-center">
+              <p className="font-serif text-2xl md:text-3xl text-vmNavy italic leading-snug mb-6">
+                "$4,300 in booked appointments within two days of going live."
               </p>
-              
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-4 gap-x-8 mb-10">
-                {[
-                  { title: "KPI Instrumentation", desc: "Baseline metrics + revenue attribution" },
-                  { title: "Response Enforcement", desc: "Speed-to-lead and follow-up protocols" },
-                  { title: "Lead Recapture Campaigns", desc: "Reactive outbound SMS + Voice for dropped inquiries" },
-                  { title: "Qualification Rules", desc: "Automated logic + escalation paths" },
-                  { title: "Scheduling Engine", desc: "Automation + exception handling" },
-                  { title: "Transparent Audit", desc: "Logs for visibility and improvement" }
-                ].map((item, idx) => (
-                  <div key={idx} className="flex items-start gap-3">
-                    <Check className="w-4 h-4 text-vmTeal mt-1 shrink-0" />
-                    <div>
-                      <h5 className="text-sm font-bold text-vmNavy">{item.title}</h5>
-                      <p className="text-xs text-slate-500">{item.desc}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              <div className="flex flex-col sm:flex-row gap-8 pt-8 border-t border-slate-50">
-                 <div>
-                    <span className="text-[10px] text-slate-400 uppercase tracking-widest font-bold mb-2 block">Standard Deliverable</span>
-                    <span className="text-xs font-bold text-vmNavy px-3 py-1 bg-vmTeal/10 rounded-full">Revenue Infrastructure Install</span>
-                 </div>
-                 <div>
-                    <span className="text-[10px] text-slate-400 uppercase tracking-widest font-bold mb-2 block">Security Standard</span>
-                    <span className="text-xs font-bold text-vmNavy px-3 py-1 bg-vmTeal/10 rounded-full">Brand-Isolated Guardrails</span>
-                 </div>
-              </div>
-            </div>
-
-            <div className="md:col-span-4 bg-vmNavy p-10 rounded-sm flex flex-col justify-center items-center text-center text-white relative">
-              <Database className="w-12 h-12 text-vmTeal/20 absolute top-4 right-4" />
-              <h4 className="text-xs font-black text-vmTeal uppercase tracking-widest mb-4">Implementation</h4>
-              <div className="text-4xl font-serif mb-8 italic text-white">45 Days</div>
-              <a 
-                href={bookingLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full py-5 bg-vmTeal text-vmNavy rounded-sm font-bold flex items-center justify-center gap-2 hover:bg-white transition-all shadow-lg"
-              >
-                Request AI Audit <ArrowRight className="w-4 h-4" />
-              </a>
-              <p className="mt-6 text-[10px] text-vmTeal/50 uppercase tracking-widest font-bold">Includes End-to-End Tracking</p>
-            </div>
-            
-            <div className="md:col-span-12 mt-4">
-              <p className="text-[11px] text-slate-400 italic">
-                *Results depend on lead quality, offer strength, and your team’s capacity—but the system ensures every lead is handled consistently and measurable end-to-end.
+              <p className="eyebrow text-slate-400">Voice AI pilot · Seattle-area optometry practice</p>
+              <p className="text-sm text-slate-500 mt-4 max-w-md mx-auto">
+                One workflow, deployed under the same discipline every engagement gets:
+                scoped, governed, measured.
               </p>
-            </div>
+            </ColumnFlank>
+          </Reveal>
+        </div>
+      </section>
+
+      <div className="max-w-4xl mx-auto px-6"><div className="keyline-double text-vmNavy" /></div>
+
+      {/* ─── THE TIERS ─── */}
+      <section className="px-6 py-20">
+        <div className="max-w-7xl mx-auto">
+          <Reveal className="text-center mb-16">
+            <Eyebrow className="text-accent mb-4">Three ways to engage</Eyebrow>
+            <h2 className="text-4xl font-serif text-vmNavy mb-4">Start fixed-scope. Grow when it's earned.</h2>
+            <p className="text-slate-500 max-w-2xl mx-auto">
+              Most clients begin with the audit. The retainer follows when the roadmap proves
+              there's enough work to own.
+            </p>
+          </Reveal>
+
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
+            {TIERS.map((tier, i) => (
+              <Reveal key={tier.name} delay={i * 100}
+                className={`flex flex-col p-8 md:p-10 rounded-sm ${tier.featured
+                  ? 'bg-vmNavy text-white border-2 border-vmTeal lg:-my-4 lg:py-14'
+                  : 'bg-white border border-slate-200'}`}>
+                <p className={`eyebrow mb-3 ${tier.featured ? 'text-vmTeal' : 'text-accent'}`}>{tier.role}</p>
+                <h3 className={`text-2xl font-serif mb-2 ${tier.featured ? 'text-white' : 'text-vmNavy'}`}>{tier.name}</h3>
+                <p className={`font-serif text-xl mb-1 ${tier.featured ? 'text-vmTeal' : 'text-vmNavy'}`}>{tier.price}</p>
+                <p className={`text-xs mb-6 ${tier.featured ? 'text-white/50' : 'text-slate-400'}`}>{tier.cadence}</p>
+                <p className={`text-sm leading-relaxed mb-8 ${tier.featured ? 'text-white/70' : 'text-slate-600'}`}>{tier.desc}</p>
+                <ul className="space-y-2.5 mb-10 flex-grow">
+                  {tier.includes.map((item) => (
+                    <li key={item} className={`flex items-start gap-2.5 text-sm ${tier.featured ? 'text-white/80' : 'text-slate-700'}`}>
+                      <Check className={`w-4 h-4 shrink-0 mt-0.5 ${tier.featured ? 'text-vmTeal' : 'text-accent'}`} aria-hidden />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+                <a href={BOOKING_URLS.DISCOVERY} target="_blank" rel="noopener noreferrer"
+                  className={tier.featured ? buttonTealOnNavy + ' w-full' : buttonPrimary + ' w-full'}>
+                  Discuss this engagement <ArrowRight className="w-4 h-4" />
+                </a>
+              </Reveal>
+            ))}
+          </div>
+          <Reveal className="text-center mt-10">
+            <p className="text-xs text-slate-400 max-w-xl mx-auto">
+              Pricing shown is representative; every engagement is scoped to the value at stake
+              in a working session before any proposal.
+            </p>
+          </Reveal>
+        </div>
+      </section>
+
+      <div className="max-w-4xl mx-auto px-6"><div className="keyline-double text-vmNavy" /></div>
+
+      {/* ─── FIT / NOT FIT ─── */}
+      <section className="px-6 py-20">
+        <div className="max-w-4xl mx-auto">
+          <Reveal className="text-center mb-14">
+            <h2 className="text-3xl font-serif text-vmNavy">This works best when it fits.</h2>
+          </Reveal>
+          <div className="grid md:grid-cols-2 gap-12">
+            <Reveal>
+              <p className="eyebrow text-accent mb-6">A strong fit if you are</p>
+              <ul className="space-y-4">
+                {[
+                  'A healthcare or dental organization, single practice to multi-location group',
+                  'Led by an owner or administrator who wants AI owned, measured, and safe',
+                  'Already feeling the cost of missed calls, manual follow-up, or vendor noise',
+                  'Ready to act on a roadmap once you trust it',
+                ].map((item) => (
+                  <li key={item} className="flex items-start gap-3 text-slate-700 text-sm leading-relaxed">
+                    <Check className="w-4 h-4 text-accent shrink-0 mt-1" aria-hidden />{item}
+                  </li>
+                ))}
+              </ul>
+            </Reveal>
+            <Reveal delay={100}>
+              <p className="eyebrow text-slate-400 mb-6">Probably not a fit if you</p>
+              <ul className="space-y-4">
+                {[
+                  'Want a one-time build with no one accountable afterward',
+                  'Are looking for the cheapest possible chatbot',
+                  'Need a full-time, on-site executive — we will tell you, and help you hire one',
+                  'Expect AI to fix an operations problem that is really a people problem',
+                ].map((item) => (
+                  <li key={item} className="flex items-start gap-3 text-slate-500 text-sm leading-relaxed">
+                    <Minus className="w-4 h-4 text-slate-300 shrink-0 mt-1" aria-hidden />{item}
+                  </li>
+                ))}
+              </ul>
+            </Reveal>
           </div>
         </div>
+      </section>
 
-{/* AI Voice Solutions CTA */}        <div className="bg-vmNavy rounded-sm p-10 md:p-12 mb-32 flex flex-col md:flex-row items-center justify-between gap-8 relative overflow-hidden">          <div className="absolute inset-0 bg-gradient-to-r from-vmNavy via-vmNavy to-vmTeal/20" />          <div className="relative z-10 flex items-center gap-5">            <div className="w-14 h-14 rounded-full bg-vmTeal/20 flex items-center justify-center flex-shrink-0">              <Phone className="w-7 h-7 text-vmTeal" />            </div>            <div>              <span className="text-vmTeal font-black text-xs uppercase tracking-[0.3em] mb-1 block">For Medical Practices</span>              <h3 className="text-xl font-serif text-white mb-1">Stop losing patients to voicemail</h3>              <p className="text-white/60 text-sm font-light">AI voice agents that answer every call — dental, optometry, dermatology, and more. Live in days.</p>            </div>          </div>          <Link            to="/ai-voice"            className="relative z-10 flex-shrink-0 px-8 py-4 bg-vmTeal text-vmNavy font-bold rounded-sm hover:bg-white transition-all flex items-center gap-2 group shadow-lg"          >            Learn More <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />          </Link>        </div>
-        {/* Final CTA Section */}
-        <div className="max-w-4xl mx-auto py-20 px-8 bg-vmSlate border border-slate-100 rounded-sm text-center">
-          <h2 className="text-4xl font-serif text-vmNavy mb-6 italic">Secure your transformation today.</h2>
-          <p className="text-slate-600 mb-10 max-w-xl mx-auto">
-            Book your AI Audit to identify revenue leakage and build your implementation roadmap.
-          </p>
-          <a 
-            href={bookingLink}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-3 px-12 py-5 bg-vmNavy text-white font-bold uppercase tracking-widest text-xs rounded-sm hover:bg-vmTeal hover:text-vmNavy transition-all shadow-xl group"
-          >
-            Schedule Your Audit <ChevronRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-          </a>
+      {/* ─── VOICE AI CROSS-LINK ─── */}
+      <section className="px-6 mb-20">
+        <div className="max-w-5xl mx-auto">
+          <Reveal className="bg-vmNavy rounded-sm p-10 md:p-12 flex flex-col md:flex-row items-center justify-between gap-8">
+            <div className="flex items-center gap-5">
+              <div className="w-14 h-14 rounded-full bg-vmTeal/15 flex items-center justify-center flex-shrink-0">
+                <Phone className="w-7 h-7 text-vmTeal" aria-hidden />
+              </div>
+              <div>
+                <Eyebrow className="text-vmTeal mb-1">The most common first pilot</Eyebrow>
+                <h3 className="text-xl font-serif text-white mb-1">Stop losing patients to voicemail</h3>
+                <p className="text-white/60 text-sm">Voice AI that answers every call — dental, optometry, dermatology, and more. Live in days.</p>
+              </div>
+            </div>
+            <Link to="/ai-voice" className={buttonTealOnNavy + ' flex-shrink-0'}>
+              See the voice agents <ArrowRight className="w-4 h-4" />
+            </Link>
+          </Reveal>
         </div>
-      </div>
+      </section>
+
+      <div className="max-w-4xl mx-auto px-6"><div className="keyline-double text-vmNavy" /></div>
+
+      {/* ─── FAQ ─── */}
+      <section className="px-6 py-20">
+        <div className="max-w-3xl mx-auto">
+          <Reveal className="text-center mb-14">
+            <Eyebrow className="text-accent mb-4">Questions owners actually ask</Eyebrow>
+            <h2 className="text-3xl font-serif text-vmNavy">Before you book the call.</h2>
+          </Reveal>
+          <div className="space-y-10">
+            {FAQS.map((faq, i) => (
+              <Reveal key={faq.q} delay={i * 60}>
+                <h3 className="font-semibold text-vmNavy mb-3">{faq.q}</h3>
+                <p className="text-sm text-slate-600 leading-relaxed">{faq.a}</p>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ─── FINAL CTA ─── */}
+      <section className="px-6 pt-10">
+        <div className="max-w-3xl mx-auto text-center">
+          <Reveal>
+            <LaurelSprig className="w-28 mx-auto mb-10 text-accent" />
+            <h2 className="text-4xl font-serif text-vmNavy mb-6 italic">Give AI an owner.</h2>
+            <p className="text-slate-600 mb-10 max-w-xl mx-auto">
+              Thirty minutes. We map where AI earns its keep in your organization and whether
+              the fractional model fits. A working session, not a sales pitch.
+            </p>
+            <a href={BOOKING_URLS.DISCOVERY} target="_blank" rel="noopener noreferrer" className={buttonPrimary}>
+              Book the strategy call <ChevronRight className="w-4 h-4" />
+            </a>
+          </Reveal>
+        </div>
+      </section>
     </div>
     </>
   );

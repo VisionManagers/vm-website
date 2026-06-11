@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import SEO from '../components/SEO';
 import { ChevronRight, ArrowLeft, Send, CheckCircle2, Loader2, AlertCircle } from 'lucide-react';
+import { Reveal, Eyebrow, ToriiMark } from '../components/ornaments';
 
 const StartHere: React.FC = () => {
   const [step, setStep] = useState(1);
@@ -170,17 +171,30 @@ const StartHere: React.FC = () => {
       description="Take the Vision Managers strategic assessment. Get a custom AI roadmap for your business — zero pressure, pure utility. 3 steps, 5 minutes."
       path="/start"
     />
-    <div className="pt-32 pb-20 px-6 min-h-screen bg-vmSlate">
+    <div className="pt-40 pb-28 px-6 min-h-screen light-wash relative" data-aesthetic="nihon">
+      <span className="vertical-label absolute left-6 top-52 text-slate-300 hidden lg:block" aria-hidden>
+        Three steps · five minutes
+      </span>
       <div className="max-w-3xl mx-auto">
+        <Reveal quiet className="text-center mb-16">
+          <ToriiMark className="w-9 h-9 mx-auto mb-8 text-accent" />
+          <Eyebrow className="text-accent mb-6">Start here</Eyebrow>
+          <h1 className="text-4xl md:text-5xl font-serif text-vmNavy mb-6 leading-tight">One clear path.</h1>
+          <p className="text-slate-500 max-w-md mx-auto leading-relaxed">
+            Three steps, five minutes. You get a custom AI roadmap for your practice —
+            we learn whether we can genuinely help.
+          </p>
+        </Reveal>
+
         <div className="mb-12">
           <div className="flex justify-between items-end mb-4">
-            <h1 className="text-3xl font-serif text-vmNavy">Strategic Assessment</h1>
-            <span className="text-sm font-bold text-vmTeal uppercase tracking-widest">Step {step} of 3</span>
+            <h2 className="text-xl font-serif text-vmNavy">Strategic Assessment</h2>
+            <span className="eyebrow text-accent">Step {step} of 3</span>
           </div>
-          <div className="h-1 w-full bg-slate-200 rounded-full overflow-hidden">
-            <div 
-              className="h-full bg-vmTeal transition-all duration-700 ease-out" 
-              style={{ width: `${(step / 3) * 100}%` }} 
+          <div className="h-px w-full bg-slate-200 overflow-hidden">
+            <div
+              className="h-full bg-vmNavy transition-all duration-700 ease-out"
+              style={{ width: `${(step / 3) * 100}%` }}
             />
           </div>
         </div>

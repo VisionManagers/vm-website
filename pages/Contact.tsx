@@ -78,13 +78,13 @@ const Contact: React.FC = () => {
         url: 'https://visionmanagers.com/contact',
       }}
     />
-    <div className="pt-40 pb-20 px-6 min-h-screen bg-white">
+    <div className="pt-40 pb-20 px-6 min-h-screen light-wash" data-aesthetic="nihon">
       <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-20">
         <div>
-          <span className="text-vmTeal font-black text-xs uppercase tracking-[0.3em] mb-4 block">Let's Talk</span>
-          <h1 className="text-5xl font-serif text-vmNavy mb-8 leading-tight">Book a <br /><span className="italic">Discovery Call.</span></h1>
+          <span className="eyebrow text-accent mb-6 block">Let's talk</span>
+          <h1 className="text-5xl font-serif text-vmNavy mb-8 leading-tight">Book a <br /><span className="italic">strategy call.</span></h1>
           <p className="text-xl text-slate-600 font-light leading-relaxed mb-8">
-            In 20 minutes, we'll map your situation, show you where AI creates the most value, and give you a clear next step. No pitch. No pressure.
+            In 30 minutes we'll map your situation, show you where AI creates the most value, and give you a clear next step. A working session, not a sales pitch.
           </p>
 
           {/* Primary CTA — Booking */}

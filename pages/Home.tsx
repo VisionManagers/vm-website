@@ -2,30 +2,58 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import SEO from '../components/SEO';
-import { IMAGES, TESTIMONIALS, BOOKING_URLS } from '../constants';
+import { TESTIMONIALS, BOOKING_URLS } from '../constants';
 import {
-  ChevronRight,
-  ShieldCheck,
-  Zap,
-  CheckCircle2,
-  ArrowRight,
-  Phone,
-  Mic,
-  Search,
-  Rocket,
-  GraduationCap,
-  CalendarCheck,
-  Clock,
-  DollarSign,
-  Star
-} from 'lucide-react';
+  Reveal, Eyebrow, LaurelSprig, VineDivider, LeafMark,
+  buttonPrimary, buttonSecondary, buttonTealOnNavy,
+} from '../components/ornaments';
+import { ChevronRight, ArrowRight, Mic, GraduationCap, Compass, Star } from 'lucide-react';
+
+/* Hero line art: a column with a vine growing across it —
+   durable structure, living growth. Drawn like an engraving. */
+const ColumnAndVine: React.FC = () => (
+  <svg viewBox="0 0 280 360" className="w-full max-w-sm text-vmNavy" fill="none" stroke="currentColor"
+    strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+    {/* capital */}
+    <path className="draw-path" style={{ '--path-len': 220 } as React.CSSProperties} strokeWidth="1.4"
+      d="M70 60 H 210 M76 70 H 204 M84 70 C 84 80, 80 86, 72 92 M196 70 C 196 80, 200 86, 208 92" />
+    {/* fluted shaft */}
+    {[100, 118, 136, 154, 172].map((x, i) => (
+      <path key={x} className="draw-path" strokeWidth={i === 2 ? 1.4 : 1}
+        style={{ '--path-len': 260, transitionDelay: `${0.15 + i * 0.08}s` } as React.CSSProperties}
+        d={`M${x} 74 V 318`} opacity={i === 0 || i === 4 ? 0.9 : 0.45} />
+    ))}
+    {/* base */}
+    <path className="draw-path" style={{ '--path-len': 200, transitionDelay: '0.5s' } as React.CSSProperties} strokeWidth="1.4"
+      d="M82 318 H 198 M74 330 H 206 M66 342 H 214" />
+    {/* vine */}
+    <g className="text-vmLeaf" stroke="currentColor">
+      <path className="draw-path" strokeWidth="1.3"
+        style={{ '--path-len': 520, transitionDelay: '0.7s' } as React.CSSProperties}
+        d="M30 350 C 60 320, 70 290, 96 268 C 130 240, 160 250, 178 222 C 196 196, 184 168, 160 150 C 140 136, 128 116, 134 92 C 138 76, 150 64, 168 58" />
+      {[
+        [96, 268, -30], [150, 246, 15], [184, 200, 30], [162, 152, -40], [134, 100, -15], [166, 60, 20],
+      ].map(([x, y, r], i) => (
+        <ellipse key={i} cx={x} cy={y} rx="3.4" ry="8.5" transform={`rotate(${r} ${x} ${y})`}
+          className="draw-path" style={{ '--path-len': 42, transitionDelay: `${1.2 + i * 0.12}s` } as React.CSSProperties} />
+      ))}
+      {/* one blossom — spring */}
+      <g transform="translate(178 222)" className="text-vmLeaf">
+        {[0, 72, 144, 216, 288].map((a) => (
+          <ellipse key={a} cx="0" cy="-6" rx="2.8" ry="5" transform={`rotate(${a})`}
+            className="draw-path" style={{ '--path-len': 26, transitionDelay: '1.9s' } as React.CSSProperties} />
+        ))}
+      </g>
+    </g>
+  </svg>
+);
 
 const Home: React.FC = () => {
   return (
     <>
     <SEO
-      title="Home"
-      description="Voice AI for healthcare practices. Your AI receptionist answers every call, books appointments, and never puts a patient on hold. Live in 14 days. Vision Managers."
+      title="Fractional Chief AI Officer for Healthcare"
+      description="Vision Managers is the fractional Chief AI Officer for healthcare and dental organizations — senior AI leadership that owns strategy, governance, and results for a fraction of an executive hire."
       path="/"
       jsonLd={{
         '@context': 'https://schema.org',
@@ -33,348 +61,325 @@ const Home: React.FC = () => {
         name: 'Vision Managers',
         url: 'https://visionmanagers.com',
         logo: 'https://storage.googleapis.com/vm-website/web%20images/vm-logo%402x.png',
-        description: 'Voice AI concierge systems for healthcare practices. AI training for individuals and teams.',
+        description: 'Fractional Chief AI Officer services for healthcare and dental organizations. AI strategy, governance, voice AI deployment, and AI training.',
         email: 'sukhneet@visionmanagers.com',
         telephone: '+1-425-494-4489',
         areaServed: 'US',
-        serviceType: ['AI Voice Agents', 'AI Training', 'AI Consulting'],
+        serviceType: ['Fractional Chief AI Officer', 'AI Strategy Consulting', 'AI Voice Agents', 'AI Training'],
         hasOfferCatalog: {
           '@type': 'OfferCatalog',
-          name: 'AI Services',
+          name: 'AI Leadership Services',
           itemListElement: [
+            { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Fractional Chief AI Officer' } },
             { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Voice AI Concierge for Healthcare Practices' } },
             { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'AI Training for Individuals and Organizations' } },
-            { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'AI Discovery and Automation Strategy' } },
           ],
         },
       }}
     />
-    <div className="w-full">
+    <div className="w-full" data-aesthetic="solar">
 
       {/* ─── HERO ─── */}
-      <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden pt-32 pb-20 bg-white">
-        <div className="relative z-10 max-w-5xl mx-auto px-6 text-center">
-          <span className="inline-block px-4 py-1.5 mb-10 text-xs font-bold tracking-[0.2em] text-vmNavy uppercase bg-vmTeal/10 rounded-full">
-            Voice AI for Healthcare Practices
-          </span>
-          <h1 className="text-5xl md:text-8xl font-serif text-vmNavy mb-10 leading-[1.05]">
-            Your Practice Is <br />
-            <span className="italic font-normal">Missing Calls.</span>
-          </h1>
-          <p className="text-xl md:text-2xl text-slate-600 mb-6 max-w-3xl mx-auto font-light leading-relaxed">
-            85% of patients who hit voicemail won't leave a message — they'll call the next practice.
-            Our <span className="text-vmNavy font-semibold">AI voice receptionist</span> answers every call, books appointments, and never puts a patient on hold.
-            <span className="text-vmTeal font-bold"> Live in 14 days.</span>
-          </p>
-
-          <p className="text-sm text-slate-400 mb-14 max-w-2xl mx-auto">
-            Flat monthly fee. No per-call charges. No long-term contracts.
-          </p>
-
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-16">
-            <a
-              href={BOOKING_URLS.DISCOVERY}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-full sm:w-auto px-12 py-5 bg-vmNavy text-white rounded-sm font-semibold hover:shadow-2xl hover:-translate-y-1 transition-all flex items-center justify-center gap-2 group"
-            >
-              Book a Free Discovery Call
-              <ChevronRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-            </a>
-            <Link
-              to="/ai-voice"
-              className="w-full sm:w-auto px-12 py-5 bg-white text-vmNavy border border-slate-200 rounded-sm font-semibold hover:bg-slate-50 transition-all flex items-center justify-center gap-2 group"
-            >
-              See How It Works
-              <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-            </Link>
+      <section className="relative min-h-[88vh] flex items-center overflow-hidden pt-36 pb-24 light-wash">
+        <div className="max-w-7xl mx-auto px-6 w-full">
+          <div className="grid md:grid-cols-12 gap-12 items-center">
+            <div className="md:col-span-7">
+              <Reveal>
+                <Eyebrow className="text-accent mb-8">Fractional Chief AI Officer · Healthcare &amp; Dental</Eyebrow>
+              </Reveal>
+              <Reveal delay={80}>
+                <h1 className="font-serif text-vmNavy text-[2.75rem] md:text-7xl leading-[1.06] mb-8">
+                  AI is everyone's question.
+                  <br />
+                  <span className="italic">Make it someone's job.</span>
+                </h1>
+              </Reveal>
+              <Reveal delay={160}>
+                <p className="text-lg md:text-xl text-slate-600 leading-relaxed max-w-xl mb-4">
+                  Most practices use AI playfully — and see nothing for it. Vision Managers
+                  gives your organization a Chief AI Officer: senior leadership that owns the
+                  strategy, the vendor decisions, and the results, for a fraction of an executive hire.
+                </p>
+                <p className="text-sm text-slate-400 mb-12">
+                  Built for healthcare and dental organizations from single practices to multi-location groups.
+                </p>
+              </Reveal>
+              <Reveal delay={240}>
+                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5 mb-5">
+                  <a href={BOOKING_URLS.DISCOVERY} target="_blank" rel="noopener noreferrer" className={buttonPrimary}>
+                    Book a 30-minute AI strategy call
+                    <ChevronRight className="w-4 h-4" />
+                  </a>
+                  <Link to="/solutions" className={buttonSecondary}>
+                    See how the role works
+                    <ArrowRight className="w-4 h-4" />
+                  </Link>
+                </div>
+                <p className="text-xs text-slate-400">30 minutes. No pitch deck. You leave with two concrete next steps.</p>
+              </Reveal>
+            </div>
+            <Reveal className="md:col-span-5 hidden md:flex justify-center" delay={300}>
+              <ColumnAndVine />
+            </Reveal>
           </div>
 
-          <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs text-slate-400 font-medium">
-            <span className="flex items-center gap-1.5"><ShieldCheck className="w-3.5 h-3.5 text-vmTeal" /> HIPAA-Conscious</span>
-            <span className="flex items-center gap-1.5"><Clock className="w-3.5 h-3.5 text-vmTeal" /> Live in 14 Days</span>
-            <span className="flex items-center gap-1.5"><CheckCircle2 className="w-3.5 h-3.5 text-vmTeal" /> No Long-Term Contracts</span>
-          </div>
-
-          <div className="pt-10 mt-10 border-t border-slate-100">
-            <p className="text-xs font-bold text-slate-400 uppercase tracking-[0.3em]">
-              Built for <span className="text-vmNavy">Dentists</span> · <span className="text-vmNavy">Optometrists</span> · <span className="text-vmNavy">Chiropractors</span> · <span className="text-vmNavy">Med Spas</span> · <span className="text-slate-400">and other healthcare practices</span>
+          <Reveal className="mt-20 pt-8 hairline" delay={100}>
+            <p className="eyebrow text-slate-400">
+              Working with <span className="text-vmNavy">dentists</span> · <span className="text-vmNavy">optometrists</span> · <span className="text-vmNavy">chiropractors</span> · <span className="text-vmNavy">med spas</span> · and other healthcare organizations
             </p>
-          </div>
+          </Reveal>
         </div>
       </section>
 
-      {/* ─── SOCIAL PROOF: CASE STUDY SPOTLIGHT ─── */}
-      <section className="py-20 bg-vmNavy relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-vmNavy via-vmNavy to-vmTeal/10" />
+      {/* ─── PROOF: CASE SPOTLIGHT ─── */}
+      <section className="py-24 bg-vmNavy relative overflow-hidden">
         <div className="max-w-5xl mx-auto px-6 relative z-10">
-          <div className="text-center mb-12">
-            <span className="text-vmTeal font-black text-[10px] uppercase tracking-widest mb-4 block">Client Results</span>
-          </div>
+          <Reveal className="text-center mb-12">
+            <Eyebrow className="text-vmTeal">Client results</Eyebrow>
+          </Reveal>
 
-          <div className="bg-white/5 border border-white/10 rounded-sm p-8 md:p-12 backdrop-blur-sm">
+          <Reveal className="border border-white/10 rounded-sm p-8 md:p-14 bg-white/5">
             <div className="grid md:grid-cols-2 gap-12 items-center">
               <div>
-                <p className="text-white/50 text-[10px] font-black uppercase tracking-widest mb-4">Voice AI — Seattle-Area Optometry Practice</p>
+                <p className="eyebrow text-white/40 mb-5">Voice AI — Seattle-area optometry practice</p>
                 <h3 className="text-2xl md:text-3xl font-serif text-white mb-6 leading-snug">
-                  5 new patient appointments booked in <span className="text-vmTeal italic">week one.</span>
+                  $4,300 in booked appointments within <span className="text-vmTeal italic">two days</span> of going live.
                 </h3>
                 <p className="text-white/60 leading-relaxed mb-8">
-                  After deploying their Voice AI concierge, the practice immediately started capturing after-hours calls that previously went to voicemail — converting them into booked appointments without adding staff.
+                  The practice's after-hours calls had been going to voicemail. We deployed a voice AI
+                  concierge that answers every call and books directly into their schedule — five new
+                  patient appointments in week one, no staff added.
                 </p>
-                <a
-                  href={BOOKING_URLS.DISCOVERY}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 text-vmTeal font-semibold hover:underline group text-sm"
-                >
-                  Get results like this <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                <a href={BOOKING_URLS.DISCOVERY} target="_blank" rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 text-vmTeal font-semibold hover:underline text-sm">
+                  Get results like this <ArrowRight className="w-4 h-4" />
                 </a>
               </div>
               <div className="grid grid-cols-3 gap-6">
-                <div className="text-center">
-                  <div className="text-4xl font-bold text-vmTeal mb-2">5</div>
-                  <p className="text-white/50 text-[10px] font-black uppercase tracking-widest">Appointments</p>
-                </div>
-                <div className="text-center">
-                  <div className="text-4xl font-bold text-white mb-2">$4,300<span className="text-lg">+</span></div>
-                  <p className="text-white/50 text-[10px] font-black uppercase tracking-widest">Visit Value</p>
-                </div>
-                <div className="text-center">
-                  <div className="text-4xl font-bold text-vmTeal mb-2">2</div>
-                  <p className="text-white/50 text-[10px] font-black uppercase tracking-widest">Days</p>
-                </div>
+                {[
+                  ['5', 'Appointments'],
+                  ['$4,300+', 'Visit value'],
+                  ['2', 'Days live'],
+                ].map(([num, label]) => (
+                  <div key={label} className="text-center">
+                    <div className="text-3xl md:text-4xl font-serif text-vmTeal mb-2">{num}</div>
+                    <p className="eyebrow text-white/40">{label}</p>
+                  </div>
+                ))}
               </div>
             </div>
-          </div>
+          </Reveal>
         </div>
       </section>
 
-      {/* ─── THREE SERVICES ─── */}
-      <section className="py-32 bg-white">
+      {/* ─── THE PROBLEM, NAMED ─── */}
+      <section className="py-28 bg-white">
+        <div className="max-w-3xl mx-auto px-6 text-center">
+          <Reveal>
+            <LaurelSprig className="w-28 mx-auto mb-10 text-accent" />
+            <h2 className="text-3xl md:text-4xl font-serif text-vmNavy mb-8 leading-snug">
+              You're being asked for an AI strategy.
+              <br /><span className="italic">Nobody on your team owns one.</span>
+            </h2>
+            <p className="text-lg text-slate-600 leading-relaxed">
+              Vendors call weekly. Staff experiment quietly. Compliance questions go unanswered.
+              That isn't a technology gap — it's a leadership gap. A fractional Chief AI Officer
+              closes it: one accountable person who decides what's worth doing, what's safe,
+              and what gets measured.
+            </p>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ─── THREE WAYS IN ─── */}
+      <section className="py-28 bg-vmSlate/40">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-20">
-            <span className="text-vmTeal font-black text-[10px] uppercase tracking-widest mb-4 block">What We Offer</span>
-            <h2 className="text-4xl md:text-5xl font-serif text-vmNavy mb-4">Three ways we help.</h2>
-            <p className="text-slate-500 max-w-xl mx-auto font-light">Choose what fits — or let us figure it out together on a free discovery call.</p>
-          </div>
+          <Reveal className="text-center mb-16">
+            <Eyebrow className="text-accent mb-4">What we offer</Eyebrow>
+            <h2 className="text-4xl md:text-5xl font-serif text-vmNavy mb-4">Three ways to work with us.</h2>
+            <p className="text-slate-500 max-w-xl mx-auto">Start where it fits. Most engagements begin with a readiness audit and grow from there.</p>
+          </Reveal>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Voice AI — Featured */}
-            <div className="relative p-8 md:p-10 bg-white border-2 border-vmTeal rounded-sm hover:shadow-2xl transition-all group">
-              <div className="absolute -top-3 left-8 px-3 py-1 bg-vmTeal text-vmNavy text-[10px] font-black uppercase tracking-widest rounded-sm">Most Popular</div>
-              <div className="w-12 h-12 bg-vmTeal/10 rounded-full flex items-center justify-center mb-6">
-                <Mic className="w-6 h-6 text-vmTeal" />
-              </div>
-              <h3 className="text-2xl font-serif text-vmNavy mb-3">Voice AI Concierge</h3>
-              <p className="text-sm text-slate-500 mb-2 font-medium">Best for: Healthcare practices</p>
-              <p className="text-slate-600 mb-6 leading-relaxed">
-                Your AI front desk. Answers every call, books appointments, confirms scheduling, handles FAQs, and escalates to your staff when needed. 24/7. No extra headcount.
-              </p>
-              <ul className="space-y-2 mb-8">
+            {/* FAIO — lead offer */}
+            <Reveal className="relative p-8 md:p-10 bg-white border-2 border-vmTeal rounded-sm flex flex-col">
+              <div className="absolute -top-3 left-8 px-3 py-1 bg-vmTeal text-vmNavy eyebrow rounded-sm">The core offer</div>
+              <Compass className="w-8 h-8 text-vmNavy mb-6" aria-hidden />
+              <h3 className="text-2xl font-serif text-vmNavy mb-3">Fractional AI Officer</h3>
+              <p className="text-sm text-slate-500 mb-4 font-medium">For practices and groups that need AI owned, not dabbled in</p>
+              <ul className="space-y-2.5 mb-8 flex-grow">
                 {[
-                  'Natural, human-sounding voice',
-                  'EHR-aware scheduling',
+                  'AI strategy owned by a named executive',
+                  'Vendor selection and governance',
+                  'First 90 days: strategy, guardrails, live pilot',
+                  'Monthly leadership cadence with your team',
+                ].map((item) => (
+                  <li key={item} className="flex items-start gap-2.5 text-sm text-slate-700">
+                    <LeafMark className="w-4 h-4 text-accent shrink-0 mt-0.5" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+              <Link to="/solutions" className={`${buttonPrimary} w-full`}>
+                How the role works <ArrowRight className="w-4 h-4" />
+              </Link>
+            </Reveal>
+
+            {/* Voice AI */}
+            <Reveal delay={100} className="p-8 md:p-10 bg-white border border-slate-200 rounded-sm flex flex-col">
+              <Mic className="w-8 h-8 text-vmNavy mb-6" aria-hidden />
+              <h3 className="text-2xl font-serif text-vmNavy mb-3">Voice AI Concierge</h3>
+              <p className="text-sm text-slate-500 mb-4 font-medium">For practices losing patients to voicemail</p>
+              <ul className="space-y-2.5 mb-8 flex-grow">
+                {[
+                  'Answers every call, 24/7',
+                  'Books directly into your schedule',
                   'HIPAA-conscious architecture',
                   'Live in 10–14 days',
-                ].map((item, i) => (
-                  <li key={i} className="flex items-start gap-2 text-sm text-slate-700">
-                    <CheckCircle2 className="w-4 h-4 text-vmTeal shrink-0 mt-0.5" />
+                ].map((item) => (
+                  <li key={item} className="flex items-start gap-2.5 text-sm text-slate-700">
+                    <LeafMark className="w-4 h-4 text-accent shrink-0 mt-0.5" />
                     {item}
                   </li>
                 ))}
               </ul>
-              <a
-                href={BOOKING_URLS.DISCOVERY}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full py-4 bg-vmNavy text-white font-bold uppercase tracking-widest text-[11px] rounded-sm hover:bg-vmTeal hover:text-vmNavy transition-all flex items-center justify-center gap-2 group/btn"
-              >
-                Book a Voice AI Demo <ArrowRight className="w-4 h-4 transition-transform group-hover/btn:translate-x-1" />
-              </a>
-            </div>
+              <Link to="/ai-voice" className={`${buttonSecondary} w-full`}>
+                See how it works <ArrowRight className="w-4 h-4" />
+              </Link>
+            </Reveal>
 
-            {/* AI Training */}
-            <div className="p-8 md:p-10 bg-white border border-slate-200 rounded-sm hover:shadow-2xl transition-all group">
-              <div className="w-12 h-12 bg-vmNavy/5 rounded-full flex items-center justify-center mb-6">
-                <GraduationCap className="w-6 h-6 text-vmNavy" />
-              </div>
+            {/* Training */}
+            <Reveal delay={200} className="p-8 md:p-10 bg-white border border-slate-200 rounded-sm flex flex-col">
+              <GraduationCap className="w-8 h-8 text-vmNavy mb-6" aria-hidden />
               <h3 className="text-2xl font-serif text-vmNavy mb-3">AI Training</h3>
-              <p className="text-sm text-slate-500 mb-2 font-medium">Best for: Individuals & business teams</p>
-              <p className="text-slate-600 mb-6 leading-relaxed">
-                From zero to AI-native in 3 hours — not weeks. Hands-on training with real AI tools applied to your actual role. You leave being able to build things yourself. Guaranteed.
-              </p>
-              <ul className="space-y-2 mb-8">
+              <p className="text-sm text-slate-500 mb-4 font-medium">For teams that want capability in-house</p>
+              <ul className="space-y-2.5 mb-8 flex-grow">
                 {[
-                  'Beginner to advanced',
+                  'Hands-on, applied to your actual roles',
+                  'From zero to working output in 3 hours',
                   'Customized to your industry',
-                  'Real tools, real workflows',
-                  '1-on-1 or corporate formats',
-                ].map((item, i) => (
-                  <li key={i} className="flex items-start gap-2 text-sm text-slate-700">
-                    <CheckCircle2 className="w-4 h-4 text-vmTeal shrink-0 mt-0.5" />
+                  '1-on-1 or team formats',
+                ].map((item) => (
+                  <li key={item} className="flex items-start gap-2.5 text-sm text-slate-700">
+                    <LeafMark className="w-4 h-4 text-accent shrink-0 mt-0.5" />
                     {item}
                   </li>
                 ))}
               </ul>
-              <a
-                href={BOOKING_URLS.DISCOVERY}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full py-4 bg-white text-vmNavy border border-slate-200 font-bold uppercase tracking-widest text-[11px] rounded-sm hover:bg-vmNavy hover:text-white transition-all flex items-center justify-center gap-2 group/btn"
-              >
-                Book a Training Session <ArrowRight className="w-4 h-4 transition-transform group-hover/btn:translate-x-1" />
+              <a href={BOOKING_URLS.DISCOVERY} target="_blank" rel="noopener noreferrer" className={`${buttonSecondary} w-full`}>
+                Book a session <ArrowRight className="w-4 h-4" />
               </a>
-            </div>
-
-            {/* Discovery Call */}
-            <div className="p-8 md:p-10 bg-white border border-slate-200 rounded-sm hover:shadow-2xl transition-all group">
-              <div className="w-12 h-12 bg-vmNavy/5 rounded-full flex items-center justify-center mb-6">
-                <Search className="w-6 h-6 text-vmNavy" />
-              </div>
-              <h3 className="text-2xl font-serif text-vmNavy mb-3">Free Discovery Call</h3>
-              <p className="text-sm text-slate-500 mb-2 font-medium">Best for: Anyone exploring AI</p>
-              <p className="text-slate-600 mb-6 leading-relaxed">
-                Not sure where to start? We'll map your current workflows, show you where AI and automation save you time and money, and give you a clear next step — in 20 minutes.
-              </p>
-              <ul className="space-y-2 mb-8">
-                {[
-                  'Free, no-obligation',
-                  'Tailored to your practice',
-                  'Actionable recommendations',
-                  'Clear pricing before you commit',
-                ].map((item, i) => (
-                  <li key={i} className="flex items-start gap-2 text-sm text-slate-700">
-                    <CheckCircle2 className="w-4 h-4 text-vmTeal shrink-0 mt-0.5" />
-                    {item}
-                  </li>
-                ))}
-              </ul>
-              <a
-                href={BOOKING_URLS.DISCOVERY}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full py-4 bg-white text-vmNavy border border-slate-200 font-bold uppercase tracking-widest text-[11px] rounded-sm hover:bg-vmNavy hover:text-white transition-all flex items-center justify-center gap-2 group/btn"
-              >
-                Book Free Call <ArrowRight className="w-4 h-4 transition-transform group-hover/btn:translate-x-1" />
-              </a>
-            </div>
+            </Reveal>
           </div>
         </div>
       </section>
 
-      {/* ─── HOW IT WORKS ─── */}
-      <section className="py-32 bg-vmSlate/30">
+      {/* ─── FIRST 90 DAYS ─── */}
+      <section className="py-28 bg-white">
         <div className="max-w-5xl mx-auto px-6">
-          <div className="text-center mb-20">
-            <span className="text-vmTeal font-black text-[10px] uppercase tracking-widest mb-4 block">Simple Process</span>
-            <h2 className="text-4xl md:text-5xl font-serif text-vmNavy mb-4">How it works.</h2>
-          </div>
+          <Reveal className="text-center mb-16">
+            <Eyebrow className="text-accent mb-4">The first 90 days</Eyebrow>
+            <h2 className="text-4xl font-serif text-vmNavy mb-4">You leave with artifacts, not advice.</h2>
+          </Reveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
             {[
               {
-                step: '1',
-                title: 'Discovery',
-                icon: Search,
-                desc: 'Free 20-minute call. We map your current workflow, identify where calls drop off, and define what your AI solution looks like.',
-                detail: 'Free — no commitment',
+                n: '01',
+                title: 'AI strategy document',
+                desc: 'Where AI earns its keep in your organization — and where it doesn’t. Priorities ranked by return, signed off by your leadership.',
               },
               {
-                step: '2',
-                title: 'Build & Configure',
-                icon: Zap,
-                desc: 'We build and train your AI on your specific workflows, tone, and systems. You review and approve before anything goes live.',
-                detail: '10–14 days typical',
+                n: '02',
+                title: 'Governance framework',
+                desc: 'Who can use what, with which data, under which guardrails. The answer to the compliance questions your vendors can’t give you.',
               },
               {
-                step: '3',
-                title: 'Go Live & Optimize',
-                icon: Rocket,
-                desc: 'Your AI goes live. We monitor and optimize performance, fine-tuning responses and flows based on real call data.',
-                detail: 'Ongoing support included',
+                n: '03',
+                title: 'First pilot, live',
+                desc: 'One high-impact workflow deployed and measured — often missed-call recovery, where results show up in days, not quarters.',
               },
-            ].map((item) => (
-              <div key={item.step} className="text-center group">
-                <div className="relative mx-auto mb-8 w-20 h-20">
-                  <div className="w-20 h-20 rounded-full bg-white flex items-center justify-center text-vmNavy group-hover:bg-vmNavy group-hover:text-white transition-all duration-500 shadow-sm group-hover:shadow-2xl border border-slate-100">
-                    <item.icon className="w-8 h-8" />
-                  </div>
-                  <div className="absolute -top-1 -right-1 w-6 h-6 bg-vmTeal text-vmNavy text-[10px] font-black rounded-full flex items-center justify-center border-2 border-white z-10 shadow-sm">
-                    {item.step}
-                  </div>
-                </div>
-                <h3 className="text-xl font-bold text-vmNavy mb-3 uppercase tracking-widest text-sm">{item.title}</h3>
-                <p className="text-slate-600 text-sm leading-relaxed mb-4 max-w-xs mx-auto">{item.desc}</p>
-                <p className="text-vmTeal text-xs font-bold uppercase tracking-widest">{item.detail}</p>
-              </div>
+            ].map((item, i) => (
+              <Reveal key={item.n} delay={i * 100} className="relative pt-8">
+                <span className="font-serif text-5xl text-accent/80 leading-none block mb-5" aria-hidden>{item.n}</span>
+                <h3 className="text-lg font-semibold text-vmNavy mb-3">{item.title}</h3>
+                <p className="text-sm text-slate-600 leading-relaxed">{item.desc}</p>
+              </Reveal>
             ))}
           </div>
 
-          <div className="text-center mt-16">
-            <a
-              href={BOOKING_URLS.DISCOVERY}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-10 py-5 bg-vmNavy text-white font-semibold rounded-sm hover:shadow-2xl hover:-translate-y-1 transition-all group"
-            >
-              Start with a Free Discovery Call <ChevronRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+          <Reveal className="text-center mt-16">
+            <a href={BOOKING_URLS.DISCOVERY} target="_blank" rel="noopener noreferrer" className={buttonPrimary}>
+              Start with a strategy call <ChevronRight className="w-4 h-4" />
             </a>
-            <p className="mt-4 text-xs text-slate-400">20 minutes. No pitch. Just clarity on what AI can do for you.</p>
-          </div>
+          </Reveal>
         </div>
       </section>
 
       {/* ─── TESTIMONIALS ─── */}
-      <section className="py-32 bg-white">
+      <section className="py-28 bg-vmSlate/40">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-20">
-            <span className="text-vmTeal font-black text-[10px] uppercase tracking-widest mb-4 block">What People Say</span>
-            <h2 className="text-4xl font-serif text-vmNavy mb-4">Trusted by healthcare professionals.</h2>
-          </div>
+          <Reveal className="text-center mb-16">
+            <Eyebrow className="text-accent mb-4">What people say</Eyebrow>
+            <h2 className="text-4xl font-serif text-vmNavy">Trusted by healthcare professionals.</h2>
+          </Reveal>
 
           <div className="grid md:grid-cols-3 gap-8">
             {TESTIMONIALS.map((t, i) => (
-              <div key={i} className="p-10 bg-vmSlate rounded-sm group hover:bg-white hover:shadow-2xl transition-all border border-slate-100 flex flex-col">
-                <div className="flex gap-1 mb-6">
+              <Reveal key={t.name} delay={i * 100} className="p-10 bg-white rounded-sm border border-slate-100 flex flex-col">
+                <div className="flex gap-1 mb-6" aria-label="5 star review">
                   {[...Array(5)].map((_, j) => (
-                    <Star key={j} className="w-4 h-4 fill-vmTeal text-vmTeal" />
+                    <Star key={j} className="w-4 h-4 fill-vmTeal text-vmTeal" aria-hidden />
                   ))}
                 </div>
-                <div className="flex-grow">
-                  <p className="text-lg text-slate-700 italic mb-8 leading-relaxed">"{t.quote}"</p>
+                <p className="text-slate-700 italic mb-8 leading-relaxed flex-grow">"{t.quote}"</p>
+                <div className="pt-6 hairline">
+                  <h5 className="font-semibold text-vmNavy text-sm">{t.name}</h5>
+                  <p className="eyebrow text-slate-400 mt-1">{t.title}</p>
                 </div>
-                <div className="pt-6 border-t border-slate-50">
-                  <h5 className="font-bold text-vmNavy text-sm">{t.name}</h5>
-                  <p className="text-[10px] text-slate-400 uppercase tracking-widest font-bold mt-1">{t.title}</p>
-                </div>
-              </div>
+              </Reveal>
             ))}
           </div>
         </div>
       </section>
 
+      {/* ─── CASUAL INTELLIGENCE BAND ─── */}
+      <section className="py-20 bg-white">
+        <div className="max-w-5xl mx-auto px-6">
+          <Reveal className="flex flex-col md:flex-row items-center justify-between gap-8 p-10 md:p-12 bg-vmNavy rounded-sm">
+            <div>
+              <Eyebrow className="text-vmMarigold mb-3">Every Wednesday</Eyebrow>
+              <h3 className="text-2xl font-serif text-white mb-2">Casual Intelligence</h3>
+              <p className="text-white/60 text-sm max-w-md leading-relaxed">
+                A weekly roundtable where operators show how they actually use AI — live builds,
+                real workflows, no sales pitches. Free to attend.
+              </p>
+            </div>
+            <Link to="/casual-intelligence" className={buttonTealOnNavy}>
+              Join the roundtable <ArrowRight className="w-4 h-4" />
+            </Link>
+          </Reveal>
+        </div>
+      </section>
+
       {/* ─── FINAL CTA ─── */}
-      <section className="py-32 border-t border-slate-100 bg-vmSlate/30">
+      <section className="py-28 light-wash border-t border-slate-100">
         <div className="max-w-4xl mx-auto px-6 text-center">
-          <h2 className="text-4xl font-serif text-vmNavy mb-6 italic">Ready to stop missing calls?</h2>
-          <p className="text-lg text-slate-600 mb-4 max-w-2xl mx-auto">
-            In 20 minutes, we'll show you exactly how many calls your practice is missing, what that's costing you, and how AI fixes it — specific to your situation.
-          </p>
-          <p className="text-sm text-slate-400 mb-12">No pitch. No pressure. Just a clear picture.</p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
-            <a
-              href={BOOKING_URLS.DISCOVERY}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-12 py-5 bg-vmNavy text-white rounded-sm font-semibold hover:shadow-2xl hover:-translate-y-1 transition-all flex items-center gap-2 group"
-            >
-              Book Your Free Discovery Call <ChevronRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+          <Reveal>
+            <VineDivider className="mx-auto mb-12 text-accent" />
+            <h2 className="text-4xl font-serif text-vmNavy mb-6 italic">Ready to give AI an owner?</h2>
+            <p className="text-lg text-slate-600 mb-3 max-w-2xl mx-auto">
+              In 30 minutes we'll map where AI can earn its keep in your organization,
+              what it would take, and whether the fractional model fits.
+            </p>
+            <p className="text-sm text-slate-400 mb-12">A working session, not a sales pitch.</p>
+            <a href={BOOKING_URLS.DISCOVERY} target="_blank" rel="noopener noreferrer" className={buttonPrimary}>
+              Book your strategy call <ChevronRight className="w-4 h-4" />
             </a>
-          </div>
-          <p className="mt-8 text-xs text-slate-400">
-            Or call directly: <a href="tel:+14254944489" className="text-vmNavy font-semibold hover:text-vmTeal transition-colors">(425) 494-4489</a>
-          </p>
+            <p className="mt-8 text-xs text-slate-400">
+              Or call directly: <a href="tel:+14254944489" className="text-vmNavy font-semibold hover:text-vmTeal transition-colors">(425) 494-4489</a>
+            </p>
+          </Reveal>
         </div>
       </section>
     </div>
