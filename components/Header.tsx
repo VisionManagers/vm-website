@@ -42,11 +42,13 @@ const Header: React.FC = () => {
     setIsMenuOpen(false);
   }, [location.pathname]);
 
+  // AI Voice intentionally NOT in the main nav — it's a component offer,
+  // surfaced from the Solutions page's voice highlight section instead.
   const navLinks = [
-    { name: 'AI Voice', path: '/ai-voice' },
     { name: 'Solutions', path: '/solutions' },
     { name: 'The Lab', path: '/lab' },
     { name: 'Insights', path: '/insights' },
+    { name: 'About', path: '/about' },
   ];
 
   const isActive = (path: string) => location.pathname === path;
@@ -160,8 +162,9 @@ const Header: React.FC = () => {
                 <div className="mt-12 flex flex-col items-center gap-4 border-t border-slate-100 pt-10">
                   <p className="text-[10px] text-slate-400 font-bold uppercase tracking-[0.3em] mb-2">Direct Access</p>
                   <div className="flex flex-col items-center gap-6">
+                    <Link to="/start" className="text-lg font-bold text-vmNavy hover:text-vmTeal transition-colors">Start Here</Link>
+                    <Link to="/casual-intelligence" className="text-lg font-bold text-vmNavy hover:text-vmTeal transition-colors">Casual Intelligence</Link>
                     <Link to="/contact" className="text-lg font-bold text-vmNavy hover:text-vmTeal transition-colors">Contact Us</Link>
-                    <Link to="/about" className="text-lg font-bold text-vmNavy hover:text-vmTeal transition-colors">About the Firm</Link>
                   </div>
                 </div>
               </div>
@@ -174,7 +177,7 @@ const Header: React.FC = () => {
               }`}
               style={{ transitionDelay: `${350 + navLinks.length * 60}ms` }}
             >
-               <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">© 2024 Vision Managers LLC</p>
+               <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">© {new Date().getFullYear()} Vision Managers LLC</p>
             </div>
           </div>
         </div>

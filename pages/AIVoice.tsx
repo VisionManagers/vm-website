@@ -161,12 +161,13 @@ const AIVoice: React.FC = () => {
         serviceType: ['AI Voice Agent', 'Virtual Receptionist', 'Medical Practice Automation'],
       }}
     />
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white" data-aesthetic="roman">
 
       {/* Hero */}
       <section className="relative bg-vmNavy text-white overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-vmNavy via-vmNavy/95 to-vmTeal/20" />
         <div className="relative max-w-7xl mx-auto px-6 pt-44 pb-20 md:pb-28 text-center">
+          <span className="eyebrow text-vmTeal block mb-6">The most common first pilot</span>
           <h1 className="text-4xl md:text-6xl font-serif leading-tight mb-6">
             Stop Losing Patients<br />to <span className="italic text-vmTeal">Voicemail</span>
           </h1>

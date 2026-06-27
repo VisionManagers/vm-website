@@ -31,6 +31,7 @@ const STATIC_ROUTES = [
   '/about',
   '/privacy',
   '/start',
+  '/casual-intelligence',
 ];
 
 // Priority + changefreq for sitemap generation
@@ -42,6 +43,7 @@ const ROUTE_META = {
   '/insights':        { priority: '0.8', changefreq: 'weekly' },
   '/insights/digest': { priority: '0.6', changefreq: 'weekly' },
   '/lab':             { priority: '0.7', changefreq: 'monthly' },
+  '/casual-intelligence': { priority: '0.7', changefreq: 'weekly' },
   '/about':           { priority: '0.7', changefreq: 'monthly' },
   '/contact':         { priority: '0.6', changefreq: 'monthly' },
   '/privacy':         { priority: '0.3', changefreq: 'yearly' },
