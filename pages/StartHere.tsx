@@ -1,8 +1,9 @@
 
 import React, { useState } from 'react';
 import SEO from '../components/SEO';
-import { ChevronRight, ArrowLeft, Send, CheckCircle2, Loader2, AlertCircle } from 'lucide-react';
-import { Reveal, Eyebrow, ToriiMark } from '../components/ornaments';
+import { ChevronRight, ArrowLeft, ArrowRight, Send, CheckCircle2, Loader2, AlertCircle } from 'lucide-react';
+import { Reveal, Eyebrow, Constellation } from '../components/ornaments';
+import { BOOKING_URLS } from '../constants';
 
 const StartHere: React.FC = () => {
   const [step, setStep] = useState(1);
@@ -146,13 +147,13 @@ const StartHere: React.FC = () => {
 
   if (step === 4) {
     return (
-      <div className="pt-32 pb-20 px-6 min-h-screen flex items-center justify-center bg-vmSlate">
+      <div className="pt-32 pb-20 px-6 min-h-screen flex items-center justify-center cosmos-wash">
         <div className="max-w-md w-full bg-white p-12 rounded-sm shadow-2xl text-center">
           <div className="w-20 h-20 bg-vmTeal/10 rounded-full flex items-center justify-center mx-auto mb-8">
             <CheckCircle2 className="w-10 h-10 text-vmTeal" />
           </div>
-          <h2 className="text-3xl font-serif text-vmNavy mb-4">Thank you - submission received.</h2>
-          <p className="text-slate-600 mb-8">Please monitor your email for your custom assessment.</p>
+          <h2 className="text-3xl font-serif text-vmNavy mb-4">Got it — your assessment is on its way.</h2>
+          <p className="text-slate-600 mb-8">Watch your email for your custom roadmap. Talk soon.</p>
           <button 
             onClick={() => window.location.hash = '/'}
             className="text-vmNavy font-bold hover:text-vmTeal transition-colors"
@@ -167,23 +168,31 @@ const StartHere: React.FC = () => {
   return (
     <>
     <SEO
-      title="Start Here"
-      description="Take the Vision Managers strategic assessment. Get a custom AI roadmap for your business — zero pressure, pure utility. 3 steps, 5 minutes."
+      title="Start Here — Find What Your Data Could Be Doing"
+      description="Three steps, about five minutes. Tell Vision Managers where it hurts and how your business runs, and get a custom roadmap — where AI earns its keep, where it doesn’t, and the first move worth making. Proven in healthcare, built for anyone."
       path="/start"
     />
-    <div className="pt-40 pb-28 px-6 min-h-screen light-wash relative" data-aesthetic="nihon">
-      <span className="vertical-label absolute left-6 top-52 text-slate-300 hidden lg:block" aria-hidden>
+    <div className="pt-40 pb-28 px-6 min-h-screen cosmos-wash relative overflow-hidden" data-aesthetic="solar">
+      <Constellation />
+      <span className="vertical-label absolute left-6 top-52 text-slate-300 hidden lg:block z-10" aria-hidden>
         Three steps · five minutes
       </span>
-      <div className="max-w-3xl mx-auto">
-        <Reveal quiet className="text-center mb-16">
-          <ToriiMark className="w-9 h-9 mx-auto mb-8 text-accent" />
-          <Eyebrow className="text-accent mb-6">Start here</Eyebrow>
-          <h1 className="text-4xl md:text-5xl font-serif text-vmNavy mb-6 leading-tight">One clear path.</h1>
-          <p className="text-slate-500 max-w-md mx-auto leading-relaxed">
-            Three steps, five minutes. You get a custom AI roadmap for your practice —
-            we learn whether we can genuinely help.
+      <div className="max-w-3xl mx-auto relative z-10">
+        <Reveal className="text-center mb-14">
+          <Eyebrow className="text-vmTeal mb-6">Start here</Eyebrow>
+          <h1 className="text-4xl md:text-5xl font-serif text-vmNavy mb-6 leading-[1.1]">Let’s find what your data could be doing.</h1>
+          <p className="text-slate-600 max-w-xl mx-auto leading-relaxed mb-6">
+            Three steps, about five minutes. Tell me where it hurts and how your business runs, and
+            I’ll come back with a custom roadmap — where AI earns its keep, where it doesn’t, and the
+            first move worth making. Proven in healthcare, built for anyone.
           </p>
+          <p className="eyebrow text-slate-400 mb-8">
+            Find the loss · Map the Cosmos · Build the system · Answer for the result
+          </p>
+          <a href={BOOKING_URLS.DISCOVERY} target="_blank" rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 text-vmNavy font-semibold hover:text-vmTeal transition-colors text-sm">
+            Prefer to just talk? Book a call <ArrowRight className="w-4 h-4" />
+          </a>
         </Reveal>
 
         <div className="mb-12">

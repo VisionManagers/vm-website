@@ -210,6 +210,112 @@ export const SectionNumber: React.FC<{ n: string; className?: string }> = ({ n, 
   <span aria-hidden className={`font-serif text-5xl md:text-6xl leading-none text-accent opacity-90 ${className}`}>{n}</span>
 );
 
+/* ── Cosmos ──────────────────────────────────────────────────────── */
+
+/* Constellation field — the Cosmos motif. Drifting nodes linked when
+   near: relationship-mapping made visible (stars → constellations,
+   neurons → a mind). Decorative + aria-hidden; meaning lives in the HTML
+   behind it. Static single frame under reduced-motion, so it never blocks
+   comprehension or prerender. Absolutely positioned; never intercepts input. */
+export const Constellation: React.FC<{ className?: string }> = ({ className = '' }) => {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const LINK = 134;
+    let width = 0;
+    let height = 0;
+    let nodes: { x: number; y: number; vx: number; vy: number; r: number; bright: boolean }[] = [];
+    let raf = 0;
+
+    const build = () => {
+      const rect = canvas.getBoundingClientRect();
+      width = rect.width;
+      height = rect.height;
+      canvas.width = Math.floor(width * dpr);
+      canvas.height = Math.floor(height * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      const count = Math.max(26, Math.min(76, Math.floor((width * height) / 15500)));
+      nodes = Array.from({ length: count }, () => ({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        vx: (Math.random() - 0.5) * 0.16,
+        vy: (Math.random() - 0.5) * 0.16,
+        r: Math.random() * 1.4 + 0.8,
+        bright: Math.random() < 0.16,
+      }));
+    };
+
+    const draw = () => {
+      ctx.clearRect(0, 0, width, height);
+      for (let i = 0; i < nodes.length; i++) {
+        for (let j = i + 1; j < nodes.length; j++) {
+          const a = nodes[i];
+          const b = nodes[j];
+          const d = Math.hypot(a.x - b.x, a.y - b.y);
+          if (d < LINK) {
+            ctx.strokeStyle = `rgba(11,76,131,${(1 - d / LINK) * 0.2})`;
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(a.x, a.y);
+            ctx.lineTo(b.x, b.y);
+            ctx.stroke();
+          }
+        }
+      }
+      for (const n of nodes) {
+        if (n.bright) {
+          ctx.beginPath();
+          ctx.arc(n.x, n.y, n.r * 3.4, 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(0,229,209,0.08)';
+          ctx.fill();
+        }
+        ctx.beginPath();
+        ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+        ctx.fillStyle = n.bright ? 'rgba(0,194,178,0.95)' : 'rgba(11,76,131,0.5)';
+        ctx.fill();
+      }
+    };
+
+    const step = () => {
+      for (const n of nodes) {
+        n.x += n.vx;
+        n.y += n.vy;
+        if (n.x < 0 || n.x > width) n.vx *= -1;
+        if (n.y < 0 || n.y > height) n.vy *= -1;
+      }
+      draw();
+      raf = requestAnimationFrame(step);
+    };
+
+    const start = () => {
+      build();
+      if (reduce) draw();
+      else raf = requestAnimationFrame(step);
+    };
+
+    const onResize = () => {
+      cancelAnimationFrame(raf);
+      start();
+    };
+
+    start();
+    window.addEventListener('resize', onResize);
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener('resize', onResize);
+    };
+  }, []);
+
+  return <canvas ref={canvasRef} className={`constellation-canvas ${className}`} aria-hidden />;
+};
+
 /* Primary + secondary button voices (invariant across aesthetics) */
 export const buttonPrimary =
   'inline-flex items-center justify-center gap-2 px-10 py-4 bg-vmNavy text-white text-sm font-semibold tracking-wide rounded-sm hover:shadow-xl hover:-translate-y-0.5 transition-all duration-200';

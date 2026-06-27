@@ -20,9 +20,9 @@ const Footer: React.FC = () => {
               <span className="font-serif text-xl text-vmNavy tracking-tight">Vision Managers</span>
             </Link>
             <p className="text-sm text-slate-500 leading-relaxed max-w-sm">
-              Fractional Chief AI Officer for healthcare and dental organizations.
-              Senior AI leadership that owns strategy, governance, and results —
-              for a fraction of an executive hire.
+              Turning the data and relationships your business already runs on
+              into systems that drive real outcomes. AI that earns its keep —
+              one person accountable. Proven in healthcare, built for anyone.
             </p>
             <p className="mt-6 text-xs text-slate-400">
               <a href="mailto:sukhneet@visionmanagers.com" className="hover:text-vmTeal transition-colors">sukhneet@visionmanagers.com</a>

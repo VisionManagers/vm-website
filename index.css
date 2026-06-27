@@ -5,6 +5,8 @@
   --color-vmInk: #0A3A63;
   --color-vmTeal: #00E5D1;
   --color-vmSlate: #F8FAFC;
+  --color-vmCream: #FAF6EE;   /* warm paper ground — the new base */
+  --color-vmGold: #C9A24B;    /* cathedral-leaf, used only in dark chapters */
   /* Spring accents — one per aesthetic, never mixed on a page */
   --color-vmTerracotta: #C4654A;
   --color-vmMarigold: #E8A33D;
@@ -244,6 +246,52 @@
 /* Warm light wash — sun through glass, tinted by the page accent */
 .light-wash {
   background: linear-gradient(165deg, color-mix(in srgb, var(--accent) 7%, white) 0%, white 55%);
+}
+
+/* ── Cosmos layer (Home) ───────────────────────────────────────────
+   The constellation/neuron motif: relationship-mapping made visible. */
+
+/* Warm paper ground with a faint teal nebula bloom, top-right */
+.cosmos-wash {
+  background:
+    radial-gradient(60% 50% at 78% 12%, color-mix(in srgb, var(--color-vmTeal) 12%, transparent) 0%, transparent 70%),
+    radial-gradient(50% 60% at 8% 90%, color-mix(in srgb, var(--color-vmLeaf) 9%, transparent) 0%, transparent 70%),
+    var(--color-vmCream);
+}
+
+/* Constellation canvas sits behind hero content, never intercepts input */
+.constellation-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* Portrait duotone — pull a real photo into navy/teal so it lives in-palette */
+.duotone-vm {
+  position: relative;
+  overflow: hidden;
+}
+.duotone-vm img {
+  filter: grayscale(1) contrast(1.06) brightness(1.02);
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.duotone-vm::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(150deg, color-mix(in srgb, var(--color-vmNavy) 88%, transparent), color-mix(in srgb, var(--color-vmTeal) 42%, transparent));
+  mix-blend-mode: screen;
+  opacity: 0.5;
+}
+
+/* Dark chapter — cathedral gold-on-night, the immersion beat */
+.dark-chapter { background-color: #0A1722; }
+.dark-chapter .chapter-img {
+  filter: brightness(0.55) contrast(1.05) saturate(1.05);
 }
 
 /* Sumi-ink duotone image treatment (nihon) */

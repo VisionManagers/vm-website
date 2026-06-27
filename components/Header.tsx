@@ -42,9 +42,10 @@ const Header: React.FC = () => {
     setIsMenuOpen(false);
   }, [location.pathname]);
 
+  // AI Voice intentionally NOT in the main nav — it's a component offer,
+  // surfaced from the Solutions page's voice highlight section instead.
   const navLinks = [
     { name: 'Solutions', path: '/solutions' },
-    { name: 'AI Voice', path: '/ai-voice' },
     { name: 'The Lab', path: '/lab' },
     { name: 'Insights', path: '/insights' },
     { name: 'About', path: '/about' },
