@@ -302,3 +302,109 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   outline: 2px solid var(--color-vmNavy);
   outline-offset: 2px;
 }
+
+/* ───────────────── Voice page — homage to the human voice ─────────────────
+   A spring-lit museum. Keeps the sitewide tokens; the only new device is the
+   staged hero (a sticky frame the headline → sub-hero scroll through) and a
+   gold museum-label register. All choreography is removed under reduced motion. */
+
+.voice-scroller { position: relative; height: 260vh; }
+.voice-sticky { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; }
+
+/* background plate — licensed/commissioned choir footage drops in here; until
+   then the spring-lit poster gradient stands in (no empty <video> element). */
+.voice-bg { position: absolute; inset: 0; z-index: 0; overflow: hidden; transform-origin: center 42%; will-change: transform; }
+.voice-bg video { position: absolute; inset: -2%; width: 104%; height: 104%; object-fit: cover; }
+.voice-poster {
+  position: absolute; inset: -2%;
+  background:
+    radial-gradient(38% 46% at 22% 28%, rgba(255,238,188,0.85), transparent 62%),
+    radial-gradient(30% 40% at 76% 22%, rgba(232,157,169,0.42), transparent 60%),
+    radial-gradient(46% 58% at 64% 84%, rgba(111,163,94,0.36), transparent 66%),
+    radial-gradient(30% 40% at 12% 86%, rgba(232,163,61,0.28), transparent 62%),
+    linear-gradient(158deg, #fdf7ea 0%, #f5ecd9 42%, #ecdfc6 100%);
+  filter: saturate(1.04);
+}
+.voice-sunbeam { position: absolute; inset: 0; background: linear-gradient(115deg, transparent 38%, rgba(255,247,224,0.5) 50%, transparent 62%); mix-blend-mode: screen; }
+.voice-scrim { position: absolute; inset: 0; background:
+  radial-gradient(58% 52% at 50% 44%, rgba(250,246,238,0.78) 0%, rgba(250,246,238,0.32) 46%, rgba(250,246,238,0.05) 72%),
+  linear-gradient(180deg, rgba(250,246,238,0.5) 0%, transparent 24%, transparent 72%, rgba(250,246,238,0.55) 100%); }
+.voice-veil { position: absolute; inset: 0; z-index: 1; background: var(--color-vmCream); opacity: 0; pointer-events: none; }
+
+/* gold museum corner ticks */
+.voice-tick { position: absolute; width: 26px; height: 26px; z-index: 4; border-color: rgba(201,162,75,0.5); pointer-events: none; }
+.voice-tick-bl { left: 1.4rem; bottom: 1.4rem; border-left: 1px solid; border-bottom: 1px solid; }
+.voice-tick-br { right: 1.4rem; bottom: 1.4rem; border-right: 1px solid; border-bottom: 1px solid; }
+
+/* the two scroll-stages share the frame, centered */
+.voice-stage { position: absolute; inset: 0; z-index: 5; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 7rem 1.5rem 3rem; text-align: center; will-change: opacity, transform; }
+
+/* gold eyebrow set between two hairlines (museum placard) — pairs with .eyebrow */
+.voice-eyebrow { display: inline-flex; align-items: center; gap: 1rem; }
+.voice-eyebrow::before, .voice-eyebrow::after { content: ''; width: 34px; height: 1px; background: linear-gradient(90deg, transparent, var(--color-vmGold)); opacity: 0.8; }
+.voice-eyebrow::after { background: linear-gradient(90deg, var(--color-vmGold), transparent); }
+
+/* fancy gold detailing on the key word */
+.voice-care { position: relative; white-space: nowrap; font-weight: 500; }
+.voice-care svg { position: absolute; left: 0; right: 0; bottom: -0.18em; width: 100%; height: 0.34em; overflow: visible; }
+.voice-care path { fill: none; stroke: var(--color-vmGold); stroke-width: 1.6; stroke-linecap: round;
+  stroke-dasharray: 210; stroke-dashoffset: 210; animation: voiceDraw 1.4s cubic-bezier(.22,1,.36,1) 1.2s forwards;
+  filter: drop-shadow(0 1px 1px rgba(201,162,75,0.35)); }
+@keyframes voiceDraw { to { stroke-dashoffset: 0; } }
+
+/* Conversation IQ — italic word, upright IQ (so the Q never reads as a 2) */
+.voice-ciq { font-family: var(--font-serif); font-weight: 500; color: var(--color-vmNavy); }
+.voice-ciq .word { font-style: italic; }
+.voice-ciq .iq { font-style: normal; letter-spacing: 0.04em; }
+
+/* scroll cue */
+.voice-cue { position: absolute; left: 0; right: 0; bottom: 2.2rem; text-align: center; z-index: 6;
+  font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace; font-size: 0.72rem; letter-spacing: 0.16em;
+  text-transform: uppercase; color: rgba(11,76,131,0.5); }
+.voice-cue .arrow { display: block; margin-top: 0.5rem; animation: voiceBob 1.8s ease-in-out infinite; }
+@keyframes voiceBob { 0%,100% { transform: translateY(0); opacity: 0.6; } 50% { transform: translateY(5px); opacity: 1; } }
+
+/* audio shell — vertical tab, middle-right (clear of the header menu) */
+.voice-sound { position: fixed; right: 0; top: 50%; transform: translateY(-50%); z-index: 50;
+  display: flex; flex-direction: column; align-items: center; gap: 0.8rem;
+  background: rgba(255,255,255,0.72); border: 1px solid rgba(201,162,75,0.45); border-right: none; border-radius: 10px 0 0 10px;
+  padding: 1rem 0.6rem; cursor: pointer; -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+  transition: padding-right .25s ease, border-color .2s ease; }
+.voice-sound:hover { border-color: rgba(201,162,75,0.8); padding-right: 0.85rem; }
+.voice-sound .dot { width: 8px; height: 8px; border-radius: 50%; }
+.voice-sound .vlabel { writing-mode: vertical-rl; text-orientation: mixed; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-vmNavy); }
+.voice-sound .cap { writing-mode: vertical-rl; font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace; font-size: 0.6rem; letter-spacing: 0.08em; color: rgba(11,76,131,0.5); }
+
+/* reduced motion: stages stack as plain panels, nothing pins or moves */
+.voice-reduced .voice-scroller { height: auto; }
+.voice-reduced .voice-sticky { position: static; height: auto; }
+.voice-reduced .voice-stage { position: relative; inset: auto; opacity: 1 !important; transform: none !important; min-height: 90vh; }
+.voice-reduced .voice-cue { display: none; }
+@media (prefers-reduced-motion: reduce) {
+  .voice-care path { animation: none; stroke-dashoffset: 0; }
+}
+
+/* ── Sound dock — opt-in multi-soundscape chooser (Voice + Museum) ── */
+.sounddock { position: fixed; right: 0; top: 50%; transform: translateY(-50%); z-index: 50; display: flex; align-items: stretch; }
+.sounddock-tab { display: flex; flex-direction: column; align-items: center; gap: 0.8rem;
+  background: rgba(255,255,255,0.72); border: 1px solid rgba(201,162,75,0.45); border-right: none; border-radius: 10px 0 0 10px;
+  padding: 1rem 0.6rem; cursor: pointer; -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); transition: border-color .2s ease; }
+.sounddock-tab:hover { border-color: rgba(201,162,75,0.8); }
+.sounddock-tab .dot { width: 8px; height: 8px; border-radius: 50%; }
+.sounddock-tab .vlabel { writing-mode: vertical-rl; text-orientation: mixed; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-vmNavy); }
+.sounddock-panel { width: 232px; align-self: center; background: rgba(255,255,255,0.93); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+  border: 1px solid rgba(201,162,75,0.45); border-right: none; border-radius: 10px 0 0 10px; padding: 1rem; box-shadow: -12px 0 44px rgba(11,76,131,0.12); }
+.sounddock-panel h4 { font-family: ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size: 0.62rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-vmGold); margin-bottom: 0.75rem; }
+.sounddock-opt { display: flex; align-items: center; gap: 0.6rem; width: 100%; text-align: left; padding: 0.55rem 0.6rem; border-radius: 4px; font-size: 0.85rem; color: var(--color-vmNavy); cursor: pointer; background: transparent; border: none; transition: background .15s ease; }
+.sounddock-opt:hover { background: rgba(201,162,75,0.10); }
+.sounddock-opt[aria-pressed="true"] { background: rgba(0,194,178,0.12); font-weight: 600; }
+.sounddock-opt .mini { width: 6px; height: 6px; border-radius: 50%; background: var(--color-vmGold); flex-shrink: 0; }
+.sounddock-opt[aria-pressed="true"] .mini { background: var(--color-vmTeal); box-shadow: 0 0 7px var(--color-vmTeal); }
+.sounddock-off { margin-top: 0.5rem; width: 100%; font-family: ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(11,76,131,0.5); background: transparent; border: none; border-top: 1px solid rgba(11,76,131,0.1); padding-top: 0.65rem; margin-top: 0.65rem; cursor: pointer; }
+
+/* ── Museum of the Human Voice ── */
+.museum-band { position: relative; min-height: 86vh; display: flex; align-items: center; justify-content: center; overflow: hidden; padding: 6rem 1.5rem; text-align: center; }
+.museum-bg { position: absolute; inset: 0; z-index: 0; background-size: cover; background-position: center; }
+.museum-scrim { position: absolute; inset: 0; z-index: 1; }
+.museum-inner { position: relative; z-index: 2; max-width: 46rem; }
+.museum-placard { font-family: ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size: 0.66rem; letter-spacing: 0.18em; text-transform: uppercase; }

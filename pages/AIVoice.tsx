@@ -1,334 +1,339 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import SEO from '../components/SEO';
-import {
-  PhoneOff, Clock, DollarSign, Clock4, CalendarCheck, Shield, Users,
-  Rocket, Mic, BarChart3, Settings, CheckCircle2, ChevronDown,
-  Loader2
-} from 'lucide-react';
+import { BOOKING_URLS } from '../constants';
+import { Reveal, buttonPrimary, buttonTealOnNavy } from '../components/ornaments';
+import SoundDock from '../components/SoundDock';
+import { ChevronRight, ArrowRight, PhoneCall, TrendingUp, Music } from 'lucide-react';
+
+/* Drop the licensed/commissioned choir clip in /public and set this to its path
+   (e.g. '/videos/voice-choir.mp4'). Empty → the spring-lit poster gradient stands
+   in, so there is never a broken/empty <video>. */
+const HERO_VIDEO = '';
+const HERO_POSTER = '/images/vm/voice-hero-poster.jpg';
+
+const SPECTRUM = [
+  {
+    key: 'Operate',
+    Icon: PhoneCall,
+    line: 'The everyday front desk, handled with care.',
+    items: ['Reception over your knowledge base', 'Booking & rescheduling', 'Intake forms', 'Data collection', 'Surveys & callbacks'],
+  },
+  {
+    key: 'Grow',
+    Icon: TrendingUp,
+    line: 'A voice that opens doors, not just answers them.',
+    items: ['Sales conversations', 'Lead qualification', 'Deal-making & negotiation'],
+  },
+  {
+    key: 'Create',
+    Icon: Music,
+    line: 'Where voice becomes craft.',
+    items: ['Guided meditations', 'Voiceover for video', 'Sermons', 'Coaching sessions', 'Training', 'Original music — including our founder’s own'],
+  },
+];
 
 const AIVoice: React.FC = () => {
-  const [formData, setFormData] = useState({
-    full_name: '',
-    email: '',
-    phone: '',
-    company: '',
-    challenge: '',
-  });
-  const [submitting, setSubmitting] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
-  const [error, setError] = useState('');
+  const rootRef = useRef<HTMLDivElement>(null);
+  const scrollerRef = useRef<HTMLElement>(null);
+  const stage1Ref = useRef<HTMLDivElement>(null);
+  const stage2Ref = useRef<HTMLDivElement>(null);
+  const bgRef = useRef<HTMLDivElement>(null);
+  const veilRef = useRef<HTMLDivElement>(null);
 
-  const validate = () => {
-    if (!formData.full_name.trim() || formData.full_name.trim().length < 2) return 'Please enter your full name.';
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) return 'Please enter a valid email address.';
-    const digits = formData.phone.replace(/\D/g, '');
-    if (digits.length < 7 || digits.length > 15) return 'Please enter a valid phone number.';
-    return '';
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError('');
-    const validationError = validate();
-    if (validationError) { setError(validationError); return; }
-
-    setSubmitting(true);
-    try {
-      const response = await fetch('https://services.leadconnectorhq.com/hooks/q4adJN1peFzHlHvxv37q/webhook-trigger/8c78e9a9-18e6-41a7-a8a8-016c115e58d0', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          full_name: formData.full_name.trim(),
-          email: formData.email.trim(),
-          phone: formData.phone.trim(),
-          company: formData.company.trim() || '',
-          challenge: formData.challenge || '',
-          source: 'ai-voice-medical-leadpage',
-        }),
-      });
-      if (!response.ok) throw new Error('Webhook failed');
-      setSubmitted(true);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    } catch {
-      setError('Something went wrong. Please try again or contact us directly.');
-    } finally {
-      setSubmitting(false);
+  // Staged hero: as you scroll the sticky frame, the headline gives way to the
+  // sub-hero + CTA while the background zooms and softens toward cream.
+  useEffect(() => {
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduce) {
+      rootRef.current?.classList.add('voice-reduced');
+      return;
     }
-  };
+    const scroller = scrollerRef.current;
+    const s1 = stage1Ref.current, s2 = stage2Ref.current, bg = bgRef.current, veil = veilRef.current;
+    if (!scroller || !s1 || !s2 || !bg || !veil) return;
 
-  const update = (field: string) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    setFormData(prev => ({ ...prev, [field]: e.target.value }));
-  };
+    const ss = (a: number, b: number, x: number) => {
+      const t = Math.min(1, Math.max(0, (x - a) / (b - a)));
+      return t * t * (3 - 2 * t);
+    };
+    let ticking = false;
+    const update = () => {
+      const total = scroller.offsetHeight - window.innerHeight;
+      const p = total > 0 ? Math.min(1, Math.max(0, -scroller.getBoundingClientRect().top / total)) : 0;
+      const a1 = 1 - ss(0.30, 0.50, p);
+      const a2 = ss(0.42, 0.62, p);
+      s1.style.opacity = String(a1);
+      s1.style.transform = `translateY(${-26 * (1 - a1)}px)`;
+      s1.style.pointerEvents = a1 < 0.1 ? 'none' : 'auto';
+      s2.style.opacity = String(a2);
+      s2.style.transform = `translateY(${28 * (1 - a2)}px)`;
+      s2.style.pointerEvents = a2 < 0.1 ? 'none' : 'auto';
+      bg.style.transform = `scale(${1 + 0.12 * p})`;
+      veil.style.opacity = (0.5 * ss(0.18, 0.7, p)).toFixed(3);
+      ticking = false;
+    };
+    const onScroll = () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    update();
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
+    };
+  }, []);
 
-  // ── Thank-You State ──────────────────────────────────────────────
-  if (submitted) {
-    return (
-      <div className="pt-32 pb-20 px-6 min-h-screen flex items-center justify-center bg-white">
-        <div className="max-w-lg w-full text-center">
-          <div className="w-20 h-20 bg-vmTeal/10 rounded-full flex items-center justify-center mx-auto mb-8 animate-[scale-in_0.5s_ease-out]">
-            <CheckCircle2 className="w-10 h-10 text-vmTeal" />
-          </div>
-          <h1 className="text-4xl font-serif text-vmNavy mb-4">We Got Your Info!</h1>
-          <p className="text-slate-600 text-lg mb-8">
-            Thanks for reaching out. A member of the Vision Managers team will contact you within <strong>24 hours</strong> to discuss how AI voice agents can work for your practice.
-          </p>
-          <div className="bg-vmSlate rounded-xl p-8 text-left mb-8">
-            <h2 className="font-bold text-lg text-vmNavy mb-4">What happens next:</h2>
-            <ol className="space-y-4 text-slate-600">
-              <li className="flex gap-3">
-                <span className="bg-vmTeal/20 text-vmNavy font-bold w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 text-sm">1</span>
-                <span>We review your practice details and prepare a personalized overview</span>
-              </li>
-              <li className="flex gap-3">
-                <span className="bg-vmTeal/20 text-vmNavy font-bold w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 text-sm">2</span>
-                <span>We'll call or email to schedule a quick 15-minute discovery call</span>
-              </li>
-              <li className="flex gap-3">
-                <span className="bg-vmTeal/20 text-vmNavy font-bold w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 text-sm">3</span>
-                <span>You'll hear a live demo of your AI voice agent, customized for your practice</span>
-              </li>
-            </ol>
-          </div>
-          <button onClick={() => window.location.hash = '/'} className="text-vmNavy font-bold hover:text-vmTeal transition-colors">
-            &larr; Return Home
-          </button>
-        </div>
-      </div>
-    );
-  }
-
-  // ── Lead Form Component ───────────────────────────────────────────
-  const LeadForm = ({ id, dark }: { id?: string; dark?: boolean }) => (
-    <form id={id} onSubmit={handleSubmit} className={`rounded-2xl p-8 md:p-10 ${dark ? 'bg-white shadow-2xl' : 'bg-vmSlate border border-slate-200'}`}>
-      <div className="grid md:grid-cols-2 gap-5">
-        <div>
-          <label htmlFor={`full_name_${id}`} className="block text-sm font-semibold text-vmNavy mb-1">Full Name <span className="text-red-500">*</span></label>
-          <input type="text" id={`full_name_${id}`} value={formData.full_name} onChange={update('full_name')} required placeholder="Dr. Jane Smith"
-            className="w-full px-4 py-3 rounded-lg border border-slate-300 text-slate-800 placeholder-slate-400 focus:ring-2 focus:ring-vmTeal focus:border-vmTeal outline-none transition" />
-        </div>
-        <div>
-          <label htmlFor={`email_${id}`} className="block text-sm font-semibold text-vmNavy mb-1">Email <span className="text-red-500">*</span></label>
-          <input type="email" id={`email_${id}`} value={formData.email} onChange={update('email')} required placeholder="jane@yourpractice.com"
-            className="w-full px-4 py-3 rounded-lg border border-slate-300 text-slate-800 placeholder-slate-400 focus:ring-2 focus:ring-vmTeal focus:border-vmTeal outline-none transition" />
-        </div>
-        <div>
-          <label htmlFor={`phone_${id}`} className="block text-sm font-semibold text-vmNavy mb-1">Phone Number <span className="text-red-500">*</span></label>
-          <input type="tel" id={`phone_${id}`} value={formData.phone} onChange={update('phone')} required placeholder="(555) 123-4567"
-            className="w-full px-4 py-3 rounded-lg border border-slate-300 text-slate-800 placeholder-slate-400 focus:ring-2 focus:ring-vmTeal focus:border-vmTeal outline-none transition" />
-        </div>
-        <div>
-          <label htmlFor={`company_${id}`} className="block text-sm font-semibold text-vmNavy mb-1">Practice Name</label>
-          <input type="text" id={`company_${id}`} value={formData.company} onChange={update('company')} placeholder="Bright Smile Dental"
-            className="w-full px-4 py-3 rounded-lg border border-slate-300 text-slate-800 placeholder-slate-400 focus:ring-2 focus:ring-vmTeal focus:border-vmTeal outline-none transition" />
-        </div>
-      </div>
-      <div className="mt-5">
-        <label htmlFor={`challenge_${id}`} className="block text-sm font-semibold text-vmNavy mb-1">What's your biggest challenge with phone calls?</label>
-        <select id={`challenge_${id}`} value={formData.challenge} onChange={update('challenge')}
-          className="w-full px-4 py-3 rounded-lg border border-slate-300 text-slate-800 focus:ring-2 focus:ring-vmTeal focus:border-vmTeal outline-none transition">
-          <option value="">Select one...</option>
-          <option value="after-hours">Too many after-hours calls going to voicemail</option>
-          <option value="overwhelmed-staff">Front desk is overwhelmed during peak hours</option>
-          <option value="missed-calls">We know we're missing calls but can't quantify it</option>
-          <option value="scheduling">Patients struggle to schedule appointments</option>
-          <option value="multiple-locations">Managing calls across multiple locations</option>
-          <option value="other">Something else</option>
-        </select>
-      </div>
-      {error && <div className="mt-4 p-3 bg-red-50 border border-red-200 text-red-700 rounded-lg text-sm">{error}</div>}
-      <button type="submit" disabled={submitting}
-        className="w-full mt-6 bg-vmNavy hover:bg-vmNavy/90 text-white font-bold py-4 px-8 rounded-lg text-lg transition shadow-lg disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2">
-        {submitting ? <><Loader2 className="w-5 h-5 animate-spin" /> Submitting...</> : 'Get Your Free Consultation'}
-      </button>
-      <p className="text-center text-slate-400 text-xs mt-3">We'll reach out within 24 hours. No spam, no obligation.</p>
-    </form>
-  );
-
-  // ── Main Page ─────────────────────────────────────────────────────
   return (
     <>
-    <SEO
-      title="AI Voice Agents"
-      description="Stop losing patients to voicemail. 24/7 AI voice reception for dental, optometry, chiropractic, and med spa practices. Natural-sounding, HIPAA-conscious, live in 14 days."
-      path="/ai-voice"
-      jsonLd={{
-        '@context': 'https://schema.org',
-        '@type': 'Service',
-        name: 'AI Voice Agents for Medical Practices',
-        provider: { '@type': 'Organization', name: 'Vision Managers' },
-        description: '24/7 AI-powered phone reception for healthcare practices. Answers every call, books appointments automatically.',
-        url: 'https://visionmanagers.com/ai-voice',
-        serviceType: ['AI Voice Agent', 'Virtual Receptionist', 'Medical Practice Automation'],
-      }}
-    />
-    <div className="min-h-screen bg-white" data-aesthetic="roman">
+      <SEO
+        title="AI Voice — Conversation IQ"
+        description="Everybody's getting voice AI. We design the one that sounds like your practice — the first voice a patient trusts. Conversation IQ: voice agents built with taste, for healthcare and other high-trust practices."
+        path="/ai-voice"
+        jsonLd={{
+          '@context': 'https://schema.org',
+          '@type': 'Service',
+          name: 'AI Voice Agents — Conversation IQ',
+          provider: { '@type': 'Organization', name: 'Vision Managers' },
+          description: 'Designed voice agents for healthcare and high-trust practices — answering, booking, and earning trust in a voice that sounds like the practice itself.',
+          url: 'https://visionmanagers.com/ai-voice',
+          serviceType: ['AI Voice Agent', 'Conversation Design', 'Virtual Receptionist', 'Practice Automation'],
+        }}
+      />
 
-      {/* Hero */}
-      <section className="relative bg-vmNavy text-white overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-vmNavy via-vmNavy/95 to-vmTeal/20" />
-        <div className="relative max-w-7xl mx-auto px-6 pt-44 pb-20 md:pb-28 text-center">
-          <span className="eyebrow text-vmTeal block mb-6">The most common first pilot</span>
-          <h1 className="text-4xl md:text-6xl font-serif leading-tight mb-6">
-            Stop Losing Patients<br />to <span className="italic text-vmTeal">Voicemail</span>
-          </h1>
-          <p className="text-lg md:text-xl text-white/80 max-w-2xl mx-auto mb-8 font-light">
-            Your practice misses calls every day — after hours, during lunch, when staff is busy.
-            Each missed call is a patient who books somewhere else. Our AI voice agents answer every call,
-            24/7, so you never lose another lead.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a href="#get-started" className="bg-vmTeal text-vmNavy px-8 py-4 rounded-lg font-bold text-lg hover:bg-vmTeal/90 transition shadow-lg">
-              See How It Works
-            </a>
-            <a href="#benefits" className="border-2 border-white/30 text-white px-8 py-4 rounded-lg font-bold text-lg hover:bg-white/10 transition">
-              Learn More
-            </a>
-          </div>
-          <p className="text-white/50 text-sm mt-6">Dental &bull; Optometry &bull; Dermatology &bull; Any high-volume practice</p>
-        </div>
-      </section>
+      <div ref={rootRef} data-aesthetic="solar" className="bg-vmCream">
 
-      {/* Problem Section */}
-      <section className="py-20 md:py-28 bg-vmSlate">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="max-w-3xl mb-16">
-            <span className="text-vmTeal font-black text-xs uppercase tracking-[0.3em] mb-4 block">The Problem</span>
-            <h2 className="text-3xl md:text-4xl font-serif text-vmNavy mb-4">This Is Costing You Real Money</h2>
-            <p className="text-slate-500 text-lg font-light">Most practices don't realize how many patients they lose before they ever walk through the door.</p>
-          </div>
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              { icon: PhoneOff, title: "After-Hours Calls Go Nowhere", desc: "40% of patient calls happen outside business hours. Every one that hits voicemail is a potential booking lost to a competitor who picks up." },
-              { icon: Clock, title: "Front Desk Is Overwhelmed", desc: "Your staff juggles check-ins, insurance questions, and ringing phones. When they can't keep up, calls go unanswered and patients feel ignored." },
-              { icon: DollarSign, title: "Revenue Walks Out the Door", desc: "A single missed new-patient call can mean $1,000+ in lifetime value gone. Multiply that across a month and the losses add up fast." },
-            ].map((item, i) => (
-              <div key={i} className="bg-white rounded-xl p-8 border border-slate-200">
-                <div className="w-12 h-12 bg-red-50 rounded-lg flex items-center justify-center mb-4">
-                  <item.icon className="w-6 h-6 text-red-500" />
-                </div>
-                <h3 className="font-bold text-lg mb-2 text-vmNavy">{item.title}</h3>
-                <p className="text-slate-600">{item.desc}</p>
+        {/* Opt-in soundscape chooser (shared with the Museum) */}
+        <SoundDock />
+
+        {/* ─── Staged hero — the homage to the human voice ─── */}
+        <section ref={scrollerRef} className="voice-scroller">
+          <div className="voice-sticky">
+            <div ref={bgRef} className="voice-bg" aria-hidden>
+              {HERO_VIDEO
+                ? <video src={HERO_VIDEO} poster={HERO_POSTER} autoPlay muted loop playsInline preload="none" />
+                : <div className="voice-poster" />}
+              <div className="voice-sunbeam" />
+              <div className="voice-scrim" />
+            </div>
+            <div ref={veilRef} className="voice-veil" aria-hidden />
+            <span className="voice-tick voice-tick-bl" aria-hidden />
+            <span className="voice-tick voice-tick-br" aria-hidden />
+
+            {/* Stage 1 — the headline, on its own */}
+            <div ref={stage1Ref} className="voice-stage">
+              <div className="max-w-4xl">
+                <span className="eyebrow voice-eyebrow text-vmGold mb-9">Conversation IQ — voice, with taste</span>
+                <h1 className="font-serif text-vmNavy" style={{ lineHeight: 1.07, letterSpacing: '-0.01em' }}>
+                  <span className="block opacity-90" style={{ fontSize: 'clamp(1.5rem, 4.2vw, 2.8rem)' }}>
+                    Everybody’s getting voice AI.
+                  </span>
+                  <span className="block italic" style={{ fontSize: 'clamp(2.2rem, 6.6vw, 4.9rem)', marginTop: '0.4rem' }}>
+                    But{' '}
+                    <span className="voice-care">
+                      care
+                      <svg viewBox="0 0 120 12" preserveAspectRatio="none" aria-hidden>
+                        <path d="M3 7 C 28 2, 92 2, 117 6" />
+                      </svg>
+                    </span>{' '}
+                    begins when the phone rings.
+                  </span>
+                </h1>
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
+              <div className="voice-cue">There’s a discipline behind it<span className="arrow">↓</span></div>
+            </div>
 
-      {/* Solution Section */}
-      <section className="py-20 md:py-28">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="max-w-3xl mb-16">
-            <span className="text-vmTeal font-black text-xs uppercase tracking-[0.3em] mb-4 block">The Solution</span>
-            <h2 className="text-3xl md:text-4xl font-serif text-vmNavy mb-4">An AI Voice Agent That Works Like Your Best Receptionist</h2>
-            <p className="text-slate-500 text-lg font-light">Our AI answers calls naturally, books appointments, answers common questions, and routes urgent matters — all without putting a single patient on hold.</p>
-          </div>
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div className="space-y-8">
-              {[
-                { icon: Clock4, title: "24/7 Call Answering", desc: "Nights, weekends, holidays — every call gets answered by a professional, natural-sounding AI voice agent." },
-                { icon: CalendarCheck, title: "Instant Appointment Booking", desc: "Integrates with your scheduling system to book, reschedule, or confirm appointments in real time." },
-                { icon: Shield, title: "HIPAA-Conscious Design", desc: "Built with healthcare privacy in mind. No sensitive health data is stored — just the information needed to get patients scheduled." },
-                { icon: Users, title: "Frees Up Your Staff", desc: "Your front desk focuses on in-office patients while the AI handles the phones. Better experience for everyone." },
-              ].map((item, i) => (
-                <div key={i} className="flex gap-4">
-                  <div className="w-10 h-10 bg-vmTeal/10 rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
-                    <item.icon className="w-5 h-5 text-vmNavy" />
-                  </div>
-                  <div>
-                    <h3 className="font-bold text-lg text-vmNavy">{item.title}</h3>
-                    <p className="text-slate-600">{item.desc}</p>
-                  </div>
+            {/* Stage 2 — the sub-hero + CTA */}
+            <div ref={stage2Ref} className="voice-stage" style={{ opacity: 0 }}>
+              <div className="max-w-2xl">
+                <p className="text-lg md:text-xl font-light leading-relaxed text-vmInk/80">
+                  The voice that answers shouldn’t sound like a machine. It should sound like your practice —
+                  for most patients, it’s the first time they decide to trust you.
+                </p>
+                <p className="mt-5 text-xl md:text-2xl text-vmNavy">Designing that is a discipline.</p>
+                <p className="mt-3 text-xl md:text-2xl text-vmNavy">
+                  We call it <span className="voice-ciq"><span className="word">Conversation</span> <span className="iq">IQ</span></span>.
+                </p>
+                <div className="mt-10">
+                  <a href={BOOKING_URLS.DISCOVERY} target="_blank" rel="noopener noreferrer" className={buttonPrimary}>
+                    Book a call <ChevronRight className="w-4 h-4" />
+                  </a>
                 </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ─── The difference — taste as care ─── */}
+        <section className="py-28 md:py-36 bg-vmCream">
+          <div className="max-w-5xl mx-auto px-6">
+            <Reveal className="text-center max-w-3xl mx-auto mb-16">
+              <span className="eyebrow voice-eyebrow text-vmGold mb-6">The difference</span>
+              <h2 className="font-serif text-vmNavy text-3xl md:text-5xl leading-tight">
+                A machine can answer the phone.<br />
+                Only a designed voice can <span className="italic">receive someone</span>.
+              </h2>
+            </Reveal>
+
+            <div className="grid md:grid-cols-2 gap-10 md:gap-16 items-start">
+              <Reveal>
+                <p className="eyebrow text-slate-400 mb-4">What everyone ships</p>
+                <p className="text-slate-600 leading-relaxed">
+                  Most voice AI is built to complete a task — answer, book, end the call. It clears the queue.
+                  It doesn’t make anyone feel cared for, and patients can tell the difference in the first
+                  three seconds.
+                </p>
+              </Reveal>
+              <Reveal delay={100}>
+                <p className="eyebrow text-vmGold mb-4">What we design</p>
+                <p className="text-slate-700 leading-relaxed">
+                  A voice that knows how a practice like yours greets people — what reassurance sounds like,
+                  when to slow down, when to hand off to a human. It still books the appointment. It just
+                  earns trust on the way.
+                </p>
+              </Reveal>
+            </div>
+
+            <Reveal className="mt-16 max-w-3xl mx-auto text-center border border-slate-200 rounded-sm bg-white p-8 md:p-12">
+              <p className="text-lg md:text-xl text-vmNavy leading-relaxed">
+                We call the discipline behind it{' '}
+                <span className="voice-ciq"><span className="word">Conversation</span> <span className="iq">IQ</span></span> —
+                conversation design and UX research applied to the one interface every patient actually uses.
+                It’s the layer above the voice technology. It’s the layer everyone else skips.
+              </p>
+            </Reveal>
+          </div>
+        </section>
+
+        {/* ─── The spectrum of voice ─── */}
+        <section className="py-28 md:py-36 bg-white">
+          <div className="max-w-7xl mx-auto px-6">
+            <Reveal className="text-center max-w-3xl mx-auto mb-16">
+              <span className="eyebrow voice-eyebrow text-vmGold mb-6">The spectrum of voice</span>
+              <h2 className="font-serif text-vmNavy text-3xl md:text-5xl leading-tight">
+                Once a voice is designed well, it can do far more than answer.
+              </h2>
+            </Reveal>
+
+            <div className="grid md:grid-cols-3 gap-8">
+              {SPECTRUM.map((s, i) => (
+                <Reveal key={s.key} delay={i * 90} className="flex flex-col p-8 md:p-10 bg-vmCream/70 border border-slate-100 rounded-sm">
+                  <s.Icon className="w-8 h-8 text-vmNavy mb-6" strokeWidth={1.4} aria-hidden />
+                  <h3 className="font-serif text-2xl text-vmNavy mb-2">{s.key}</h3>
+                  <p className="text-sm text-slate-500 italic mb-6">{s.line}</p>
+                  <ul className="space-y-2.5 mt-auto">
+                    {s.items.map((it) => (
+                      <li key={it} className="flex items-start gap-2.5 text-sm text-slate-600">
+                        <span className="mt-2 w-1 h-1 rounded-full bg-vmGold flex-shrink-0" aria-hidden />
+                        {it}
+                      </li>
+                    ))}
+                  </ul>
+                </Reveal>
               ))}
             </div>
-            <div className="bg-gradient-to-br from-vmNavy/5 to-vmTeal/10 rounded-2xl p-8 md:p-12">
-              <div className="text-center">
-                <p className="text-5xl font-bold text-vmNavy mb-2">85%</p>
-                <p className="text-slate-600 mb-8">of callers won't leave a voicemail — they'll just call the next practice</p>
-                <div className="border-t border-slate-200 pt-8">
-                  <p className="text-5xl font-bold text-vmNavy mb-2">$155K+</p>
-                  <p className="text-slate-600">average annual revenue lost per practice from missed calls</p>
-                </div>
+
+            <Reveal className="text-center mt-10">
+              <p className="text-sm text-slate-400">Coaching, not therapy — we keep that line clear.</p>
+            </Reveal>
+          </div>
+        </section>
+
+        {/* ─── Doorway into the Museum of Sound ─── */}
+        <section className="relative dark-chapter overflow-hidden">
+          <img
+            src="/images/vm/cathedral-dome.jpg"
+            alt=""
+            aria-hidden
+            className="chapter-img absolute inset-0 w-full h-full object-cover"
+            loading="lazy"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#0A1722]/80 via-[#0A1722]/72 to-[#0A1722]/88" />
+          <div className="relative z-10 max-w-4xl mx-auto px-6 py-28 md:py-36 text-center">
+            <Reveal>
+              <span className="eyebrow voice-eyebrow text-vmGold mb-6">Why our voices are different</span>
+              <h2 className="font-serif text-vmCream text-3xl md:text-5xl leading-tight mb-6">
+                We think about the human voice<br />
+                <span className="italic text-white">more deeply than anyone selling a bot.</span>
+              </h2>
+              <p className="text-white/70 leading-relaxed max-w-2xl mx-auto mb-10">
+                From Gregorian chant to birdsong to the model that now speaks back, we built a small museum
+                about where voice comes from — because it’s the medium we design in. The same care goes into
+                the voice that answers your phone.
+              </p>
+              <Link to="/sound" className={buttonTealOnNavy}>
+                Step into the Museum of Sound <ChevronRight className="w-4 h-4" />
+              </Link>
+            </Reveal>
+          </div>
+        </section>
+
+        {/* ─── Proof — the number, the names ─── */}
+        <section className="py-28 md:py-36 bg-vmCream">
+          <div className="max-w-5xl mx-auto px-6">
+            <Reveal className="text-center mb-14">
+              <span className="eyebrow voice-eyebrow text-vmGold mb-6">Proof</span>
+              <h2 className="font-serif text-vmNavy text-4xl md:text-5xl leading-tight">
+                $4,300 in booked appointments —<br />
+                <span className="italic">in two days.</span>
+              </h2>
+            </Reveal>
+
+            <Reveal className="grid md:grid-cols-2 gap-12 items-center border border-slate-200 rounded-sm bg-white p-8 md:p-14">
+              <div>
+                <p className="eyebrow text-slate-400 mb-5">Voice AI — Seattle-area optometry practice</p>
+                <p className="text-slate-600 leading-relaxed mb-8">
+                  Their after-hours calls were going to voicemail — and walking out the door. We mapped where
+                  patients were being lost, then deployed a voice concierge that answers every call and books
+                  straight into the schedule. Five new appointments in the first week, no staff added.
+                </p>
+                <a href={BOOKING_URLS.DISCOVERY} target="_blank" rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 text-vmNavy font-semibold hover:text-vmTeal transition-colors text-sm">
+                  Find what you’re losing <ArrowRight className="w-4 h-4" />
+                </a>
               </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Benefits Section */}
-      <section id="benefits" className="py-20 md:py-28 bg-vmSlate">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-16">
-            <span className="text-vmTeal font-black text-xs uppercase tracking-[0.3em] mb-4 block">Why Us</span>
-            <h2 className="text-3xl md:text-4xl font-serif text-vmNavy">Why Practices Choose Vision Managers</h2>
-          </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {[
-              { icon: Rocket, title: "Live in Days, Not Months", desc: "We configure and deploy your AI voice agent in under a week. No IT team required." },
-              { icon: Mic, title: "Sounds Natural", desc: "Patients can't tell it's AI. Natural conversation flow, not robotic menus or hold music." },
-              { icon: BarChart3, title: "ROI From Week One", desc: "Capture just 2-3 extra patients per month and the system pays for itself many times over." },
-              { icon: Settings, title: "Fully Customized", desc: "Trained on your practice's services, hours, providers, and protocols. It's your receptionist, just AI-powered." },
-            ].map((item, i) => (
-              <div key={i} className="bg-white rounded-xl p-6 text-center border border-slate-200">
-                <div className="w-14 h-14 bg-vmTeal/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <item.icon className="w-7 h-7 text-vmNavy" />
-                </div>
-                <h3 className="font-bold mb-2 text-vmNavy">{item.title}</h3>
-                <p className="text-slate-600 text-sm">{item.desc}</p>
+              <div className="grid grid-cols-3 gap-6">
+                {[['5', 'Appointments'], ['$4,300+', 'Visit value'], ['2', 'Days live']].map(([num, label]) => (
+                  <div key={label} className="text-center">
+                    <div className="font-serif text-3xl md:text-4xl text-vmTeal mb-2">{num}</div>
+                    <p className="eyebrow text-slate-400">{label}</p>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
+            </Reveal>
 
-      {/* Trust Badges */}
-      <section className="py-12">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="flex flex-wrap justify-center gap-8 text-slate-400 text-sm">
-            <div className="flex items-center gap-2"><Shield className="w-4 h-4" /> HIPAA-Conscious</div>
-            <div className="flex items-center gap-2"><Clock className="w-4 h-4" /> 24/7 Availability</div>
-            <div className="flex items-center gap-2"><Rocket className="w-4 h-4" /> Setup in Days</div>
+            <Reveal className="mt-12 text-center">
+              <p className="eyebrow text-slate-400">
+                Trusted to build for <span className="text-vmNavy">Emerald Health</span> ·{' '}
+                <span className="text-vmNavy">Nexus Health ID</span>
+              </p>
+            </Reveal>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* CTA / Lead Form */}
-      <section id="get-started" className="py-20 md:py-28 bg-vmNavy text-white">
-        <div className="max-w-3xl mx-auto px-6">
-          <div className="text-center mb-10">
-            <h2 className="text-3xl md:text-4xl font-serif mb-4">Find Out How Many Patients You're Losing</h2>
-            <p className="text-white/70 text-lg font-light">Tell us about your practice and we'll show you exactly how an AI voice agent can capture missed revenue. Free consultation, no pressure.</p>
+        {/* ─── Close ─── */}
+        <section className="py-28 md:py-36 bg-white border-t border-slate-100">
+          <div className="max-w-3xl mx-auto px-6 text-center">
+            <Reveal>
+              <span className="eyebrow voice-eyebrow text-vmGold mb-6">The next call</span>
+              <h2 className="font-serif text-vmNavy text-4xl md:text-5xl mb-6 italic">
+                Let’s make the first voice they hear sound like you.
+              </h2>
+              <p className="text-lg text-slate-600 mb-3 max-w-2xl mx-auto">
+                In 30 minutes we’ll map where calls are slipping, what a designed voice would change, and
+                whether we’re the right ones to build it with you.
+              </p>
+              <p className="text-sm text-slate-400 mb-10">A working session, not a sales pitch.</p>
+              <a href={BOOKING_URLS.DISCOVERY} target="_blank" rel="noopener noreferrer" className={buttonPrimary}>
+                Book a call <ChevronRight className="w-4 h-4" />
+              </a>
+              <p className="mt-8 text-xs text-slate-400">
+                Or call directly:{' '}
+                <a href="tel:+14254944489" className="text-vmNavy font-semibold hover:text-vmTeal transition-colors">(425) 494-4489</a>
+              </p>
+            </Reveal>
           </div>
-          <LeadForm id="get-started-form" dark />
-        </div>
-      </section>
-
-      {/* FAQ */}
-      <section className="py-20 md:py-28 bg-vmSlate">
-        <div className="max-w-3xl mx-auto px-6">
-          <div className="text-center mb-16">
-            <span className="text-vmTeal font-black text-xs uppercase tracking-[0.3em] mb-4 block">FAQ</span>
-            <h2 className="text-3xl md:text-4xl font-serif text-vmNavy">Frequently Asked Questions</h2>
-          </div>
-          <div className="space-y-4">
-            {[
-              { q: "Will patients know they're talking to an AI?", a: "Most patients can't tell. Our AI uses advanced natural language processing to have fluid, human-like conversations. It handles greetings, scheduling, and common questions just like a trained receptionist would. We're transparent if a patient directly asks, but most simply appreciate getting their call answered immediately." },
-              { q: "What happens if the AI can't handle a call?", a: "The AI is trained to recognize when a situation needs a human touch — emergencies, complex insurance questions, upset patients. In those cases, it takes a message with full context and flags it for immediate follow-up by your team. During office hours, it can transfer directly to staff." },
-              { q: "How long does setup take?", a: "Most practices are live within 3-5 business days. We handle the technical setup, train the AI on your specific services and protocols, and test thoroughly before going live. You don't need an IT team or any technical expertise." },
-              { q: "What does it cost?", a: "Pricing depends on your call volume and the level of customization needed. Most single-location practices find the cost is a fraction of hiring additional front desk staff — and the AI never calls in sick. We'll give you transparent pricing during your free consultation." },
-            ].map((faq, i) => (
-              <details key={i} className="bg-white rounded-xl border border-slate-200 group" {...(i === 0 ? { open: true } : {})}>
-                <summary className="font-bold text-vmNavy cursor-pointer list-none flex justify-between items-center p-6">
-                  {faq.q}
-                  <ChevronDown className="w-5 h-5 text-slate-400 group-open:rotate-180 transition-transform flex-shrink-0 ml-4" />
-                </summary>
-                <p className="text-slate-600 px-6 pb-6">{faq.a}</p>
-              </details>
-            ))}
-          </div>
-        </div>
-      </section>
-    </div>
+        </section>
+      </div>
     </>
   );
 };
