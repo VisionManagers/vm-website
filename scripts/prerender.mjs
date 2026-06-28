@@ -23,6 +23,7 @@ const SITE_URL = 'https://visionmanagers.com';
 const STATIC_ROUTES = [
   '/',
   '/ai-voice',
+  '/sound',
   '/solutions',
   '/lab',
   '/insights',
@@ -38,6 +39,7 @@ const STATIC_ROUTES = [
 const ROUTE_META = {
   '/':                { priority: '1.0', changefreq: 'weekly' },
   '/ai-voice':        { priority: '0.9', changefreq: 'monthly' },
+  '/sound':           { priority: '0.7', changefreq: 'monthly' },
   '/solutions':       { priority: '0.9', changefreq: 'monthly' },
   '/start':           { priority: '0.8', changefreq: 'monthly' },
   '/insights':        { priority: '0.8', changefreq: 'weekly' },

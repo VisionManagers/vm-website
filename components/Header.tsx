@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { IMAGES, BOOKING_URLS } from '../constants';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, ChevronDown } from 'lucide-react';
 
 const Header: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -42,19 +42,24 @@ const Header: React.FC = () => {
     setIsMenuOpen(false);
   }, [location.pathname]);
 
-  // AI Voice intentionally NOT in the main nav — it's a component offer,
-  // surfaced from the Solutions page's voice highlight section instead.
+  // Solutions is a dropdown — AI Voice lives here as a component offer; more
+  // solutions slot into this list as we build them out.
+  const solutionsMenu = [
+    { name: 'All Solutions', path: '/solutions' },
+    { name: 'AI Voice', path: '/ai-voice' },
+  ];
+
   const navLinks = [
-    { name: 'Solutions', path: '/solutions' },
     { name: 'The Lab', path: '/lab' },
     { name: 'Insights', path: '/insights' },
     { name: 'About', path: '/about' },
   ];
 
   const isActive = (path: string) => location.pathname === path;
+  const solutionsActive = location.pathname === '/solutions' || location.pathname === '/ai-voice';
 
   return (
-    <header 
+    <header
       className={`fixed top-0 left-0 right-0 z-[60] transition-all duration-700 px-6 py-4 border-b border-slate-200/50 ${
         isMenuOpen ? 'bg-white' : (isScrolled ? 'py-3 glass-effect' : 'py-5 glass-effect')
       }`}
@@ -69,6 +74,34 @@ const Header: React.FC = () => {
 
         {/* Desktop Nav */}
         <nav className="hidden md:flex items-center gap-10">
+          {/* Solutions dropdown */}
+          <div className="relative group">
+            <Link
+              to="/solutions"
+              className={`flex items-center gap-1 text-sm font-medium tracking-wide transition-all hover:text-vmTeal py-1 ${
+                solutionsActive ? 'text-vmTeal' : 'text-slate-600'
+              }`}
+            >
+              Solutions
+              <ChevronDown className="w-3.5 h-3.5 transition-transform duration-300 group-hover:rotate-180" />
+            </Link>
+            <div className="absolute left-1/2 -translate-x-1/2 top-full pt-4 opacity-0 invisible translate-y-1 transition-all duration-200 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 group-focus-within:opacity-100 group-focus-within:visible group-focus-within:translate-y-0">
+              <div className="bg-white rounded-sm shadow-xl border border-slate-100 py-2 min-w-[210px]">
+                {solutionsMenu.map((item) => (
+                  <Link
+                    key={item.path}
+                    to={item.path}
+                    className={`block px-5 py-2.5 text-sm transition-colors hover:bg-vmSlate ${
+                      isActive(item.path) ? 'text-vmTeal' : 'text-slate-600'
+                    }`}
+                  >
+                    {item.name}
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </div>
+
           {navLinks.map((link) => (
             <Link
               key={link.path}
@@ -94,7 +127,7 @@ const Header: React.FC = () => {
         </nav>
 
         {/* Mobile Toggle */}
-        <button 
+        <button
           className="md:hidden p-3 text-vmNavy relative z-[70] focus:outline-none bg-vmSlate/50 rounded-full hover:bg-vmSlate transition-all active:scale-90"
           onClick={() => setIsMenuOpen(!isMenuOpen)}
           aria-label="Toggle Menu"
@@ -110,10 +143,10 @@ const Header: React.FC = () => {
         </button>
 
         {/* Mobile Menu Overlay - Snappy Circ Reveal */}
-        <div 
+        <div
           className={`fixed inset-0 bg-white z-[65] md:hidden flex flex-col transition-all duration-[500ms] ease-[cubic-bezier(0.19,1,0.22,1)] ${
-            isMenuOpen 
-              ? 'opacity-100' 
+            isMenuOpen
+              ? 'opacity-100'
               : 'opacity-0 pointer-events-none'
           }`}
           style={{
@@ -123,14 +156,37 @@ const Header: React.FC = () => {
         >
           {/* Inner Content - Staggered Entry */}
           <div className={`flex flex-col h-full w-full transition-all duration-500 ${isMenuOpen ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}`}>
-            
+
             {/* Background Accent */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-40">
               <div className={`absolute -top-20 -right-20 w-[100vw] h-[100vw] bg-vmTeal/10 rounded-full blur-[100px] transition-transform duration-[800ms] ${isMenuOpen ? 'translate-x-0' : 'translate-x-1/2'}`} />
             </div>
 
             {/* Navigation Links Area */}
-            <div className="flex-grow flex flex-col items-center justify-center gap-10 px-8 pt-24 pb-12 overflow-y-auto relative z-10">
+            <div className="flex-grow flex flex-col items-center justify-center gap-8 px-8 pt-24 pb-12 overflow-y-auto relative z-10">
+              {/* Solutions + its sub-items */}
+              <div
+                className={`flex flex-col items-center gap-4 transition-all duration-500 transform ${
+                  isMenuOpen ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
+                }`}
+                style={{ transitionDelay: '150ms' }}
+              >
+                <Link
+                  to="/solutions"
+                  className={`text-3xl font-serif tracking-tight transition-colors ${
+                    location.pathname === '/solutions' ? 'text-vmTeal' : 'text-vmNavy'
+                  }`}
+                >
+                  Solutions
+                </Link>
+                <Link
+                  to="/ai-voice"
+                  className={`text-lg transition-colors ${isActive('/ai-voice') ? 'text-vmTeal' : 'text-slate-500'} hover:text-vmTeal`}
+                >
+                  AI Voice
+                </Link>
+              </div>
+
               {navLinks.map((link, idx) => (
                 <Link
                   key={link.path}
@@ -138,17 +194,17 @@ const Header: React.FC = () => {
                   className={`text-3xl font-serif tracking-tight transition-all duration-500 transform ${
                     isActive(link.path) ? 'text-vmTeal' : 'text-vmNavy'
                   } ${isMenuOpen ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'}`}
-                  style={{ transitionDelay: `${150 + idx * 60}ms` }}
+                  style={{ transitionDelay: `${210 + idx * 60}ms` }}
                 >
                   {link.name}
                 </Link>
               ))}
-              
-              <div 
+
+              <div
                 className={`w-full max-w-sm pt-8 transition-all duration-500 transform ${
                   isMenuOpen ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
                 }`}
-                style={{ transitionDelay: `${250 + navLinks.length * 60}ms` }}
+                style={{ transitionDelay: `${250 + (navLinks.length + 1) * 60}ms` }}
               >
                 <a
                   href={BOOKING_URLS.DISCOVERY}
@@ -158,7 +214,7 @@ const Header: React.FC = () => {
                 >
                   Book a Call
                 </a>
-                
+
                 <div className="mt-12 flex flex-col items-center gap-4 border-t border-slate-100 pt-10">
                   <p className="text-[10px] text-slate-400 font-bold uppercase tracking-[0.3em] mb-2">Direct Access</p>
                   <div className="flex flex-col items-center gap-6">
@@ -169,9 +225,9 @@ const Header: React.FC = () => {
                 </div>
               </div>
             </div>
-            
+
             {/* Mobile Footer */}
-            <div 
+            <div
               className={`p-8 text-center bg-vmSlate/30 border-t border-slate-100 transition-all duration-500 ${
                 isMenuOpen ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
               }`}

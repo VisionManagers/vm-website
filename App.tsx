@@ -10,6 +10,7 @@ import Contact from './pages/Contact';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import About from './pages/About';
 import AIVoice from './pages/AIVoice';
+import Sound from './pages/Sound';
 import CasualIntelligence from './pages/CasualIntelligence';
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -56,6 +57,7 @@ const App: React.FC = () => {
               <Route path="/privacy" element={<PrivacyPolicy />} />
               <Route path="/about" element={<About />} />
               <Route path="/ai-voice" element={<AIVoice />} />
+              <Route path="/sound" element={<Sound />} />
               <Route path="/casual-intelligence" element={<CasualIntelligence />} />
 
               {/* Admin routes — no public nav links */}
