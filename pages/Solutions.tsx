@@ -130,13 +130,17 @@ const Solutions: React.FC = () => {
             <Reveal className="text-vmNavy">
               <ColumnFlank className="py-10 text-center">
                 <p className="font-serif text-2xl md:text-3xl text-vmNavy italic leading-snug mb-6">
-                  "$4,300 in booked appointments within two days of going live."
+                  "New patients on the schedule within days of going live."
                 </p>
                 <p className="eyebrow text-slate-400">Voice AI pilot · Seattle-area optometry practice</p>
                 <p className="text-sm text-slate-500 mt-4 max-w-md mx-auto">
                   One workflow, deployed under the same discipline every engagement gets: find the
                   loss, map it, build it, measure it. Trusted to build for Emerald Health and Nexus Health ID.
                 </p>
+                <Link to="/ai-voice"
+                  className="inline-flex items-center gap-2 text-vmNavy font-semibold hover:text-vmTeal transition-colors text-sm mt-6">
+                  Read the case study <ArrowRight className="w-4 h-4" />
+                </Link>
               </ColumnFlank>
             </Reveal>
           </div>
