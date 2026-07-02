@@ -17,18 +17,21 @@ const SPECTRUM = [
     key: 'Operate',
     Icon: PhoneCall,
     line: 'The everyday front desk, handled with care.',
+    desc: 'The calls your practice already gets, answered every time. Conversations run on your own knowledge base, book straight into the schedule, and capture the details your team actually needs — without adding staff.',
     items: ['Reception over your knowledge base', 'Booking & rescheduling', 'Intake forms', 'Data collection', 'Surveys & callbacks'],
   },
   {
     key: 'Grow',
     Icon: TrendingUp,
     line: 'A voice that opens doors, not just answers them.',
+    desc: 'Conversations designed to move a relationship forward — qualifying a lead before it reaches your team, following up while interest is still warm, and holding its own in a real negotiation.',
     items: ['Sales conversations', 'Lead qualification', 'Deal-making & negotiation'],
   },
   {
     key: 'Create',
     Icon: Music,
     line: 'Where voice becomes craft.',
+    desc: 'Voice as a medium for the work itself — guidance, teaching, and narration produced in a consistent voice, ready to publish, no studio booth required.',
     items: ['Guided meditations', 'Voiceover for video', 'Sermons', 'Coaching sessions', 'Training', 'Original music — including our founder’s own'],
   },
 ];
@@ -177,11 +180,11 @@ const AIVoice: React.FC = () => {
 
             <div className="grid md:grid-cols-2 gap-10 md:gap-16 items-start">
               <Reveal>
-                <p className="eyebrow text-slate-400 mb-4">What everyone ships</p>
+                <p className="eyebrow text-slate-400 mb-4">Voice AI out of the box</p>
                 <p className="text-slate-600 leading-relaxed">
-                  Most voice AI is built to complete a task — answer, book, end the call. It clears the queue.
-                  But patients read the difference in under half a second — a beat too slow to answer, a
-                  question it should already know the answer to, a dead end where a human should be.
+                  Built to complete a task — answer, book, end the call. It clears the queue. But patients
+                  read the difference in under half a second — a beat too slow to answer, a question it
+                  should already know the answer to, a dead end where a human should be.
                 </p>
               </Reveal>
               <Reveal delay={100}>
@@ -206,7 +209,7 @@ const AIVoice: React.FC = () => {
                 We call the discipline behind it{' '}
                 <span className="voice-ciq"><span className="word">Conversation</span> <span className="iq">IQ</span></span> —
                 conversation design and UX research applied to the one interface every patient actually uses.
-                It’s the layer above the voice technology. It’s the layer everyone else skips.
+                It’s the layer above the voice technology — the part we care most about getting right.
               </p>
             </Reveal>
           </div>
@@ -227,8 +230,9 @@ const AIVoice: React.FC = () => {
                 <Reveal key={s.key} delay={i * 90} className="flex flex-col p-8 md:p-10 bg-vmCream/70 border border-slate-100 rounded-sm">
                   <s.Icon className="w-8 h-8 text-vmNavy mb-6" strokeWidth={1.4} aria-hidden />
                   <h3 className="font-serif text-2xl text-vmNavy mb-2">{s.key}</h3>
-                  <p className="text-sm text-slate-500 italic mb-6">{s.line}</p>
-                  <ul className="space-y-2.5 mt-auto">
+                  <p className="text-sm text-slate-500 italic mb-4">{s.line}</p>
+                  <p className="text-sm text-slate-600 leading-relaxed mb-6">{s.desc}</p>
+                  <ul className="space-y-2.5">
                     {s.items.map((it) => (
                       <li key={it} className="flex items-start gap-2.5 text-sm text-slate-600">
                         <span className="mt-2 w-1 h-1 rounded-full bg-vmGold flex-shrink-0" aria-hidden />
@@ -258,15 +262,15 @@ const AIVoice: React.FC = () => {
           <div className="absolute inset-0 bg-gradient-to-b from-[#0A1722]/80 via-[#0A1722]/72 to-[#0A1722]/88" />
           <div className="relative z-10 max-w-4xl mx-auto px-6 py-28 md:py-36 text-center">
             <Reveal>
-              <span className="eyebrow voice-eyebrow text-vmGold mb-6">Why our voices are different</span>
+              <span className="eyebrow voice-eyebrow text-vmGold mb-6">The thinking behind the work</span>
               <h2 className="font-serif text-vmCream text-3xl md:text-5xl leading-tight mb-6">
-                We think about the human voice<br />
-                <span className="italic text-white">more deeply than anyone selling a bot.</span>
+                We take the human voice seriously —<br />
+                <span className="italic text-white">seriously enough to build it a museum.</span>
               </h2>
               <p className="text-white/70 leading-relaxed max-w-2xl mx-auto mb-10">
-                From Gregorian chant to birdsong to the model that now speaks back, we built a small museum
-                about where voice comes from — because everything we’ve learned from it flows into how we
-                design conversations. Including the ones that answer your phone.
+                From Gregorian chant to birdsong to the model that now speaks back: a short walk through
+                where voice comes from, and how everything we’ve learned from it flows into the
+                conversations we design. Including the ones that answer your phone.
               </p>
               <Link to="/sound" className={buttonTealOnNavy}>
                 Step into the Museum of Sound <ChevronRight className="w-4 h-4" />
