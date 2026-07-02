@@ -87,14 +87,14 @@ const AIVoice: React.FC = () => {
     <>
       <SEO
         title="AI Voice — Conversation IQ"
-        description="Everybody's getting voice AI. We design the one that sounds like your practice — the first voice a patient trusts. Conversation IQ: voice agents built with taste, for healthcare and other high-trust practices."
+        description="Everybody's getting voice AI. We design the conversation behind it — what it asks, what it knows, when it hands off to a human. Conversation IQ: voice agents for healthcare and other high-trust practices."
         path="/ai-voice"
         jsonLd={{
           '@context': 'https://schema.org',
           '@type': 'Service',
           name: 'AI Voice Agents — Conversation IQ',
           provider: { '@type': 'Organization', name: 'Vision Managers' },
-          description: 'Designed voice agents for healthcare and high-trust practices — answering, booking, and earning trust in a voice that sounds like the practice itself.',
+          description: 'Designed voice agents for healthcare and high-trust practices — answering, scheduling, qualifying, and booking through conversations designed with intention.',
           url: 'https://visionmanagers.com/ai-voice',
           serviceType: ['AI Voice Agent', 'Conversation Design', 'Virtual Receptionist', 'Practice Automation'],
         }}
@@ -146,10 +146,11 @@ const AIVoice: React.FC = () => {
             <div ref={stage2Ref} className="voice-stage" style={{ opacity: 0 }}>
               <div className="max-w-2xl">
                 <p className="text-lg md:text-xl font-light leading-relaxed text-vmInk/80">
-                  The voice that answers shouldn’t sound like a machine. It should sound like your practice —
-                  for most patients, it’s the first time they decide to trust you.
+                  The first hello earns trust in under half a second. Everything after that is the
+                  conversation: what it asks, what it already knows, when it slows down, when it brings
+                  in a human.
                 </p>
-                <p className="mt-5 text-xl md:text-2xl text-vmNavy">Designing that is a discipline.</p>
+                <p className="mt-5 text-xl md:text-2xl text-vmNavy">Designing that conversation is a discipline.</p>
                 <p className="mt-3 text-xl md:text-2xl text-vmNavy">
                   We call it <span className="voice-ciq"><span className="word">Conversation</span> <span className="iq">IQ</span></span>.
                 </p>
@@ -170,7 +171,7 @@ const AIVoice: React.FC = () => {
               <span className="eyebrow voice-eyebrow text-vmGold mb-6">The difference</span>
               <h2 className="font-serif text-vmNavy text-3xl md:text-5xl leading-tight">
                 A machine can answer the phone.<br />
-                Only a designed voice can <span className="italic">receive someone</span>.
+                Only a designed conversation can <span className="italic">receive someone</span>.
               </h2>
             </Reveal>
 
@@ -179,19 +180,26 @@ const AIVoice: React.FC = () => {
                 <p className="eyebrow text-slate-400 mb-4">What everyone ships</p>
                 <p className="text-slate-600 leading-relaxed">
                   Most voice AI is built to complete a task — answer, book, end the call. It clears the queue.
-                  It doesn’t make anyone feel cared for, and patients can tell the difference in the first
-                  three seconds.
+                  But patients read the difference in under half a second — a beat too slow to answer, a
+                  question it should already know the answer to, a dead end where a human should be.
                 </p>
               </Reveal>
               <Reveal delay={100}>
                 <p className="eyebrow text-vmGold mb-4">What we design</p>
                 <p className="text-slate-700 leading-relaxed">
-                  A voice that knows how a practice like yours greets people — what reassurance sounds like,
-                  when to slow down, when to hand off to a human. It still books the appointment. It just
-                  earns trust on the way.
+                  A conversation built the way your practice actually cares for people — what to ask, what
+                  never to ask twice, when to reassure, when to hand off to a human. It still books the
+                  appointment. It just earns trust on the way.
                 </p>
               </Reveal>
             </div>
+
+            <Reveal className="mt-12 text-center">
+              <p className="text-sm text-slate-500 max-w-2xl mx-auto">
+                Humans take turns in conversation about every 200 milliseconds. Most voice bots take
+                three to five times longer. Your patients can hear the difference.
+              </p>
+            </Reveal>
 
             <Reveal className="mt-16 max-w-3xl mx-auto text-center border border-slate-200 rounded-sm bg-white p-8 md:p-12">
               <p className="text-lg md:text-xl text-vmNavy leading-relaxed">
@@ -257,8 +265,8 @@ const AIVoice: React.FC = () => {
               </h2>
               <p className="text-white/70 leading-relaxed max-w-2xl mx-auto mb-10">
                 From Gregorian chant to birdsong to the model that now speaks back, we built a small museum
-                about where voice comes from — because it’s the medium we design in. The same care goes into
-                the voice that answers your phone.
+                about where voice comes from — because everything we’ve learned from it flows into how we
+                design conversations. Including the ones that answer your phone.
               </p>
               <Link to="/sound" className={buttonTealOnNavy}>
                 Step into the Museum of Sound <ChevronRight className="w-4 h-4" />
@@ -316,11 +324,11 @@ const AIVoice: React.FC = () => {
             <Reveal>
               <span className="eyebrow voice-eyebrow text-vmGold mb-6">The next call</span>
               <h2 className="font-serif text-vmNavy text-4xl md:text-5xl mb-6 italic">
-                Let’s make the first voice they hear sound like you.
+                Let’s design the conversation that answers for you.
               </h2>
               <p className="text-lg text-slate-600 mb-3 max-w-2xl mx-auto">
-                In 30 minutes we’ll map where calls are slipping, what a designed voice would change, and
-                whether we’re the right ones to build it with you.
+                In 30 minutes we’ll map where calls are slipping, what a designed conversation would change,
+                and whether we’re the right ones to build it with you.
               </p>
               <p className="text-sm text-slate-400 mb-10">A working session, not a sales pitch.</p>
               <a href={BOOKING_URLS.DISCOVERY} target="_blank" rel="noopener noreferrer" className={buttonPrimary}>
@@ -329,6 +337,11 @@ const AIVoice: React.FC = () => {
               <p className="mt-8 text-xs text-slate-400">
                 Or call directly:{' '}
                 <a href="tel:+14254944489" className="text-vmNavy font-semibold hover:text-vmTeal transition-colors">(425) 494-4489</a>
+              </p>
+              <p className="mt-6 text-xs text-slate-400 max-w-xl mx-auto leading-relaxed">
+                Built for healthcare: our conversations collect only what they need, protected health
+                information is handled in line with HIPAA, and your patient data never trains public
+                models. BAA available when your practice requires one.
               </p>
             </Reveal>
           </div>
