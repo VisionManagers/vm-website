@@ -199,47 +199,29 @@ const Home: React.FC = () => {
           </div>
         </section>
 
-        {/* ─── PROOF — the number, the names ─── */}
+        {/* ─── PROOF — the names, the pointer ─── */}
         <section className="py-28 bg-white">
           <div className="max-w-5xl mx-auto px-6">
             <Reveal className="text-center mb-14">
               <Eyebrow className="text-accent mb-4">Proof</Eyebrow>
               <h2 className="text-4xl md:text-5xl font-serif text-vmNavy leading-tight">
-                $4,300 in booked appointments —
+                Trusted to build for
                 <br />
-                <span className="italic">in two days.</span>
+                <span className="italic">Emerald Health · Nexus Health ID.</span>
               </h2>
             </Reveal>
 
-            <Reveal className="grid md:grid-cols-2 gap-12 items-center border border-slate-200 rounded-sm p-8 md:p-14 bg-vmCream/60">
-              <div>
-                <p className="eyebrow text-slate-400 mb-5">Voice AI — Seattle-area optometry practice</p>
-                <p className="text-slate-600 leading-relaxed mb-8">
-                  Their after-hours calls were going to voicemail — and walking out the door. We
-                  mapped where patients were being lost, then deployed a voice concierge that answers
-                  every call and books straight into the schedule. Five new appointments in week one,
-                  no staff added.
-                </p>
-                <a href={BOOKING_URLS.DISCOVERY} target="_blank" rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 text-vmNavy font-semibold hover:text-vmTeal transition-colors text-sm">
-                  Find what you’re losing <ArrowRight className="w-4 h-4" />
-                </a>
-              </div>
-              <div className="grid grid-cols-3 gap-6">
-                {[['5', 'Appointments'], ['$4,300+', 'Visit value'], ['2', 'Days live']].map(([num, label]) => (
-                  <div key={label} className="text-center">
-                    <div className="text-3xl md:text-4xl font-serif text-vmTeal mb-2">{num}</div>
-                    <p className="eyebrow text-slate-400">{label}</p>
-                  </div>
-                ))}
-              </div>
-            </Reveal>
-
-            <Reveal className="mt-12 text-center">
-              <p className="eyebrow text-slate-400">
-                Trusted to build for <span className="text-vmNavy">Emerald Health</span> ·{' '}
-                <span className="text-vmNavy">Nexus Health ID</span>
+            <Reveal className="max-w-2xl mx-auto text-center">
+              <p className="text-slate-600 leading-relaxed mb-8">
+                And for the practices whose phones we answer. When a Seattle-area optometry
+                practice was losing after-hours calls to voicemail, we mapped where patients
+                were being lost and deployed a voice concierge that books straight into the
+                schedule — new patients on the books within days of going live, no staff added.
               </p>
+              <Link to="/ai-voice"
+                className="inline-flex items-center gap-2 text-vmNavy font-semibold hover:text-vmTeal transition-colors text-sm">
+                Read the case study <ArrowRight className="w-4 h-4" />
+              </Link>
             </Reveal>
           </div>
         </section>

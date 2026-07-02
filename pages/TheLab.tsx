@@ -33,7 +33,7 @@ const GREENHOUSE = [
   },
   {
     title: 'Call the demo line',
-    desc: 'A live voice agent you can phone right now and try to stump. The same architecture that booked $4,300 in two days.',
+    desc: 'A live voice agent you can phone right now and try to stump. The same architecture that answers for our client practices.',
     status: 'Coming to this page',
   },
   {
