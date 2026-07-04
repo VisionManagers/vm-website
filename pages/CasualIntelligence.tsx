@@ -7,17 +7,19 @@ import {
 } from '../components/ornaments';
 import { ArrowRight, CalendarDays } from 'lucide-react';
 
-/* TODO(sukh): replace with the live Luma calendar/event URL when ready.
-   Until then the CTA routes to email so no visitor hits a dead end. */
-const JOIN_URL = 'mailto:sukhneet@visionmanagers.com?subject=Casual%20Intelligence%20invite';
+const LUMA_URL = 'https://luma.com/casual-intelligence';
+const LUMA_EMBED = 'https://luma.com/embed/calendar/cal-U6X63y9rEYlCVLr/events?lt=light';
 
 const TOPICS = [
-  { title: 'CRM automation', desc: 'Pipelines that maintain themselves — like the MINT framework session on automating follow-up.' },
-  { title: 'Research with AI', desc: 'Fortune-level research workflows: multi-source, verified, fast.' },
-  { title: 'Second-mind systems', desc: 'Obsidian, memory, and knowledge bases that compound week over week.' },
-  { title: 'Agents & automation', desc: 'Voice agents, workflow bots, and where human-in-the-loop still wins.' },
-  { title: 'AI compliance', desc: 'State AI law, HIPAA posture, and what regulators actually look for.' },
-  { title: 'Business models', desc: 'How operators in different verticals are turning AI into margin.' },
+  { title: 'Second-mind systems', desc: 'Full Obsidian + Claude stacks built live — from daily dashboard to a knowledge base that compounds.' },
+  { title: 'CRM that maintains itself', desc: 'The MINT framework, Nexus CRM, and Graph RAG — pipelines that ingest meetings and update themselves.' },
+  { title: 'Agents & automation', desc: 'Mission Control setups, local LLMs, and the smallest chunk of work worth automating first.' },
+  { title: 'Prompting as a service', desc: 'A great prompt is a reusable business asset — how operators package and sell theirs.' },
+  { title: 'AI compliance', desc: 'Recording consent, HIPAA posture, and state-by-state AI law — what regulators actually look for.' },
+  { title: 'AI consulting economics', desc: 'Pricing your first client, scoping engagements, and what the market pays.' },
+  { title: 'Deep research & memory', desc: 'Multi-source research workflows and memory frameworks that survive past one chat.' },
+  { title: 'Platform-agnostic AI', desc: 'Claude, ChatGPT, Gemini, local models — building so you never marry one vendor.' },
+  { title: 'Vertical spotlights', desc: 'Genomic health, civic orchestration, tax workflows — the room goes deep on one industry at a time.' },
 ];
 
 const RECENT = [
@@ -72,11 +74,13 @@ const CasualIntelligence: React.FC = () => {
               front of the room. Ever.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-5">
-              <a href={JOIN_URL} className={buttonPrimary}>
-                Request an invite <ArrowRight className="w-4 h-4" />
+              <a href="#upcoming" className={buttonPrimary}>
+                See upcoming sessions & RSVP <ArrowRight className="w-4 h-4" />
               </a>
             </div>
-            <p className="mt-4 text-xs text-slate-400">Bring a colleague. The best sessions start with someone's real problem.</p>
+            <p className="mt-4 text-xs text-slate-400">
+              This page is the invite — share visionmanagers.com/casual-intelligence and someone can be in the room Wednesday.
+            </p>
           </Reveal>
         </div>
       </section>
@@ -84,6 +88,35 @@ const CasualIntelligence: React.FC = () => {
       <Reveal className="flex justify-center py-4 text-accent">
         <CuspedArch />
       </Reveal>
+
+      {/* ─── UPCOMING — live Luma calendar, RSVP on-page ─── */}
+      <section id="upcoming" className="py-24 px-6">
+        <div className="max-w-3xl mx-auto">
+          <Reveal className="text-center mb-10">
+            <Eyebrow className="text-accent mb-4">Upcoming</Eyebrow>
+            <h2 className="text-3xl md:text-4xl font-serif text-vmNavy">Pick a Wednesday. RSVP right here.</h2>
+          </Reveal>
+          <Reveal>
+            <div className="border border-slate-200 rounded-sm overflow-hidden bg-white">
+              <iframe
+                src={LUMA_EMBED}
+                title="Casual Intelligence — upcoming sessions"
+                className="w-full"
+                style={{ height: '480px', border: 'none' }}
+                loading="lazy"
+                allowFullScreen
+              />
+            </div>
+            <p className="mt-4 text-center text-sm text-slate-500">
+              Calendar not loading?{' '}
+              <a href={LUMA_URL} target="_blank" rel="noreferrer" className="underline decoration-vmMarigold/60 underline-offset-4 text-vmNavy">
+                Open Casual Intelligence on Luma
+              </a>{' '}
+              — hit Follow and every session lands on your calendar.
+            </p>
+          </Reveal>
+        </div>
+      </section>
 
       {/* ─── THE FORMAT ─── */}
       <section className="py-24 px-6">
@@ -154,6 +187,38 @@ const CasualIntelligence: React.FC = () => {
         </div>
       </section>
 
+      {/* ─── WHO THIS ROOM IS FOR ─── */}
+      <section className="py-24 px-6 bg-vmSlate/40">
+        <div className="max-w-3xl mx-auto">
+          <Reveal className="text-center mb-14">
+            <Eyebrow className="text-accent mb-4">The room's one rule</Eyebrow>
+            <h2 className="text-3xl md:text-4xl font-serif text-vmNavy">Come to figure it out together.</h2>
+          </Reveal>
+          <div className="grid md:grid-cols-2 gap-6">
+            <Reveal className="p-8 bg-white border border-slate-200 rounded-sm">
+              <h3 className="font-serif text-xl text-vmNavy mb-4">This is your room if</h3>
+              <ul className="space-y-3 text-sm text-slate-600 leading-relaxed">
+                <li>You run something real and want AI to earn its keep in it.</li>
+                <li>You'd rather ask "would this survive my front desk?" than nod politely.</li>
+                <li>You show your work — including the parts that broke — so others can build on it.</li>
+                <li>You come back. The relationships are where the compounding happens.</li>
+              </ul>
+            </Reveal>
+            <Reveal delay={120} className="p-8 bg-white border border-slate-200 rounded-sm">
+              <h3 className="font-serif text-xl text-vmNavy mb-4">It's not the room for</h3>
+              <ul className="space-y-3 text-sm text-slate-600 leading-relaxed">
+                <li>Pitching from the front. Nobody sells here — that includes us.</li>
+                <li>Showing off a result without sharing the how.</li>
+                <li>Collecting an audience instead of joining a conversation.</li>
+              </ul>
+              <p className="mt-5 text-sm text-slate-500 leading-relaxed">
+                If that's the fit you're after, no hard feelings — this just isn't that place.
+              </p>
+            </Reveal>
+          </div>
+        </div>
+      </section>
+
       {/* ─── CTA ─── */}
       <section className="py-24 px-6 bg-vmNavy relative overflow-hidden">
         <div className="absolute inset-0 text-vmMarigold pointer-events-none" aria-hidden>
@@ -167,8 +232,8 @@ const CasualIntelligence: React.FC = () => {
               Free, weekly, and genuinely useful. If you're an operator trying to make AI
               earn its keep, this is the room.
             </p>
-            <a href={JOIN_URL} className={buttonSecondary}>
-              Request an invite <ArrowRight className="w-4 h-4" />
+            <a href={LUMA_URL} target="_blank" rel="noreferrer" className={buttonSecondary}>
+              Follow on Luma <ArrowRight className="w-4 h-4" />
             </a>
           </Reveal>
         </div>
