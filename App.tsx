@@ -12,6 +12,7 @@ import About from './pages/About';
 import AIVoice from './pages/AIVoice';
 import Sound from './pages/Sound';
 import CasualIntelligence from './pages/CasualIntelligence';
+import WhatIsAI from './pages/WhatIsAI';
 import Header from './components/Header';
 import Footer from './components/Footer';
 
@@ -59,6 +60,7 @@ const App: React.FC = () => {
               <Route path="/ai-voice" element={<AIVoice />} />
               <Route path="/sound" element={<Sound />} />
               <Route path="/casual-intelligence" element={<CasualIntelligence />} />
+              <Route path="/ai" element={<WhatIsAI />} />
 
               {/* Admin routes — no public nav links */}
               <Route path="/admin/login" element={<AdminLogin />} />
