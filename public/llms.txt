@@ -26,6 +26,7 @@ Vision Managers builds and deploys Voice AI concierge systems for healthcare pra
 ## Key Pages
 
 - [Home](https://visionmanagers.com/): Overview of Voice AI, training, and discovery services
+- [What is AI?](https://visionmanagers.com/ai): Plain-English guide for business owners + the free 20-minute discovery call (leave with your AI Opportunity Snapshot: your #1 AI opportunity sized in dollars, in writing, the next day)
 - [AI Voice](https://visionmanagers.com/ai-voice): Voice AI concierge product details
 - [Solutions](https://visionmanagers.com/solutions): Engagement model (Audit → Pilot → Deploy → Maintain)
 - [About](https://visionmanagers.com/about): Company background and founder
