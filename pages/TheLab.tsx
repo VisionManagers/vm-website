@@ -37,9 +37,39 @@ const GREENHOUSE = [
     status: 'Coming to this page',
   },
   {
-    title: 'The 90-minute CRM',
-    desc: 'A working CRM built with Claude in one sitting — it reads meetings and email, then flags who to follow up with. We use it daily.',
-    status: 'Write-up in progress',
+    title: '3D equipment teardowns',
+    desc: 'Scroll-driven, interactive breakdowns of real clinical equipment — see every component of a machine as you move down the page.',
+    status: 'Queued',
+  },
+  {
+    title: 'Learn: AI from zero',
+    desc: 'A leveled AI-literacy track — three short courses from "what is AI" to prompting as a reusable business asset.',
+    status: 'Recording',
+  },
+];
+
+/* Systems we run our own business on — every claim literally true. */
+const IN_USE = [
+  {
+    title: 'The discovery pipeline',
+    desc: 'Book a call and you experience the product: the conversation is ingested by our system and your AI Opportunity Snapshot — your #1 opportunity, sized in dollars — arrives in writing the next day.',
+    hint: 'Experience it: book the 20-minute call.',
+  },
+  {
+    title: 'The second-mind CRM',
+    desc: 'An Obsidian + Claude system that reads our meetings and email, updates 90+ relationship records, flags who to follow up with, and keeps every promise dated. It runs this entire business, daily.',
+    hint: 'Ask to see it live on a call.',
+  },
+  {
+    title: 'VM Voice, in production',
+    desc: 'The same voice agents we sell, answering for real practices right now — designed conversation by conversation.',
+    hint: 'Read the case study on the AI Voice page.',
+    to: '/ai-voice',
+  },
+  {
+    title: 'The AI-training kit',
+    desc: 'A live training cohort built from a tested session structure — starter templates, first prompts, and a build-it-in-session format.',
+    hint: 'Cohorts run monthly.',
   },
 ];
 
@@ -71,6 +101,7 @@ const TheLab: React.FC = () => {
             <p className="text-slate-600 text-xl leading-relaxed">
               Things we've actually built — live, usable, and measured. If we recommend
               something for your practice, a version of it has been grown here first.
+              Step in. Touch everything.
             </p>
             <VineDivider className="mx-auto mt-10 text-accent" />
           </Reveal>
@@ -205,6 +236,65 @@ const TheLab: React.FC = () => {
             </p>
           </section>
 
+          {/* ─── MORE LIVE EXHIBITS ─── */}
+          <section>
+            <Reveal className="text-center mb-14">
+              <Eyebrow className="text-accent mb-4">More rooms, open now</Eyebrow>
+              <h2 className="text-3xl md:text-4xl font-serif text-vmNavy mb-4">Walk the other exhibits.</h2>
+            </Reveal>
+            <div className="grid md:grid-cols-2 gap-8">
+              <Reveal className="p-10 bg-white border border-slate-200 rounded-sm flex flex-col">
+                <p className="eyebrow text-accent mb-2">Lab 002 · Live</p>
+                <h3 className="text-2xl font-serif text-vmNavy mb-4">The Museum of Sound</h3>
+                <p className="text-sm text-slate-600 leading-relaxed mb-6 flex-grow">
+                  An immersive walk from the first sounds to the language of AI — built as an
+                  experience, not a page. This is what we make when we explore for its own sake.
+                </p>
+                <Link to="/sound" className="inline-flex items-center gap-2 text-vmNavy font-semibold hover:text-vmTeal transition-colors text-sm">
+                  Enter the museum <ArrowRight className="w-4 h-4" />
+                </Link>
+              </Reveal>
+              <Reveal delay={120} className="p-10 bg-white border border-slate-200 rounded-sm flex flex-col">
+                <p className="eyebrow text-accent mb-2">Lab 003 · You're inside it</p>
+                <h3 className="text-2xl font-serif text-vmNavy mb-4">This website</h3>
+                <p className="text-sm text-slate-600 leading-relaxed mb-6 flex-grow">
+                  Museum-grade design system, classical architecture as structural language, every
+                  page a different room of one building — designed, written, and shipped with the
+                  same AI-assisted system we install for clients.
+                </p>
+                <span className="text-sm text-slate-400 italic">Exhibit ongoing. You're in it now.</span>
+              </Reveal>
+            </div>
+          </section>
+
+          {/* ─── IN DAILY USE ─── */}
+          <section>
+            <Reveal className="text-center mb-14">
+              <Eyebrow className="text-accent mb-4">The honest flex</Eyebrow>
+              <h2 className="text-3xl md:text-4xl font-serif text-vmNavy mb-4">We run our business on what we sell.</h2>
+              <p className="text-slate-500 max-w-xl mx-auto">
+                Every system below is in production — not for a client, for us. Nothing here is a
+                mockup, and every claim is literally true.
+              </p>
+            </Reveal>
+            <div className="grid md:grid-cols-2 gap-8">
+              {IN_USE.map((item, i) => (
+                <Reveal key={item.title} delay={i * 80}
+                  className="p-8 bg-white border border-slate-200 rounded-sm border-t-2 border-t-vmLeaf/60">
+                  <h3 className="text-xl font-serif text-vmNavy mb-3">{item.title}</h3>
+                  <p className="text-sm text-slate-600 leading-relaxed mb-5">{item.desc}</p>
+                  {item.to ? (
+                    <Link to={item.to} className="inline-flex items-center gap-2 text-sm font-semibold text-vmNavy hover:text-vmTeal transition-colors">
+                      {item.hint} <ArrowRight className="w-4 h-4" />
+                    </Link>
+                  ) : (
+                    <p className="eyebrow text-slate-400">{item.hint}</p>
+                  )}
+                </Reveal>
+              ))}
+            </div>
+          </section>
+
           {/* ─── THE GREENHOUSE ─── */}
           <section>
             <Reveal className="text-center mb-14">
@@ -216,7 +306,7 @@ const TheLab: React.FC = () => {
               </p>
             </Reveal>
 
-            <div className="grid md:grid-cols-3 gap-8">
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
               {GREENHOUSE.map((item, i) => (
                 <Reveal key={item.title} delay={i * 100}
                   className="p-8 bg-white/70 border border-dashed border-slate-300 rounded-sm">
@@ -236,8 +326,9 @@ const TheLab: React.FC = () => {
                 <Eyebrow className="text-accent mb-4">How everything here is built</Eyebrow>
                 <h2 className="text-3xl md:text-4xl font-serif text-vmNavy mb-8 italic">Guardrails, not just code.</h2>
                 <p className="text-slate-600 mb-10 text-lg leading-relaxed">
-                  Every lab and every client system runs inside the same discipline —
-                  the governance framework from our fractional AI Officer practice.
+                  Every lab and every client system runs inside the same discipline:
+                  find the loss, map it, build it, measure it — with the guardrails below
+                  as non-negotiables.
                 </p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
                   {[
