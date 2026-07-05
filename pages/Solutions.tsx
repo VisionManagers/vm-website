@@ -8,36 +8,36 @@ import {
 } from '../components/ornaments';
 import { ArrowRight, ChevronRight, Phone, Check, Minus } from 'lucide-react';
 
-/* NOTE FOR REVIEW (not rendered): tier pricing below comes from the researched
-   pricing playbook (70-Research/playbooks/pricing.md) and is NOT yet ratified
-   by Sukh. Adjust numbers here before any deploy. */
+/* Prices on this page RENDER the vault canon: 10-Strategy/offers/offer-ladder.md
+   + pricing-rules.md (rule 8: the website renders prices, never defines them).
+   To change a number, change it there first — then update this display. */
 
 const TIERS = [
   {
-    name: 'AI Readiness Audit',
+    name: 'AI Quick-Start',
     role: 'The entry point',
-    price: 'From $5,000',
-    cadence: 'Fixed scope · 2–4 weeks',
-    desc: 'A complete map of where you stand: where AI earns its keep, which vendors to trust, what the compliance posture requires. You receive a prioritized 90-day roadmap and a leadership readout.',
-    includes: ['Workflow and bottleneck assessment', 'Vendor and data review (HIPAA-aware where it applies)', 'Prioritized 90-day roadmap', 'Leadership readout session'],
+    price: '$500 fixed',
+    cadence: 'One week · start here',
+    desc: 'A one-week look at your business: where AI makes or saves you money, with real dollar math — and one quick win implemented before the week is out. If the report doesn’t surface at least $500 a month of opportunity, don’t pay.',
+    includes: ['90-minute working session', 'Opportunity report with dollar math', 'One quick win implemented the same week', 'A priced recommendation for what’s next'],
     featured: false,
   },
   {
-    name: 'Fractional AI Officer',
-    role: 'The core engagement',
-    price: '$6,000–$9,000 / month',
-    cadence: 'Quarterly commitment · monthly billing',
-    desc: 'One accountable person who owns AI for your organization. Strategy, governance, vendor decisions, pilot oversight — with a monthly leadership cadence and outcomes you can measure.',
-    includes: ['AI strategy owned and maintained', 'Governance and compliance framework', 'Vendor selection and accountability', 'Pilot oversight with measurement', 'Monthly executive readout'],
+    name: 'Build Sprint',
+    role: 'Where the roadmap becomes real',
+    price: '$1,500–$4,500 fixed',
+    cadence: 'Fixed scope, fixed price · weeks not months',
+    desc: 'The top items from your Quick-Start, built: voice agents, automation, websites, data systems. Every build ships with a monthly report showing what it actually recovered — that report is how the next decision gets made.',
+    includes: ['Fixed scope and price before work starts', 'VM Voice from $1,000 setup + $300–400/mo (Practice tier ~$2,500 + $750/mo)', 'Monthly recovered-revenue report', 'Training so your team runs it without us'],
     featured: true,
   },
   {
-    name: 'Officer + Implementation',
-    role: 'For multi-location groups',
-    price: 'From $12,000 / month',
-    cadence: 'Quarterly commitment',
-    desc: 'Everything in the core engagement, plus hands-on deployment: voice agents, workflow automation, staff training, and KPI dashboards across locations.',
-    includes: ['Everything in Fractional AI Officer', 'Hands-on deployment and builds', 'Staff training programs', 'KPI dashboards across locations'],
+    name: 'AI Partner',
+    role: 'One accountable partner, ongoing',
+    price: 'From $1,000 / month',
+    cadence: 'Monthly · expands only on documented results',
+    desc: 'Ongoing ownership: implementation support, advisory, and your roadmap maintained month over month. Deeper strategic partnerships — data systems, cross-team outcomes, a weekly strategy seat — grow from here on evidence, not ambition.',
+    includes: ['Working block, or advisory + build at $2,000/mo', 'Roadmap owned and maintained', 'Monthly executive readout', 'A clear path to a full strategic partnership'],
     featured: false,
   },
 ];
@@ -56,12 +56,12 @@ const FAQS = [
     a: 'Data handling is governed before anything is deployed: the right architecture for your industry, business associate agreements where healthcare requires them, and a written rule that your data never trains public models. Compliance posture is part of the audit, not an afterthought.',
   },
   {
-    q: 'What does it cost compared to hiring?',
-    a: 'A full-time AI executive runs $250,000+ a year, if you can find one. The fractional model gives you the same seniority at a fraction of that — and you can start with a fixed-scope audit before committing to anything ongoing.',
+    q: 'What does it cost?',
+    a: 'You can start for $500 — the Quick-Start — and most clients do. Builds are fixed-price ($1,500–$4,500; voice agents from $1,000 setup plus $300–400 a month). Ongoing partnership starts at $1,000 a month and expands only when documented results justify it. For scale: a full-time AI executive runs $250,000+ a year. This ladder exists so you never pay for more conviction than the evidence supports.',
   },
   {
     q: 'What happens after the call?',
-    a: 'If the fit is right, we scope a readiness audit. If it is not, you still leave the call with two concrete next steps you can act on without me. The call is a working session, not a pitch.',
+    a: 'Within a day you get your AI Opportunity Snapshot: the biggest opportunity we found in your business, sized in dollars, in writing. If the fit is right, the Quick-Start is the next step. Either way, the call is a working session, not a pitch.',
   },
 ];
 
@@ -70,7 +70,7 @@ const Solutions: React.FC = () => {
     <>
       <SEO
         title="Work With Me — AI Systems That Earn Their Keep"
-        description="Vision Managers turns the data and relationships your business already runs on into systems that drive outcomes — AI strategy, automation, and voice, with one person accountable. Readiness audits from $5,000, fractional AI officer retainers, full implementation. Proven in healthcare, built for anyone."
+        description="Vision Managers turns the data and relationships your business already runs on into systems that drive outcomes — AI strategy, automation, and voice, with one person accountable. Start with a $500 Quick-Start; fixed-price builds; an accountable AI partner from $1,000/month. Proven in healthcare, built for anyone."
         path="/solutions"
         jsonLd={{
           '@context': 'https://schema.org',
@@ -146,15 +146,32 @@ const Solutions: React.FC = () => {
           </div>
         </section>
 
+        {/* ─── RUNG ZERO — the free door, always first ─── */}
+        <section className="px-6 pt-16 pb-4 bg-vmCream">
+          <div className="max-w-3xl mx-auto">
+            <Reveal className="text-center border border-slate-200 bg-white rounded-sm p-8 md:p-10">
+              <Eyebrow className="text-accent mb-3">Every engagement starts free</Eyebrow>
+              <p className="text-slate-600 leading-relaxed max-w-xl mx-auto">
+                A 20-minute discovery call, and the next day your <span className="font-medium text-vmNavy">AI
+                Opportunity Snapshot</span> arrives in writing: your #1 opportunity, sized in dollars —
+                whether or not we ever work together.
+              </p>
+              <Link to="/ai" className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-vmNavy hover:text-vmTeal transition-colors">
+                How the call works <ArrowRight className="w-4 h-4" />
+              </Link>
+            </Reveal>
+          </div>
+        </section>
+
         {/* ─── THE TIERS ─── */}
         <section className="px-6 py-20 bg-vmCream">
           <div className="max-w-7xl mx-auto">
             <Reveal className="text-center mb-16">
               <Eyebrow className="text-accent mb-4">Three ways to engage</Eyebrow>
-              <h2 className="text-4xl font-serif text-vmNavy mb-4">Start fixed-scope. Grow when it’s earned.</h2>
+              <h2 className="text-4xl font-serif text-vmNavy mb-4">Start at $500. Grow when it’s earned.</h2>
               <p className="text-slate-500 max-w-2xl mx-auto">
-                Most clients begin with the audit. The retainer follows when the roadmap proves
-                there’s enough work to own.
+                Most clients begin with the Quick-Start. Everything after it is fixed-price and
+                expands only on documented results.
               </p>
             </Reveal>
 
@@ -186,8 +203,8 @@ const Solutions: React.FC = () => {
             </div>
             <Reveal className="text-center mt-10">
               <p className="text-xs text-slate-400 max-w-xl mx-auto">
-                Pricing shown is representative; every engagement is scoped to the value at stake
-                in a working session before any proposal.
+                These are the actual prices, not “contact us” theater. Larger strategic scopes are
+                priced from the value on the table, after the results earn the conversation.
               </p>
             </Reveal>
           </div>
@@ -231,6 +248,31 @@ const Solutions: React.FC = () => {
                 </ul>
               </Reveal>
             </div>
+          </div>
+        </section>
+
+        {/* ─── WHO YOU'RE WORKING WITH ─── */}
+        <section className="px-6 py-20 bg-vmCream">
+          <div className="max-w-3xl mx-auto text-center">
+            <Reveal>
+              <Eyebrow className="text-accent mb-4">Who you’re working with</Eyebrow>
+              <h2 className="text-3xl font-serif text-vmNavy mb-6">Pattern recognition, earned the long way.</h2>
+              <p className="text-slate-600 leading-relaxed mb-8">
+                Sukh has run user research at Facebook and CVS Health, managed a 117-bed nursing home
+                through the height of COVID, grown an optometry practice 200% in ten months, and built
+                sales systems for companies from startups to $1.5B in revenue. That range is the point:
+                a vertical consultant knows your industry’s habits — cross-vertical experience spots
+                which ones are quietly costing you.
+              </p>
+              <div className="flex items-center justify-center gap-8 text-sm">
+                <Link to="/about" className="inline-flex items-center gap-2 font-semibold text-vmNavy hover:text-vmTeal transition-colors">
+                  The full story <ArrowRight className="w-4 h-4" />
+                </Link>
+                <Link to="/lab" className="inline-flex items-center gap-2 font-semibold text-vmNavy hover:text-vmTeal transition-colors">
+                  See what we build <ArrowRight className="w-4 h-4" />
+                </Link>
+              </div>
+            </Reveal>
           </div>
         </section>
 

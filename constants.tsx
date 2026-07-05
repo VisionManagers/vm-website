@@ -15,7 +15,7 @@ export const COLORS = {
 };
 
 export const BOOKING_URLS = {
-  DISCOVERY: "https://api.leadconnectorhq.com/widget/booking/Fl8PjcBk3EG88tCPMwbn",
+  DISCOVERY: "https://api.leadconnectorhq.com/widget/booking/u9ITLagwSXqANxwjhaAS",
   STRATEGY_CALL: "https://api.leadconnectorhq.com/widget/booking/Rblry3wONPt5B5yvAy0u",
 };
 
