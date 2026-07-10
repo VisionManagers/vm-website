@@ -446,7 +446,7 @@ const Sound: React.FC = () => {
             </Reveal>
             <div className="grid md:grid-cols-2 gap-6 text-left">
               <Reveal delay={100}>
-                <Link to="/casual-intelligence" className="block h-full p-8 bg-white/80 border border-slate-200 rounded-sm hover:border-vmLeaf/70 transition-colors">
+                <Link to="/ci" className="block h-full p-8 bg-white/80 border border-slate-200 rounded-sm hover:border-vmLeaf/70 transition-colors">
                   <h3 className="font-serif text-xl text-vmNavy mb-3">Join the conversation</h3>
                   <p className="text-sm text-slate-600 leading-relaxed mb-4">
                     Casual Intelligence — a weekly room where owners and builders talk AI in plain
