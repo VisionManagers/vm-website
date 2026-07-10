@@ -1,4 +1,7 @@
 {
+  "redirects": [
+    { "source": "/casual-intelligence", "destination": "/ci", "permanent": true }
+  ],
   "rewrites": [
     { "source": "/((?!api/).*)", "destination": "/_shell.html" }
   ]

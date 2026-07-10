@@ -32,7 +32,7 @@ const STATIC_ROUTES = [
   '/about',
   '/privacy',
   '/start',
-  '/casual-intelligence',
+  '/ci',
   '/ai',
 ];
 
@@ -46,7 +46,7 @@ const ROUTE_META = {
   '/insights':        { priority: '0.8', changefreq: 'weekly' },
   '/insights/digest': { priority: '0.6', changefreq: 'weekly' },
   '/lab':             { priority: '0.7', changefreq: 'monthly' },
-  '/casual-intelligence': { priority: '0.7', changefreq: 'weekly' },
+  '/ci':              { priority: '0.7', changefreq: 'weekly' },
   '/ai':              { priority: '0.9', changefreq: 'weekly' },
   '/about':           { priority: '0.7', changefreq: 'monthly' },
   '/contact':         { priority: '0.6', changefreq: 'monthly' },

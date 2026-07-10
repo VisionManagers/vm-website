@@ -322,7 +322,7 @@ const Home: React.FC = () => {
                   real workflows, no sales pitches. Free to attend.
                 </p>
               </div>
-              <Link to="/casual-intelligence" className={buttonTealOnNavy}>
+              <Link to="/ci" className={buttonTealOnNavy}>
                 Join the roundtable <ArrowRight className="w-4 h-4" />
               </Link>
             </Reveal>

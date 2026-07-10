@@ -84,7 +84,7 @@ const WhatIsAI: React.FC = () => {
               </div>
               <p className="mt-8 text-sm text-vmNavy/55">
                 From the team behind{' '}
-                <Link to="/casual-intelligence" className="underline decoration-vmLeaf/50 underline-offset-4 hover:text-vmNavy">
+                <Link to="/ci" className="underline decoration-vmLeaf/50 underline-offset-4 hover:text-vmNavy">
                   Casual Intelligence
                 </Link>
                 , the Eastside&rsquo;s weekly AI roundtable &mdash; working with clients like Emerald Health.
@@ -188,7 +188,7 @@ const WhatIsAI: React.FC = () => {
             </Reveal>
             <div className="mt-8 grid gap-6 md:grid-cols-2">
               <Reveal delay={150}>
-                <Link to="/casual-intelligence" className="block border border-slate-200/70 rounded-sm p-6 hover:border-vmLeaf/60 transition-colors">
+                <Link to="/ci" className="block border border-slate-200/70 rounded-sm p-6 hover:border-vmLeaf/60 transition-colors">
                   <h4 className="font-serif text-lg">Join the room</h4>
                   <p className="mt-2 text-sm text-vmNavy/65 leading-relaxed">
                     Casual Intelligence, Wednesdays. Free, casual, real conversations about using AI well.
@@ -196,7 +196,7 @@ const WhatIsAI: React.FC = () => {
                 </Link>
               </Reveal>
               <Reveal delay={220}>
-                <Link to="/casual-intelligence" className="block border border-slate-200/70 rounded-sm p-6 hover:border-vmLeaf/60 transition-colors">
+                <Link to="/ci" className="block border border-slate-200/70 rounded-sm p-6 hover:border-vmLeaf/60 transition-colors">
                   <h4 className="font-serif text-lg">Learn it yourself</h4>
                   <p className="mt-2 text-sm text-vmNavy/65 leading-relaxed">
                     Short free lessons, from zero. The same ground clients pay us $200 an hour to walk
@@ -214,7 +214,7 @@ const WhatIsAI: React.FC = () => {
         <section className="py-16 px-6">
           <div className="max-w-4xl mx-auto grid gap-8 md:grid-cols-3 text-center">
             {[
-              { p: 'A weekly room of owners and builders talking AI in plain English.', to: '/casual-intelligence', label: 'Casual Intelligence' },
+              { p: 'A weekly room of owners and builders talking AI in plain English.', to: '/ci', label: 'Casual Intelligence' },
               { p: 'Working with healthcare clients like Emerald Health.', to: '/ai-voice', label: 'AI Voice for practices' },
               { p: 'We build in the open. See what we actually make.', to: '/lab', label: 'The Lab' },
             ].map(({ p, to, label }, i) => (

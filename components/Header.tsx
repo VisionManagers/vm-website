@@ -220,7 +220,7 @@ const Header: React.FC = () => {
                   <p className="text-[10px] text-slate-400 font-bold uppercase tracking-[0.3em] mb-2">Direct Access</p>
                   <div className="flex flex-col items-center gap-6">
                     <Link to="/start" className="text-lg font-bold text-vmNavy hover:text-vmTeal transition-colors">Start Here</Link>
-                    <Link to="/casual-intelligence" className="text-lg font-bold text-vmNavy hover:text-vmTeal transition-colors">Casual Intelligence</Link>
+                    <Link to="/ci" className="text-lg font-bold text-vmNavy hover:text-vmTeal transition-colors">Casual Intelligence</Link>
                     <Link to="/contact" className="text-lg font-bold text-vmNavy hover:text-vmTeal transition-colors">Contact Us</Link>
                   </div>
                 </div>

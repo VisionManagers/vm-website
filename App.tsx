@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import Home from './pages/Home';
 import StartHere from './pages/StartHere';
 import Solutions from './pages/Solutions';
@@ -59,7 +59,8 @@ const App: React.FC = () => {
               <Route path="/about" element={<About />} />
               <Route path="/ai-voice" element={<AIVoice />} />
               <Route path="/sound" element={<Sound />} />
-              <Route path="/casual-intelligence" element={<CasualIntelligence />} />
+              <Route path="/ci" element={<CasualIntelligence />} />
+              <Route path="/casual-intelligence" element={<Navigate to="/ci" replace />} />
               <Route path="/ai" element={<WhatIsAI />} />
 
               {/* Admin routes — no public nav links */}
