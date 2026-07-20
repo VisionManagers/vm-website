@@ -25,6 +25,9 @@ const AdminDigestSettings = React.lazy(() => import('./pages/admin/DigestSetting
 // Lazy-load digest page
 const Digest = React.lazy(() => import('./pages/insights/Digest'));
 
+// Hidden page — direct-link sharing only (no nav links, not in sitemap/prerender, noindex)
+const LeakAudit = React.lazy(() => import('./pages/LeakAudit'));
+
 const ScrollToTop = () => {
   const { pathname } = useLocation();
   useEffect(() => {
@@ -62,6 +65,9 @@ const App: React.FC = () => {
               <Route path="/ci" element={<CasualIntelligence />} />
               <Route path="/casual-intelligence" element={<Navigate to="/ci" replace />} />
               <Route path="/ai" element={<WhatIsAI />} />
+
+              {/* Hidden route — shared by direct link only */}
+              <Route path="/leak-audit" element={<LeakAudit />} />
 
               {/* Admin routes — no public nav links */}
               <Route path="/admin/login" element={<AdminLogin />} />
