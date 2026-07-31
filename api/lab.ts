@@ -42,6 +42,24 @@ interface LabLead {
   goal: string | null;
 }
 
+// Free-mail domains that don't identify a business website
+const FREE_MAIL = new Set([
+  'gmail.com', 'googlemail.com', 'yahoo.com', 'ymail.com', 'outlook.com', 'hotmail.com',
+  'live.com', 'msn.com', 'icloud.com', 'me.com', 'mac.com', 'aol.com', 'protonmail.com',
+  'proton.me', 'pm.me', 'mail.com', 'gmx.com', 'gmx.net', 'zoho.com', 'fastmail.com',
+  'hey.com', 'yandex.com', 'comcast.net', 'att.net', 'verizon.net', 'sbcglobal.net',
+]);
+
+/* "riverside-dental.com" → "Riverside Dental" */
+function businessNameFromDomain(domain: string): string {
+  const base = domain.replace(/^https?:\/\//, '').replace(/^www\./, '').split('/')[0].split('.')[0];
+  return base
+    .split(/[-_.]/)
+    .filter(Boolean)
+    .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+    .join(' ');
+}
+
 function businessContext(lead: LabLead): string {
   return [
     `Business name: ${lead.business_name}`,
@@ -223,30 +241,39 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const { action } = req.body || {};
 
   try {
-    // ── Start a session: capture the lead + business context ──
+    // ── Start a session: name + email required, everything else optional ──
     if (action === 'start') {
-      const { name, email, businessName, industry, city, website, goal } = req.body;
+      const { name, email, website, phone } = req.body;
 
+      if (!name || typeof name !== 'string' || !name.trim()) {
+        return res.status(400).json({ error: 'Your name is required.' });
+      }
       if (!email || typeof email !== 'string' || !email.includes('@')) {
         return res.status(400).json({ error: 'A valid email is required.' });
       }
-      if (!businessName || typeof businessName !== 'string') {
-        return res.status(400).json({ error: 'Business name is required.' });
-      }
 
-      const { data, error } = await supabase
-        .from('lab_leads')
-        .insert({
-          name: name || null,
-          email,
-          business_name: businessName,
-          industry: industry || null,
-          city: city || null,
-          website: website || null,
-          goal: goal || null,
-        })
-        .select('id')
-        .single();
+      // Website: what they typed, or derived from a business email domain
+      let site = typeof website === 'string' ? website.trim() : '';
+      const emailDomain = email.split('@')[1]?.toLowerCase().trim();
+      if (!site && emailDomain && !FREE_MAIL.has(emailDomain)) {
+        site = emailDomain;
+      }
+      const businessName = site ? businessNameFromDomain(site) : `${name.trim().split(/\s+/)[0]}'s business`;
+
+      const row: Record<string, string | null> = {
+        name: name.trim(),
+        email,
+        business_name: businessName,
+        website: site || null,
+        phone: (typeof phone === 'string' && phone.trim()) || null,
+      };
+
+      let { data, error } = await supabase.from('lab_leads').insert(row).select('id').single();
+      if (error && /phone/.test(error.message)) {
+        // phone column not migrated yet — save the lead anyway
+        delete row.phone;
+        ({ data, error } = await supabase.from('lab_leads').insert(row).select('id').single());
+      }
 
       if (error || !data) {
         console.error('Supabase insert error:', error);
@@ -265,15 +292,15 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
             from: 'Vision Managers <notifications@visionmanagers.com>',
             to: NOTIFY_EMAIL,
             subject: `Lab visitor: ${businessName}`,
-            html: `<p><strong>${name || 'Someone'}</strong> (${email}) just entered The Workbench.</p>
-              <p>Business: ${businessName}${industry ? ` · ${industry}` : ''}${city ? ` · ${city}` : ''}<br/>
-              ${website ? `Website: ${website}<br/>` : ''}
-              ${goal ? `Goal: ${goal}` : ''}</p>`,
+            html: `<p><strong>${name}</strong> (${email}) just entered The Workbench.</p>
+              <p>Business: ${businessName}<br/>
+              ${site ? `Website: ${site}<br/>` : ''}
+              ${row.phone ? `Phone: ${row.phone}` : ''}</p>`,
           }),
         }).catch((err) => console.error('Lead notification failed:', err));
       }
 
-      return res.status(200).json({ leadId: data.id });
+      return res.status(200).json({ leadId: data.id, businessName });
     }
 
     // ── All other actions need an existing lead ──

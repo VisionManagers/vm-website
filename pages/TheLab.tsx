@@ -118,8 +118,8 @@ const TheLab: React.FC = () => {
                   <h2 className="text-3xl md:text-4xl font-serif text-white mb-5 italic">The Workbench.</h2>
                   <p className="text-white/70 leading-relaxed mb-8">
                     Six AI tools that rebuild themselves around <em>your</em> business the moment
-                    you enter it: an agent you can try to stump, a property scout with live web
-                    search, a deal finder that sizes your hidden revenue in dollars, a business
+                    you enter it: an AI receptionist you can talk to, a property scout with live
+                    web search, a deal finder that sizes your hidden revenue in dollars, a business
                     coach, a marketing studio, and a lead machine. Everything you make is emailed
                     to you as a designed report.
                   </p>
@@ -129,7 +129,7 @@ const TheLab: React.FC = () => {
                 </div>
                 <div className="md:col-span-2 bg-white/5 border-t md:border-t-0 md:border-l border-white/10 p-10 md:p-14 flex flex-col justify-center gap-5">
                   {[
-                    'Try to Stump It — chat with your AI front desk',
+                    'AI Receptionist — the front desk that never misses a call',
                     'Deal Scout — live property deal sourcing',
                     'Deal Finder — your hidden revenue, in dollars',
                     'Business Coach — direct answers, your context',
