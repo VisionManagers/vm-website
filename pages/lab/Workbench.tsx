@@ -32,12 +32,12 @@ interface ChatMsg {
 type ToolKey = 'chat' | 'scout' | 'deals' | 'coach' | 'marketing' | 'leads';
 
 const TOOLS: { key: ToolKey; icon: React.ElementType; title: string; tagline: string }[] = [
-  { key: 'chat', icon: MessageCircle, title: 'Try to Stump It', tagline: 'Chat with the AI front-desk agent answering for your business. Try to break it.' },
-  { key: 'scout', icon: Building2, title: 'Deal Scout', tagline: 'A real-estate acquisition agent with live web search. Build your buy-box, then let it hunt.' },
-  { key: 'deals', icon: Gem, title: 'Deal Finder', tagline: 'The revenue hiding in how your business runs today — found and sized in dollars.' },
-  { key: 'coach', icon: Compass, title: 'Business Coach', tagline: 'Ask anything. Get a direct, practical answer built around your business.' },
-  { key: 'marketing', icon: Megaphone, title: 'Marketing Studio', tagline: 'Emails, social posts, and ads written for your business — usable today.' },
-  { key: 'leads', icon: Magnet, title: 'Lead Machine', tagline: 'Your ideal client, where to find them, and the scripts to reach them.' },
+  { key: 'chat', icon: MessageCircle, title: 'AI Receptionist', tagline: 'The AI front desk that answers when you can’t. Chat with it like a caller would.' },
+  { key: 'scout', icon: Building2, title: 'Deal Scout', tagline: 'Finds real property deals with live web search. Answer a few questions, then it hunts.' },
+  { key: 'deals', icon: Gem, title: 'Deal Finder', tagline: 'Finds the revenue hiding in how your business runs today — sized in dollars.' },
+  { key: 'coach', icon: Compass, title: 'Business Coach', tagline: 'Ask any business question. Get a direct, practical answer.' },
+  { key: 'marketing', icon: Megaphone, title: 'Marketing Studio', tagline: 'Writes your emails, social posts, and ads — ready to use today.' },
+  { key: 'leads', icon: Magnet, title: 'Lead Machine', tagline: 'Builds your client-finding playbook: who, where, and the exact scripts.' },
 ];
 
 const SCOUT_SEED = `Let's build your buy-box, one quick question at a time — then I'll go hunting with live web search.
@@ -115,11 +115,12 @@ async function postJson(url: string, body: unknown): Promise<any> {
 /* ── Intake form ─────────────────────────────────────────────── */
 
 const IntakeForm: React.FC<{ onStarted: (s: Session) => void }> = ({ onStarted }) => {
-  const [form, setForm] = useState({ name: '', email: '', businessName: '', industry: '', city: '', website: '', goal: '' });
+  const [form, setForm] = useState({ name: '', email: '', website: '', phone: '' });
+  const [showOptional, setShowOptional] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
 
-  const set = (k: string) => (ev: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) =>
+  const set = (k: string) => (ev: React.ChangeEvent<HTMLInputElement>) =>
     setForm((f) => ({ ...f, [k]: ev.target.value }));
 
   const submit = async (ev: React.FormEvent) => {
@@ -127,8 +128,8 @@ const IntakeForm: React.FC<{ onStarted: (s: Session) => void }> = ({ onStarted }
     setBusy(true);
     setError('');
     try {
-      const { leadId } = await postJson('/api/lab', { action: 'start', ...form });
-      onStarted({ leadId, businessName: form.businessName, name: form.name });
+      const { leadId, businessName } = await postJson('/api/lab', { action: 'start', ...form });
+      onStarted({ leadId, businessName, name: form.name });
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Could not start. Try again.');
     } finally {
@@ -139,59 +140,49 @@ const IntakeForm: React.FC<{ onStarted: (s: Session) => void }> = ({ onStarted }
   const field = 'w-full p-4 border border-slate-200 rounded-sm focus:border-vmNavy focus:outline-none transition-all bg-vmSlate/40 text-base';
 
   return (
-    <Reveal className="max-w-2xl mx-auto bg-white border border-slate-200 shadow-2xl rounded-sm overflow-hidden">
-      <div className="bg-vmNavy p-8 md:p-10">
-        <p className="eyebrow text-vmTeal mb-3">Step 1 of 2 · Set up your bench</p>
-        <h2 className="text-2xl md:text-3xl font-serif text-white leading-snug">
-          Tell the AI about your business.
-        </h2>
-        <p className="text-white/60 text-sm mt-3 leading-relaxed">
-          Everything the tools produce is built around what you enter here — and your
-          finished report is emailed to you as a designed PDF.
+    <Reveal className="max-w-xl mx-auto bg-white border border-slate-200 shadow-2xl rounded-sm overflow-hidden">
+      <div className="bg-vmNavy px-8 py-7 md:px-10">
+        <h2 className="text-2xl font-serif text-white leading-snug">Two fields and you're in.</h2>
+        <p className="text-white/60 text-sm mt-2 leading-relaxed">
+          The tools personalize from your email — and your results get emailed to you as a designed report.
         </p>
       </div>
       <form onSubmit={submit} className="p-8 md:p-10 space-y-5">
         <div className="grid sm:grid-cols-2 gap-5">
           <div>
-            <label className="eyebrow text-vmNavy block mb-2">Your name</label>
-            <input className={field} value={form.name} onChange={set('name')} placeholder="Jordan Rivera" />
+            <label className="eyebrow text-vmNavy block mb-2">Name *</label>
+            <input className={field} required value={form.name} onChange={set('name')} placeholder="Jordan Rivera" autoFocus />
           </div>
           <div>
             <label className="eyebrow text-vmNavy block mb-2">Email *</label>
-            <input className={field} type="email" required value={form.email} onChange={set('email')} placeholder="you@yourpractice.com" />
+            <input className={field} type="email" required value={form.email} onChange={set('email')} placeholder="you@yourbusiness.com" />
           </div>
         </div>
-        <div className="grid sm:grid-cols-2 gap-5">
-          <div>
-            <label className="eyebrow text-vmNavy block mb-2">Business name *</label>
-            <input className={field} required value={form.businessName} onChange={set('businessName')} placeholder="Riverside Dental Studio" />
+
+        {showOptional ? (
+          <div className="grid sm:grid-cols-2 gap-5">
+            <div>
+              <label className="eyebrow text-vmNavy block mb-2">Website <span className="text-slate-300 normal-case">(optional)</span></label>
+              <input className={field} value={form.website} onChange={set('website')} placeholder="yourbusiness.com" />
+            </div>
+            <div>
+              <label className="eyebrow text-vmNavy block mb-2">Phone <span className="text-slate-300 normal-case">(optional)</span></label>
+              <input className={field} type="tel" value={form.phone} onChange={set('phone')} placeholder="(555) 555-0100" />
+            </div>
           </div>
-          <div>
-            <label className="eyebrow text-vmNavy block mb-2">Industry</label>
-            <input className={field} value={form.industry} onChange={set('industry')} placeholder="Dental clinic, law firm, real estate…" />
-          </div>
-        </div>
-        <div className="grid sm:grid-cols-2 gap-5">
-          <div>
-            <label className="eyebrow text-vmNavy block mb-2">City</label>
-            <input className={field} value={form.city} onChange={set('city')} placeholder="Seattle, WA" />
-          </div>
-          <div>
-            <label className="eyebrow text-vmNavy block mb-2">Website</label>
-            <input className={field} value={form.website} onChange={set('website')} placeholder="yourpractice.com" />
-          </div>
-        </div>
-        <div>
-          <label className="eyebrow text-vmNavy block mb-2">Your #1 goal right now</label>
-          <input className={field} value={form.goal} onChange={set('goal')} placeholder="More new patients, fewer no-shows, less admin…" />
-        </div>
+        ) : (
+          <button type="button" onClick={() => setShowOptional(true)} className="text-sm text-slate-400 hover:text-vmNavy transition-colors">
+            + Add website or phone (optional — we'll read your website from a business email)
+          </button>
+        )}
+
         {error && <p className="text-sm text-red-600">{error}</p>}
         <button type="submit" disabled={busy} className={buttonPrimary + ' w-full disabled:opacity-60'}>
           {busy ? <Loader2 className="w-5 h-5 animate-spin" /> : <Sparkles className="w-5 h-5" />}
-          Open the workbench
+          Start using the AI
         </button>
         <p className="text-xs text-slate-400 text-center leading-relaxed">
-          Free to use. Your details personalize the tools and deliver your report — nothing else.
+          Free to use. No card, no call required.
         </p>
       </form>
     </Reveal>
@@ -210,7 +201,8 @@ const ChatTool: React.FC<{
   markdown?: boolean;
   busyHint?: string;
   onRan: () => void;
-}> = ({ session, toolKey, intro, emptyHint, placeholder, seed, markdown, busyHint, onRan }) => {
+  onBusyChange?: (busy: boolean) => void;
+}> = ({ session, toolKey, intro, emptyHint, placeholder, seed, markdown, busyHint, onRan, onBusyChange }) => {
   const [messages, setMessages] = useState<ChatMsg[]>(
     seed ? [{ role: 'assistant', content: seed }] : []
   );
@@ -231,6 +223,7 @@ const ChatTool: React.FC<{
     setMessages(next);
     setInput('');
     setBusy(true);
+    onBusyChange?.(true);
     setError('');
     try {
       const { reply } = await postJson('/api/lab', { action: 'chat', tool: toolKey, leadId: session.leadId, messages: next });
@@ -241,6 +234,7 @@ const ChatTool: React.FC<{
       setMessages(messages);
     } finally {
       setBusy(false);
+      onBusyChange?.(false);
     }
   };
 
@@ -294,7 +288,8 @@ const GeneratorTool: React.FC<{
   session: Session;
   tool: ToolKey;
   onRan: () => void;
-}> = ({ session, tool, onRan }) => {
+  onBusyChange?: (busy: boolean) => void;
+}> = ({ session, tool, onRan, onBusyChange }) => {
   const [output, setOutput] = useState('');
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
@@ -304,6 +299,7 @@ const GeneratorTool: React.FC<{
 
   const run = async () => {
     setBusy(true);
+    onBusyChange?.(true);
     setError('');
     try {
       const input =
@@ -316,6 +312,7 @@ const GeneratorTool: React.FC<{
       setError(err instanceof Error ? err.message : 'Generation failed. Try again.');
     } finally {
       setBusy(false);
+      onBusyChange?.(false);
     }
   };
 
@@ -391,6 +388,7 @@ const Workbench: React.FC = () => {
   const [session, setSession] = useState<Session | null>(null);
   const [activeTool, setActiveTool] = useState<ToolKey>('chat');
   const [toolsRun, setToolsRun] = useState<Set<string>>(new Set());
+  const [busyTools, setBusyTools] = useState<Set<string>>(new Set());
   const [reportState, setReportState] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle');
   const [reportError, setReportError] = useState('');
 
@@ -409,11 +407,19 @@ const Workbench: React.FC = () => {
   const reset = () => {
     setSession(null);
     setToolsRun(new Set());
+    setBusyTools(new Set());
     setReportState('idle');
     try { localStorage.removeItem(STORAGE_KEY); } catch { /* noop */ }
   };
 
   const markRan = (tool: string) => setToolsRun((prev) => new Set(prev).add(tool));
+
+  const setToolBusy = (tool: string) => (busy: boolean) =>
+    setBusyTools((prev) => {
+      const next = new Set(prev);
+      if (busy) next.add(tool); else next.delete(tool);
+      return next;
+    });
 
   const sendReport = async () => {
     if (!session) return;
@@ -471,6 +477,7 @@ const Workbench: React.FC = () => {
                 {TOOLS.map((t) => {
                   const active = activeTool === t.key;
                   const ran = toolsRun.has(t.key);
+                  const working = busyTools.has(t.key);
                   return (
                     <button
                       key={t.key}
@@ -483,7 +490,9 @@ const Workbench: React.FC = () => {
                     >
                       <div className="flex items-center justify-between mb-2">
                         <t.icon className={`w-5 h-5 ${active ? 'text-vmTeal' : 'text-accent'}`} aria-hidden />
-                        {ran && <CheckCircle2 className={`w-4 h-4 ${active ? 'text-vmTeal' : 'text-vmLeaf'}`} aria-hidden />}
+                        {working
+                          ? <Loader2 className={`w-4 h-4 animate-spin ${active ? 'text-vmTeal' : 'text-vmNavy/60'}`} aria-label="Working" />
+                          : ran && <CheckCircle2 className={`w-4 h-4 ${active ? 'text-vmTeal' : 'text-vmLeaf'}`} aria-hidden />}
                       </div>
                       <p className="text-sm font-semibold leading-tight">{t.title}</p>
                     </button>
@@ -491,50 +500,53 @@ const Workbench: React.FC = () => {
                 })}
               </Reveal>
 
-              {/* Active tool */}
+              {/* Tool panels — all stay mounted so switching tools never resets
+                  state, and in-flight generations keep working in the background */}
               <Reveal className="bg-white border border-slate-200 shadow-2xl rounded-sm p-8 md:p-12">
-                {(() => {
-                  const tool = TOOLS.find((t) => t.key === activeTool)!;
-                  return (
-                    <>
-                      <div className="flex items-center gap-4 pb-5 mb-6 hairline border-b">
-                        <div className="w-10 h-10 bg-vmTeal/10 rounded-sm flex items-center justify-center text-vmNavy shrink-0">
-                          <tool.icon className="w-6 h-6" aria-hidden />
-                        </div>
-                        <div>
-                          <h3 className="text-xl font-serif text-vmNavy">{tool.title}</h3>
-                          <p className="text-xs text-slate-400">{tool.tagline}</p>
-                        </div>
+                {TOOLS.map((tool) => (
+                  <div key={tool.key} className={activeTool === tool.key ? '' : 'hidden'}>
+                    <div className="flex items-center gap-4 pb-5 mb-6 hairline border-b">
+                      <div className="w-10 h-10 bg-vmTeal/10 rounded-sm flex items-center justify-center text-vmNavy shrink-0">
+                        <tool.icon className="w-6 h-6" aria-hidden />
                       </div>
-                      {activeTool === 'chat' ? (
-                        <ChatTool
-                          key="chat"
-                          session={session}
-                          toolKey="chat"
-                          intro={<>This is the AI receptionist answering for <strong className="text-vmNavy">{session.businessName}</strong>. Book an appointment. Complain. Ask something weird. Try prompt tricks. The same architecture answers real phones for our client practices.</>}
-                          emptyHint="The line is open. Say hello — or go straight for the stump."
-                          placeholder="Type like a caller would…"
-                          onRan={() => markRan('chat')}
-                        />
-                      ) : activeTool === 'scout' ? (
-                        <ChatTool
-                          key="scout"
-                          session={session}
-                          toolKey="scout"
-                          intro={<>AcquisitionScout hunts real property listings with live web search — distress signals, auction inventory, county lists. Answer its questions to build your buy-box, then send it hunting. Every lead cites its source; verify title and comps before any offer.</>}
-                          emptyHint="The scout is ready to report in."
-                          placeholder="Answer the scout, or change the mission…"
-                          seed={SCOUT_SEED}
-                          markdown
-                          busyHint="Searching live listings — this can take up to a minute…"
-                          onRan={() => markRan('scout')}
-                        />
-                      ) : (
-                        <GeneratorTool key={activeTool} session={session} tool={activeTool} onRan={() => markRan(activeTool)} />
-                      )}
-                    </>
-                  );
-                })()}
+                      <div>
+                        <h3 className="text-xl font-serif text-vmNavy">{tool.title}</h3>
+                        <p className="text-xs text-slate-400">{tool.tagline}</p>
+                      </div>
+                    </div>
+                    {tool.key === 'chat' ? (
+                      <ChatTool
+                        session={session}
+                        toolKey="chat"
+                        intro={<>This is the AI receptionist answering for <strong className="text-vmNavy">{session.businessName}</strong>. Talk to it exactly like a caller would: book an appointment, ask about prices, complain, or try your best to confuse it. The same architecture answers real phones for our client practices.</>}
+                        emptyHint="The line is open — say hello, or ask to book an appointment."
+                        placeholder="Type like a caller would…"
+                        onRan={() => markRan('chat')}
+                        onBusyChange={setToolBusy('chat')}
+                      />
+                    ) : tool.key === 'scout' ? (
+                      <ChatTool
+                        session={session}
+                        toolKey="scout"
+                        intro={<>AcquisitionScout hunts real property listings with live web search — distress signals, auction inventory, county lists. Answer its questions to build your buy-box, then send it hunting. Every lead cites its source; verify title and comps before any offer.</>}
+                        emptyHint="The scout is ready to report in."
+                        placeholder="Answer the scout, or change the mission…"
+                        seed={SCOUT_SEED}
+                        markdown
+                        busyHint="Searching live listings — this can take up to a minute…"
+                        onRan={() => markRan('scout')}
+                        onBusyChange={setToolBusy('scout')}
+                      />
+                    ) : (
+                      <GeneratorTool
+                        session={session}
+                        tool={tool.key}
+                        onRan={() => markRan(tool.key)}
+                        onBusyChange={setToolBusy(tool.key)}
+                      />
+                    )}
+                  </div>
+                ))}
               </Reveal>
 
               {/* Report CTA */}
