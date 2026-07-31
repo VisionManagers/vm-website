@@ -33,8 +33,8 @@ const GREENHOUSE = [
   },
   {
     title: 'Call the demo line',
-    desc: 'A live voice agent you can phone right now and try to stump. The same architecture that answers for our client practices.',
-    status: 'Coming to this page',
+    desc: 'A live voice agent you can phone and try to stump. The text version is live now in The Workbench — the phone version is next.',
+    status: 'Text version live · voice next',
   },
   {
     title: '3D equipment teardowns',
@@ -108,6 +108,43 @@ const TheLab: React.FC = () => {
         </header>
 
         <div className="space-y-24">
+
+          {/* ─── LAB 004: THE WORKBENCH (flagship live exhibit) ─── */}
+          <section>
+            <Reveal className="max-w-5xl mx-auto bg-vmNavy rounded-sm overflow-hidden shadow-2xl">
+              <div className="grid md:grid-cols-5">
+                <div className="md:col-span-3 p-10 md:p-14">
+                  <p className="eyebrow text-vmTeal mb-3">Lab 004 · Live now · Newest exhibit</p>
+                  <h2 className="text-3xl md:text-4xl font-serif text-white mb-5 italic">The Workbench.</h2>
+                  <p className="text-white/70 leading-relaxed mb-8">
+                    Six AI tools that rebuild themselves around <em>your</em> business the moment
+                    you enter it: an agent you can try to stump, a property scout with live web
+                    search, a deal finder that sizes your hidden revenue in dollars, a business
+                    coach, a marketing studio, and a lead machine. Everything you make is emailed
+                    to you as a designed report.
+                  </p>
+                  <Link to="/lab/workbench" className={buttonTealOnNavy}>
+                    Sit down at the bench <ArrowRight className="w-5 h-5" />
+                  </Link>
+                </div>
+                <div className="md:col-span-2 bg-white/5 border-t md:border-t-0 md:border-l border-white/10 p-10 md:p-14 flex flex-col justify-center gap-5">
+                  {[
+                    'Try to Stump It — chat with your AI front desk',
+                    'Deal Scout — live property deal sourcing',
+                    'Deal Finder — your hidden revenue, in dollars',
+                    'Business Coach — direct answers, your context',
+                    'Marketing Studio — copy you can ship today',
+                    'Lead Machine — who to reach and how',
+                  ].map((item) => (
+                    <div key={item} className="flex items-start gap-3">
+                      <Check className="w-4 h-4 text-vmTeal shrink-0 mt-1" aria-hidden />
+                      <p className="text-sm text-white/70 leading-snug">{item}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </Reveal>
+          </section>
 
           {/* Case Studies — renders only when real case studies exist */}
           {CASE_STUDIES.length > 0 && (
