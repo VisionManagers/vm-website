@@ -17,6 +17,8 @@ export const COLORS = {
 export const BOOKING_URLS = {
   DISCOVERY: "https://api.leadconnectorhq.com/widget/booking/u9ITLagwSXqANxwjhaAS",
   STRATEGY_CALL: "https://api.leadconnectorhq.com/widget/booking/Rblry3wONPt5B5yvAy0u",
+  // Clean public booking link — /book redirects straight to the discovery-call scheduler
+  BOOK: "https://visionmanagers.com/book",
 };
 
 export const SOLUTIONS = [

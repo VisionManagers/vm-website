@@ -573,8 +573,8 @@ const Workbench: React.FC = () => {
                     and numbers — this is what runs every day.
                   </p>
                 </div>
-                <a href={BOOKING_URLS.DISCOVERY} target="_blank" rel="noopener noreferrer" className={buttonPrimary}>
-                  See it installed in your business <ArrowRight className="w-4 h-4" />
+                <a href={BOOKING_URLS.BOOK} target="_blank" rel="noopener noreferrer" className={buttonPrimary}>
+                  Book your 20-minute discovery call <ArrowRight className="w-4 h-4" />
                 </a>
               </Reveal>
             </div>
