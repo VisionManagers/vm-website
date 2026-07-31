@@ -148,7 +148,7 @@ function buildPdf(lead: { name: string | null; business_name: string; industry: 
     e(View, { style: styles.ctaBox },
       e(Text, { style: styles.ctaTitle }, 'This took the AI a few minutes. Imagine it working for you every day.'),
       e(Text, null,
-        'Everything in this report came from a demo with only the few details you typed in. With your real numbers, calendar, and phone line connected, this becomes a system that answers, books, follows up, and finds revenue while you work. Book a 20-minute discovery call at visionmanagers.com/start — the conversation itself becomes your AI Opportunity Snapshot, delivered in writing the next day.')
+        'Everything in this report came from a demo with only the few details you typed in. With your real numbers, calendar, and phone line connected, this becomes a system that answers, books, follows up, and finds revenue while you work. Book your 20-minute discovery call at visionmanagers.com/book — the conversation itself becomes your AI Opportunity Snapshot, delivered in writing the next day.')
     )
   );
 
@@ -225,7 +225,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
               <p>Attached is everything the AI built for <strong>${lead.business_name}</strong> in the Lab just now — your revenue opportunities, coaching notes, marketing copy, and lead-generation playbook, formatted to keep.</p>
               <p>It was generated from just the few details you typed in. Connected to your real calendar, phone line, and numbers, this becomes a system working for you every day.</p>
               <p style="margin:28px 0;">
-                <a href="https://visionmanagers.com/start" style="background:#0B4C83;color:#fff;padding:14px 28px;text-decoration:none;border-radius:2px;font-family:Helvetica,Arial,sans-serif;font-size:14px;">See what it looks like in your business</a>
+                <a href="https://visionmanagers.com/book" style="background:#0B4C83;color:#fff;padding:14px 28px;text-decoration:none;border-radius:2px;font-family:Helvetica,Arial,sans-serif;font-size:14px;">Book your 20-minute discovery call</a>
               </p>
               <p style="color:#64748b;font-size:13px;">— Sukhneet, Vision Managers</p>
             </div>

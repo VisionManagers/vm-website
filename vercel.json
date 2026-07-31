@@ -4,7 +4,8 @@
     "api/lab-report.ts": { "maxDuration": 60 }
   },
   "redirects": [
-    { "source": "/casual-intelligence", "destination": "/ci", "permanent": true }
+    { "source": "/casual-intelligence", "destination": "/ci", "permanent": true },
+    { "source": "/book", "destination": "https://api.leadconnectorhq.com/widget/booking/u9ITLagwSXqANxwjhaAS", "permanent": false }
   ],
   "rewrites": [
     { "source": "/((?!api/).*)", "destination": "/_shell.html" }

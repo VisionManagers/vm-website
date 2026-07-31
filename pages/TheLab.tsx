@@ -395,8 +395,8 @@ const TheLab: React.FC = () => {
 
           {/* ─── ONE CTA ─── */}
           <Reveal className="text-center pt-8">
-            <a href={BOOKING_URLS.DISCOVERY} target="_blank" rel="noopener noreferrer" className={buttonPrimary}>
-              Talk through what this could look like for you <ArrowRight className="w-4 h-4" />
+            <a href={BOOKING_URLS.BOOK} target="_blank" rel="noopener noreferrer" className={buttonPrimary}>
+              Book your 20-minute discovery call <ArrowRight className="w-4 h-4" />
             </a>
           </Reveal>
         </div>
