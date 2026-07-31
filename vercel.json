@@ -1,4 +1,8 @@
 {
+  "functions": {
+    "api/lab.ts": { "maxDuration": 60 },
+    "api/lab-report.ts": { "maxDuration": 60 }
+  },
   "redirects": [
     { "source": "/casual-intelligence", "destination": "/ci", "permanent": true }
   ],

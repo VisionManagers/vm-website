@@ -25,6 +25,9 @@ const AdminDigestSettings = React.lazy(() => import('./pages/admin/DigestSetting
 // Lazy-load digest page
 const Digest = React.lazy(() => import('./pages/insights/Digest'));
 
+// Lazy-load the Workbench (interactive AI tools — keep off the main bundle)
+const Workbench = React.lazy(() => import('./pages/lab/Workbench'));
+
 const ScrollToTop = () => {
   const { pathname } = useLocation();
   useEffect(() => {
@@ -51,6 +54,7 @@ const App: React.FC = () => {
               <Route path="/start" element={<StartHere />} />
               <Route path="/solutions" element={<Solutions />} />
               <Route path="/lab" element={<TheLab />} />
+              <Route path="/lab/workbench" element={<Workbench />} />
               <Route path="/insights" element={<Insights />} />
               <Route path="/insights/digest" element={<Digest />} />
               <Route path="/insights/:slug" element={<PostDetail />} />

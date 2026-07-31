@@ -408,3 +408,13 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 .museum-scrim { position: absolute; inset: 0; z-index: 1; }
 .museum-inner { position: relative; z-index: 2; max-width: 46rem; }
 .museum-placard { font-family: ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size: 0.66rem; letter-spacing: 0.18em; text-transform: uppercase; }
+
+/* ── Lab Workbench: markdown inside chat bubbles (Deal Scout) ── */
+.chat-md h2 { font-size: 1rem; margin: 0.85rem 0 0.3rem; padding-bottom: 0.25rem; }
+.chat-md h3 { font-size: 0.92rem; margin: 0.7rem 0 0.2rem; }
+.chat-md p { font-size: 0.875rem; margin: 0.4rem 0; }
+.chat-md ul, .chat-md ol { margin: 0.45rem 0; }
+.chat-md li { font-size: 0.875rem; }
+.chat-md li + li { margin-top: 0.25rem; }
+.chat-md > :first-child { margin-top: 0; }
+.chat-md > :last-child { margin-bottom: 0; }
