@@ -318,12 +318,19 @@ const ChatTool: React.FC<{
   seed?: string;
   compact?: boolean;
   busyHint?: string;
+  /* Controlled mode: the parent owns the transcript (generator intake chats) */
+  messages?: ChatMsg[];
+  onMessagesChange?: (m: ChatMsg[]) => void;
   onRan: () => void;
   onBusyChange?: (busy: boolean) => void;
-}> = ({ session, toolKey, intro, emptyHint, placeholder, seed, compact, busyHint, onRan, onBusyChange }) => {
-  const [messages, setMessages] = useState<ChatMsg[]>(
+}> = ({ session, toolKey, intro, emptyHint, placeholder, seed, compact, busyHint, messages: controlled, onMessagesChange, onRan, onBusyChange }) => {
+  const [internalMessages, setInternalMessages] = useState<ChatMsg[]>(
     seed ? [{ role: 'assistant', content: seed }] : []
   );
+  const messages = controlled ?? internalMessages;
+  const setMessages = (m: ChatMsg[]) => {
+    if (onMessagesChange) onMessagesChange(m); else setInternalMessages(m);
+  };
   const [input, setInput] = useState('');
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
@@ -424,6 +431,15 @@ const PROGRESS_STAGES: { at: number; msg: string }[] = [
 
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
+/* Opening messages for each tool's intake conversation — the advisor asks
+   for real numbers instead of inferring them; Build works at any time */
+const INTAKE_SEEDS: Record<GeneratorKey, string> = {
+  deals: "Numbers first, magic second — I'd rather ask than guess at your business. **What do you sell, and what's a typical sale or job worth?** Rough is fine. A couple of quick questions and the audit gets built on your real numbers.",
+  coach: "What's on your mind? Ask it the way you'd ask a $500-an-hour advisor — messy is fine. I'll come back with a couple of quick questions so my answer fits your actual numbers, not averages.",
+  marketing: "Before I write a single word of copy: **what are you promoting right now, and who's the customer you wish you had more of?** The strategy comes from your answers, not a template.",
+  leads: "Let's start with who's worth cloning. **Think of your best client — what made them great, and roughly what are they worth to you over a few years?** Ballpark is fine.",
+};
+
 const GeneratorTool: React.FC<{
   session: Session;
   tool: GeneratorKey;
@@ -435,18 +451,20 @@ const GeneratorTool: React.FC<{
   const [progress, setProgress] = useState('');
   const [error, setError] = useState('');
   const [capped, setCapped] = useState(false);
-  const [question, setQuestion] = useState('');
   const [assetType, setAssetType] = useState(MARKETING_ASSETS[0].value);
-  const [braindump, setBraindump] = useState('');
+  const [messages, setMessages] = useState<ChatMsg[]>([
+    { role: 'assistant', content: INTAKE_SEEDS[tool] },
+  ]);
 
   const run = async () => {
     setBusy(true);
     onBusyChange?.(true);
     setError('');
     try {
-      const input =
-        tool === 'coach' ? { question, braindump } :
-        tool === 'marketing' ? { assetType, braindump } : { braindump };
+      const input = {
+        ...(tool === 'marketing' ? { assetType } : {}),
+        transcript: messages.length > 1 ? messages : undefined,
+      };
       const { runId } = await postJson('/api/lab', { action: 'generate', leadId: session.leadId, tool, input });
 
       const t0 = Date.now();
@@ -482,10 +500,10 @@ const GeneratorTool: React.FC<{
   };
 
   const intro: Record<GeneratorKey, string> = {
-    deals: `The AI studies ${session.businessName} — including what it can find and remember about you — then hunts for the revenue leaks and untapped opportunities most businesses like yours are sitting on, each one sized in dollars.`,
-    coach: 'Ask the question you would ask a $500-an-hour advisor. Leave it blank and the coach will tell you what to focus on for the next 90 days. Then talk it through below.',
-    marketing: 'A strategist, not a template mill: it diagnoses your market, picks one big idea, then writes everything to carry it. Brain-dump what\'s going on — talk or type — and it does the rest.',
-    leads: `The AI defines ${session.businessName}'s highest-value client, searches out where to find them in your market, and writes the outreach scripts to go get them.`,
+    deals: `Chat first — it asks for your real numbers instead of guessing, then builds the full audit for ${session.businessName}. After it's built, keep talking: corrections recalculate on the spot.`,
+    coach: 'Chat like you would with a real coach — it asks the follow-ups your answer depends on, then builds the full walkthrough. Keep talking after: push back, adjust, refine.',
+    marketing: 'Talk it through first — what you\'re promoting, who you want more of. The strategy gets built from your answers, not a template, and you can adjust it in the same conversation.',
+    leads: `A quick conversation about who's worth pursuing, then the full playbook for ${session.businessName} — real named targets in your market. Corrections welcome after; it redoes the math live.`,
   };
 
   const buttonLabel: Record<GeneratorKey, string> = {
@@ -495,35 +513,13 @@ const GeneratorTool: React.FC<{
     leads: 'Build my lead playbook',
   };
 
-  const dumpPlaceholder: Record<GeneratorKey, string> = {
-    deals: 'Optional: what\'s going on in the business right now? Slow season, staffing, a number that bugs you…',
-    coach: '',
-    marketing: 'What\'s going on? What are you promoting, who\'s not calling, what have you tried? The more you share, the sharper the strategy.',
-    leads: 'Optional: who\'s your best client today, and where did they come from?',
-  };
-
-  const textarea = 'w-full p-4 border border-slate-200 rounded-sm focus:border-vmNavy focus:outline-none transition-all bg-vmSlate/40 text-base min-h-24';
-
   return (
     <div>
       <p className="text-sm text-slate-500 leading-relaxed mb-5">{intro[tool]}</p>
 
-      {tool === 'coach' && (
-        <div className="flex gap-3 mb-4 items-start">
-          <textarea
-            className={textarea}
-            value={question}
-            onChange={(ev) => setQuestion(ev.target.value)}
-            placeholder="e.g. Should I hire a second front-desk person or automate first?"
-            maxLength={1500}
-          />
-          <MicButton onText={(t) => setQuestion((v) => (v ? v + ' ' : '') + t)} />
-        </div>
-      )}
-
       {tool === 'marketing' && (
         <div className="mb-4">
-          <label className="eyebrow text-vmNavy block mb-2">What do you need?</label>
+          <label className="eyebrow text-vmNavy block mb-2">What do you need built?</label>
           <select
             className="w-full p-4 border border-slate-200 rounded-sm focus:border-vmNavy focus:outline-none bg-vmSlate/40 text-base"
             value={assetType}
@@ -534,59 +530,48 @@ const GeneratorTool: React.FC<{
         </div>
       )}
 
-      {tool !== 'coach' && (
-        <div className="flex gap-3 mb-4 items-start">
-          <textarea
-            className={textarea}
-            value={braindump}
-            onChange={(ev) => setBraindump(ev.target.value)}
-            placeholder={dumpPlaceholder[tool]}
-            maxLength={3000}
-          />
-          <MicButton onText={(t) => setBraindump((v) => (v ? v + ' ' : '') + t)} />
-        </div>
-      )}
+      <ChatTool
+        session={session}
+        toolKey={tool}
+        compact={!!output}
+        emptyHint=""
+        placeholder={output ? 'Correct a number, push back, or ask for more…' : 'Answer, or ask anything — talk or type…'}
+        busyHint="Thinking — may check the web…"
+        messages={messages}
+        onMessagesChange={setMessages}
+        onRan={onRan}
+        onBusyChange={onBusyChange}
+      />
 
-      {capped ? <CapNotice /> : (
-        <>
-          <button onClick={run} disabled={busy} className={buttonPrimary + ' disabled:opacity-60'}>
-            {busy ? <Loader2 className="w-5 h-5 animate-spin" /> : <Sparkles className="w-5 h-5" />}
-            {busy ? 'Working — a real one takes a few minutes' : output ? 'Run it again' : buttonLabel[tool]}
-          </button>
-          {busy && progress && (
-            <p className="text-sm text-vmNavy/70 mt-3 italic transition-all">{progress}</p>
-          )}
-          {busy && (
-            <p className="text-xs text-slate-400 mt-1">
-              Feel free to switch tools while this works — it keeps going in the background.
-            </p>
-          )}
-        </>
-      )}
-      {error && <p className="text-sm text-red-600 mt-3">{error}</p>}
+      <div className="mt-5">
+        {capped ? <CapNotice /> : (
+          <>
+            <button onClick={run} disabled={busy} className={buttonPrimary + ' disabled:opacity-60'}>
+              {busy ? <Loader2 className="w-5 h-5 animate-spin" /> : <Sparkles className="w-5 h-5" />}
+              {busy ? 'Building — takes a few minutes' : output ? 'Rebuild with what we discussed' : buttonLabel[tool]}
+            </button>
+            {busy && progress && (
+              <p className="text-sm text-vmNavy/70 mt-3 italic transition-all">{progress}</p>
+            )}
+            {busy ? (
+              <p className="text-xs text-slate-400 mt-1">
+                Switch tools freely while this works — it keeps going in the background.
+              </p>
+            ) : !output && (
+              <p className="text-xs text-slate-400 mt-2">
+                The advisor will tell you when it has enough — or build now and it flags anything it had to assume.
+              </p>
+            )}
+          </>
+        )}
+        {error && <p className="text-sm text-red-600 mt-3">{error}</p>}
+      </div>
 
       {output && (
-        <>
-          <div
-            className="mt-8 pt-6 hairline border-t text-base"
-            dangerouslySetInnerHTML={{ __html: renderMarkdown(output) }}
-          />
-          <div className="mt-10 pt-6 hairline border-t">
-            <h4 className="text-lg font-serif text-vmNavy mb-1">Talk it through.</h4>
-            <p className="text-sm text-slate-500 leading-relaxed mb-4">
-              Push back, ask for detail, or give it a real number — it recalculates on the spot.
-            </p>
-            <ChatTool
-              session={session}
-              toolKey={tool}
-              compact
-              emptyHint="Ask a follow-up — it read what it wrote."
-              placeholder="Ask a follow-up…"
-              busyHint="Thinking — may check the web…"
-              onRan={onRan}
-            />
-          </div>
-        </>
+        <div
+          className="mt-8 pt-6 hairline border-t text-base"
+          dangerouslySetInnerHTML={{ __html: renderMarkdown(output) }}
+        />
       )}
     </div>
   );
@@ -607,6 +592,23 @@ const Workbench: React.FC = () => {
       const saved = localStorage.getItem(STORAGE_KEY);
       if (saved) setSession(JSON.parse(saved));
     } catch { /* fresh session */ }
+  }, []);
+
+  // On page close, tell the server the visit ended so Suk gets one
+  // consolidated summary email (the idle sweeper catches missed beacons)
+  useEffect(() => {
+    const endVisit = () => {
+      try {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        if (!saved) return;
+        const { leadId } = JSON.parse(saved);
+        if (!leadId) return;
+        navigator.sendBeacon?.('/api/lab',
+          new Blob([JSON.stringify({ action: 'end-visit', leadId })], { type: 'application/json' }));
+      } catch { /* noop */ }
+    };
+    window.addEventListener('pagehide', endVisit);
+    return () => window.removeEventListener('pagehide', endVisit);
   }, []);
 
   const start = (s: Session) => {

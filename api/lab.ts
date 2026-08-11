@@ -4,9 +4,18 @@ import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import { waitUntil } from '@vercel/functions';
 import {
   LabLead, GeneratorTool, GENERATOR_TOOLS, GenerateInput,
-  scoutSystemPrompt, generatePrompt, followupSystemPrompt,
+  scoutSystemPrompt, generatePrompt, followupSystemPrompt, intakeSystemPrompt,
   researchProfilePrompt, memoryUpdatePrompt, reviewPrompt,
 } from './_lib/prompts.js';
+import { sendVisitSummary } from './_lib/visit-summary.js';
+
+/* Button labels the intake prompt references, matching the UI */
+const BUILD_LABELS: Record<GeneratorTool, string> = {
+  deals: 'Find my hidden revenue',
+  coach: 'Coach me',
+  marketing: 'Build my strategy',
+  leads: 'Build my lead playbook',
+};
 
 const SUPABASE_URL = process.env.VITE_SUPABASE_URL;
 const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
@@ -58,19 +67,30 @@ function todayUTC(): string {
   return new Date().toISOString().slice(0, 10);
 }
 
-/* Daily cap, tracked per lead in Supabase. Degrades to untracked (allow)
-   until migration 006 adds the columns. */
-async function consumeRun(supabase: SupabaseClient, lead: Record<string, unknown>): Promise<'ok' | 'capped'> {
-  if (!('daily_runs' in lead)) return 'ok';
+/* Daily cap + visit tracking, per lead in Supabase. Degrades gracefully
+   until migrations 006/007 add the columns. A gap of 30+ minutes since the
+   last activity marks the start of a new visit. */
+const VISIT_GAP_MS = 30 * 60 * 1000;
+
+async function consumeRun(
+  supabase: SupabaseClient,
+  lead: Record<string, unknown>
+): Promise<{ status: 'ok' | 'capped'; newVisit: boolean }> {
+  if (!('daily_runs' in lead)) return { status: 'ok', newVisit: false };
   const today = todayUTC();
   const used = lead.runs_date === today ? Number(lead.daily_runs) || 0 : 0;
-  if (used >= DAILY_CAP) return 'capped';
-  const { error } = await supabase
-    .from('lab_leads')
-    .update({ daily_runs: used + 1, runs_date: today })
-    .eq('id', lead.id as string);
+  if (used >= DAILY_CAP) return { status: 'capped', newVisit: false };
+
+  const updates: Record<string, unknown> = { daily_runs: used + 1, runs_date: today };
+  let newVisit = false;
+  if ('last_activity_at' in lead) {
+    const last = lead.last_activity_at ? new Date(lead.last_activity_at as string).getTime() : 0;
+    newVisit = Date.now() - last > VISIT_GAP_MS;
+    updates.last_activity_at = new Date().toISOString();
+  }
+  const { error } = await supabase.from('lab_leads').update(updates).eq('id', lead.id as string);
   if (error) console.error('Run counter update failed:', error);
-  return 'ok';
+  return { status: 'ok', newVisit };
 }
 
 function capResponse(res: VercelResponse) {
@@ -240,17 +260,9 @@ async function runGeneration(
 
     await supabase.from('lab_runs').update({ output }).eq('id', runId);
 
-    // Every generator run goes straight to Suk with the full deliverable —
-    // these are the hot-lead moments worth a same-hour follow-up
+    // Per-run emails retired — the consolidated visit summary carries
+    // everything when the visit ends (beacon, idle sweep, or report send)
     const inputNote = [input.question, input.details, input.braindump].filter(Boolean).join(' | ');
-    await notifySuk(
-      `Lab run: ${lead.business_name} → ${tool}`,
-      `${leadHeader(lead)}
-       ${inputNote ? `<p><em>Their input:</em> ${escapeHtml(inputNote.slice(0, 1500))}</p>` : ''}
-       <p><em>What the AI delivered:</em></p>
-       <pre style="white-space:pre-wrap;font-family:Georgia,serif;font-size:14px;background:#f8fafc;padding:16px;border-left:3px solid #00C2B2;">${escapeHtml(output)}</pre>`
-    );
-
     if (memoryIsTracked(leadRow)) {
       await updateMemory(supabase, anthropic, lead,
         `[${tool} tool run]\n${inputNote ? `Owner input: ${inputNote.slice(0, 1200)}\n` : ''}Delivered: ${output.slice(0, 3500)}`);
@@ -298,6 +310,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
+  // navigator.sendBeacon delivers text/plain bodies; normalize to JSON
+  if (typeof req.body === 'string') {
+    try { (req as { body: unknown }).body = JSON.parse(req.body); } catch { /* leave as-is */ }
+  }
+
   if (!SUPABASE_URL || !SUPABASE_SERVICE_KEY) {
     return res.status(500).json({ error: 'Server configuration error' });
   }
@@ -306,9 +323,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   const ip = (req.headers['x-forwarded-for'] as string)?.split(',')[0]?.trim() || 'unknown';
-  // Polling for an in-flight run is cheap and frequent — it must not consume
-  // the IP budget or a single generation would trip the backstop by itself.
-  if (req.body?.action !== 'poll' && isRateLimited(ip)) {
+  // Polling and visit-close beacons are cheap and frequent — they must not
+  // consume the IP budget or a single generation would trip the backstop.
+  if (!['poll', 'end-visit'].includes(req.body?.action) && isRateLimited(ip)) {
     return res.status(429).json({ error: 'The lab is popular today — please come back in an hour.' });
   }
 
@@ -468,13 +485,24 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         return res.status(400).json({ error: 'Invalid conversation.' });
       }
 
-      if ((await consumeRun(supabase, leadRow)) === 'capped') return capResponse(res);
+      {
+        const { status, newVisit } = await consumeRun(supabase, leadRow);
+        if (status === 'capped') return capResponse(res);
+        if (newVisit) {
+          waitUntil(notifySuk(
+            `On the bench now: ${lead.business_name}`,
+            `${leadHeader(lead)}<p>A new visit just started — the full summary lands when they leave.</p>`
+          ));
+        }
+      }
 
       let system: string;
       if (isScout) {
         system = scoutSystemPrompt(lead);
       } else {
-        // Ground the follow-up in the latest generated output for that tool
+        // Before the first build this chat is the intake conversation —
+        // gathering the owner's real numbers instead of inferring them.
+        // After a build it grounds follow-ups in the latest deliverable.
         const { data: lastRun } = await supabase
           .from('lab_runs')
           .select('output')
@@ -485,7 +513,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           .order('created_at', { ascending: false })
           .limit(1)
           .maybeSingle();
-        system = followupSystemPrompt(chatTool as GeneratorTool, lead, lastRun?.output ?? null);
+        system = lastRun?.output
+          ? followupSystemPrompt(chatTool as GeneratorTool, lead, lastRun.output)
+          : intakeSystemPrompt(chatTool as GeneratorTool, lead, BUILD_LABELS[chatTool as GeneratorTool]);
       }
 
       // Scout: medium effort but a tight search budget — the prompt has it work
@@ -522,16 +552,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           `[${storeKey} chat]\nOwner said: ${lastUser.slice(0, 1500)}\nAdvisor replied: ${reply.slice(0, 2500)}`));
       }
 
-      // Tell Suk when a conversation opens (first exchange only — the daily
-      // digest carries full transcripts, so this is just the live signal)
-      if (clean.length <= 1) {
-        waitUntil(notifySuk(
-          `Lab live: ${lead.business_name} started talking to ${storeKey}`,
-          `${leadHeader(lead)}<p>First message:</p><blockquote>${escapeHtml(clean[0]?.content ?? '')}</blockquote>
-           <p>Full transcript comes in tonight's digest.</p>`
-        ));
-      }
-
       return res.status(200).json({ reply });
     }
 
@@ -544,8 +564,28 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       if (!GENERATOR_TOOLS.includes(tool as GeneratorTool)) {
         return res.status(400).json({ error: 'Unknown tool.' });
       }
+      // The intake conversation rides along as ground truth for the build
+      if (input.transcript) {
+        if (!Array.isArray(input.transcript)) {
+          delete input.transcript;
+        } else {
+          input.transcript = input.transcript
+            .filter((m) => (m.role === 'user' || m.role === 'assistant') && typeof m.content === 'string')
+            .slice(-30)
+            .map((m) => ({ role: m.role, content: m.content.slice(0, 2000) }));
+        }
+      }
 
-      if ((await consumeRun(supabase, leadRow)) === 'capped') return capResponse(res);
+      {
+        const { status, newVisit } = await consumeRun(supabase, leadRow);
+        if (status === 'capped') return capResponse(res);
+        if (newVisit) {
+          waitUntil(notifySuk(
+            `On the bench now: ${lead.business_name}`,
+            `${leadHeader(lead)}<p>A new visit just started — the full summary lands when they leave.</p>`
+          ));
+        }
+      }
 
       // Pending marker: empty output. 'ERROR::' prefix marks a failed run.
       const { data: runRow, error: runErr } = await supabase
@@ -582,6 +622,27 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         return res.status(200).json({ status: 'error', error: out.slice(7).trim() || 'Generation failed. Try again.' });
       }
       return res.status(200).json({ status: 'done', output: out });
+    }
+
+    // ── Visit ended (browser beacon on page close) — send the consolidated summary ──
+    if (action === 'end-visit') {
+      if (RESEND_API_KEY && 'visit_notified_at' in leadRow && leadRow.last_activity_at) {
+        const lastActivity = new Date(leadRow.last_activity_at as string).getTime();
+        const notified = leadRow.visit_notified_at ? new Date(leadRow.visit_notified_at as string).getTime() : 0;
+        if (lastActivity > notified) {
+          const key = RESEND_API_KEY;
+          waitUntil((async () => {
+            const since = new Date(Date.now() - 12 * 3600 * 1000).toISOString();
+            const sent = await sendVisitSummary(supabase, key, leadRow, since);
+            if (sent) {
+              await supabase.from('lab_leads')
+                .update({ visit_notified_at: new Date().toISOString() })
+                .eq('id', leadId);
+            }
+          })().catch((err) => console.error('Visit summary failed:', err)));
+        }
+      }
+      return res.status(200).json({ ok: true });
     }
 
     return res.status(400).json({ error: 'Unknown action.' });

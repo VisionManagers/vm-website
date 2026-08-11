@@ -2,10 +2,12 @@
   "functions": {
     "api/lab.ts": { "maxDuration": 300 },
     "api/lab-report.ts": { "maxDuration": 60 },
-    "api/lab-digest.ts": { "maxDuration": 60 }
+    "api/lab-digest.ts": { "maxDuration": 60 },
+    "api/lab-visits.ts": { "maxDuration": 60 }
   },
   "crons": [
-    { "path": "/api/lab-digest", "schedule": "0 1 * * *" }
+    { "path": "/api/lab-digest", "schedule": "0 1 * * *" },
+    { "path": "/api/lab-visits", "schedule": "*/10 * * * *" }
   ],
   "redirects": [
     { "source": "/casual-intelligence", "destination": "/ci", "permanent": true },

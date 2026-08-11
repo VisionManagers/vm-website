@@ -248,6 +248,13 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return res.status(502).json({ error: 'Report generated, but the email failed to send. Try again.' });
     }
 
+    // The BCC'd PDF is the consolidated summary for this visit — suppress the
+    // separate visit email (graceful no-op until migration 007 runs)
+    await supabase.from('lab_leads')
+      .update({ visit_notified_at: new Date().toISOString() })
+      .eq('id', leadId)
+      .then(({ error: e }) => { if (e) console.error('visit_notified_at update failed:', e); });
+
     return res.status(200).json({ success: true });
   } catch (err) {
     console.error('Report generation error:', err);
