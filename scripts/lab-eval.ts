@@ -184,8 +184,8 @@ async function runScenario(s: Scenario): Promise<string> {
     return callModel({
       system: scoutSystemPrompt(s.lead),
       messages: s.messages!,
-      maxTokens: 6000,
-      effort: 'low',
+      maxTokens: 8000,
+      effort: 'medium',
       maxSearches: 3,
     });
   }
@@ -193,7 +193,7 @@ async function runScenario(s: Scenario): Promise<string> {
   return callModel({
     system: prompt.system,
     messages: [{ role: 'user', content: prompt.user }],
-    maxTokens: 16000,
+    maxTokens: 24000,
     effort: 'high',
     maxSearches: 5,
   });
@@ -291,6 +291,9 @@ async function main() {
   const argv = process.argv.slice(2);
   const toolArg = argv.includes('--tool') ? argv[argv.indexOf('--tool') + 1] : null;
   const label = argv.includes('--label') ? argv[argv.indexOf('--label') + 1] : `run-${Date.now()}`;
+  // --skip-judge: run scenarios only (outputs saved for external judging —
+  // e.g. judging inside a Claude Code session on subscription usage)
+  const skipJudge = argv.includes('--skip-judge');
 
   const scenarios = SCENARIOS.filter((s) => !toolArg || s.tool === toolArg);
   if (scenarios.length === 0) {
@@ -330,6 +333,12 @@ async function main() {
       }
       const t0 = Date.now();
       const output = await withRetry(() => runScenario(s));
+      if (skipJudge) {
+        console.log(`  ${s.id}: output ready, unjudged (${Math.round((Date.now() - t0) / 1000)}s)`);
+        fs.writeFileSync(path.join(outDir, `${s.id}.output.md`),
+          `# ${s.id} (unjudged)\n\nPERSONA: ${s.lead.name} — ${s.lead.business_name}${s.lead.industry ? ` (${s.lead.industry})` : ''}${s.lead.city ? `, ${s.lead.city}` : ''}. Goal: ${s.lead.goal || 'n/a'}\nSCENARIO: ${s.note}\nMEMORY AVAILABLE:\n${s.lead.memory || '(none)'}\n${s.input ? `OWNER INPUT: ${JSON.stringify(s.input)}` : ''}${s.messages ? `CONVERSATION: ${JSON.stringify(s.messages)}` : ''}\n\n## Output\n\n${output}\n`);
+        return null as any;
+      }
       const j = await withRetry(() => judge(s, output));
       const avg = DIMS.reduce((sum, d) => sum + j[d], 0) / DIMS.length;
       console.log(`  ${s.id}: avg ${avg.toFixed(1)} [${DIMS.map((d) => j[d]).join(' ')}] (${Math.round((Date.now() - t0) / 1000)}s)`);
@@ -338,7 +347,12 @@ async function main() {
         `# ${s.id} — avg ${avg.toFixed(1)}\n\nScores: ${DIMS.map((d) => `${d} ${j[d]}`).join(' · ')}\n\n## Judge notes\n${j.notes}\n\n## Top fixes\n${j.top_fixes.map((f) => `- ${f}`).join('\n')}\n\n## Output\n\n${output}\n`);
       return { scenario: s, output, judge: j, avg };
     }));
-    results.push(...chunkResults);
+    results.push(...chunkResults.filter(Boolean));
+  }
+
+  if (skipJudge) {
+    console.log(`\nOutputs written to ${outDir}/*.output.md — judge externally.`);
+    return;
   }
 
   // Per-tool rollup

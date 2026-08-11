@@ -374,14 +374,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         system = followupSystemPrompt(chatTool as GeneratorTool, lead, lastRun?.output ?? null);
       }
 
-      // Scout runs at low effort with a tight search budget: chat replies must
-      // land well inside the function timeout, and the prompt has it work in
-      // small batches ("keep hunting" spans turns instead of one long turn).
+      // Scout: medium effort but a tight search budget — the prompt has it work
+      // in small batches so "keep hunting" spans turns instead of one long turn
+      // that would blow the function timeout.
       const reply = await callClaude(anthropic, {
         system,
         messages: clean,
-        maxTokens: isScout ? 6000 : 4000,
-        effort: isScout ? 'low' : 'medium',
+        maxTokens: isScout ? 8000 : 4000,
+        effort: 'medium',
         tools: [{ type: 'web_search_20260209', name: 'web_search', max_uses: isScout ? 3 : 2 }],
       });
 
@@ -421,10 +421,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       if ((await consumeRun(supabase, leadRow)) === 'capped') return capResponse(res);
 
       const prompt = generatePrompt(tool as GeneratorTool, lead, input);
+      // 24k max_tokens: high-effort thinking shares the budget with the visible
+      // output, and a truncated deliverable loses its payoff sections.
       const output = await callClaude(anthropic, {
         system: prompt.system,
         messages: [{ role: 'user', content: prompt.user }],
-        maxTokens: 16000,
+        maxTokens: 24000,
         effort: 'high',
         tools: [{ type: 'web_search_20260209', name: 'web_search', max_uses: 5 }],
       });
