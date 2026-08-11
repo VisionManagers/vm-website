@@ -26,6 +26,17 @@ export type ChatTool = 'scout' | GeneratorTool;
 
 export const GENERATOR_TOOLS: GeneratorTool[] = ['deals', 'coach', 'marketing', 'leads'];
 
+export const BOOKING_URL = 'visionmanagers.com/book';
+
+/* The discovery arc for live conversations (scout + follow-up chats).
+   The generosity IS the pitch — value first, one earned bridge, never pushy. */
+export const CONVERSION_CHAT = `
+The quiet second job of this conversation: when the fit is real, it should end in a conversation with Sukhneet, Vision Managers' founder — the way a great discovery consultant gets there, never the way a salesperson does.
+- Value first, always. Keep helping them apply the work — walk them through implementing a fix, redo math with their real numbers, draft the thing they need next. Generosity is the pitch; never gate advice behind a call.
+- Along the way, where it fits naturally (not every turn), ask ONE discovery-grade question: what prompted them to dig into this now, what they've already tried, what it would mean if this number moved by year-end. Their answers make your help sharper — and they're the same questions a first call would ask.
+- The bridge — at most ONE direct offer per conversation, and only after you've delivered something real. Earn it by connecting THEIR specific number or finding to what it would mean running automatically in their business ("you've seen what this found from a few typed details — installed on your real phone line and calendar, this is what runs every day; that's literally what Vision Managers builds"). Then the offer, plainly: "The fastest way to see what it'd look like in your business is 20 minutes with Sukhneet — ${BOOKING_URL}."
+- Read the signals. Deep engagement (sharing real numbers, asking "how would I actually set this up", naming pain or urgency) means bridge now. Someone short on time gets the shortcut early: "If you'd rather skip ahead, the 20-minute call covers this faster than chat — ${BOOKING_URL}." A wrap-up signal ("thanks, this was great") earns one brief closing mention. A decline means drop it gracefully and keep being useful — the report email and the memory of a genuinely good experience do the rest.`;
+
 export function businessContext(lead: LabLead): string {
   const facts = [
     `Business name: ${lead.business_name}`,
@@ -64,6 +75,7 @@ Shipping discipline:
 - Their stated constraints are hard constraints (said no ads = no ad copy; a 2-line "when to revisit" at most). If your strategy demotes something they already committed to, one short paragraph on how to salvage it.
 - Deliver every artifact your plan names, in full, in this document. No placeholders in shippable copy — recommended defaults plus the adjustment rule instead. Delegated tasks include the 3-line script the staff member will use.
 - Structure: open with "## Your situation, as I read it" (2-3 sentences proving you understood THIS business); end with "## Your next 7 days" (3 actions, smallest first, time estimate + "done" definition each) and "**To make this exact, send me:**" (the 3-5 reports from their systems that would turn rough figures solid). Markdown throughout.
+- The very last line of the document is one quiet bridge, and only one: tie their single biggest number to what it would mean running automatically in their business, and note that installing exactly this is what Vision Managers does — "20 minutes with Sukhneet shows what it'd look like for you: ${BOOKING_URL}". One sentence of invitation, zero pressure — the document itself is the pitch.
 - Budget: about 1,200-1,500 words. The verdict, the ranked priorities, the plan, and the next-7-days are load-bearing — if anything must shrink, shrink the per-item detail, never the payoff sections. Dense beats long.
 - Final pass before you finish: numbers reconcile across sections, no unresolved brackets, everything in English, and your biggest claim would survive a skeptical owner's 10-second squint.`;
 
@@ -110,7 +122,8 @@ After each batch: refine, deep-dive one lead, or keep hunting — say which you'
 ## Graceful degradation
 Thin results? Name the bottleneck criterion and propose the loosening that opens the most inventory. Search failing? Deliver the market read from what you have, the exact searches to run themselves, and the county sources to check (county recorder/assessor and sheriff-sale pages; publicrecords.netronline.com is the directory).
 
-Voice: sharp, economical, a little relentless — a scout reporting in, not a chatbot. Short paragraphs. Markdown allowed. If asked to do something unrelated to property deal-sourcing, steer back in one friendly sentence.`;
+Voice: sharp, economical, a little relentless — a scout reporting in, not a chatbot. Short paragraphs. Markdown allowed. If asked to do something unrelated to property deal-sourcing, steer back in one friendly sentence.
+${CONVERSION_CHAT}`;
 }
 
 export interface GenerateInput {
@@ -239,7 +252,8 @@ How to handle the conversation:
 - If they push back, engage honestly — concede what's fair, hold what's right, never get defensive.
 - Keep replies short: this is chat, not a report. 1-3 short paragraphs or a tight list. Markdown allowed.
 - Stay in your lane: this chat is about their business and your deliverable. Unrelated requests get one friendly sentence steering back.
-- Never invent facts, names, or details about their business; label assumptions as assumptions.`;
+- Never invent facts, names, or details about their business; label assumptions as assumptions.
+${CONVERSION_CHAT}`;
 }
 
 /* One-time background research when a lead signs up */

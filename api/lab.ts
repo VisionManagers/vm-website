@@ -187,6 +187,35 @@ function memoryIsTracked(lead: Record<string, unknown>): boolean {
   return 'memory' in lead;
 }
 
+/* ── Lead-activity notifications to Suk ── */
+
+function escapeHtml(s: string): string {
+  return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+function leadHeader(lead: LabLead): string {
+  return `<p><strong>${escapeHtml(lead.name || 'Unknown')}</strong> · ${escapeHtml(lead.email)}${lead.city ? ` · ${escapeHtml(lead.city)}` : ''}<br/>
+    <strong>${escapeHtml(lead.business_name)}</strong>${lead.website ? ` · ${escapeHtml(lead.website)}` : ''}</p>`;
+}
+
+async function notifySuk(subject: string, html: string): Promise<void> {
+  if (!RESEND_API_KEY) return;
+  try {
+    await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: { 'Authorization': `Bearer ${RESEND_API_KEY}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        from: 'Vision Managers <notifications@visionmanagers.com>',
+        to: NOTIFY_EMAIL,
+        subject,
+        html,
+      }),
+    });
+  } catch (err) {
+    console.error('Activity notification failed:', err);
+  }
+}
+
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
@@ -408,6 +437,16 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           `[${storeKey} chat]\nOwner said: ${lastUser.slice(0, 1500)}\nAdvisor replied: ${reply.slice(0, 2500)}`));
       }
 
+      // Tell Suk when a conversation opens (first exchange only — the daily
+      // digest carries full transcripts, so this is just the live signal)
+      if (clean.length <= 1) {
+        waitUntil(notifySuk(
+          `Lab live: ${lead.business_name} started talking to ${storeKey}`,
+          `${leadHeader(lead)}<p>First message:</p><blockquote>${escapeHtml(clean[0]?.content ?? '')}</blockquote>
+           <p>Full transcript comes in tonight's digest.</p>`
+        ));
+      }
+
       return res.status(200).json({ reply });
     }
 
@@ -437,6 +476,19 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         const inputNote = [input.question, input.details, input.braindump].filter(Boolean).join(' | ');
         waitUntil(updateMemory(supabase, anthropic, lead,
           `[${tool} tool run]\n${inputNote ? `Owner input: ${inputNote.slice(0, 1200)}\n` : ''}Delivered: ${output.slice(0, 3500)}`));
+      }
+
+      // Every generator run goes straight to Suk with the full deliverable —
+      // these are the hot-lead moments worth a same-hour follow-up
+      {
+        const inputNote = [input.question, input.details, input.braindump].filter(Boolean).join(' | ');
+        waitUntil(notifySuk(
+          `Lab run: ${lead.business_name} → ${tool}`,
+          `${leadHeader(lead)}
+           ${inputNote ? `<p><em>Their input:</em> ${escapeHtml(inputNote.slice(0, 1500))}</p>` : ''}
+           <p><em>What the AI delivered:</em></p>
+           <pre style="white-space:pre-wrap;font-family:Georgia,serif;font-size:14px;background:#f8fafc;padding:16px;border-left:3px solid #00C2B2;">${escapeHtml(output)}</pre>`
+        ));
       }
 
       return res.status(200).json({ output });
