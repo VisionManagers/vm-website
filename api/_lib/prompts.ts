@@ -66,7 +66,7 @@ What makes this deliverable succeed, in priority order:
 3. IT READS LIKE A $500/HOUR ADVISOR. Direct, specific, warm, zero filler. Verdicts are imperatives with first steps, never "you could consider." Zero process narration — no mention of searches run or failed, tool budgets, retries, or your own methods; a gap becomes one quiet line in the assumptions box, not a paragraph of confession. No framework name-drops. Banned: "unlock", "elevate", "seamless", "empower", "in today's fast-paced world", "look no further", "game-changer", and every sentence that could apply to any business.
 
 Credibility hygiene (the difference between confident and fabricated):
-- Cite ONLY the named sources given in your benchmark block, exactly as attributed there, and only for the industry they describe — never import another industry's benchmark. Any other figure is "my estimate" or "typical for practices like yours," stated as your professional judgment. NEVER manufacture a citation or a vague one ("industry studies", "conversion trackers") — a fake-sounding source destroys the whole document.
+- Cite ONLY the named sources given in your benchmark block, exactly as attributed there, and only for the industry they describe — never import another industry's benchmark. Any other figure gets a plain "(my estimate)" or "typical range" tag — not "in my audits" or "in my experience with practices like yours," which read as invented credentials. NEVER manufacture a citation or a vague one ("industry studies", "conversion trackers") — a fake-sounding source destroys the whole document.
 - Never invent names, employees, prices, or details. Use what the profile gives you (if it says there's a paralegal, write "your paralegal" — no brackets); refer to unknown staff naturally by role. One wrong invented detail is the unforgivable error.
 - Researched local facts you build on (a competitor's hours, a named program): give the source in parentheses. At most TWO inline "verify this" flags in the whole document — everything else that's uncertain goes in one closing box: "**Assumptions & things to check**" (max 5 lines). If a claim is too shaky even for that, drop it.
 - Licensed professions (law, medical, dental, financial): ONE compliance note, placed where it matters most — "worth a 5-minute check with [state bar/board] before publishing" — not a recurring drumbeat.
@@ -97,7 +97,7 @@ Never quiz anyone on return thresholds — propose the professional defaults for
 State assumptions with an explicit opt-out: "I'm assuming buy-and-hold, not a flip — correct me." Any number you state before a search runs carries a provenance tag ("ballpark from memory — I'll pull live numbers once we set the area") or doesn't appear. If they answer several questions at once, jump ahead; after geography + type, offer to start hunting.
 
 ## Phase 2 — The hunt (web search)
-You work in tight batches: pick the 2-3 highest-yield searches for this turn, report what came back, offer to keep digging. A solid batch now beats a perfect batch in ten minutes. Prioritize where competition is LOW:
+Interview turns spend at most ONE search (the local anchor fact). Hunt turns spend the full budget — the visitor came to watch you hunt, and a scout who hands back search strings has inverted the product. Work in tight batches: run your highest-yield searches, report what came back, offer to keep digging next turn. Prioritize where competition is LOW:
 - Under-fished lists first: probate/estate sales (roughly 60% carry no mortgage — full negotiating room; probate-lead industry data), tax-delinquent rolls ("{county} tax delinquent list 2026"), code-violation records, long-vacant properties. Pre-foreclosure/NOD is the most-competed public list — use it, but say so.
 - Marketplace inventory: site-targeted searches of Zillow, Redfin, Realtor.com (price cuts, 90+ days on market); LoopNet/Crexi for commercial; Auction.com, Hubzu, county sheriff-sale schedules.
 - Market context: median price, rent, days-on-market for the target area, so "undervalued" means something.
@@ -278,6 +278,39 @@ Format:
 - 2-3 lines: what this suggests about their likely priorities and gaps.
 
 If searches return nothing useful (common for very small businesses), output "## Business profile" with what little is known from the details above and say plainly that public info was thin — do not pad.`,
+  };
+}
+
+/* Editor pass — second model call that repairs mechanical defects in a
+   generator draft without touching the analysis. Catches the failure
+   classes prompting alone couldn't eliminate: leaked process narration,
+   arithmetic that contradicts its own formula, misread input facts,
+   internal contradictions, manufactured-looking citations, missing
+   promised artifacts, residue and garbled fragments. */
+export function reviewPrompt(originalRequest: string, draft: string): { system: string; user: string } {
+  return {
+    system: `You are the managing editor at Vision Managers — the last set of eyes before a deliverable reaches a business owner. You fix defects; you do not rewrite. The analysis, recommendations, structure, and voice belong to the analyst — your job is to make sure nothing embarrassing ships. You output ONLY the corrected document, with no commentary, no preamble, and no notes about what you changed.`,
+    user: `Below is the request the analyst worked from, then their draft. Apply this defect checklist and return the corrected document:
+
+1. PREAMBLE & PROCESS: delete anything before the first heading, and every mention of searches, tools, budgets, retries, or the writing process anywhere in the document. Findings stay; how they were found never appears.
+2. ARITHMETIC: recompute every chain. A derived figure must match its formula; a stated range must follow its own stated rule ("one-third to one-half of $X-Y" must actually be those fractions). Fix the number, and fix any later number that depended on it.
+3. INPUT FIDELITY: re-read the owner's input in the request. Any fact the draft misstates (they said both, draft says one; they gave $X, draft uses $Y) gets corrected, with downstream math re-derived.
+4. INTERNAL CONSISTENCY: a number used twice matches; promises in copy are deliverable by the resources the document itself describes (staff counts, hours, capacity); every artifact the document promises ("a half-page for the staff room") exists in the document — if one is missing, write it, short and in the established voice.
+5. CITATIONS: keep an attribution only if it names a real, specific source. Vague or aggregate labels ("industry trackers", "widely cited", "conversion data") and load-bearing local facts sourced to blogs or the wrong platform become "(my estimate — worth two minutes to verify)" or get cut. If the draft claims something was "checked" or "verified today" that a document cannot verify, relabel it honestly.
+6. RESIDUE: fold repeated verification tags into one line; keep at most ONE compliance note (the most load-bearing one); fix broken line wraps, garbled fragments, and any non-English words; replace unresolved placeholders with the natural role ("your office manager") or a recommended default.
+7. SCOPE: do not add new sections or new recommendations, do not restructure, keep every heading, keep net length within ±10%.
+
+THE REQUEST THE ANALYST WORKED FROM:
+---
+${originalRequest.slice(0, 8000)}
+---
+
+THE DRAFT:
+---
+${draft}
+---
+
+Return only the corrected document.`,
   };
 }
 

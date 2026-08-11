@@ -21,7 +21,7 @@ import path from 'node:path';
 import Anthropic from '@anthropic-ai/sdk';
 import {
   LabLead, GeneratorTool, GenerateInput,
-  scoutSystemPrompt, generatePrompt,
+  scoutSystemPrompt, generatePrompt, reviewPrompt,
 } from '../api/_lib/prompts';
 
 const MODEL = 'claude-opus-5';
@@ -186,17 +186,30 @@ async function runScenario(s: Scenario): Promise<string> {
       messages: s.messages!,
       maxTokens: 8000,
       effort: 'medium',
-      maxSearches: 3,
+      maxSearches: 5,
     });
   }
   const prompt = generatePrompt(s.tool, s.lead, s.input ?? {});
-  return callModel({
+  const draft = await callModel({
     system: prompt.system,
     messages: [{ role: 'user', content: prompt.user }],
     maxTokens: 24000,
     effort: 'high',
     maxSearches: 5,
   });
+  // Mirror production: editor pass repairs mechanical defects
+  const review = reviewPrompt(prompt.user, draft);
+  const resp = await anthropic.messages.create({
+    model: MODEL,
+    max_tokens: 20000,
+    system: review.system,
+    messages: [{ role: 'user', content: review.user }],
+    output_config: { effort: 'medium' },
+  });
+  const edited = resp.content
+    .filter((b): b is Anthropic.TextBlock => b.type === 'text')
+    .map((b) => b.text).join('\n').trim();
+  return edited.length > draft.length * 0.6 && edited.length < draft.length * 1.4 ? edited : draft;
 }
 
 /* ── Judge ── */
