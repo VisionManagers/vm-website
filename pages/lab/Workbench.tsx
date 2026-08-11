@@ -410,6 +410,20 @@ const ChatTool: React.FC<{
 
 /* ── Generator tools (one-shot output + follow-up conversation) ── */
 
+/* The big runs take 2-5 minutes server-side; the browser polls rather than
+   holding a connection open, and these staged messages keep the wait honest */
+const PROGRESS_STAGES: { at: number; msg: string }[] = [
+  { at: 0, msg: 'Reading everything it knows about your business…' },
+  { at: 15, msg: 'Researching your market — live web search…' },
+  { at: 50, msg: 'Checking local competitors and real benchmarks…' },
+  { at: 95, msg: 'Running the numbers — every figure shows its math…' },
+  { at: 150, msg: 'Writing your walkthrough…' },
+  { at: 210, msg: 'Editor pass — checking every number twice…' },
+  { at: 260, msg: 'Almost there — formatting the final document…' },
+];
+
+const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+
 const GeneratorTool: React.FC<{
   session: Session;
   tool: GeneratorKey;
@@ -418,6 +432,7 @@ const GeneratorTool: React.FC<{
 }> = ({ session, tool, onRan, onBusyChange }) => {
   const [output, setOutput] = useState('');
   const [busy, setBusy] = useState(false);
+  const [progress, setProgress] = useState('');
   const [error, setError] = useState('');
   const [capped, setCapped] = useState(false);
   const [question, setQuestion] = useState('');
@@ -432,9 +447,27 @@ const GeneratorTool: React.FC<{
       const input =
         tool === 'coach' ? { question, braindump } :
         tool === 'marketing' ? { assetType, braindump } : { braindump };
-      const { output: text } = await postJson('/api/lab', { action: 'generate', leadId: session.leadId, tool, input });
-      setOutput(text);
-      onRan();
+      const { runId } = await postJson('/api/lab', { action: 'generate', leadId: session.leadId, tool, input });
+
+      const t0 = Date.now();
+      // Poll up to 7 minutes; the server job itself is bounded well under that
+      while (Date.now() - t0 < 7 * 60 * 1000) {
+        const elapsed = (Date.now() - t0) / 1000;
+        const stage = [...PROGRESS_STAGES].reverse().find((s) => elapsed >= s.at);
+        setProgress(stage?.msg ?? PROGRESS_STAGES[0].msg);
+        await sleep(4000);
+        const poll = await postJson('/api/lab', { action: 'poll', leadId: session.leadId, runId });
+        if (poll.status === 'done') {
+          setOutput(poll.output);
+          onRan();
+          return;
+        }
+        if (poll.status === 'error') {
+          setError(poll.error || 'Generation failed. Try again.');
+          return;
+        }
+      }
+      setError('This one ran long and timed out. Run it again — your inputs are saved.');
     } catch (err) {
       if ((err as LabError).capReached) {
         setCapped(true);
@@ -443,6 +476,7 @@ const GeneratorTool: React.FC<{
       }
     } finally {
       setBusy(false);
+      setProgress('');
       onBusyChange?.(false);
     }
   };
@@ -514,10 +548,20 @@ const GeneratorTool: React.FC<{
       )}
 
       {capped ? <CapNotice /> : (
-        <button onClick={run} disabled={busy} className={buttonPrimary + ' disabled:opacity-60'}>
-          {busy ? <Loader2 className="w-5 h-5 animate-spin" /> : <Sparkles className="w-5 h-5" />}
-          {busy ? 'Working — researching and building…' : output ? 'Run it again' : buttonLabel[tool]}
-        </button>
+        <>
+          <button onClick={run} disabled={busy} className={buttonPrimary + ' disabled:opacity-60'}>
+            {busy ? <Loader2 className="w-5 h-5 animate-spin" /> : <Sparkles className="w-5 h-5" />}
+            {busy ? 'Working — a real one takes a few minutes' : output ? 'Run it again' : buttonLabel[tool]}
+          </button>
+          {busy && progress && (
+            <p className="text-sm text-vmNavy/70 mt-3 italic transition-all">{progress}</p>
+          )}
+          {busy && (
+            <p className="text-xs text-slate-400 mt-1">
+              Feel free to switch tools while this works — it keeps going in the background.
+            </p>
+          )}
+        </>
       )}
       {error && <p className="text-sm text-red-600 mt-3">{error}</p>}
 

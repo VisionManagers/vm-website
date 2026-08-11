@@ -187,6 +187,83 @@ function memoryIsTracked(lead: Record<string, unknown>): boolean {
   return 'memory' in lead;
 }
 
+/* The full generator pipeline, run after the response is sent: draft →
+   editor pass → write output to the run row → notify Suk → update memory.
+   Failures write an ERROR:: marker the poll endpoint translates. */
+async function runGeneration(
+  supabase: SupabaseClient,
+  anthropic: Anthropic,
+  lead: LabLead,
+  leadRow: Record<string, unknown>,
+  tool: GeneratorTool,
+  input: GenerateInput,
+  runId: string
+): Promise<void> {
+  try {
+    const prompt = generatePrompt(tool, lead, input);
+    // 24k max_tokens: high-effort thinking shares the budget with the visible
+    // output, and a truncated deliverable loses its payoff sections.
+    const t0 = Date.now();
+    const draft = await callClaude(anthropic, {
+      system: prompt.system,
+      messages: [{ role: 'user', content: prompt.user }],
+      maxTokens: 24000,
+      effort: 'high',
+      tools: [{ type: 'web_search_20260209', name: 'web_search', max_uses: 5 }],
+    });
+
+    // Editor pass: repairs mechanical defects without touching the analysis.
+    // Low effort — a checklist edit — and skipped if the draft already ate
+    // most of the 300s function budget.
+    let output = draft;
+    if (Date.now() - t0 < 180_000) {
+      try {
+        const review = reviewPrompt(prompt.user, draft);
+        const edited = await callClaude(anthropic, {
+          system: review.system,
+          messages: [{ role: 'user', content: review.user }],
+          maxTokens: 20000,
+          effort: 'low',
+        });
+        // Sanity: an editor that returns a stub or balloons the doc is wrong
+        if (edited.length > draft.length * 0.6 && edited.length < draft.length * 1.4) {
+          output = edited;
+        }
+      } catch (err) {
+        console.error('Editor pass failed, shipping draft:', err);
+      }
+    }
+
+    if (!output.trim()) {
+      throw new Error('Empty generation');
+    }
+
+    await supabase.from('lab_runs').update({ output }).eq('id', runId);
+
+    // Every generator run goes straight to Suk with the full deliverable —
+    // these are the hot-lead moments worth a same-hour follow-up
+    const inputNote = [input.question, input.details, input.braindump].filter(Boolean).join(' | ');
+    await notifySuk(
+      `Lab run: ${lead.business_name} → ${tool}`,
+      `${leadHeader(lead)}
+       ${inputNote ? `<p><em>Their input:</em> ${escapeHtml(inputNote.slice(0, 1500))}</p>` : ''}
+       <p><em>What the AI delivered:</em></p>
+       <pre style="white-space:pre-wrap;font-family:Georgia,serif;font-size:14px;background:#f8fafc;padding:16px;border-left:3px solid #00C2B2;">${escapeHtml(output)}</pre>`
+    );
+
+    if (memoryIsTracked(leadRow)) {
+      await updateMemory(supabase, anthropic, lead,
+        `[${tool} tool run]\n${inputNote ? `Owner input: ${inputNote.slice(0, 1200)}\n` : ''}Delivered: ${output.slice(0, 3500)}`);
+    }
+  } catch (err) {
+    console.error(`Generation ${runId} failed:`, err);
+    await supabase.from('lab_runs')
+      .update({ output: 'ERROR:: The generation hit a snag. Run it again — your inputs are saved.' })
+      .eq('id', runId)
+      .then(({ error }) => { if (error) console.error('Error-marker write failed:', error); });
+  }
+}
+
 /* ── Lead-activity notifications to Suk ── */
 
 function escapeHtml(s: string): string {
@@ -229,7 +306,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   const ip = (req.headers['x-forwarded-for'] as string)?.split(',')[0]?.trim() || 'unknown';
-  if (isRateLimited(ip)) {
+  // Polling for an in-flight run is cheap and frequent — it must not consume
+  // the IP budget or a single generation would trip the backstop by itself.
+  if (req.body?.action !== 'poll' && isRateLimited(ip)) {
     return res.status(429).json({ error: 'The lab is popular today — please come back in an hour.' });
   }
 
@@ -401,6 +480,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           .select('output')
           .eq('lead_id', leadId)
           .eq('tool', chatTool)
+          .neq('output', '')
+          .not('output', 'like', 'ERROR::%')
           .order('created_at', { ascending: false })
           .limit(1)
           .maybeSingle();
@@ -455,6 +536,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     // ── One-shot generators: deals, coach, marketing, leads ──
+    // Async job pattern: browsers kill multi-minute synchronous responses, so
+    // generate returns a runId instantly, the work continues via waitUntil
+    // writing into the lab_runs row, and the client polls for the result.
     if (action === 'generate') {
       const { tool, input = {} } = req.body as { tool: string; input?: GenerateInput };
       if (!GENERATOR_TOOLS.includes(tool as GeneratorTool)) {
@@ -463,64 +547,41 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
       if ((await consumeRun(supabase, leadRow)) === 'capped') return capResponse(res);
 
-      const prompt = generatePrompt(tool as GeneratorTool, lead, input);
-      // 24k max_tokens: high-effort thinking shares the budget with the visible
-      // output, and a truncated deliverable loses its payoff sections.
-      const t0 = Date.now();
-      const draft = await callClaude(anthropic, {
-        system: prompt.system,
-        messages: [{ role: 'user', content: prompt.user }],
-        maxTokens: 24000,
-        effort: 'high',
-        tools: [{ type: 'web_search_20260209', name: 'web_search', max_uses: 5 }],
-      });
-
-      // Editor pass: repairs mechanical defects (leaked narration, arithmetic
-      // that contradicts itself, misread inputs, residue) without touching the
-      // analysis. Low effort — it's a checklist edit, not analysis — and
-      // skipped entirely if the draft already ate the 300s function budget:
-      // shipping an unedited draft beats timing out the whole request.
-      let output = draft;
-      if (Date.now() - t0 < 200_000) {
-        try {
-          const review = reviewPrompt(prompt.user, draft);
-          const edited = await callClaude(anthropic, {
-            system: review.system,
-            messages: [{ role: 'user', content: review.user }],
-            maxTokens: 20000,
-            effort: 'low',
-          });
-          // Sanity: an editor that returns a stub or balloons the doc is wrong
-          if (edited.length > draft.length * 0.6 && edited.length < draft.length * 1.4) {
-            output = edited;
-          }
-        } catch (err) {
-          console.error('Editor pass failed, shipping draft:', err);
-        }
+      // Pending marker: empty output. 'ERROR::' prefix marks a failed run.
+      const { data: runRow, error: runErr } = await supabase
+        .from('lab_runs')
+        .insert({ lead_id: leadId, tool, input, output: '' })
+        .select('id')
+        .single();
+      if (runErr || !runRow) {
+        console.error('Run insert failed:', runErr);
+        return res.status(500).json({ error: 'Could not start the run. Try again.' });
       }
 
-      await supabase.from('lab_runs').insert({ lead_id: leadId, tool, input, output });
+      waitUntil(runGeneration(supabase, anthropic, lead, leadRow, tool as GeneratorTool, input, runRow.id));
 
-      if (memoryIsTracked(leadRow)) {
-        const inputNote = [input.question, input.details, input.braindump].filter(Boolean).join(' | ');
-        waitUntil(updateMemory(supabase, anthropic, lead,
-          `[${tool} tool run]\n${inputNote ? `Owner input: ${inputNote.slice(0, 1200)}\n` : ''}Delivered: ${output.slice(0, 3500)}`));
+      return res.status(202).json({ runId: runRow.id });
+    }
+
+    // ── Poll an in-flight generator run ──
+    if (action === 'poll') {
+      const { runId } = req.body as { runId?: string };
+      if (!runId || typeof runId !== 'string') {
+        return res.status(400).json({ error: 'Missing run.' });
       }
-
-      // Every generator run goes straight to Suk with the full deliverable —
-      // these are the hot-lead moments worth a same-hour follow-up
-      {
-        const inputNote = [input.question, input.details, input.braindump].filter(Boolean).join(' | ');
-        waitUntil(notifySuk(
-          `Lab run: ${lead.business_name} → ${tool}`,
-          `${leadHeader(lead)}
-           ${inputNote ? `<p><em>Their input:</em> ${escapeHtml(inputNote.slice(0, 1500))}</p>` : ''}
-           <p><em>What the AI delivered:</em></p>
-           <pre style="white-space:pre-wrap;font-family:Georgia,serif;font-size:14px;background:#f8fafc;padding:16px;border-left:3px solid #00C2B2;">${escapeHtml(output)}</pre>`
-        ));
+      const { data: run } = await supabase
+        .from('lab_runs')
+        .select('output')
+        .eq('id', runId)
+        .eq('lead_id', leadId)
+        .maybeSingle();
+      if (!run) return res.status(404).json({ error: 'Run not found.' });
+      const out = (run.output as string) || '';
+      if (!out) return res.status(200).json({ status: 'pending' });
+      if (out.startsWith('ERROR::')) {
+        return res.status(200).json({ status: 'error', error: out.slice(7).trim() || 'Generation failed. Try again.' });
       }
-
-      return res.status(200).json({ output });
+      return res.status(200).json({ status: 'done', output: out });
     }
 
     return res.status(400).json({ error: 'Unknown action.' });
