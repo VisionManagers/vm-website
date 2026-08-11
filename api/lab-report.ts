@@ -93,7 +93,7 @@ function markdownBlocks(md: string): React.ReactNode[] {
 const TOOL_TITLES: Record<string, string> = {
   deals: 'Deal Finder — Hidden Revenue Opportunities',
   coach: 'Business Coach — Your Session',
-  marketing: 'Marketing Studio — Ready-to-Use Copy',
+  marketing: 'Marketing Strategist — Your Strategy & Materials',
   leads: 'Lead Machine — Your Acquisition Playbook',
 };
 
@@ -101,6 +101,10 @@ const TOOL_TITLES: Record<string, string> = {
 const TRANSCRIPT_TITLES: Record<string, { title: string; user: string; agent: string }> = {
   chat: { title: 'Try to Stump It — Your Conversation with the Agent', user: 'You', agent: 'Agent' },
   scout: { title: 'Deal Scout — Your Property Hunt', user: 'You', agent: 'Scout' },
+  'deals-chat': { title: 'Deal Finder — Your Follow-Up Conversation', user: 'You', agent: 'Analyst' },
+  'coach-chat': { title: 'Business Coach — Your Follow-Up Conversation', user: 'You', agent: 'Coach' },
+  'marketing-chat': { title: 'Marketing Strategist — Your Follow-Up Conversation', user: 'You', agent: 'Strategist' },
+  'leads-chat': { title: 'Lead Machine — Your Follow-Up Conversation', user: 'You', agent: 'Strategist' },
 };
 
 interface RunRow { tool: string; output: string; input: unknown; created_at: string }
@@ -130,8 +134,8 @@ function buildPdf(lead: { name: string | null; business_name: string; industry: 
     const meta = TRANSCRIPT_TITLES[run.tool];
     children.push(e(Text, { style: styles.sectionTitle }, meta.title));
     for (const msg of (run.input as { role: string; content: string }[]).slice(0, 30)) {
-      if (msg.role === 'assistant' && run.tool === 'scout') {
-        // Scout replies are markdown deal reports — render them properly
+      if (msg.role === 'assistant' && run.tool !== 'chat') {
+        // Agent replies are markdown — render them properly (legacy 'chat' stays plain)
         children.push(e(Text, { style: { ...styles.h3, color: TEAL } }, meta.agent));
         children.push(...markdownBlocks(msg.content));
       } else {

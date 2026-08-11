@@ -33,8 +33,8 @@ const GREENHOUSE = [
   },
   {
     title: 'Call the demo line',
-    desc: 'A live voice agent you can phone and try to stump. The text version is live now in The Workbench — the phone version is next.',
-    status: 'Text version live · voice next',
+    desc: 'A live voice agent you can phone and try to stump — the AI receptionist answers at (425) 494-4489, linked from The Workbench.',
+    status: 'Live now',
   },
   {
     title: '3D equipment teardowns',
@@ -117,11 +117,11 @@ const TheLab: React.FC = () => {
                   <p className="eyebrow text-vmTeal mb-3">Lab 004 · Live now · Newest exhibit</p>
                   <h2 className="text-3xl md:text-4xl font-serif text-white mb-5 italic">The Workbench.</h2>
                   <p className="text-white/70 leading-relaxed mb-8">
-                    Six AI tools that rebuild themselves around <em>your</em> business the moment
-                    you enter it: an AI receptionist you can talk to, a property scout with live
-                    web search, a deal finder that sizes your hidden revenue in dollars, a business
-                    coach, a marketing studio, and a lead machine. Everything you make is emailed
-                    to you as a designed report.
+                    Five AI tools that research <em>your</em> business the moment you enter — and
+                    remember you when you come back: a property scout with live web search, a deal
+                    finder that sizes your hidden revenue in dollars, a business coach, a marketing
+                    strategist, and a lead machine. Plus an AI receptionist answering a real phone
+                    line. Everything you make is emailed to you as a designed report.
                   </p>
                   <Link to="/lab/workbench" className={buttonTealOnNavy}>
                     Sit down at the bench <ArrowRight className="w-5 h-5" />
@@ -129,11 +129,11 @@ const TheLab: React.FC = () => {
                 </div>
                 <div className="md:col-span-2 bg-white/5 border-t md:border-t-0 md:border-l border-white/10 p-10 md:p-14 flex flex-col justify-center gap-5">
                   {[
-                    'AI Receptionist — the front desk that never misses a call',
+                    'AI Receptionist — call it live: (425) 494-4489',
                     'Deal Scout — live property deal sourcing',
                     'Deal Finder — your hidden revenue, in dollars',
                     'Business Coach — direct answers, your context',
-                    'Marketing Studio — copy you can ship today',
+                    'Marketing Strategist — strategy first, then the copy',
                     'Lead Machine — who to reach and how',
                   ].map((item) => (
                     <div key={item} className="flex items-start gap-3">

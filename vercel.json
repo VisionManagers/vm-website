@@ -1,6 +1,6 @@
 {
   "functions": {
-    "api/lab.ts": { "maxDuration": 60 },
+    "api/lab.ts": { "maxDuration": 300 },
     "api/lab-report.ts": { "maxDuration": 60 }
   },
   "redirects": [

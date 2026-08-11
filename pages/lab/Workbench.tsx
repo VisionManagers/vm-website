@@ -7,21 +7,26 @@ import {
   buttonPrimary,
 } from '../../components/ornaments';
 import {
-  MessageCircle, Gem, Compass, Megaphone, Magnet, Building2,
-  ArrowRight, Send, Loader2, Mail, CheckCircle2, RotateCcw, Sparkles,
+  Gem, Compass, Megaphone, Magnet, Building2, Phone,
+  ArrowRight, Send, Loader2, Mail, CheckCircle2, RotateCcw, Sparkles, Mic,
 } from 'lucide-react';
 
 /* ────────────────────────────────────────────────────────────────
    The Workbench — five live AI tools, personalized to the visitor's
-   business, with an emailed PDF report as the capture mechanic.
+   business, with working memory across sessions and an emailed PDF
+   report as the capture mechanic. The AI receptionist demo lives on
+   a real phone line: (425) 494-4489.
    ──────────────────────────────────────────────────────────────── */
 
 const STORAGE_KEY = 'vm_lab_session';
+const RECEPTIONIST_TEL = '+14254944489';
+const RECEPTIONIST_DISPLAY = '(425) 494-4489';
 
 interface Session {
   leadId: string;
   businessName: string;
   name: string;
+  returning?: boolean;
 }
 
 interface ChatMsg {
@@ -29,14 +34,14 @@ interface ChatMsg {
   content: string;
 }
 
-type ToolKey = 'chat' | 'scout' | 'deals' | 'coach' | 'marketing' | 'leads';
+type ToolKey = 'scout' | 'deals' | 'coach' | 'marketing' | 'leads';
+type GeneratorKey = 'deals' | 'coach' | 'marketing' | 'leads';
 
 const TOOLS: { key: ToolKey; icon: React.ElementType; title: string; tagline: string }[] = [
-  { key: 'chat', icon: MessageCircle, title: 'AI Receptionist', tagline: 'The AI front desk that answers when you can’t. Chat with it like a caller would.' },
-  { key: 'scout', icon: Building2, title: 'Deal Scout', tagline: 'Finds real property deals with live web search. Answer a few questions, then it hunts.' },
+  { key: 'scout', icon: Building2, title: 'Deal Scout', tagline: 'Hunts real property deals with live web search — built for investors and agents.' },
   { key: 'deals', icon: Gem, title: 'Deal Finder', tagline: 'Finds the revenue hiding in how your business runs today — sized in dollars.' },
-  { key: 'coach', icon: Compass, title: 'Business Coach', tagline: 'Ask any business question. Get a direct, practical answer.' },
-  { key: 'marketing', icon: Megaphone, title: 'Marketing Studio', tagline: 'Writes your emails, social posts, and ads — ready to use today.' },
+  { key: 'coach', icon: Compass, title: 'Business Coach', tagline: 'Ask any business question. Get a direct, practical answer — then talk it through.' },
+  { key: 'marketing', icon: Megaphone, title: 'Marketing Strategist', tagline: 'Diagnoses your market, picks the angle, then writes everything — strategy first.' },
   { key: 'leads', icon: Magnet, title: 'Lead Machine', tagline: 'Builds your client-finding playbook: who, where, and the exact scripts.' },
 ];
 
@@ -101,6 +106,10 @@ function renderMarkdown(md: string): string {
   return DOMPurify.sanitize(parts.join(''));
 }
 
+interface LabError extends Error {
+  capReached?: boolean;
+}
+
 async function postJson(url: string, body: unknown): Promise<any> {
   const res = await fetch(url, {
     method: 'POST',
@@ -108,9 +117,117 @@ async function postJson(url: string, body: unknown): Promise<any> {
     body: JSON.stringify(body),
   });
   const data = await res.json().catch(() => ({}));
-  if (!res.ok) throw new Error(data.error || 'Something went wrong. Try again.');
+  if (!res.ok) {
+    const err: LabError = new Error(data.error || 'Something went wrong. Try again.');
+    err.capReached = !!data.capReached;
+    throw err;
+  }
   return data;
 }
+
+/* ── Speech-to-text (browser Web Speech API; hidden where unsupported) ── */
+
+function getSpeechRecognition(): any {
+  if (typeof window === 'undefined') return null;
+  return (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition || null;
+}
+
+function useSpeech(onText: (text: string) => void) {
+  const recRef = useRef<any>(null);
+  const onTextRef = useRef(onText);
+  onTextRef.current = onText;
+  const [listening, setListening] = useState(false);
+  const supported = !!getSpeechRecognition();
+
+  useEffect(() => () => { recRef.current?.stop?.(); }, []);
+
+  const toggle = () => {
+    if (listening) {
+      recRef.current?.stop();
+      setListening(false);
+      return;
+    }
+    const SR = getSpeechRecognition();
+    if (!SR) return;
+    const rec = new SR();
+    rec.continuous = true;
+    rec.interimResults = false;
+    rec.lang = 'en-US';
+    rec.onresult = (ev: any) => {
+      let text = '';
+      for (let i = ev.resultIndex; i < ev.results.length; i++) {
+        if (ev.results[i].isFinal) text += ev.results[i][0].transcript;
+      }
+      if (text.trim()) onTextRef.current(text.trim());
+    };
+    rec.onend = () => setListening(false);
+    rec.onerror = () => setListening(false);
+    recRef.current = rec;
+    rec.start();
+    setListening(true);
+  };
+
+  return { supported, listening, toggle };
+}
+
+const MicButton: React.FC<{ onText: (t: string) => void; className?: string }> = ({ onText, className }) => {
+  const { supported, listening, toggle } = useSpeech(onText);
+  if (!supported) return null;
+  return (
+    <button
+      type="button"
+      onClick={toggle}
+      aria-label={listening ? 'Stop dictating' : 'Dictate instead of typing'}
+      title={listening ? 'Stop dictating' : 'Talk instead of typing'}
+      className={`shrink-0 w-10 h-10 rounded-sm border flex items-center justify-center transition-all ${
+        listening
+          ? 'bg-red-50 border-red-300 text-red-600 animate-pulse'
+          : 'bg-white border-slate-200 text-slate-400 hover:text-vmNavy hover:border-vmNavy/40'
+      } ${className || ''}`}
+    >
+      <Mic className="w-4 h-4" />
+    </button>
+  );
+};
+
+/* ── Cap-reached notice (conversion moment, not an error) ── */
+
+const CapNotice: React.FC = () => (
+  <div className="mt-4 bg-vmNavy/5 border border-vmNavy/15 rounded-sm p-5">
+    <p className="text-sm text-vmNavy font-semibold mb-1">You've used today's bench time.</p>
+    <p className="text-sm text-slate-600 leading-relaxed mb-4">
+      The bench resets tomorrow — or skip the wait and see these tools uncapped,
+      wired into your real phone line, calendar, and numbers.
+    </p>
+    <a href={BOOKING_URLS.BOOK} target="_blank" rel="noopener noreferrer"
+      className="inline-flex items-center gap-2 text-sm font-bold text-vmNavy hover:text-vmTeal transition-colors">
+      Book your 20-minute discovery call <ArrowRight className="w-4 h-4" />
+    </a>
+  </div>
+);
+
+/* ── Live receptionist call card ── */
+
+const ReceptionistCard: React.FC<{ compact?: boolean }> = ({ compact }) => (
+  <div className={`bg-vmNavy rounded-sm ${compact ? 'p-6' : 'p-6 md:p-8'} flex flex-col sm:flex-row sm:items-center gap-5`}>
+    <div className="w-12 h-12 bg-vmTeal/15 rounded-sm flex items-center justify-center shrink-0">
+      <Phone className="w-6 h-6 text-vmTeal" aria-hidden />
+    </div>
+    <div className="flex-grow">
+      <h3 className="text-lg font-serif text-white">The AI Receptionist answers a real phone line.</h3>
+      <p className="text-sm text-white/60 leading-relaxed mt-1">
+        Don't chat with a demo — call it. Book an appointment, ask about prices,
+        try your best to stump it. It's the same system answering for our client practices.
+      </p>
+    </div>
+    <a
+      href={`tel:${RECEPTIONIST_TEL}`}
+      className="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-vmTeal text-vmNavy text-sm font-bold tracking-wide rounded-sm hover:bg-white transition-all duration-200 shrink-0"
+    >
+      <Phone className="w-4 h-4" /> {RECEPTIONIST_DISPLAY}
+    </a>
+  </div>
+);
 
 /* ── Intake form ─────────────────────────────────────────────── */
 
@@ -128,8 +245,8 @@ const IntakeForm: React.FC<{ onStarted: (s: Session) => void }> = ({ onStarted }
     setBusy(true);
     setError('');
     try {
-      const { leadId, businessName } = await postJson('/api/lab', { action: 'start', ...form });
-      onStarted({ leadId, businessName, name: form.name });
+      const { leadId, businessName, returning } = await postJson('/api/lab', { action: 'start', ...form });
+      onStarted({ leadId, businessName, name: form.name, returning });
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Could not start. Try again.');
     } finally {
@@ -144,7 +261,8 @@ const IntakeForm: React.FC<{ onStarted: (s: Session) => void }> = ({ onStarted }
       <div className="bg-vmNavy px-8 py-7 md:px-10">
         <h2 className="text-2xl font-serif text-white leading-snug">Two fields and you're in.</h2>
         <p className="text-white/60 text-sm mt-2 leading-relaxed">
-          The tools personalize from your email — and your results get emailed to you as a designed report.
+          The tools research your business from your email and remember you when you
+          come back — and your results get emailed to you as a designed report.
         </p>
       </div>
       <form onSubmit={submit} className="p-8 md:p-10 space-y-5">
@@ -189,26 +307,27 @@ const IntakeForm: React.FC<{ onStarted: (s: Session) => void }> = ({ onStarted }
   );
 };
 
-/* ── Chat tool ───────────────────────────────────────────────── */
+/* ── Chat panel (Deal Scout, and follow-up chat under each generator) ── */
 
 const ChatTool: React.FC<{
   session: Session;
-  toolKey: 'chat' | 'scout';
-  intro: React.ReactNode;
+  toolKey: ToolKey;
+  intro?: React.ReactNode;
   emptyHint: string;
   placeholder: string;
   seed?: string;
-  markdown?: boolean;
+  compact?: boolean;
   busyHint?: string;
   onRan: () => void;
   onBusyChange?: (busy: boolean) => void;
-}> = ({ session, toolKey, intro, emptyHint, placeholder, seed, markdown, busyHint, onRan, onBusyChange }) => {
+}> = ({ session, toolKey, intro, emptyHint, placeholder, seed, compact, busyHint, onRan, onBusyChange }) => {
   const [messages, setMessages] = useState<ChatMsg[]>(
     seed ? [{ role: 'assistant', content: seed }] : []
   );
   const [input, setInput] = useState('');
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
+  const [capped, setCapped] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -230,7 +349,11 @@ const ChatTool: React.FC<{
       setMessages([...next, { role: 'assistant', content: reply }]);
       onRan();
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'The agent dropped the call. Try again.');
+      if ((err as LabError).capReached) {
+        setCapped(true);
+      } else {
+        setError(err instanceof Error ? err.message : 'The agent dropped the call. Try again.');
+      }
       setMessages(messages);
     } finally {
       setBusy(false);
@@ -240,17 +363,17 @@ const ChatTool: React.FC<{
 
   return (
     <div>
-      <p className="text-sm text-slate-500 leading-relaxed mb-5">{intro}</p>
-      <div ref={scrollRef} className="h-96 overflow-y-auto bg-vmSlate/40 border border-slate-200 rounded-sm p-4 space-y-3">
+      {intro && <p className="text-sm text-slate-500 leading-relaxed mb-5">{intro}</p>}
+      <div ref={scrollRef} className={`${compact ? 'h-64' : 'h-96'} overflow-y-auto bg-vmSlate/40 border border-slate-200 rounded-sm p-4 space-y-3`}>
         {messages.length === 0 && (
-          <p className="text-sm text-slate-400 italic text-center mt-32">{emptyHint}</p>
+          <p className={`text-sm text-slate-400 italic text-center ${compact ? 'mt-20' : 'mt-32'}`}>{emptyHint}</p>
         )}
         {messages.map((m, i) => (
           <div key={i} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
             <div className={`max-w-[88%] px-4 py-3 rounded-sm text-sm leading-relaxed ${
               m.role === 'user' ? 'bg-vmNavy text-white' : 'bg-white border border-slate-200 text-slate-700'
             }`}>
-              {m.role === 'assistant' && markdown
+              {m.role === 'assistant'
                 ? <div className="chat-md" dangerouslySetInnerHTML={{ __html: renderMarkdown(m.content) }} />
                 : m.content}
             </div>
@@ -266,36 +389,40 @@ const ChatTool: React.FC<{
         )}
       </div>
       {error && <p className="text-sm text-red-600 mt-2">{error}</p>}
-      <form onSubmit={send} className="flex gap-3 mt-4">
-        <input
-          className="flex-grow p-4 border border-slate-200 rounded-sm focus:border-vmNavy focus:outline-none transition-all bg-white text-base"
-          value={input}
-          onChange={(ev) => setInput(ev.target.value)}
-          placeholder={placeholder}
-          maxLength={2000}
-        />
-        <button type="submit" disabled={busy || !input.trim()} className="px-6 bg-vmNavy text-white rounded-sm hover:shadow-lg transition-all disabled:opacity-40" aria-label="Send">
-          <Send className="w-5 h-5" />
-        </button>
-      </form>
+      {capped ? <CapNotice /> : (
+        <form onSubmit={send} className="flex gap-3 mt-4">
+          <input
+            className="flex-grow p-4 border border-slate-200 rounded-sm focus:border-vmNavy focus:outline-none transition-all bg-white text-base"
+            value={input}
+            onChange={(ev) => setInput(ev.target.value)}
+            placeholder={placeholder}
+            maxLength={2000}
+          />
+          <MicButton onText={(t) => setInput((v) => (v ? v + ' ' : '') + t)} className="self-center w-12 h-12" />
+          <button type="submit" disabled={busy || !input.trim()} className="px-6 bg-vmNavy text-white rounded-sm hover:shadow-lg transition-all disabled:opacity-40" aria-label="Send">
+            <Send className="w-5 h-5" />
+          </button>
+        </form>
+      )}
     </div>
   );
 };
 
-/* ── One-shot generator tools ────────────────────────────────── */
+/* ── Generator tools (one-shot output + follow-up conversation) ── */
 
 const GeneratorTool: React.FC<{
   session: Session;
-  tool: ToolKey;
+  tool: GeneratorKey;
   onRan: () => void;
   onBusyChange?: (busy: boolean) => void;
 }> = ({ session, tool, onRan, onBusyChange }) => {
   const [output, setOutput] = useState('');
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
+  const [capped, setCapped] = useState(false);
   const [question, setQuestion] = useState('');
   const [assetType, setAssetType] = useState(MARKETING_ASSETS[0].value);
-  const [details, setDetails] = useState('');
+  const [braindump, setBraindump] = useState('');
 
   const run = async () => {
     setBusy(true);
@@ -303,80 +430,119 @@ const GeneratorTool: React.FC<{
     setError('');
     try {
       const input =
-        tool === 'coach' ? { question } :
-        tool === 'marketing' ? { assetType, details } : {};
+        tool === 'coach' ? { question, braindump } :
+        tool === 'marketing' ? { assetType, braindump } : { braindump };
       const { output: text } = await postJson('/api/lab', { action: 'generate', leadId: session.leadId, tool, input });
       setOutput(text);
       onRan();
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Generation failed. Try again.');
+      if ((err as LabError).capReached) {
+        setCapped(true);
+      } else {
+        setError(err instanceof Error ? err.message : 'Generation failed. Try again.');
+      }
     } finally {
       setBusy(false);
       onBusyChange?.(false);
     }
   };
 
-  const intro: Record<string, string> = {
-    deals: `The AI will study what you told it about ${session.businessName} and hunt for the revenue leaks and untapped opportunities most businesses like yours are sitting on — each one sized in dollars.`,
-    coach: 'Ask the question you would ask a $500-an-hour advisor. Leave it blank and the coach will tell you what to focus on for the next 90 days.',
-    marketing: 'Pick what you need and the studio writes it — with your business name, your market, your angle. Copy, paste, publish.',
-    leads: `The AI will define ${session.businessName}'s highest-value client, map where to find them, and write the outreach scripts to go get them.`,
+  const intro: Record<GeneratorKey, string> = {
+    deals: `The AI studies ${session.businessName} — including what it can find and remember about you — then hunts for the revenue leaks and untapped opportunities most businesses like yours are sitting on, each one sized in dollars.`,
+    coach: 'Ask the question you would ask a $500-an-hour advisor. Leave it blank and the coach will tell you what to focus on for the next 90 days. Then talk it through below.',
+    marketing: 'A strategist, not a template mill: it diagnoses your market, picks one big idea, then writes everything to carry it. Brain-dump what\'s going on — talk or type — and it does the rest.',
+    leads: `The AI defines ${session.businessName}'s highest-value client, searches out where to find them in your market, and writes the outreach scripts to go get them.`,
   };
 
-  const buttonLabel: Record<string, string> = {
-    deals: 'Find my hidden deals',
+  const buttonLabel: Record<GeneratorKey, string> = {
+    deals: 'Find my hidden revenue',
     coach: 'Coach me',
-    marketing: 'Write my materials',
+    marketing: 'Build my strategy',
     leads: 'Build my lead playbook',
   };
+
+  const dumpPlaceholder: Record<GeneratorKey, string> = {
+    deals: 'Optional: what\'s going on in the business right now? Slow season, staffing, a number that bugs you…',
+    coach: '',
+    marketing: 'What\'s going on? What are you promoting, who\'s not calling, what have you tried? The more you share, the sharper the strategy.',
+    leads: 'Optional: who\'s your best client today, and where did they come from?',
+  };
+
+  const textarea = 'w-full p-4 border border-slate-200 rounded-sm focus:border-vmNavy focus:outline-none transition-all bg-vmSlate/40 text-base min-h-24';
 
   return (
     <div>
       <p className="text-sm text-slate-500 leading-relaxed mb-5">{intro[tool]}</p>
 
       {tool === 'coach' && (
-        <textarea
-          className="w-full p-4 border border-slate-200 rounded-sm focus:border-vmNavy focus:outline-none transition-all bg-vmSlate/40 text-base mb-4 min-h-24"
-          value={question}
-          onChange={(ev) => setQuestion(ev.target.value)}
-          placeholder="e.g. Should I hire a second front-desk person or automate first?"
-          maxLength={1000}
-        />
-      )}
-
-      {tool === 'marketing' && (
-        <div className="space-y-4 mb-4">
-          <div>
-            <label className="eyebrow text-vmNavy block mb-2">What do you need?</label>
-            <select
-              className="w-full p-4 border border-slate-200 rounded-sm focus:border-vmNavy focus:outline-none bg-vmSlate/40 text-base"
-              value={assetType}
-              onChange={(ev) => setAssetType(ev.target.value)}
-            >
-              {MARKETING_ASSETS.map((a) => <option key={a.value} value={a.value}>{a.label}</option>)}
-            </select>
-          </div>
-          <input
-            className="w-full p-4 border border-slate-200 rounded-sm focus:border-vmNavy focus:outline-none transition-all bg-vmSlate/40 text-base"
-            value={details}
-            onChange={(ev) => setDetails(ev.target.value)}
-            placeholder="Optional: what are you promoting? Any offer or angle?"
-            maxLength={500}
+        <div className="flex gap-3 mb-4 items-start">
+          <textarea
+            className={textarea}
+            value={question}
+            onChange={(ev) => setQuestion(ev.target.value)}
+            placeholder="e.g. Should I hire a second front-desk person or automate first?"
+            maxLength={1500}
           />
+          <MicButton onText={(t) => setQuestion((v) => (v ? v + ' ' : '') + t)} />
         </div>
       )}
 
-      <button onClick={run} disabled={busy} className={buttonPrimary + ' disabled:opacity-60'}>
-        {busy ? <Loader2 className="w-5 h-5 animate-spin" /> : <Sparkles className="w-5 h-5" />}
-        {busy ? 'Working — give it a minute…' : output ? 'Run it again' : buttonLabel[tool]}
-      </button>
+      {tool === 'marketing' && (
+        <div className="mb-4">
+          <label className="eyebrow text-vmNavy block mb-2">What do you need?</label>
+          <select
+            className="w-full p-4 border border-slate-200 rounded-sm focus:border-vmNavy focus:outline-none bg-vmSlate/40 text-base"
+            value={assetType}
+            onChange={(ev) => setAssetType(ev.target.value)}
+          >
+            {MARKETING_ASSETS.map((a) => <option key={a.value} value={a.value}>{a.label}</option>)}
+          </select>
+        </div>
+      )}
+
+      {tool !== 'coach' && (
+        <div className="flex gap-3 mb-4 items-start">
+          <textarea
+            className={textarea}
+            value={braindump}
+            onChange={(ev) => setBraindump(ev.target.value)}
+            placeholder={dumpPlaceholder[tool]}
+            maxLength={3000}
+          />
+          <MicButton onText={(t) => setBraindump((v) => (v ? v + ' ' : '') + t)} />
+        </div>
+      )}
+
+      {capped ? <CapNotice /> : (
+        <button onClick={run} disabled={busy} className={buttonPrimary + ' disabled:opacity-60'}>
+          {busy ? <Loader2 className="w-5 h-5 animate-spin" /> : <Sparkles className="w-5 h-5" />}
+          {busy ? 'Working — researching and building…' : output ? 'Run it again' : buttonLabel[tool]}
+        </button>
+      )}
       {error && <p className="text-sm text-red-600 mt-3">{error}</p>}
 
       {output && (
-        <div
-          className="mt-8 pt-6 hairline border-t text-base"
-          dangerouslySetInnerHTML={{ __html: renderMarkdown(output) }}
-        />
+        <>
+          <div
+            className="mt-8 pt-6 hairline border-t text-base"
+            dangerouslySetInnerHTML={{ __html: renderMarkdown(output) }}
+          />
+          <div className="mt-10 pt-6 hairline border-t">
+            <h4 className="text-lg font-serif text-vmNavy mb-1">Talk it through.</h4>
+            <p className="text-sm text-slate-500 leading-relaxed mb-4">
+              Push back, ask for detail, or give it a real number — it recalculates on the spot.
+            </p>
+            <ChatTool
+              session={session}
+              toolKey={tool}
+              compact
+              emptyHint="Ask a follow-up — it read what it wrote."
+              placeholder="Ask a follow-up…"
+              busyHint="Thinking — may check the web…"
+              onRan={onRan}
+            />
+          </div>
+        </>
       )}
     </div>
   );
@@ -386,7 +552,7 @@ const GeneratorTool: React.FC<{
 
 const Workbench: React.FC = () => {
   const [session, setSession] = useState<Session | null>(null);
-  const [activeTool, setActiveTool] = useState<ToolKey>('chat');
+  const [activeTool, setActiveTool] = useState<ToolKey>('deals');
   const [toolsRun, setToolsRun] = useState<Set<string>>(new Set());
   const [busyTools, setBusyTools] = useState<Set<string>>(new Set());
   const [reportState, setReportState] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle');
@@ -438,7 +604,7 @@ const Workbench: React.FC = () => {
     <>
       <SEO
         title="The Workbench"
-        description="Five live AI tools personalized to your business: an agent to stump, a deal finder, a business coach, a marketing studio, and a lead machine. Your results emailed as a designed PDF."
+        description="Five live AI tools personalized to your business — a deal scout, a revenue finder, a business coach, a marketing strategist, and a lead machine — plus an AI receptionist answering a real phone line. Your results emailed as a designed PDF."
         path="/lab/workbench"
       />
       <div className="pt-40 pb-24 min-h-screen light-wash" data-aesthetic="solar">
@@ -449,22 +615,30 @@ const Workbench: React.FC = () => {
               <Eyebrow className="text-accent mb-6">Lab 004 · Live now</Eyebrow>
               <h1 className="text-5xl md:text-6xl font-serif text-vmNavy mb-8 leading-tight italic">The Workbench.</h1>
               <p className="text-slate-600 text-xl leading-relaxed">
-                Six working AI tools, each one rebuilt around <em>your</em> business the moment
-                you sit down. Use them all — then we'll email you everything as a designed report.
+                Five working AI tools that research <em>your</em> business the moment you sit down —
+                and remember you when you come back. Use them all, then we'll email you
+                everything as a designed report.
               </p>
               <VineDivider className="mx-auto mt-10 text-accent" />
             </Reveal>
           </header>
 
           {!session ? (
-            <IntakeForm onStarted={start} />
+            <div className="space-y-8">
+              <IntakeForm onStarted={start} />
+              <Reveal className="max-w-xl mx-auto">
+                <ReceptionistCard compact />
+              </Reveal>
+            </div>
           ) : (
             <div className="space-y-10">
 
               {/* Bench header */}
               <Reveal className="flex items-center justify-between flex-wrap gap-4">
                 <div>
-                  <p className="eyebrow text-accent mb-1">Bench configured for</p>
+                  <p className="eyebrow text-accent mb-1">
+                    {session.returning ? 'Welcome back — the bench remembers' : 'Bench configured for'}
+                  </p>
                   <h2 className="text-2xl font-serif text-vmNavy">{session.businessName}</h2>
                 </div>
                 <button onClick={reset} className="inline-flex items-center gap-2 text-sm text-slate-400 hover:text-vmNavy transition-colors">
@@ -472,8 +646,13 @@ const Workbench: React.FC = () => {
                 </button>
               </Reveal>
 
+              {/* Live receptionist line */}
+              <Reveal>
+                <ReceptionistCard />
+              </Reveal>
+
               {/* Tool selector */}
-              <Reveal className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
+              <Reveal className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
                 {TOOLS.map((t) => {
                   const active = activeTool === t.key;
                   const ran = toolsRun.has(t.key);
@@ -514,17 +693,7 @@ const Workbench: React.FC = () => {
                         <p className="text-xs text-slate-400">{tool.tagline}</p>
                       </div>
                     </div>
-                    {tool.key === 'chat' ? (
-                      <ChatTool
-                        session={session}
-                        toolKey="chat"
-                        intro={<>This is the AI receptionist answering for <strong className="text-vmNavy">{session.businessName}</strong>. Talk to it exactly like a caller would: book an appointment, ask about prices, complain, or try your best to confuse it. The same architecture answers real phones for our client practices.</>}
-                        emptyHint="The line is open — say hello, or ask to book an appointment."
-                        placeholder="Type like a caller would…"
-                        onRan={() => markRan('chat')}
-                        onBusyChange={setToolBusy('chat')}
-                      />
-                    ) : tool.key === 'scout' ? (
+                    {tool.key === 'scout' ? (
                       <ChatTool
                         session={session}
                         toolKey="scout"
@@ -532,7 +701,6 @@ const Workbench: React.FC = () => {
                         emptyHint="The scout is ready to report in."
                         placeholder="Answer the scout, or change the mission…"
                         seed={SCOUT_SEED}
-                        markdown
                         busyHint="Searching live listings — this can take up to a minute…"
                         onRan={() => markRan('scout')}
                         onBusyChange={setToolBusy('scout')}
@@ -540,7 +708,7 @@ const Workbench: React.FC = () => {
                     ) : (
                       <GeneratorTool
                         session={session}
-                        tool={tool.key}
+                        tool={tool.key as GeneratorKey}
                         onRan={() => markRan(tool.key)}
                         onBusyChange={setToolBusy(tool.key)}
                       />
@@ -580,9 +748,10 @@ const Workbench: React.FC = () => {
                 <div className="flex items-start gap-3 max-w-xl mx-auto text-left mb-10">
                   <LeafMark className="w-5 h-5 text-accent shrink-0 mt-0.5" />
                   <p className="text-sm text-slate-500 leading-relaxed">
-                    Everything above was generated from the few details you typed in.
-                    Installed in your business — connected to your real phone line, calendar,
-                    and numbers — this is what runs every day.
+                    Everything above was generated from the few details you typed in, plus
+                    what the AI could research and remember. Installed in your business —
+                    connected to your real phone line, calendar, and numbers — this is
+                    what runs every day.
                   </p>
                 </div>
                 <a href={BOOKING_URLS.BOOK} target="_blank" rel="noopener noreferrer" className={buttonPrimary}>
