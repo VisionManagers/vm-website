@@ -374,12 +374,15 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         system = followupSystemPrompt(chatTool as GeneratorTool, lead, lastRun?.output ?? null);
       }
 
+      // Scout runs at low effort with a tight search budget: chat replies must
+      // land well inside the function timeout, and the prompt has it work in
+      // small batches ("keep hunting" spans turns instead of one long turn).
       const reply = await callClaude(anthropic, {
         system,
         messages: clean,
-        maxTokens: isScout ? 8000 : 4000,
-        effort: 'medium',
-        tools: [{ type: 'web_search_20260209', name: 'web_search', max_uses: isScout ? 4 : 2 }],
+        maxTokens: isScout ? 6000 : 4000,
+        effort: isScout ? 'low' : 'medium',
+        tools: [{ type: 'web_search_20260209', name: 'web_search', max_uses: isScout ? 3 : 2 }],
       });
 
       // Keep one transcript row per lead per agent, updated as the conversation grows

@@ -184,9 +184,9 @@ async function runScenario(s: Scenario): Promise<string> {
     return callModel({
       system: scoutSystemPrompt(s.lead),
       messages: s.messages!,
-      maxTokens: 8000,
-      effort: 'medium',
-      maxSearches: 4,
+      maxTokens: 6000,
+      effort: 'low',
+      maxSearches: 3,
     });
   }
   const prompt = generatePrompt(s.tool, s.lead, s.input ?? {});
@@ -305,15 +305,35 @@ async function main() {
 
   const results: { scenario: Scenario; output: string; judge: JudgeResult; avg: number }[] = [];
 
-  // Chunks of 4 to stay friendly to rate limits
+  // Chunks of 4 to stay friendly to rate limits; transient network errors
+  // retry per scenario, and completed scenarios resume from saved JSON.
+  const withRetry = async <T>(fn: () => Promise<T>, tries = 3): Promise<T> => {
+    let lastErr: unknown;
+    for (let attempt = 1; attempt <= tries; attempt++) {
+      try { return await fn(); } catch (err) {
+        lastErr = err;
+        console.log(`    (attempt ${attempt} failed: ${err instanceof Error ? err.message : err} — ${attempt < tries ? 'retrying' : 'giving up'})`);
+        if (attempt < tries) await new Promise((r) => setTimeout(r, 15000 * attempt));
+      }
+    }
+    throw lastErr;
+  };
+
   for (let i = 0; i < scenarios.length; i += 4) {
     const chunk = scenarios.slice(i, i + 4);
     const chunkResults = await Promise.all(chunk.map(async (s) => {
+      const jsonPath = path.join(outDir, `${s.id}.json`);
+      if (fs.existsSync(jsonPath)) {
+        const saved = JSON.parse(fs.readFileSync(jsonPath, 'utf8'));
+        console.log(`  ${s.id}: avg ${saved.avg.toFixed(1)} (resumed from earlier run)`);
+        return { scenario: s, output: saved.output as string, judge: saved.judge as JudgeResult, avg: saved.avg as number };
+      }
       const t0 = Date.now();
-      const output = await runScenario(s);
-      const j = await judge(s, output);
+      const output = await withRetry(() => runScenario(s));
+      const j = await withRetry(() => judge(s, output));
       const avg = DIMS.reduce((sum, d) => sum + j[d], 0) / DIMS.length;
       console.log(`  ${s.id}: avg ${avg.toFixed(1)} [${DIMS.map((d) => j[d]).join(' ')}] (${Math.round((Date.now() - t0) / 1000)}s)`);
+      fs.writeFileSync(jsonPath, JSON.stringify({ output, judge: j, avg }, null, 2));
       fs.writeFileSync(path.join(outDir, `${s.id}.md`),
         `# ${s.id} — avg ${avg.toFixed(1)}\n\nScores: ${DIMS.map((d) => `${d} ${j[d]}`).join(' · ')}\n\n## Judge notes\n${j.notes}\n\n## Top fixes\n${j.top_fixes.map((f) => `- ${f}`).join('\n')}\n\n## Output\n\n${output}\n`);
       return { scenario: s, output, judge: j, avg };

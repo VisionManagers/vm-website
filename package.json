@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build && node scripts/prerender.mjs",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "lab-eval": "tsx scripts/lab-eval.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.115.0",

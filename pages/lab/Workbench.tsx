@@ -637,7 +637,7 @@ const Workbench: React.FC = () => {
               <Reveal className="flex items-center justify-between flex-wrap gap-4">
                 <div>
                   <p className="eyebrow text-accent mb-1">
-                    {session.returning ? 'Welcome back — the bench remembers' : 'Bench configured for'}
+                    {session.returning ? `Welcome back, ${session.name.split(' ')[0]}` : 'Bench configured for'}
                   </p>
                   <h2 className="text-2xl font-serif text-vmNavy">{session.businessName}</h2>
                 </div>
