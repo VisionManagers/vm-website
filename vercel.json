@@ -1,19 +1,40 @@
 {
   "functions": {
-    "api/lab.ts": { "maxDuration": 300 },
-    "api/lab-report.ts": { "maxDuration": 60 },
-    "api/lab-digest.ts": { "maxDuration": 60 },
-    "api/lab-visits.ts": { "maxDuration": 60 }
+    "api/lab.ts": {
+      "maxDuration": 300
+    },
+    "api/lab-report.ts": {
+      "maxDuration": 60
+    },
+    "api/lab-digest.ts": {
+      "maxDuration": 60
+    },
+    "api/lab-visits.ts": {
+      "maxDuration": 60
+    }
   },
   "crons": [
-    { "path": "/api/lab-digest", "schedule": "0 1 * * *" },
-    { "path": "/api/lab-visits", "schedule": "*/10 * * * *" }
+    {
+      "path": "/api/lab-digest",
+      "schedule": "0 1 * * *"
+    }
   ],
   "redirects": [
-    { "source": "/casual-intelligence", "destination": "/ci", "permanent": true },
-    { "source": "/book", "destination": "https://api.leadconnectorhq.com/widget/booking/u9ITLagwSXqANxwjhaAS", "permanent": false }
+    {
+      "source": "/casual-intelligence",
+      "destination": "/ci",
+      "permanent": true
+    },
+    {
+      "source": "/book",
+      "destination": "https://api.leadconnectorhq.com/widget/booking/u9ITLagwSXqANxwjhaAS",
+      "permanent": false
+    }
   ],
   "rewrites": [
-    { "source": "/((?!api/).*)", "destination": "/_shell.html" }
+    {
+      "source": "/((?!api/).*)",
+      "destination": "/_shell.html"
+    }
   ]
 }
