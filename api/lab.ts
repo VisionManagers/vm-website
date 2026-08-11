@@ -6,7 +6,7 @@ import {
   LabLead, GeneratorTool, GENERATOR_TOOLS, GenerateInput,
   scoutSystemPrompt, generatePrompt, followupSystemPrompt,
   researchProfilePrompt, memoryUpdatePrompt, reviewPrompt,
-} from './_lib/prompts';
+} from './_lib/prompts.js';
 
 const SUPABASE_URL = process.env.VITE_SUPABASE_URL;
 const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
