@@ -197,6 +197,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     .from('lab_runs')
     .select('tool, output, input, created_at')
     .eq('lead_id', leadId)
+    .neq('output', '')
+    .not('output', 'like', 'ERROR::%')
     .order('created_at', { ascending: true });
 
   if (!runs || runs.length === 0) {
