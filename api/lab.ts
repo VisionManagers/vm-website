@@ -462,6 +462,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       const prompt = generatePrompt(tool as GeneratorTool, lead, input);
       // 24k max_tokens: high-effort thinking shares the budget with the visible
       // output, and a truncated deliverable loses its payoff sections.
+      const t0 = Date.now();
       const draft = await callClaude(anthropic, {
         system: prompt.system,
         messages: [{ role: 'user', content: prompt.user }],
@@ -472,22 +473,26 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
       // Editor pass: repairs mechanical defects (leaked narration, arithmetic
       // that contradicts itself, misread inputs, residue) without touching the
-      // analysis. Falls back to the draft if the pass fails.
+      // analysis. Low effort — it's a checklist edit, not analysis — and
+      // skipped entirely if the draft already ate the 300s function budget:
+      // shipping an unedited draft beats timing out the whole request.
       let output = draft;
-      try {
-        const review = reviewPrompt(prompt.user, draft);
-        const edited = await callClaude(anthropic, {
-          system: review.system,
-          messages: [{ role: 'user', content: review.user }],
-          maxTokens: 20000,
-          effort: 'medium',
-        });
-        // Sanity: an editor that returns a stub or balloons the doc is wrong
-        if (edited.length > draft.length * 0.6 && edited.length < draft.length * 1.4) {
-          output = edited;
+      if (Date.now() - t0 < 200_000) {
+        try {
+          const review = reviewPrompt(prompt.user, draft);
+          const edited = await callClaude(anthropic, {
+            system: review.system,
+            messages: [{ role: 'user', content: review.user }],
+            maxTokens: 20000,
+            effort: 'low',
+          });
+          // Sanity: an editor that returns a stub or balloons the doc is wrong
+          if (edited.length > draft.length * 0.6 && edited.length < draft.length * 1.4) {
+            output = edited;
+          }
+        } catch (err) {
+          console.error('Editor pass failed, shipping draft:', err);
         }
-      } catch (err) {
-        console.error('Editor pass failed, shipping draft:', err);
       }
 
       await supabase.from('lab_runs').insert({ lead_id: leadId, tool, input, output });
