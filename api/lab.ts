@@ -234,7 +234,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY);
-  const anthropic = new Anthropic();
+  // Explicit timeout, sized under the 300s function cap. Without it the SDK
+  // throws "Streaming is required for operations that may take longer than 10
+  // minutes" client-side for large max_tokens — instantly failing every
+  // generator run (evals never hit this: the harness sets its own timeout).
+  const anthropic = new Anthropic({ timeout: 280_000 });
   const { action } = req.body || {};
 
   try {
