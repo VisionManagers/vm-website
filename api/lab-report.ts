@@ -91,7 +91,7 @@ function markdownBlocks(md: string): React.ReactNode[] {
 }
 
 const TOOL_TITLES: Record<string, string> = {
-  deals: 'Deal Finder — Hidden Revenue Opportunities',
+  deals: 'Profit Leak Detector — Hidden Revenue Opportunities',
   coach: 'Business Coach — Your Session',
   marketing: 'Marketing Strategist — Your Strategy & Materials',
   leads: 'Lead Machine — Your Acquisition Playbook',
@@ -101,7 +101,7 @@ const TOOL_TITLES: Record<string, string> = {
 const TRANSCRIPT_TITLES: Record<string, { title: string; user: string; agent: string }> = {
   chat: { title: 'Try to Stump It — Your Conversation with the Agent', user: 'You', agent: 'Agent' },
   scout: { title: 'Deal Scout — Your Property Hunt', user: 'You', agent: 'Scout' },
-  'deals-chat': { title: 'Deal Finder — Your Follow-Up Conversation', user: 'You', agent: 'Analyst' },
+  'deals-chat': { title: 'Profit Leak Detector — Your Follow-Up Conversation', user: 'You', agent: 'Analyst' },
   'coach-chat': { title: 'Business Coach — Your Follow-Up Conversation', user: 'You', agent: 'Coach' },
   'marketing-chat': { title: 'Marketing Strategist — Your Follow-Up Conversation', user: 'You', agent: 'Strategist' },
   'leads-chat': { title: 'Lead Machine — Your Follow-Up Conversation', user: 'You', agent: 'Strategist' },

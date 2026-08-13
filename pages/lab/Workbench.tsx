@@ -38,8 +38,8 @@ type ToolKey = 'scout' | 'deals' | 'coach' | 'marketing' | 'leads';
 type GeneratorKey = 'deals' | 'coach' | 'marketing' | 'leads';
 
 const TOOLS: { key: ToolKey; icon: React.ElementType; title: string; tagline: string }[] = [
-  { key: 'scout', icon: Building2, title: 'Deal Scout', tagline: 'Hunts real property deals with live web search — built for investors and agents.' },
-  { key: 'deals', icon: Gem, title: 'Deal Finder', tagline: 'Finds the revenue hiding in how your business runs today — sized in dollars.' },
+  { key: 'scout', icon: Building2, title: 'Deal Scout', tagline: 'Real estate only: hunts live property deals with web search — for investors and agents.' },
+  { key: 'deals', icon: Gem, title: 'Profit Leak Detector', tagline: 'Finds the revenue leaking out of how your business runs — sized in dollars, ranked by what to plug first.' },
   { key: 'coach', icon: Compass, title: 'Business Coach', tagline: 'Ask any business question. Get a direct, practical answer — then talk it through.' },
   { key: 'marketing', icon: Megaphone, title: 'Marketing Strategist', tagline: 'Diagnoses your market, picks the angle, then writes everything — strategy first.' },
   { key: 'leads', icon: Magnet, title: 'Lead Machine', tagline: 'Builds your client-finding playbook: who, where, and the exact scripts.' },
@@ -650,7 +650,7 @@ const Workbench: React.FC = () => {
     <>
       <SEO
         title="The Workbench"
-        description="Five live AI tools personalized to your business — a deal scout, a revenue finder, a business coach, a marketing strategist, and a lead machine — plus an AI receptionist answering a real phone line. Your results emailed as a designed PDF."
+        description="Five live AI tools personalized to your business — a real-estate deal scout, a profit leak detector, a business coach, a marketing strategist, and a lead machine — plus an AI receptionist answering a real phone line. Your results emailed as a designed PDF."
         path="/lab/workbench"
       />
       <div className="pt-40 pb-24 min-h-screen light-wash" data-aesthetic="solar">
