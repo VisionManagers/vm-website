@@ -118,10 +118,10 @@ const TheLab: React.FC = () => {
                   <h2 className="text-3xl md:text-4xl font-serif text-white mb-5 italic">The Workbench.</h2>
                   <p className="text-white/70 leading-relaxed mb-8">
                     Five AI tools that research <em>your</em> business the moment you enter — and
-                    remember you when you come back: a property scout with live web search, a deal
-                    finder that sizes your hidden revenue in dollars, a business coach, a marketing
-                    strategist, and a lead machine. Plus an AI receptionist answering a real phone
-                    line. Everything you make is emailed to you as a designed report.
+                    remember you when you come back: a property scout with live web search, a profit
+                    leak detector that sizes your hidden revenue in dollars, a business coach, a
+                    marketing strategist, and a lead machine. Plus an AI receptionist answering a
+                    real phone line. Everything you make is emailed to you as a designed report.
                   </p>
                   <Link to="/lab/workbench" className={buttonTealOnNavy}>
                     Sit down at the bench <ArrowRight className="w-5 h-5" />
@@ -131,7 +131,7 @@ const TheLab: React.FC = () => {
                   {[
                     'AI Receptionist — call it live: (425) 494-4489',
                     'Deal Scout — live property deal sourcing',
-                    'Deal Finder — your hidden revenue, in dollars',
+                    'Profit Leak Detector — your hidden revenue, in dollars',
                     'Business Coach — direct answers, your context',
                     'Marketing Strategist — strategy first, then the copy',
                     'Lead Machine — who to reach and how',
