@@ -1,0 +1,146 @@
+{
+  "astrological-bowl": {
+    "title": "Bowl with Courtly and Astrological Motifs",
+    "artist": "",
+    "date": "late 12th–early 13th century",
+    "culture": "Central or Northern Iran",
+    "medium": "Stonepaste; polychrome inglaze and overglaze painted and gilded on opaque monochrome glaze (mina'i)",
+    "source": "The Metropolitan Museum of Art",
+    "license": "Public Domain (CC0)",
+    "page": "https://www.metmuseum.org/art/collection/search/451379",
+    "accent": "#5a4f44",
+    "palette": [
+      "#9b9b9b",
+      "#5a4f44",
+      "#b2b0b0",
+      "#b0afae",
+      "#827c70"
+    ]
+  },
+  "grande-jatte": {
+    "title": "A Sunday on La Grande Jatte — 1884",
+    "artist": "Georges Seurat (French, 1859–1891)",
+    "date": "1884–86, border added 1888–89",
+    "culture": "France",
+    "medium": "Oil on canvas",
+    "source": "Art Institute of Chicago",
+    "license": "Public Domain (CC0)",
+    "page": "https://www.artic.edu/artworks/27992",
+    "accent": "#96906b",
+    "palette": [
+      "#96906b",
+      "#57555d",
+      "#47514e",
+      "#69656a",
+      "#b2ad99"
+    ]
+  },
+  "windrush": {
+    "title": "Windrush",
+    "artist": "Designed by William Morris (English, 1834–1896), Produced by Morris & Co., London (English, 1875–1940), Merton Abbey, London (English, 1881–1940)",
+    "date": "Design 1883, made 1917–25",
+    "culture": "England",
+    "medium": "Cotton, plain weave; block printed",
+    "source": "Art Institute of Chicago",
+    "license": "Public Domain (CC0)",
+    "page": "https://www.artic.edu/artworks/39146",
+    "accent": "#798252",
+    "palette": [
+      "#b0afb4",
+      "#9d977a",
+      "#bbab96",
+      "#798252",
+      "#eaddd0"
+    ]
+  },
+  "great-wave": {
+    "title": "Under the Wave off Kanagawa (Kanagawa oki nami ura), or The Great Wave, from the series Thirty-six Views of Mount Fuji (Fugaku sanjūrokkei)",
+    "artist": "Katsushika Hokusai",
+    "date": "ca. 1830–32",
+    "culture": "Japan",
+    "medium": "Woodblock print; ink and color on paper",
+    "source": "The Metropolitan Museum of Art",
+    "license": "Public Domain (CC0)",
+    "page": "https://www.metmuseum.org/art/collection/search/39799",
+    "accent": "#33455d",
+    "palette": [
+      "#e8cfaa",
+      "#33455d",
+      "#a8a99e",
+      "#b7c2b4",
+      "#5d7482"
+    ]
+  },
+  "plate-birds": {
+    "title": "A Natural History of Uncommon Birds, and of Some Other Rare and Undescribed Animals... [Vols. 1-4]",
+    "artist": "George Edwards",
+    "date": "1743–51",
+    "culture": "England",
+    "medium": "Illustrations: etching and engraving",
+    "source": "The Metropolitan Museum of Art",
+    "license": "Public Domain (CC0)",
+    "page": "https://www.metmuseum.org/art/collection/search/349185",
+    "accent": "#6a594a",
+    "palette": [
+      "#bda98f",
+      "#939596",
+      "#e9dac4",
+      "#90816a",
+      "#6a594a"
+    ]
+  },
+  "plate-polyhedra": {
+    "title": "Perspectiva Corporum Regularium",
+    "artist": "Jost Amman",
+    "date": "1568",
+    "culture": "Germany",
+    "medium": "Etching",
+    "source": "The Metropolitan Museum of Art",
+    "license": "Public Domain (CC0)",
+    "page": "https://www.metmuseum.org/art/collection/search/339008",
+    "accent": "#7f7769",
+    "palette": [
+      "#f5ecd9",
+      "#aa9e8b",
+      "#49423c",
+      "#7f7769",
+      "#d6c9b3"
+    ]
+  },
+  "plate-proportion": {
+    "title": "\"Alberti Dvreri pictoris et architecti praestantissimi De vrbibvs...\"",
+    "artist": "Albrecht Dürer",
+    "date": "1535",
+    "culture": "Paris: Officina Christiani Wecheli, 1535",
+    "medium": "Illustrated book",
+    "source": "The Metropolitan Museum of Art",
+    "license": "Public Domain (CC0)",
+    "page": "https://www.metmuseum.org/art/collection/search/591824",
+    "accent": "#776e5b",
+    "palette": [
+      "#8d8c83",
+      "#b8b3a0",
+      "#776e5b",
+      "#e0ddcb",
+      "#403c30"
+    ]
+  },
+  "plate-tulip": {
+    "title": "A tulip, a butterfly of the species Arctia caja (garden tiger moth), and a beetle (possibly a longhorn)",
+    "artist": "Barbara Regina Dietzsch",
+    "date": "ca. 1750-60",
+    "culture": "",
+    "medium": "Opaque and transparent watercolor on parchment; partial framing lines in metallic gold paint (trimmed at upper edge)",
+    "source": "The Metropolitan Museum of Art",
+    "license": "Public Domain (CC0)",
+    "page": "https://www.metmuseum.org/art/collection/search/908466",
+    "accent": "#625f4d",
+    "palette": [
+      "#a7a2a0",
+      "#2d2824",
+      "#6b7463",
+      "#625f4d",
+      "#babcb9"
+    ]
+  }
+}

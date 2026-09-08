@@ -297,6 +297,106 @@
 /* Sumi-ink duotone image treatment (nihon) */
 .ink-image { filter: grayscale(1) contrast(1.08) brightness(1.02); }
 
+/* ── Art layer ─────────────────────────────────────────────────────
+   Public-domain works (Met · Cleveland · Art Institute of Chicago) used as
+   ground and ornament, never as illustration. Every treatment here pushes the
+   source toward the VM palette so the art reads as part of the page rather
+   than as a picture dropped onto it. Credits: public/images/art/credits.json */
+
+/* Ornamental medallion — a plate crop, pulled into navy, sitting in a ring.
+   Used on the four "how it works" steps as a shared scientific-illustration
+   family, so the method beat carries a visual voice instead of icons alone. */
+.art-medallion {
+  position: relative;
+  width: 3.75rem;
+  height: 3.75rem;
+  border-radius: 9999px;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: var(--color-vmCream);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--color-vmNavy) 18%, transparent),
+    0 0 0 4px color-mix(in srgb, var(--color-vmGold) 16%, transparent);
+}
+.art-medallion img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Push contrast up before tinting — engravings on aged paper are low-contrast
+     and go to mush once they're this small. */
+  filter: grayscale(1) contrast(1.32) brightness(0.94);
+}
+/* A true duotone: the fill supplies hue, the plate underneath supplies
+   luminance. Screen-blending a gradient here just washed the detail out. */
+.art-medallion::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--color-vmNavy);
+  mix-blend-mode: color;
+  opacity: 0.9;
+}
+
+/* Pattern ground — a Morris textile behind a section, faded at the edges so it
+   never fights the cards on top. Sits under content via a negative z-index. */
+.art-ground {
+  position: relative;
+  isolation: isolate;
+}
+.art-ground::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image: var(--art-ground-img);
+  background-size: cover;
+  background-position: center;
+  opacity: 0.11;
+  filter: saturate(0.55);
+  -webkit-mask-image: radial-gradient(120% 80% at 50% 50%, #000 25%, transparent 78%);
+          mask-image: radial-gradient(120% 80% at 50% 50%, #000 25%, transparent 78%);
+}
+
+/* Round-framed work — for objects that are themselves circular (a bowl seen
+   from above). Double gold keyline reads as a mount without a heavy frame. */
+.art-round {
+  position: relative;
+  border-radius: 9999px;
+  overflow: hidden;
+  background: var(--color-vmCream);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--color-vmNavy) 12%, transparent),
+    0 0 0 9px var(--color-vmCream),
+    0 0 0 10px color-mix(in srgb, var(--color-vmGold) 45%, transparent),
+    0 26px 60px -30px rgba(10, 23, 34, 0.5);
+}
+.art-round img { display: block; width: 100%; height: auto; }
+
+/* Museum placard — the caption voice for a featured work. Gold rule above a
+   small-caps register, matching .voice-eyebrow's gallery-label logic. */
+.art-placard {
+  border-top: 1px solid color-mix(in srgb, var(--color-vmGold) 55%, transparent);
+  padding-top: 0.9rem;
+}
+.art-placard .placard-title { font-style: italic; }
+
+/* Framed work — thin gold keyline and a warm mat, so a painting reads as hung
+   rather than pasted. */
+.art-framed {
+  position: relative;
+  padding: 0.6rem;
+  background: linear-gradient(160deg, #F5EFE2, #E8DFCC);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--color-vmGold) 42%, transparent),
+    0 24px 60px -28px rgba(10, 23, 34, 0.55);
+}
+.art-framed img { display: block; width: 100%; height: auto; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .art-framed img { transition: transform 900ms cubic-bezier(0.2, 0.7, 0.3, 1); }
+  .art-framed:hover img { transform: scale(1.012); }
+}
+
 /* Focus visibility floor */
 a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible {
   outline: 2px solid var(--color-vmNavy);
