@@ -48,7 +48,7 @@ const TheLab: React.FC = () => {
                     key={cat}
                     onClick={() => setActiveCategory(cat)}
                     className={`px-4 py-2 text-[10px] font-bold uppercase tracking-widest rounded-full border transition-all ${
-                      activeCategory === cat ? 'bg-vmNavy text-white border-vmNavy' : 'bg-white text-slate-400 border-slate-200 hover:border-vmTeal'
+                      activeCategory === cat ? 'bg-vmNavy text-white border-vmNavy' : 'bg-white text-slate-500 border-slate-200 hover:border-vmTeal'
                     }`}
                   >
                     {cat}
@@ -70,7 +70,7 @@ const TheLab: React.FC = () => {
                 
                 <div className="text-center w-full max-w-md">
                   <h4 className="text-vmNavy font-bold text-sm mb-2 uppercase tracking-widest">Compiling {activeCategory} Build</h4>
-                  <p className="text-xs text-slate-400 mb-8 px-4">Our interactive chat and decision agents are currently in private pilot phase. Select a module to see its architectural scope.</p>
+                  <p className="text-xs text-slate-500 mb-8 px-4">Our interactive chat and decision agents are currently in private pilot phase. Select a module to see its architectural scope.</p>
                   
                   <div className="grid grid-cols-1 gap-3 px-4">
                     {(tasks[activeCategory as keyof typeof tasks] || []).map(task => (
@@ -79,7 +79,7 @@ const TheLab: React.FC = () => {
                           <Check className="w-4 h-4 text-vmTeal" />
                           {task}
                         </span>
-                        <span className="text-[10px] text-slate-300 uppercase">Beta</span>
+                        <span className="text-[10px] text-slate-500 uppercase">Beta</span>
                       </div>
                     ))}
                   </div>
@@ -143,14 +143,14 @@ const TheLab: React.FC = () => {
                 <div className="space-y-12 relative z-10">
                   <div className="grid grid-cols-1 gap-12">
                     <div className="space-y-1">
-                      <p className="text-slate-400 text-[10px] font-black uppercase tracking-[0.2em]">Uncaptured Opportunity</p>
+                      <p className="text-slate-500 text-[10px] font-black uppercase tracking-[0.2em]">Uncaptured Opportunity</p>
                       <h4 className="text-3xl md:text-4xl font-bold text-vmTeal">
                         {unansweredCalls} <span className="text-sm opacity-60 font-light">missed inquiries /mo</span>
                       </h4>
                     </div>
 
                     <div className="space-y-1">
-                      <p className="text-slate-400 text-[10px] font-black uppercase tracking-[0.2em]">Revenue Leakage (Monthly)</p>
+                      <p className="text-slate-500 text-[10px] font-black uppercase tracking-[0.2em]">Revenue Leakage (Monthly)</p>
                       <h4 className="text-4xl md:text-5xl font-bold text-white">
                         ${monthlyRevenueAtRisk.toLocaleString()}
                       </h4>
@@ -158,7 +158,7 @@ const TheLab: React.FC = () => {
                     </div>
 
                     <div className="pt-8 border-t border-white/10 space-y-1">
-                      <p className="text-slate-400 text-[10px] font-black uppercase tracking-[0.2em]">Net Annual Impact</p>
+                      <p className="text-slate-500 text-[10px] font-black uppercase tracking-[0.2em]">Net Annual Impact</p>
                       <h4 className="text-5xl md:text-6xl font-bold text-vmTeal">
                         ${annualImpact.toLocaleString()}
                       </h4>
@@ -179,7 +179,7 @@ const TheLab: React.FC = () => {
                 <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rotate-45 transform translate-x-1/2 -translate-y-1/2 pointer-events-none" />
               </div>
             </div>
-            <p className="mt-8 text-center text-slate-400 text-xs italic">
+            <p className="mt-8 text-center text-slate-500 text-xs italic">
               *Preliminary calculation based on provided industry averages. Your specific assessment will refine these variables.
             </p>
           </section>

@@ -302,7 +302,7 @@ const LeakAudit: React.FC = () => {
                         <span className="font-serif text-3xl text-accent leading-none">{String(leak.n).padStart(2, '0')}</span>
                         <h3 className="font-serif text-2xl text-vmNavy">
                           {leak.name}
-                          {leak.sub && <span className="text-slate-400 text-lg ml-2">— {leak.sub}</span>}
+                          {leak.sub && <span className="text-slate-500 text-lg ml-2">— {leak.sub}</span>}
                         </h3>
                       </div>
 

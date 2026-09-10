@@ -89,7 +89,7 @@ const DigestSettingsInner: React.FC = () => {
         <div className="flex items-center justify-between mb-8">
           <button
             onClick={() => navigate('/admin/posts')}
-            className="inline-flex items-center gap-2 text-slate-400 hover:text-vmNavy text-xs font-bold uppercase tracking-widest transition-colors"
+            className="inline-flex items-center gap-2 text-slate-500 hover:text-vmNavy text-xs font-bold uppercase tracking-widest transition-colors"
           >
             <ArrowLeft className="w-4 h-4" /> Back
           </button>
@@ -104,7 +104,7 @@ const DigestSettingsInner: React.FC = () => {
         </div>
 
         <h1 className="text-3xl font-serif text-vmNavy mb-2 italic">Digest Settings</h1>
-        <p className="text-slate-400 text-sm mb-8">
+        <p className="text-slate-500 text-sm mb-8">
           Edit the system prompt used to generate the AI Intelligence Digest. Changes take effect on the next generation — no deploy needed.
         </p>
 

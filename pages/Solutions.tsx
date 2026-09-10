@@ -104,7 +104,7 @@ const Solutions: React.FC = () => {
               <a href={BOOKING_URLS.DISCOVERY} target="_blank" rel="noopener noreferrer" className={buttonPrimary}>
                 Book a call <ChevronRight className="w-4 h-4" />
               </a>
-              <p className="mt-4 text-xs text-slate-400">No prep needed. You leave with two concrete next steps.</p>
+              <p className="mt-4 text-xs text-slate-500">No prep needed. You leave with two concrete next steps.</p>
             </Reveal>
           </div>
         </section>
@@ -133,7 +133,7 @@ const Solutions: React.FC = () => {
                 <p className="font-serif text-2xl md:text-3xl text-vmNavy italic leading-snug mb-6">
                   "New patients on the schedule within days of going live."
                 </p>
-                <p className="eyebrow text-slate-400">Voice AI pilot · Seattle-area optometry practice</p>
+                <p className="eyebrow text-slate-500">Voice AI pilot · Seattle-area optometry practice</p>
                 <p className="text-sm text-slate-500 mt-4 max-w-md mx-auto">
                   One workflow, deployed under the same discipline every engagement gets: find the
                   loss, map it, build it, measure it. Trusted to build for Emerald Health and Nexus Health ID.
@@ -185,7 +185,7 @@ const Solutions: React.FC = () => {
                   <p className={`eyebrow mb-3 ${tier.featured ? 'text-vmTeal' : 'text-accent'}`}>{tier.role}</p>
                   <h3 className={`text-2xl font-serif mb-2 ${tier.featured ? 'text-white' : 'text-vmNavy'}`}>{tier.name}</h3>
                   <p className={`font-serif text-xl mb-1 ${tier.featured ? 'text-vmTeal' : 'text-vmNavy'}`}>{tier.price}</p>
-                  <p className={`text-xs mb-6 ${tier.featured ? 'text-white/50' : 'text-slate-400'}`}>{tier.cadence}</p>
+                  <p className={`text-xs mb-6 ${tier.featured ? 'text-white/60' : 'text-slate-500'}`}>{tier.cadence}</p>
                   <p className={`text-sm leading-relaxed mb-8 ${tier.featured ? 'text-white/70' : 'text-slate-600'}`}>{tier.desc}</p>
                   <ul className="space-y-2.5 mb-10 flex-grow">
                     {tier.includes.map((item) => (
@@ -209,7 +209,7 @@ const Solutions: React.FC = () => {
               ))}
             </div>
             <Reveal className="text-center mt-10">
-              <p className="text-xs text-slate-400 max-w-xl mx-auto">
+              <p className="text-xs text-slate-500 max-w-xl mx-auto">
                 These are the actual prices, not “contact us” theater. Larger strategic scopes are
                 priced from the value on the table, after the results earn the conversation.
               </p>
@@ -240,7 +240,7 @@ const Solutions: React.FC = () => {
                 </ul>
               </Reveal>
               <Reveal delay={100}>
-                <p className="eyebrow text-slate-400 mb-6">Probably not a fit if you</p>
+                <p className="eyebrow text-slate-500 mb-6">Probably not a fit if you</p>
                 <ul className="space-y-4">
                   {[
                     'Want a one-time build with no one accountable afterward',

@@ -77,11 +77,11 @@ const CasualIntelligence: React.FC = () => {
               <a href="#upcoming" className={buttonPrimary}>
                 See upcoming sessions & RSVP <ArrowRight className="w-4 h-4" />
               </a>
-              <p className="text-xs text-slate-400">
+              <p className="text-xs text-slate-500">
                 One hour on Zoom. No prep needed. Nobody sells you anything.
               </p>
             </div>
-            <p className="mt-6 text-xs text-slate-400">
+            <p className="mt-6 text-xs text-slate-500">
               This page is the invite. Share visionmanagers.com/ci and someone
               you know can be in the room Wednesday.
             </p>

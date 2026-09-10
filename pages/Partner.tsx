@@ -79,7 +79,7 @@ const Partner: React.FC = () => {
                 <span className="block font-serif text-5xl md:text-6xl text-vmNavy leading-none">
                   $5,000<span className="text-2xl text-slate-500 font-sans"> / month</span>
                 </span>
-                <span className="block eyebrow text-slate-400 mt-4">
+                <span className="block eyebrow text-slate-500 mt-4">
                   Entry. It grows on documented results, never on ambition.
                 </span>
               </div>
@@ -96,7 +96,7 @@ const Partner: React.FC = () => {
                   <ArrowRight className="w-4 h-4" />
                 </Link>
               </div>
-              <p className="text-xs text-slate-400 mt-5">
+              <p className="text-xs text-slate-500 mt-5">
                 That second button is a real one. Most people should start at $500 — see the ladder.
               </p>
             </Reveal>
@@ -178,10 +178,10 @@ const Partner: React.FC = () => {
                     quarter and why.
                   </p>
                   <figcaption className="art-placard">
-                    <p className="eyebrow text-slate-400 mb-2">From the collection</p>
+                    <p className="eyebrow text-slate-500 mb-2">From the collection</p>
                     <p className="text-sm text-vmNavy placard-title">Ancient Rome</p>
                     <p className="text-sm text-slate-500 mt-0.5">Giovanni Paolo Panini, 1757</p>
-                    <p className="text-xs text-slate-400 mt-1.5">
+                    <p className="text-xs text-slate-500 mt-1.5">
                       The Metropolitan Museum of Art · Public domain
                     </p>
                   </figcaption>
@@ -217,7 +217,7 @@ const Partner: React.FC = () => {
                   </li>
                 ))}
               </ul>
-              <p className="text-sm text-slate-400 mt-7 leading-relaxed">
+              <p className="text-sm text-slate-500 mt-7 leading-relaxed">
                 I’d rather tell you this now than three months in. The ladder exists so you never
                 pay for more conviction than the evidence supports.
               </p>
@@ -239,7 +239,7 @@ const Partner: React.FC = () => {
                 the next decision obvious. One deployment put <strong className="text-vmNavy">$4,300
                 of booked appointments</strong> on the calendar within two days of going live.
               </p>
-              <p className="text-sm text-slate-400 leading-relaxed">
+              <p className="text-sm text-slate-500 leading-relaxed">
                 No income promises. What I’ll commit to is the cadence, the roadmap, and being the
                 person who answers for it.
               </p>
@@ -260,13 +260,13 @@ const Partner: React.FC = () => {
                 whether this arrangement is worth $5,000 a month to you — or whether something
                 smaller gets you there.
               </p>
-              <p className="text-sm text-slate-400 mb-12">
+              <p className="text-sm text-slate-500 mb-12">
                 If it isn’t a fit, I’ll say so on the call and point you at what is.
               </p>
               <a href={BOOKING_URLS.STRATEGY_CALL} target="_blank" rel="noopener noreferrer" className={buttonPrimary}>
                 Book a strategy call <ChevronRight className="w-4 h-4" />
               </a>
-              <p className="mt-8 text-xs text-slate-400">
+              <p className="mt-8 text-xs text-slate-500">
                 Or call directly:{' '}
                 <a href="tel:+14254944489" className="text-vmNavy font-semibold hover:text-vmTeal transition-colors">(425) 494-4489</a>
               </p>

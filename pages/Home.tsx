@@ -153,8 +153,17 @@ const Home: React.FC = () => {
           {/* Hubert Robert's arch: a vast system, and the people underneath it
               who can't see the whole thing. Masked into the ground so it reads
               as depth behind the headline, not as a picture beside it. */}
-          <figure className="hero-art hidden lg:block" aria-hidden>
-            <img src="/images/art/roman-arch.webp" alt="" loading="eager" />
+          <figure className="hero-art hidden lg:block">
+            <img
+              src="/images/art/roman-arch.webp"
+              alt="Hubert Robert, The Return of the Cattle, about 1773 — a vast Roman arch with light coming through it, and beneath it, very small, people and cattle going about an ordinary day."
+              loading="eager"
+            />
+            <figcaption className="hero-art-caption">
+              <span className="placard-title">The Return of the Cattle</span> · Hubert Robert,
+              c. 1773 — a system far bigger than the people living inside it, who can’t see the
+              whole of it from where they stand.
+            </figcaption>
           </figure>
           <div className="max-w-7xl mx-auto px-6 w-full relative z-10">
             <div className="max-w-3xl">
@@ -189,14 +198,14 @@ const Home: React.FC = () => {
                     <ArrowRight className="w-4 h-4" />
                   </a>
                 </div>
-                <p className="text-xs text-slate-400">
+                <p className="text-xs text-slate-500">
                   Twelve leaks, your numbers, no call required. Or book a working session — not a
                   sales pitch, and you leave with two concrete next steps.
                 </p>
               </Reveal>
 
               <Reveal className="mt-16 pt-8 hairline" delay={100}>
-                <p className="eyebrow text-slate-400">
+                <p className="eyebrow text-slate-500">
                   Working with <span className="text-vmNavy">recruiters</span> ·{' '}
                   <span className="text-vmNavy">agencies</span> · <span className="text-vmNavy">law firms</span> ·{' '}
                   <span className="text-vmNavy">clinics</span> · <span className="text-vmNavy">trades</span> ·{' '}
@@ -226,9 +235,13 @@ const Home: React.FC = () => {
                 were being lost and deployed a voice concierge that books straight into the
                 schedule — new patients on the books within days of going live, no staff added.
               </p>
+              {/* Was "Read the case study" → /ai-voice, where no case study exists.
+                  Claiming one you don't have costs more credibility than it buys
+                  (NN/g: visitors already discount on-site proof). Points at what's
+                  actually there until a written case study exists. */}
               <Link to="/ai-voice"
                 className="inline-flex items-center gap-2 text-vmNavy font-semibold hover:text-vmTeal transition-colors text-sm">
-                Read the case study <ArrowRight className="w-4 h-4" />
+                How the voice work is built <ArrowRight className="w-4 h-4" />
               </Link>
             </Reveal>
           </div>
@@ -322,14 +335,14 @@ const Home: React.FC = () => {
                     between them are the whole point. Different century, same instinct.
                   </p>
                   <figcaption className="art-placard">
-                    <p className="eyebrow text-slate-400 mb-2">From the collection</p>
+                    <p className="eyebrow text-slate-500 mb-2">From the collection</p>
                     <p className="text-sm text-vmNavy placard-title">
                       Bowl with Courtly and Astrological Motifs
                     </p>
                     <p className="text-sm text-slate-500 mt-0.5">
                       Central or Northern Iran, late 12th–early 13th century · mina’i ware
                     </p>
-                    <p className="text-xs text-slate-400 mt-1.5">
+                    <p className="text-xs text-slate-500 mt-1.5">
                       The Metropolitan Museum of Art · Public domain
                     </p>
                   </figcaption>
@@ -368,7 +381,7 @@ const Home: React.FC = () => {
                 className="inline-flex items-center gap-2 text-vmNavy font-semibold hover:text-vmTeal transition-colors text-sm">
                 Step one, on your own: the twelve-leak audit <ArrowRight className="w-4 h-4" />
               </Link>
-              <p className="text-xs text-slate-400 mt-3">
+              <p className="text-xs text-slate-500 mt-3">
                 The questions and the math for each. Use your numbers, round down, total it.
               </p>
             </Reveal>
@@ -437,7 +450,7 @@ const Home: React.FC = () => {
             </div>
 
             <Reveal className="mt-10">
-              <p className="text-sm text-slate-400 max-w-2xl leading-relaxed">
+              <p className="text-sm text-slate-500 max-w-2xl leading-relaxed">
                 Prices are what they are on every call — you shouldn’t have to get on the phone to
                 find out whether you can afford to talk to me.
               </p>
@@ -500,7 +513,7 @@ const Home: React.FC = () => {
                   <p className="text-slate-700 italic mb-8 leading-relaxed flex-grow">"{t.quote}"</p>
                   <div className="pt-6 hairline">
                     <h5 className="font-semibold text-vmNavy text-sm">{t.name}</h5>
-                    <p className="eyebrow text-slate-400 mt-1">{t.title}</p>
+                    <p className="eyebrow text-slate-500 mt-1">{t.title}</p>
                   </div>
                 </Reveal>
               ))}
@@ -572,12 +585,12 @@ const Home: React.FC = () => {
                     means. The end is the time it hands back.
                   </p>
                   <figcaption className="art-placard">
-                    <p className="eyebrow text-slate-400 mb-2">From the collection</p>
+                    <p className="eyebrow text-slate-500 mb-2">From the collection</p>
                     <p className="text-sm text-vmNavy placard-title">
                       A Sunday on La Grande Jatte — 1884
                     </p>
                     <p className="text-sm text-slate-500 mt-0.5">Georges Seurat, 1884–86</p>
-                    <p className="text-xs text-slate-400 mt-1.5">
+                    <p className="text-xs text-slate-500 mt-1.5">
                       Art Institute of Chicago · Public domain
                     </p>
                   </figcaption>
@@ -597,11 +610,11 @@ const Home: React.FC = () => {
                 In 30 minutes we’ll map where you’re losing money, what it would take to fix it, and
                 whether I’m the right person to build it with you.
               </p>
-              <p className="text-sm text-slate-400 mb-12">A working session, not a sales pitch.</p>
+              <p className="text-sm text-slate-500 mb-12">A working session, not a sales pitch.</p>
               <a href={BOOKING_URLS.DISCOVERY} target="_blank" rel="noopener noreferrer" className={buttonPrimary}>
                 Book your call <ChevronRight className="w-4 h-4" />
               </a>
-              <p className="mt-8 text-xs text-slate-400">
+              <p className="mt-8 text-xs text-slate-500">
                 Or call directly:{' '}
                 <a href="tel:+14254944489" className="text-vmNavy font-semibold hover:text-vmTeal transition-colors">(425) 494-4489</a>
               </p>

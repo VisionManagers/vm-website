@@ -65,7 +65,7 @@ const PostListInner: React.FC = () => {
             <Loader2 className="w-6 h-6 text-vmTeal animate-spin" />
           </div>
         ) : posts.length === 0 ? (
-          <div className="text-center py-20 text-slate-400">
+          <div className="text-center py-20 text-slate-500">
             <p className="text-lg mb-4">No posts yet.</p>
             <Link to="/admin/posts/new" className="text-vmTeal font-bold text-sm uppercase tracking-widest hover:underline">
               Create your first post
@@ -93,13 +93,13 @@ const PostListInner: React.FC = () => {
                       >
                         {post.title}
                       </button>
-                      <p className="text-xs text-slate-400 mt-1">/{post.slug}</p>
+                      <p className="text-xs text-slate-500 mt-1">/{post.slug}</p>
                     </td>
                     <td className="p-4 hidden md:table-cell">
                       <span className="text-xs font-bold text-vmTeal uppercase tracking-widest">{post.post_type}</span>
                     </td>
                     <td className="p-4 hidden md:table-cell">
-                      <span className={`inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest ${post.published ? 'text-green-600' : 'text-slate-400'}`}>
+                      <span className={`inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest ${post.published ? 'text-green-600' : 'text-slate-500'}`}>
                         {post.published ? <Eye className="w-3 h-3" /> : <EyeOff className="w-3 h-3" />}
                         {post.published ? 'Published' : 'Draft'}
                       </span>
@@ -111,21 +111,21 @@ const PostListInner: React.FC = () => {
                       <div className="flex items-center justify-end gap-2">
                         <button
                           onClick={() => togglePublish(post.id, post.published)}
-                          className="p-2 text-slate-400 hover:text-vmTeal transition-colors"
+                          className="p-2 text-slate-500 hover:text-vmTeal transition-colors"
                           title={post.published ? 'Unpublish' : 'Publish'}
                         >
                           {post.published ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                         </button>
                         <button
                           onClick={() => navigate(`/admin/posts/${post.id}`)}
-                          className="p-2 text-slate-400 hover:text-vmNavy transition-colors"
+                          className="p-2 text-slate-500 hover:text-vmNavy transition-colors"
                           title="Edit"
                         >
                           <Edit2 className="w-4 h-4" />
                         </button>
                         <button
                           onClick={() => deletePost(post.id, post.title)}
-                          className="p-2 text-slate-400 hover:text-red-500 transition-colors"
+                          className="p-2 text-slate-500 hover:text-red-500 transition-colors"
                           title="Delete"
                         >
                           <Trash2 className="w-4 h-4" />

@@ -79,7 +79,7 @@ const PostDetail: React.FC = () => {
     />
     <div className="pt-40 pb-20 px-6 min-h-screen bg-white">
       <div className="max-w-4xl mx-auto">
-        <Link to="/insights" className="inline-flex items-center gap-2 text-slate-400 hover:text-vmNavy transition-colors mb-12 text-xs font-bold uppercase tracking-widest">
+        <Link to="/insights" className="inline-flex items-center gap-2 text-slate-500 hover:text-vmNavy transition-colors mb-12 text-xs font-bold uppercase tracking-widest">
           <ArrowLeft className="w-4 h-4" /> Back to Insights
         </Link>
 
