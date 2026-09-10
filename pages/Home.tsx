@@ -7,7 +7,7 @@ import {
   buttonPrimary, buttonSecondary, buttonTealOnNavy,
 } from '../components/ornaments';
 import {
-  ChevronRight, ArrowRight,
+  ChevronRight, ArrowRight, ArrowUpRight,
   Stethoscope, Rocket, Handshake, GraduationCap, Star,
 } from 'lucide-react';
 
@@ -517,6 +517,19 @@ const Home: React.FC = () => {
                   <div className="pt-6 hairline">
                     <h5 className="font-semibold text-vmNavy text-sm">{t.name}</h5>
                     <p className="eyebrow text-slate-500 mt-1">{t.title}</p>
+                    {/* Verifiable beats flattering: a quote the reader can check on a
+                        profile we don't control carries more weight than one we typed. */}
+                    {t.sourceUrl && (
+                      <a
+                        href={t.sourceUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1.5 mt-3 text-xs text-slate-500 hover:text-vmTeal transition-colors"
+                      >
+                        Verify on {t.sourceLabel}
+                        <ArrowUpRight className="w-3.5 h-3.5" aria-hidden />
+                      </a>
+                    )}
                   </div>
                 </Reveal>
               ))}
