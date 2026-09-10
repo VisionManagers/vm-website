@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from 'r
 import Home from './pages/Home';
 import StartHere from './pages/StartHere';
 import Solutions from './pages/Solutions';
+import Partner from './pages/Partner';
 import TheLab from './pages/TheLab';
 import Insights from './pages/Insights';
 import PostDetail from './pages/insights/PostDetail';
@@ -24,6 +25,9 @@ const AdminDigestSettings = React.lazy(() => import('./pages/admin/DigestSetting
 
 // Lazy-load digest page
 const Digest = React.lazy(() => import('./pages/insights/Digest'));
+
+// Lazy-load the Workbench (interactive AI tools — keep off the main bundle)
+const Workbench = React.lazy(() => import('./pages/lab/Workbench'));
 
 // Hidden page — direct-link sharing only (no nav links, not in sitemap/prerender, noindex)
 const LeakAudit = React.lazy(() => import('./pages/LeakAudit'));
@@ -53,7 +57,9 @@ const App: React.FC = () => {
               <Route path="/" element={<Home />} />
               <Route path="/start" element={<StartHere />} />
               <Route path="/solutions" element={<Solutions />} />
+              <Route path="/partner" element={<Partner />} />
               <Route path="/lab" element={<TheLab />} />
+              <Route path="/lab/workbench" element={<Workbench />} />
               <Route path="/insights" element={<Insights />} />
               <Route path="/insights/digest" element={<Digest />} />
               <Route path="/insights/:slug" element={<PostDetail />} />

@@ -39,6 +39,7 @@ const TIERS = [
     desc: 'Ongoing ownership: implementation support, advisory, and your roadmap maintained month over month. Deeper strategic partnerships — data systems, cross-team outcomes, a weekly strategy seat — grow from here on evidence, not ambition.',
     includes: ['Working block, or advisory + build at $2,000/mo', 'Roadmap owned and maintained', 'Monthly executive readout', 'A clear path to a full strategic partnership'],
     featured: false,
+    more: { to: '/partner', label: 'See the Strategic AI Partner seat — from $5,000/mo' },
   },
 ];
 
@@ -198,6 +199,12 @@ const Solutions: React.FC = () => {
                     className={tier.featured ? buttonTealOnNavy + ' w-full' : buttonPrimary + ' w-full'}>
                     Discuss this engagement <ArrowRight className="w-4 h-4" />
                   </a>
+                  {tier.more && (
+                    <Link to={tier.more.to}
+                      className="mt-4 inline-flex items-center gap-1.5 text-xs font-semibold text-vmNavy hover:text-vmTeal transition-colors">
+                      {tier.more.label} <ArrowRight className="w-3.5 h-3.5" />
+                    </Link>
+                  )}
                 </Reveal>
               ))}
             </div>
