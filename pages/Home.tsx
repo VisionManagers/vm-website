@@ -136,12 +136,15 @@ const Home: React.FC = () => {
                     Book a call
                     <ChevronRight className="w-4 h-4" />
                   </a>
-                  <Link to="/solutions" className={buttonSecondary}>
-                    See how it works
+                  <Link to="/leak-audit" className={buttonSecondary}>
+                    Find your leaks first
                     <ArrowRight className="w-4 h-4" />
                   </Link>
                 </div>
-                <p className="text-xs text-slate-400">A working session, not a sales pitch. You leave with two concrete next steps.</p>
+                <p className="text-xs text-slate-400">
+                  A working session, not a sales pitch. Or run the audit yourself — twelve leaks,
+                  your numbers, no call required.
+                </p>
               </Reveal>
 
               <Reveal className="mt-16 pt-8 hairline" delay={100}>
@@ -257,6 +260,16 @@ const Home: React.FC = () => {
                 </Reveal>
               ))}
             </div>
+
+            <Reveal className="mt-16 text-center">
+              <Link to="/leak-audit"
+                className="inline-flex items-center gap-2 text-vmNavy font-semibold hover:text-vmTeal transition-colors text-sm">
+                Step one, on your own: the twelve-leak audit <ArrowRight className="w-4 h-4" />
+              </Link>
+              <p className="text-xs text-slate-400 mt-3">
+                The questions and the math for each. Use your numbers, round down, total it.
+              </p>
+            </Reveal>
           </div>
         </section>
 
