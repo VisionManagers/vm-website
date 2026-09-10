@@ -142,5 +142,23 @@
       "#625f4d",
       "#babcb9"
     ]
+  },
+  "ancient-rome": {
+    "title": "Ancient Rome",
+    "artist": "Giovanni Paolo Panini",
+    "date": "1757",
+    "culture": "",
+    "medium": "Oil on canvas",
+    "source": "The Metropolitan Museum of Art",
+    "license": "Public Domain (CC0)",
+    "page": "https://www.metmuseum.org/art/collection/search/437244",
+    "accent": "#8f815e",
+    "palette": [
+      "#303122",
+      "#70735f",
+      "#5b614c",
+      "#5c563c",
+      "#8f815e"
+    ]
   }
 }
