@@ -7,34 +7,41 @@ import {
   buttonPrimary, buttonSecondary, buttonTealOnNavy,
 } from '../components/ornaments';
 import {
-  ChevronRight, ArrowRight, Telescope, Orbit, Boxes, Target,
+  ChevronRight, ArrowRight,
   Stethoscope, Rocket, Handshake, GraduationCap, Star,
 } from 'lucide-react';
 
+/* Each step carries a plate from the age of scientific illustration — observe,
+   map, construct, record. Ornament, not illustration: they're cropped to
+   medallions and pulled into navy so they read as a set. Public domain (Met). */
 const STEPS = [
   {
     n: '01',
-    Icon: Telescope,
     title: 'Find the loss',
     desc: 'We start where it hurts: the missed calls, the dead follow-ups, the revenue leaking in places you never look. Money first — clarity follows.',
+    plate: '/images/art/plate-birds.webp',
+    plateAlt: 'Detail from George Edwards, A Natural History of Uncommon Birds, 1743–51',
   },
   {
     n: '02',
-    Icon: Orbit,
     title: 'Map the Cosmos',
     desc: 'We connect your data and relationships — contacts, calls, records — into one living map, so you can finally see how your business actually moves.',
+    plate: '/images/art/plate-polyhedra.webp',
+    plateAlt: 'Detail from Jost Amman, Perspectiva Corporum Regularium, 1568',
   },
   {
     n: '03',
-    Icon: Boxes,
     title: 'Build the system',
     desc: 'Automation, voice agents, workflows that turn the map into motion. And the honest part most won’t tell you: where AI doesn’t belong yet.',
+    plate: '/images/art/plate-proportion.webp',
+    plateAlt: 'Detail from Albrecht Dürer, De vrbibvs, 1535',
   },
   {
     n: '04',
-    Icon: Target,
     title: 'Answer for the result',
     desc: 'It shows up on your P&L, or it doesn’t ship. One person accountable from the first call to the number at the end.',
+    plate: '/images/art/plate-tulip.webp',
+    plateAlt: 'Detail from Barbara Regina Dietzsch, a tulip with moth and beetle, c. 1750–60',
   },
 ];
 
@@ -175,6 +182,58 @@ const Home: React.FC = () => {
           </div>
         </section>
 
+        {/* ─── AN OLDER MAP — the Cosmos idea, with an object that already did it ─── */}
+        <section className="py-24 bg-white">
+          <div className="max-w-6xl mx-auto px-6">
+            <div className="grid md:grid-cols-12 gap-12 md:gap-16 items-center">
+              <div className="md:col-span-6 md:order-2">
+                <Reveal>
+                  <figure className="art-round max-w-md mx-auto">
+                    <img
+                      src="/images/art/astrological-bowl-round.webp"
+                      alt="A 12th-century Persian mina'i bowl: a gold sun at the centre, ringed by roundels of zodiac figures, ringed again by mounted courtiers"
+                      loading="lazy"
+                    />
+                  </figure>
+                </Reveal>
+              </div>
+
+              <div className="md:col-span-6 md:order-1">
+                <Reveal>
+                  <Eyebrow className="text-accent mb-5">An older map</Eyebrow>
+                  <h2 className="text-3xl md:text-4xl font-serif text-vmNavy mb-6 leading-snug">
+                    The idea is eight
+                    <br />
+                    <span className="italic">hundred years old.</span>
+                  </h2>
+                  <p className="text-lg text-slate-600 leading-relaxed mb-6">
+                    A potter in Iran put the sun at the centre of this bowl, ringed it with the
+                    signs of the heavens, and ringed that with the court. Everything that mattered
+                    on one surface, arranged by how the parts stood in relation to each other.
+                  </p>
+                  <p className="text-slate-500 leading-relaxed mb-8">
+                    It isn’t decoration — it’s a working diagram of a world. That’s what a Cosmos
+                    is: your contacts, calls and records drawn in one place, where the relationships
+                    between them are the whole point. Different century, same instinct.
+                  </p>
+                  <figcaption className="art-placard">
+                    <p className="eyebrow text-slate-400 mb-2">From the collection</p>
+                    <p className="text-sm text-vmNavy placard-title">
+                      Bowl with Courtly and Astrological Motifs
+                    </p>
+                    <p className="text-sm text-slate-500 mt-0.5">
+                      Central or Northern Iran, late 12th–early 13th century · mina’i ware
+                    </p>
+                    <p className="text-xs text-slate-400 mt-1.5">
+                      The Metropolitan Museum of Art · Public domain
+                    </p>
+                  </figcaption>
+                </Reveal>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* ─── HOW IT WORKS — the arc ─── */}
         <section className="py-28 bg-vmCream">
           <div className="max-w-7xl mx-auto px-6">
@@ -188,8 +247,10 @@ const Home: React.FC = () => {
               {STEPS.map((s, i) => (
                 <Reveal key={s.n} delay={i * 90} className="relative">
                   <div className="flex items-center gap-4 mb-6">
+                    <span className="art-medallion">
+                      <img src={s.plate} alt={s.plateAlt} loading="lazy" />
+                    </span>
                     <SectionNumber n={s.n} />
-                    <s.Icon className="w-7 h-7 text-vmTeal" aria-hidden strokeWidth={1.5} />
                   </div>
                   <h3 className="text-xl font-serif text-vmNavy mb-3">{s.title}</h3>
                   <p className="text-sm text-slate-600 leading-relaxed">{s.desc}</p>
@@ -261,8 +322,11 @@ const Home: React.FC = () => {
           </div>
         </section>
 
-        {/* ─── WHO IT'S FOR — the wider door ─── */}
-        <section className="py-28 bg-white">
+        {/* ─── WHO IT'S FOR — the wider door, on a Morris ground ─── */}
+        <section
+          className="py-28 bg-white art-ground"
+          style={{ '--art-ground-img': "url('/images/art/windrush.webp')" } as React.CSSProperties}
+        >
           <div className="max-w-7xl mx-auto px-6">
             <Reveal className="text-center mb-16 max-w-2xl mx-auto">
               <Eyebrow className="text-accent mb-4">Who it’s for</Eyebrow>
@@ -313,19 +377,79 @@ const Home: React.FC = () => {
         {/* ─── CASUAL INTELLIGENCE BAND ─── */}
         <section className="py-20 bg-white">
           <div className="max-w-5xl mx-auto px-6">
-            <Reveal className="flex flex-col md:flex-row items-center justify-between gap-8 p-10 md:p-12 bg-vmNavy rounded-sm">
-              <div>
-                <Eyebrow className="text-vmMarigold mb-3">Every Wednesday</Eyebrow>
-                <h3 className="text-2xl font-serif text-white mb-2">Casual Intelligence</h3>
-                <p className="text-white/60 text-sm max-w-md leading-relaxed">
-                  A weekly roundtable where operators show how they actually use AI — live builds,
-                  real workflows, no sales pitches. Free to attend.
-                </p>
+            <Reveal className="relative overflow-hidden bg-vmNavy rounded-sm">
+              {/* Hokusai's Prussian blue sits almost exactly on the VM palette —
+                  used here as texture inside the navy, not as a picture. */}
+              <img
+                src="/images/art/great-wave.webp"
+                alt=""
+                aria-hidden
+                loading="lazy"
+                className="absolute inset-0 w-full h-full object-cover opacity-[0.24] mix-blend-screen"
+              />
+              <div className="absolute inset-0 bg-gradient-to-r from-vmNavy via-vmNavy/88 to-vmNavy/25" />
+              <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8 p-10 md:p-12">
+                <div>
+                  <Eyebrow className="text-vmMarigold mb-3">Every Wednesday</Eyebrow>
+                  <h3 className="text-2xl font-serif text-white mb-2">Casual Intelligence</h3>
+                  <p className="text-white/60 text-sm max-w-md leading-relaxed">
+                    A weekly roundtable where operators show how they actually use AI — live builds,
+                    real workflows, no sales pitches. Free to attend.
+                  </p>
+                </div>
+                <Link to="/ci" className={buttonTealOnNavy}>
+                  Join the roundtable <ArrowRight className="w-4 h-4" />
+                </Link>
               </div>
-              <Link to="/ci" className={buttonTealOnNavy}>
-                Join the roundtable <ArrowRight className="w-4 h-4" />
-              </Link>
             </Reveal>
+          </div>
+        </section>
+
+        {/* ─── THE LONGER VIEW — a featured work, and why the work matters ─── */}
+        <section className="py-28 bg-vmCream">
+          <div className="max-w-6xl mx-auto px-6">
+            <div className="grid md:grid-cols-12 gap-12 md:gap-16 items-center">
+              <Reveal className="md:col-span-7">
+                <figure className="art-framed">
+                  <img
+                    src="/images/art/grande-jatte.webp"
+                    alt="Georges Seurat, A Sunday on La Grande Jatte — 1884: Parisians at rest on an island in the Seine, painted in fine dots of colour"
+                    loading="lazy"
+                  />
+                </figure>
+              </Reveal>
+
+              <div className="md:col-span-5">
+                <Reveal>
+                  <Eyebrow className="text-accent mb-5">The longer view</Eyebrow>
+                  <h2 className="text-3xl md:text-4xl font-serif text-vmNavy mb-6 leading-snug">
+                    The point was never
+                    <br />
+                    <span className="italic">the technology.</span>
+                  </h2>
+                  <p className="text-lg text-slate-600 leading-relaxed mb-6">
+                    A Sunday afternoon on an island in the Seine. Ordinary people doing nothing in
+                    particular — and a painter free to spend two years rendering them, dot by dot,
+                    because someone decided that was worth the time. It hangs in Chicago still.
+                  </p>
+                  <p className="text-slate-500 leading-relaxed mb-8">
+                    That’s the world worth building toward: people whose hours belong to them, work
+                    made freely, and the good of it kept for whoever comes next. Automation is a
+                    means. The end is the time it hands back.
+                  </p>
+                  <figcaption className="art-placard">
+                    <p className="eyebrow text-slate-400 mb-2">From the collection</p>
+                    <p className="text-sm text-vmNavy placard-title">
+                      A Sunday on La Grande Jatte — 1884
+                    </p>
+                    <p className="text-sm text-slate-500 mt-0.5">Georges Seurat, 1884–86</p>
+                    <p className="text-xs text-slate-400 mt-1.5">
+                      Art Institute of Chicago · Public domain
+                    </p>
+                  </figcaption>
+                </Reveal>
+              </div>
+            </div>
           </div>
         </section>
 
