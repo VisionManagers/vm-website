@@ -150,6 +150,12 @@ const Home: React.FC = () => {
         {/* ─── HERO — the Cosmos ─── */}
         <section className="relative min-h-[92vh] flex items-center overflow-hidden pt-36 pb-24 cosmos-wash">
           <Constellation />
+          {/* Hubert Robert's arch: a vast system, and the people underneath it
+              who can't see the whole thing. Masked into the ground so it reads
+              as depth behind the headline, not as a picture beside it. */}
+          <figure className="hero-art hidden lg:block" aria-hidden>
+            <img src="/images/art/roman-arch.webp" alt="" loading="eager" />
+          </figure>
           <div className="max-w-7xl mx-auto px-6 w-full relative z-10">
             <div className="max-w-3xl">
               <Reveal>
