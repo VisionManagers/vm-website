@@ -150,19 +150,22 @@ const Home: React.FC = () => {
         {/* ─── HERO — the Cosmos ─── */}
         <section className="relative min-h-[92vh] flex items-center overflow-hidden pt-36 pb-24 cosmos-wash">
           <Constellation />
-          {/* Hubert Robert's arch: a vast system, and the people underneath it
-              who can't see the whole thing. Masked into the ground so it reads
-              as depth behind the headline, not as a picture beside it. */}
+          {/* Hubert Robert's arch, read the right way round: nobody in the
+              painting is looking at it. They're getting on with their evening,
+              held up by something they never have to think about. Deliberately
+              NOT "the system dwarfs the people" — in an AI context that reads
+              as the machine being bigger than you, which is the fear, not the
+              pitch. Masked into the ground so it's depth, not a picture. */}
           <figure className="hero-art hidden lg:block">
             <img
               src="/images/art/roman-arch.webp"
-              alt="Hubert Robert, The Return of the Cattle, about 1773 — a vast Roman arch with light coming through it, and beneath it, very small, people and cattle going about an ordinary day."
+              alt="Hubert Robert, The Return of the Cattle, about 1773 — warm evening light through a great stone arch, with people and their cattle settling in for the evening beneath it."
               loading="eager"
             />
             <figcaption className="hero-art-caption">
               <span className="placard-title">The Return of the Cattle</span> · Hubert Robert,
-              c. 1773 — a system far bigger than the people living inside it, who can’t see the
-              whole of it from where they stand.
+              c. 1773 — someone built the arch. Centuries on, people still live their evenings
+              beneath it without once thinking about it. The best systems end up invisible.
             </figcaption>
           </figure>
           <div className="max-w-7xl mx-auto px-6 w-full relative z-10">
