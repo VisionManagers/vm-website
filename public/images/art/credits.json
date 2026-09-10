@@ -160,5 +160,23 @@
       "#5c563c",
       "#8f815e"
     ]
+  },
+  "painting-party": {
+    "title": "Calligraphy and Painting Party",
+    "artist": "Kawanabe Kyōsai (Japanese, 1831–1889)",
+    "date": "1880",
+    "culture": "Japan, Meiji period (1868–1912)",
+    "medium": "hanging scroll; ink and color on paper",
+    "source": "Cleveland Museum of Art",
+    "license": "Public Domain (CC0)",
+    "page": "https://clevelandart.org/art/1983.88",
+    "accent": "#6d553d",
+    "palette": [
+      "#898377",
+      "#a19989",
+      "#c4b9a7",
+      "#6d553d",
+      "#a2a397"
+    ]
   }
 }
