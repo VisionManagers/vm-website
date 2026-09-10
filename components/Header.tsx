@@ -44,9 +44,14 @@ const Header: React.FC = () => {
 
   // Solutions is a dropdown — AI Voice lives here as a component offer; more
   // solutions slot into this list as we build them out.
+  // Ordered by what the visitor commits, not by what we'd like to sell:
+  // free self-diagnosis first, then the offers, then the overview.
   const solutionsMenu = [
-    { name: 'All Solutions', path: '/solutions' },
+    { name: 'The Leak Audit', path: '/leak-audit' },
     { name: 'AI Voice', path: '/ai-voice' },
+    { name: 'Expansion OS', path: '/expansion-os' },
+    { name: 'Strategic AI Partner', path: '/partner' },
+    { name: 'All Solutions', path: '/solutions' },
   ];
 
   const navLinks = [
@@ -57,7 +62,8 @@ const Header: React.FC = () => {
   ];
 
   const isActive = (path: string) => location.pathname === path;
-  const solutionsActive = location.pathname === '/solutions' || location.pathname === '/ai-voice';
+  // Derived from the menu so a new solution page can't fall out of the active state.
+  const solutionsActive = solutionsMenu.some((s) => s.path === location.pathname);
 
   return (
     <header

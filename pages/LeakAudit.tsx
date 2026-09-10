@@ -1,5 +1,4 @@
 import React from 'react';
-import { Helmet } from 'react-helmet-async';
 import SEO from '../components/SEO';
 import { Reveal, Eyebrow, buttonPrimary } from '../components/ornaments';
 import { ArrowRight, ArrowDown } from 'lucide-react';
@@ -223,10 +222,9 @@ const LeakAudit: React.FC = () => {
         description="A diagnostic for established business owners: twelve leaks across demand, time, knowledge, and strategy — with the questions and the math to run your own numbers."
         path="/leak-audit"
       />
-      {/* Hidden page: shared by direct link only — keep out of search indexes */}
-      <Helmet>
-        <meta name="robots" content="noindex, nofollow" />
-      </Helmet>
+      {/* Public as of 2026-09-10. Built July as a direct-share asset (noindex);
+          the architecture review reframed it as the self-serve rung between
+          "interesting" and "book a call", which only works if it's findable. */}
 
       <div className="bg-white" data-aesthetic="solar">
         {/* ─── HERO ─── */}

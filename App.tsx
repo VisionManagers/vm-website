@@ -4,6 +4,7 @@ import Home from './pages/Home';
 import StartHere from './pages/StartHere';
 import Solutions from './pages/Solutions';
 import Partner from './pages/Partner';
+import ExpansionOS from './pages/ExpansionOS';
 import TheLab from './pages/TheLab';
 import Insights from './pages/Insights';
 import PostDetail from './pages/insights/PostDetail';
@@ -58,6 +59,7 @@ const App: React.FC = () => {
               <Route path="/start" element={<StartHere />} />
               <Route path="/solutions" element={<Solutions />} />
               <Route path="/partner" element={<Partner />} />
+              <Route path="/expansion-os" element={<ExpansionOS />} />
               <Route path="/lab" element={<TheLab />} />
               <Route path="/lab/workbench" element={<Workbench />} />
               <Route path="/insights" element={<Insights />} />

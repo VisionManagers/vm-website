@@ -45,12 +45,47 @@ const STEPS = [
   },
 ];
 
-const AUDIENCES = [
+/* Capabilities are SHOWN, never led with (offer-ladder positioning, rev. 2026-09-10).
+   Voice sits among the others deliberately: it's a strong capability and a poor
+   front door — commoditized, and not the work worth being hired for. */
+const BUILDS = [
   {
-    Icon: Stethoscope,
-    title: 'Healthcare practices',
-    desc: 'Where it’s proven. Recover missed calls, automate the front desk, stay compliant — from single practices to multi-location groups.',
+    title: 'Data and reporting systems',
+    desc: 'The numbers assembled once, automatically, instead of rebuilt by hand every month. One team lead was losing one to two full days a month to that.',
   },
+  {
+    title: 'Automation for the repetitive work',
+    desc: 'Measurements in, formatted bids out — in your layout, not a generic one. Intake, qualification, CRM updates, the follow-up that never happens.',
+  },
+  {
+    title: 'Knowledge out of people’s heads',
+    desc: 'The SOPs, the training, the answers that currently live in one person and walk out when they do. Turned into something the whole team can ask.',
+  },
+  {
+    title: 'Marketing that converts what you already get',
+    desc: 'Most sites lose the visitor before the form. Fixing the buying journey usually beats buying more traffic — and it’s cheaper.',
+  },
+  {
+    title: 'Voice agents that answer and book',
+    desc: 'Every call answered, every hour, in your language — with the compliance posture healthcare demands. Strong capability. Rarely the first thing you need.',
+  },
+  {
+    title: 'Vendor and spend audits',
+    desc: 'What you’re paying for phones, connectivity and services, re-quoted through my supplier lanes. You pay nothing — the supplier pays me.',
+  },
+];
+
+/* Renders the vault ladder (offer-ladder.md + pricing-rules.md v1.3).
+   Rule 8: the website renders prices, it never defines them. */
+const LADDER = [
+  { price: 'Free', name: 'The Leak Audit', desc: 'Twelve leaks, your numbers, on your own.', to: '/leak-audit' },
+  { price: '$0', name: 'Vendor & spend audit', desc: 'I re-quote what you already pay. The supplier pays me, not you.', to: '/solutions' },
+  { price: '$500', name: 'AI Quick-Start', desc: 'One week. Dollar math, and one fix already live.', to: '/solutions' },
+  { price: '$7,500', name: 'Expansion OS', desc: 'Six months, eight seats. You build two systems with me.', to: '/expansion-os' },
+  { price: '$5,000/mo', name: 'Strategic AI Partner', desc: 'A weekly seat and a named roadmap. The whole picture.', to: '/partner' },
+];
+
+const AUDIENCES = [
   {
     Icon: Rocket,
     title: 'Founders & operators',
@@ -66,14 +101,19 @@ const AUDIENCES = [
     title: 'Teams that want it in-house',
     desc: 'Hands-on training applied to your actual roles — from zero to working output in an afternoon, not a curriculum.',
   },
+  {
+    Icon: Stethoscope,
+    title: 'Regulated and high-trust work',
+    desc: 'Clinics, and anyone whose first question is about compliance. HIPAA posture, BAAs, and data rules written before anything is deployed — the depth that makes the rest of this safe to buy.',
+  },
 ];
 
 const Home: React.FC = () => {
   return (
     <>
       <SEO
-        title="Vision Managers — AI That Earns Its Keep"
-        description="Vision Managers turns the data and relationships your business is already sitting on into systems that drive real outcomes — AI strategy, automation, and voice, with one person accountable for the result. Proven in healthcare, built for anyone."
+        title="Vision Managers — Find What Your Business Is Leaking"
+        description="Most businesses leak six figures a year and their owners can name two of the twelve places. I find where the money and the hours are going, then build the systems that close the gap — data, automation, knowledge, marketing, voice. AI is how it gets built, not the point."
         path="/"
         jsonLd={{
           '@context': 'https://schema.org',
@@ -82,7 +122,7 @@ const Home: React.FC = () => {
           url: 'https://visionmanagers.com',
           logo: 'https://storage.googleapis.com/vm-website/web%20images/vm-logo%402x.png',
           description:
-            'Vision Managers turns a business’s scattered data and relationships into systems that drive measurable outcomes. AI strategy, automation, voice AI, and training — accountable, results-first. Proven in healthcare, built for anyone.',
+            'Vision Managers finds where a business is losing money and hours — missed demand, manual work, knowledge trapped in one person’s head — and builds the systems that close the gap. Strategy, data systems, automation, training and voice, with one person accountable for the result.',
           email: 'sukhneet@visionmanagers.com',
           telephone: '+1-425-494-4489',
           areaServed: 'US',
@@ -113,44 +153,103 @@ const Home: React.FC = () => {
           <div className="max-w-7xl mx-auto px-6 w-full relative z-10">
             <div className="max-w-3xl">
               <Reveal>
-                <Eyebrow className="text-vmTeal mb-8">Vision Managers · AI, owned and accountable</Eyebrow>
+                <Eyebrow className="text-vmTeal mb-8">Vision Managers · systems that pay for themselves</Eyebrow>
               </Reveal>
               <Reveal delay={80}>
-                <h1 className="font-serif text-vmNavy text-[2.7rem] md:text-[5.2rem] leading-[1.04] mb-8">
-                  Your business is sitting on data
+                <h1 className="font-serif text-vmNavy text-[2.6rem] md:text-[4.5rem] leading-[1.05] mb-8 text-balance">
+                  Most businesses are leaking six figures a year.
                   <br />
-                  <span className="italic">that could be running it.</span>
+                  <span className="italic text-[0.66em] leading-tight inline-block mt-4">
+                    Their owners can name two of the twelve places.
+                  </span>
                 </h1>
               </Reveal>
               <Reveal delay={160}>
                 <p className="text-lg md:text-xl text-slate-600 leading-relaxed max-w-2xl mb-10">
-                  I find what’s quietly costing you — missed calls, dead follow-ups, data nobody’s
-                  connecting — and build the systems that fix it. One person accountable for the
-                  strategy, the automation, and the result. Including when <em>not</em> to use AI.
-                  Proven in healthcare, built for anyone.
+                  I find where the money and the hours are actually going — missed demand, work
+                  still done by hand, knowledge trapped in one person’s head — then build the
+                  systems that close the gap. AI is how it gets built.{' '}
+                  <em>It isn’t the point.</em>
                 </p>
               </Reveal>
               <Reveal delay={240}>
                 <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5 mb-5">
-                  <a href={BOOKING_URLS.DISCOVERY} target="_blank" rel="noopener noreferrer" className={buttonPrimary}>
-                    Book a call
+                  <Link to="/leak-audit" className={buttonPrimary}>
+                    Find your leaks
                     <ChevronRight className="w-4 h-4" />
-                  </a>
-                  <Link to="/solutions" className={buttonSecondary}>
-                    See how it works
-                    <ArrowRight className="w-4 h-4" />
                   </Link>
+                  <a href={BOOKING_URLS.DISCOVERY} target="_blank" rel="noopener noreferrer" className={buttonSecondary}>
+                    Book a call
+                    <ArrowRight className="w-4 h-4" />
+                  </a>
                 </div>
-                <p className="text-xs text-slate-400">A working session, not a sales pitch. You leave with two concrete next steps.</p>
+                <p className="text-xs text-slate-400">
+                  Twelve leaks, your numbers, no call required. Or book a working session — not a
+                  sales pitch, and you leave with two concrete next steps.
+                </p>
               </Reveal>
 
               <Reveal className="mt-16 pt-8 hairline" delay={100}>
                 <p className="eyebrow text-slate-400">
-                  Trusted by <span className="text-vmNavy">dentists</span> · <span className="text-vmNavy">optometrists</span> ·{' '}
-                  <span className="text-vmNavy">clinics</span> · <span className="text-vmNavy">founders</span> ·{' '}
-                  <span className="text-vmNavy">operators</span>
+                  Working with <span className="text-vmNavy">recruiters</span> ·{' '}
+                  <span className="text-vmNavy">agencies</span> · <span className="text-vmNavy">law firms</span> ·{' '}
+                  <span className="text-vmNavy">clinics</span> · <span className="text-vmNavy">trades</span> ·{' '}
+                  <span className="text-vmNavy">founders</span>
                 </p>
               </Reveal>
+            </div>
+          </div>
+        </section>
+
+        {/* ─── PROOF — the names, the pointer ─── */}
+        <section className="py-28 bg-white">
+          <div className="max-w-5xl mx-auto px-6">
+            <Reveal className="text-center mb-14">
+              <Eyebrow className="text-accent mb-4">Proof</Eyebrow>
+              <h2 className="text-4xl md:text-5xl font-serif text-vmNavy leading-tight">
+                Trusted to build for
+                <br />
+                <span className="italic">Emerald Health · Nexus Health ID.</span>
+              </h2>
+            </Reveal>
+
+            <Reveal className="max-w-2xl mx-auto text-center">
+              <p className="text-slate-600 leading-relaxed mb-8">
+                And for the practices whose phones we answer. When a Seattle-area optometry
+                practice was losing after-hours calls to voicemail, we mapped where patients
+                were being lost and deployed a voice concierge that books straight into the
+                schedule — new patients on the books within days of going live, no staff added.
+              </p>
+              <Link to="/ai-voice"
+                className="inline-flex items-center gap-2 text-vmNavy font-semibold hover:text-vmTeal transition-colors text-sm">
+                Read the case study <ArrowRight className="w-4 h-4" />
+              </Link>
+            </Reveal>
+          </div>
+        </section>
+
+        {/* ─── WHAT GETS BUILT — capability, shown not led with ─── */}
+        <section className="py-24 bg-vmCream">
+          <div className="max-w-6xl mx-auto px-6">
+            <Reveal className="max-w-2xl mb-16">
+              <Eyebrow className="text-accent mb-4">What actually gets built</Eyebrow>
+              <h2 className="text-3xl md:text-4xl font-serif text-vmNavy mb-5 leading-snug">
+                Six things, chosen in that order.
+              </h2>
+              <p className="text-slate-500">
+                Which of these you need is what the audit decides. Most owners guess wrong about
+                their own list — it’s almost never the thing they came in asking for.
+              </p>
+            </Reveal>
+
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-11">
+              {BUILDS.map((b, i) => (
+                <Reveal key={b.title} delay={(i % 3) * 80}>
+                  <LeafMark className="w-5 h-5 text-accent mb-4" />
+                  <h3 className="text-lg font-serif text-vmNavy mb-3 leading-snug">{b.title}</h3>
+                  <p className="text-sm text-slate-600 leading-relaxed">{b.desc}</p>
+                </Reveal>
+              ))}
             </div>
           </div>
         </section>
@@ -257,32 +356,85 @@ const Home: React.FC = () => {
                 </Reveal>
               ))}
             </div>
+
+            <Reveal className="mt-16 text-center">
+              <Link to="/leak-audit"
+                className="inline-flex items-center gap-2 text-vmNavy font-semibold hover:text-vmTeal transition-colors text-sm">
+                Step one, on your own: the twelve-leak audit <ArrowRight className="w-4 h-4" />
+              </Link>
+              <p className="text-xs text-slate-400 mt-3">
+                The questions and the math for each. Use your numbers, round down, total it.
+              </p>
+            </Reveal>
           </div>
         </section>
 
-        {/* ─── PROOF — the names, the pointer ─── */}
-        <section className="py-28 bg-white">
-          <div className="max-w-5xl mx-auto px-6">
-            <Reveal className="text-center mb-14">
-              <Eyebrow className="text-accent mb-4">Proof</Eyebrow>
-              <h2 className="text-4xl md:text-5xl font-serif text-vmNavy leading-tight">
-                Trusted to build for
-                <br />
-                <span className="italic">Emerald Health · Nexus Health ID.</span>
-              </h2>
+        {/* ─── WHO IT'S FOR — the wider door, on a Morris ground ─── */}
+        <section
+          className="py-28 bg-white art-ground"
+          style={{ '--art-ground-img': "url('/images/art/windrush.webp')" } as React.CSSProperties}
+        >
+          <div className="max-w-7xl mx-auto px-6">
+            <Reveal className="text-center mb-16 max-w-2xl mx-auto">
+              <Eyebrow className="text-accent mb-4">Who it’s for</Eyebrow>
+              <h2 className="text-4xl md:text-5xl font-serif text-vmNavy mb-5">If it runs on data and relationships, it can run better.</h2>
+              <p className="text-slate-500">Healthcare is where it’s proven. It’s far from where it stops.</p>
             </Reveal>
 
-            <Reveal className="max-w-2xl mx-auto text-center">
-              <p className="text-slate-600 leading-relaxed mb-8">
-                And for the practices whose phones we answer. When a Seattle-area optometry
-                practice was losing after-hours calls to voicemail, we mapped where patients
-                were being lost and deployed a voice concierge that books straight into the
-                schedule — new patients on the books within days of going live, no staff added.
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+              {AUDIENCES.map((a, i) => (
+                <Reveal key={a.title} delay={i * 80} className="p-8 bg-vmCream/70 border border-slate-100 rounded-sm flex flex-col">
+                  <a.Icon className="w-8 h-8 text-vmNavy mb-6" aria-hidden strokeWidth={1.4} />
+                  <h3 className="text-xl font-serif text-vmNavy mb-3">{a.title}</h3>
+                  <p className="text-sm text-slate-600 leading-relaxed">{a.desc}</p>
+                </Reveal>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ─── THE LADDER — how people actually work with me ─── */}
+        <section className="py-24 bg-white">
+          <div className="max-w-5xl mx-auto px-6">
+            <Reveal className="max-w-2xl mb-14">
+              <Eyebrow className="text-accent mb-4">How people work with me</Eyebrow>
+              <h2 className="text-3xl md:text-4xl font-serif text-vmNavy mb-5 leading-snug">
+                Start where the evidence is. Grow when it’s earned.
+              </h2>
+              <p className="text-slate-500">
+                Two of these cost nothing. Most people start at $500 and expand only once the
+                numbers say so — nobody signs the top rung cold.
               </p>
-              <Link to="/ai-voice"
-                className="inline-flex items-center gap-2 text-vmNavy font-semibold hover:text-vmTeal transition-colors text-sm">
-                Read the case study <ArrowRight className="w-4 h-4" />
-              </Link>
+            </Reveal>
+
+            <div className="flex flex-col">
+              {LADDER.map((r, i) => (
+                <Reveal key={r.name} delay={i * 60}>
+                  <Link
+                    to={r.to}
+                    className="group grid grid-cols-[7.5rem_1fr_auto] gap-5 items-baseline py-5 border-t border-slate-200 hover:border-vmTeal transition-colors"
+                  >
+                    <span className="font-serif text-xl text-vmNavy tabular-nums">{r.price}</span>
+                    <span>
+                      <span className="block font-semibold text-vmNavy group-hover:text-vmTeal transition-colors">
+                        {r.name}
+                      </span>
+                      <span className="block text-sm text-slate-600 mt-1">{r.desc}</span>
+                    </span>
+                    <ArrowRight
+                      className="w-4 h-4 text-slate-300 group-hover:text-vmTeal transition-colors self-center"
+                      aria-hidden
+                    />
+                  </Link>
+                </Reveal>
+              ))}
+            </div>
+
+            <Reveal className="mt-10">
+              <p className="text-sm text-slate-400 max-w-2xl leading-relaxed">
+                Prices are what they are on every call — you shouldn’t have to get on the phone to
+                find out whether you can afford to talk to me.
+              </p>
             </Reveal>
           </div>
         </section>
@@ -318,30 +470,6 @@ const Home: React.FC = () => {
                   </Link>
                 </Reveal>
               </div>
-            </div>
-          </div>
-        </section>
-
-        {/* ─── WHO IT'S FOR — the wider door, on a Morris ground ─── */}
-        <section
-          className="py-28 bg-white art-ground"
-          style={{ '--art-ground-img': "url('/images/art/windrush.webp')" } as React.CSSProperties}
-        >
-          <div className="max-w-7xl mx-auto px-6">
-            <Reveal className="text-center mb-16 max-w-2xl mx-auto">
-              <Eyebrow className="text-accent mb-4">Who it’s for</Eyebrow>
-              <h2 className="text-4xl md:text-5xl font-serif text-vmNavy mb-5">If it runs on data and relationships, it can run better.</h2>
-              <p className="text-slate-500">Healthcare is where it’s proven. It’s far from where it stops.</p>
-            </Reveal>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-              {AUDIENCES.map((a, i) => (
-                <Reveal key={a.title} delay={i * 80} className="p-8 bg-vmCream/70 border border-slate-100 rounded-sm flex flex-col">
-                  <a.Icon className="w-8 h-8 text-vmNavy mb-6" aria-hidden strokeWidth={1.4} />
-                  <h3 className="text-xl font-serif text-vmNavy mb-3">{a.title}</h3>
-                  <p className="text-sm text-slate-600 leading-relaxed">{a.desc}</p>
-                </Reveal>
-              ))}
             </div>
           </div>
         </section>
