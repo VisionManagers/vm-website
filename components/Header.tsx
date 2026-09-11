@@ -223,7 +223,7 @@ const Header: React.FC = () => {
                 </a>
 
                 <div className="mt-12 flex flex-col items-center gap-4 border-t border-slate-100 pt-10">
-                  <p className="text-[10px] text-slate-400 font-bold uppercase tracking-[0.3em] mb-2">Direct Access</p>
+                  <p className="text-[10px] text-slate-500 font-bold uppercase tracking-[0.3em] mb-2">Direct Access</p>
                   <div className="flex flex-col items-center gap-6">
                     <Link to="/start" className="text-lg font-bold text-vmNavy hover:text-vmTeal transition-colors">Start Here</Link>
                     <Link to="/ci" className="text-lg font-bold text-vmNavy hover:text-vmTeal transition-colors">Casual Intelligence</Link>
@@ -240,7 +240,7 @@ const Header: React.FC = () => {
               }`}
               style={{ transitionDelay: `${350 + navLinks.length * 60}ms` }}
             >
-               <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">© {new Date().getFullYear()} Vision Managers LLC</p>
+               <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">© {new Date().getFullYear()} Vision Managers LLC</p>
             </div>
           </div>
         </div>

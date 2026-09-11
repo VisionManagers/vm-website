@@ -180,7 +180,7 @@ const AIVoice: React.FC = () => {
 
             <div className="grid md:grid-cols-2 gap-10 md:gap-16 items-start">
               <Reveal>
-                <p className="eyebrow text-slate-400 mb-4">Voice AI out of the box</p>
+                <p className="eyebrow text-slate-500 mb-4">Voice AI out of the box</p>
                 <p className="text-slate-600 leading-relaxed">
                   Built to complete a task — answer, book, end the call. It clears the queue. But patients
                   read the difference in under half a second — a beat too slow to answer, a question it
@@ -245,7 +245,7 @@ const AIVoice: React.FC = () => {
             </div>
 
             <Reveal className="text-center mt-10">
-              <p className="text-sm text-slate-400">Coaching, not therapy — we keep that line clear.</p>
+              <p className="text-sm text-slate-500">Coaching, not therapy — we keep that line clear.</p>
             </Reveal>
           </div>
         </section>
@@ -292,7 +292,7 @@ const AIVoice: React.FC = () => {
 
             <Reveal className="grid md:grid-cols-2 gap-12 items-center border border-slate-200 rounded-sm bg-white p-8 md:p-14">
               <div>
-                <p className="eyebrow text-slate-400 mb-5">Voice AI — Seattle-area optometry practice</p>
+                <p className="eyebrow text-slate-500 mb-5">Voice AI — Seattle-area optometry practice</p>
                 <p className="text-slate-600 leading-relaxed mb-8">
                   Their after-hours calls were going to voicemail — and walking out the door. We mapped where
                   patients were being lost, then deployed a voice concierge that answers every call and books
@@ -307,14 +307,14 @@ const AIVoice: React.FC = () => {
                 {[['5', 'Appointments'], ['$4,300+', 'Visit value'], ['2', 'Days live']].map(([num, label]) => (
                   <div key={label} className="text-center">
                     <div className="font-serif text-3xl md:text-4xl text-vmTeal mb-2">{num}</div>
-                    <p className="eyebrow text-slate-400">{label}</p>
+                    <p className="eyebrow text-slate-500">{label}</p>
                   </div>
                 ))}
               </div>
             </Reveal>
 
             <Reveal className="mt-12 text-center">
-              <p className="eyebrow text-slate-400">
+              <p className="eyebrow text-slate-500">
                 Trusted to build for <span className="text-vmNavy">Emerald Health</span> ·{' '}
                 <span className="text-vmNavy">Nexus Health ID</span>
               </p>
@@ -334,15 +334,15 @@ const AIVoice: React.FC = () => {
                 In 30 minutes we’ll map where calls are slipping, what a designed conversation would change,
                 and whether we’re the right ones to build it with you.
               </p>
-              <p className="text-sm text-slate-400 mb-10">A working session, not a sales pitch.</p>
+              <p className="text-sm text-slate-500 mb-10">A working session, not a sales pitch.</p>
               <a href={BOOKING_URLS.DISCOVERY} target="_blank" rel="noopener noreferrer" className={buttonPrimary}>
                 Book a call <ChevronRight className="w-4 h-4" />
               </a>
-              <p className="mt-8 text-xs text-slate-400">
+              <p className="mt-8 text-xs text-slate-500">
                 Or call directly:{' '}
                 <a href="tel:+14254944489" className="text-vmNavy font-semibold hover:text-vmTeal transition-colors">(425) 494-4489</a>
               </p>
-              <p className="mt-6 text-xs text-slate-400 max-w-xl mx-auto leading-relaxed">
+              <p className="mt-6 text-xs text-slate-500 max-w-xl mx-auto leading-relaxed">
                 Built for healthcare: our conversations collect only what they need, protected health
                 information is handled in line with HIPAA, and your patient data never trains public
                 models. BAA available when your practice requires one.

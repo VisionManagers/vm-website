@@ -114,7 +114,7 @@ const ExpansionOS: React.FC = () => {
               </p>
             </Reveal>
             <Reveal delay={200}>
-              <p className="eyebrow text-slate-400 mb-10">
+              <p className="eyebrow text-slate-500 mb-10">
                 Founding cohort · 8 seats · prepaid, six months · applications reviewed personally
               </p>
             </Reveal>
@@ -171,12 +171,12 @@ const ExpansionOS: React.FC = () => {
                 <Reveal key={m.n} delay={(i % 2) * 80}>
                   <div className="flex items-center gap-4 mb-4">
                     <SectionNumber n={m.n} />
-                    <span className="eyebrow text-slate-400">{m.month} — {m.name}</span>
+                    <span className="eyebrow text-slate-500">{m.month} — {m.name}</span>
                   </div>
                   <h3 className="text-xl font-serif text-vmNavy mb-3">{m.head}</h3>
                   <p className="text-sm text-slate-600 leading-relaxed mb-4">{m.desc}</p>
                   <p className="text-xs text-vmNavy pt-3 hairline">
-                    <span className="text-slate-400">You leave with:</span> {m.leave}
+                    <span className="text-slate-500">You leave with:</span> {m.leave}
                   </p>
                 </Reveal>
               ))}
@@ -236,10 +236,10 @@ const ExpansionOS: React.FC = () => {
                     Half the education is seeing someone else solve a problem you haven’t hit yet.
                   </p>
                   <figcaption className="art-placard">
-                    <p className="eyebrow text-slate-400 mb-2">From the collection</p>
+                    <p className="eyebrow text-slate-500 mb-2">From the collection</p>
                     <p className="text-sm text-vmNavy placard-title">Calligraphy and Painting Party</p>
                     <p className="text-sm text-slate-500 mt-0.5">Kawanabe Kyōsai, 1880</p>
-                    <p className="text-xs text-slate-400 mt-1.5">Cleveland Museum of Art · Public domain</p>
+                    <p className="text-xs text-slate-500 mt-1.5">Cleveland Museum of Art · Public domain</p>
                   </figcaption>
                 </Reveal>
               </div>
@@ -319,7 +319,7 @@ const ExpansionOS: React.FC = () => {
               <span className="block font-serif text-5xl md:text-6xl text-vmNavy leading-none">
                 $7,500
               </span>
-              <span className="block eyebrow text-slate-400 mt-4 mb-8">
+              <span className="block eyebrow text-slate-500 mt-4 mb-8">
                 Six months, prepaid · 8 seats
               </span>
               <ul className="flex flex-col gap-3 mb-8">
@@ -354,7 +354,7 @@ const ExpansionOS: React.FC = () => {
                   and I can’t control that. I can control what I find and what we ship.
                 </p>
               </div>
-              <p className="text-xs text-slate-400 mt-5 leading-relaxed">
+              <p className="text-xs text-slate-500 mt-5 leading-relaxed">
                 Prepaid because building takes commitment, and the room works when everyone in it is
                 committed.
               </p>
@@ -374,7 +374,7 @@ const ExpansionOS: React.FC = () => {
                 Every seat is approved personally — the curation is the product. We’ll talk about
                 your business and what you’d build first, and I’ll tell you honestly if this isn’t it.
               </p>
-              <p className="text-sm text-slate-400 mb-12">
+              <p className="text-sm text-slate-500 mb-12">
                 Not ready for six months? <Link to="/leak-audit" className="text-vmNavy font-semibold hover:text-vmTeal transition-colors">Run the leak audit</Link> on your own first.
               </p>
               <a href={BOOKING_URLS.DISCOVERY} target="_blank" rel="noopener noreferrer" className={buttonPrimary}>

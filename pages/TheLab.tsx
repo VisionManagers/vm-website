@@ -268,7 +268,7 @@ const TheLab: React.FC = () => {
                 </div>
               </div>
             </Reveal>
-            <p className="mt-6 text-center text-slate-400 text-xs italic">
+            <p className="mt-6 text-center text-slate-500 text-xs italic">
               *Preliminary calculation from your inputs. An assessment refines these variables for your practice.
             </p>
           </section>
@@ -299,7 +299,7 @@ const TheLab: React.FC = () => {
                   page a different room of one building — designed, written, and shipped with the
                   same AI-assisted system we install for clients.
                 </p>
-                <span className="text-sm text-slate-400 italic">Exhibit ongoing. You're in it now.</span>
+                <span className="text-sm text-slate-500 italic">Exhibit ongoing. You're in it now.</span>
               </Reveal>
             </div>
           </section>
@@ -325,7 +325,7 @@ const TheLab: React.FC = () => {
                       {item.hint} <ArrowRight className="w-4 h-4" />
                     </Link>
                   ) : (
-                    <p className="eyebrow text-slate-400">{item.hint}</p>
+                    <p className="eyebrow text-slate-500">{item.hint}</p>
                   )}
                 </Reveal>
               ))}
@@ -350,7 +350,7 @@ const TheLab: React.FC = () => {
                   <Sprout className="w-6 h-6 text-accent mb-5" aria-hidden />
                   <h3 className="text-xl font-serif text-vmNavy mb-3">{item.title}</h3>
                   <p className="text-sm text-slate-600 leading-relaxed mb-6">{item.desc}</p>
-                  <p className="eyebrow text-slate-400">{item.status}</p>
+                  <p className="eyebrow text-slate-500">{item.status}</p>
                 </Reveal>
               ))}
             </div>

@@ -100,7 +100,7 @@ const Contact: React.FC = () => {
           </a>
 
           <div className="space-y-6 pt-8 border-t border-slate-100">
-            <p className="text-[10px] font-black uppercase tracking-widest text-slate-400">Or reach out directly</p>
+            <p className="text-[10px] font-black uppercase tracking-widest text-slate-500">Or reach out directly</p>
             <div className="flex items-center gap-4">
               <div className="w-10 h-10 bg-vmSlate rounded-full flex items-center justify-center text-vmNavy">
                 <Mail className="w-5 h-5" />

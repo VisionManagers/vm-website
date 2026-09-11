@@ -194,7 +194,7 @@ const About: React.FC = () => {
                   See how it works <ArrowRight className="w-4 h-4" />
                 </a>
               </div>
-              <p className="mt-6 text-xs text-slate-400">A working session, not a sales pitch.</p>
+              <p className="mt-6 text-xs text-slate-500">A working session, not a sales pitch.</p>
             </Reveal>
           </div>
         </section>

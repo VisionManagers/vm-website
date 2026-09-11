@@ -186,7 +186,7 @@ const StartHere: React.FC = () => {
             I’ll come back with a custom roadmap — where AI earns its keep, where it doesn’t, and the
             first move worth making. Proven in healthcare, built for anyone.
           </p>
-          <p className="eyebrow text-slate-400 mb-8">
+          <p className="eyebrow text-slate-500 mb-8">
             Find the loss · Map the Cosmos · Build the system · Answer for the result
           </p>
           <a href={BOOKING_URLS.DISCOVERY} target="_blank" rel="noopener noreferrer"
@@ -304,7 +304,7 @@ const StartHere: React.FC = () => {
                 <div className="space-y-10">
                   <div>
                     <label className="block text-sm font-bold text-vmNavy uppercase tracking-widest mb-2">What’s the primary bottleneck? *</label>
-                    <p className="text-xs text-slate-400 mb-4 font-normal">Select which one you’d fix first.</p>
+                    <p className="text-xs text-slate-500 mb-4 font-normal">Select which one you’d fix first.</p>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                       {bottlenecks.map(b => (
                         <button
@@ -339,7 +339,7 @@ const StartHere: React.FC = () => {
                   <div className="grid md:grid-cols-2 gap-8">
                     <div>
                       <label className="block text-sm font-bold text-vmNavy uppercase tracking-widest mb-2">Timeline. *</label>
-                      <p className="text-[10px] text-slate-400 mb-4">When do you want to go live?</p>
+                      <p className="text-[10px] text-slate-500 mb-4">When do you want to go live?</p>
                       <select 
                         className={`w-full p-4 border outline-none bg-white text-sm rounded-sm ${errors.timeline ? 'border-red-300 bg-red-50' : 'border-slate-200'}`}
                         value={formData.timeline}
@@ -352,7 +352,7 @@ const StartHere: React.FC = () => {
                     </div>
                     <div>
                       <label className="block text-sm font-bold text-vmNavy uppercase tracking-widest mb-2">Allocated budget *</label>
-                      <p className="text-[10px] text-slate-400 mb-4 opacity-0">spacer</p>
+                      <p className="text-[10px] text-slate-500 mb-4 opacity-0">spacer</p>
                       <select 
                         className={`w-full p-4 border outline-none bg-white text-sm rounded-sm ${errors.budget ? 'border-red-300 bg-red-50' : 'border-slate-200'}`}
                         value={formData.budget}
@@ -428,7 +428,7 @@ const StartHere: React.FC = () => {
                         onChange={(e) => handleFieldChange('company', e.target.value)}
                       />
                       <ErrorLabel message={errors.company} />
-                      <p className="mt-2 text-[10px] text-slate-400">This allows your report to be more accurate and valuable.</p>
+                      <p className="mt-2 text-[10px] text-slate-500">This allows your report to be more accurate and valuable.</p>
                     </div>
                     <div>
                       <label className="block text-sm font-bold text-vmNavy uppercase tracking-widest mb-2">Website (optional)</label>
@@ -443,7 +443,7 @@ const StartHere: React.FC = () => {
                         onChange={(e) => handleFieldChange('website', e.target.value)}
                       />
                       <ErrorLabel message={errors.website} />
-                      <p className="mt-2 text-[10px] text-slate-400">This allows your report to be more accurate and valuable.</p>
+                      <p className="mt-2 text-[10px] text-slate-500">This allows your report to be more accurate and valuable.</p>
                     </div>
                   </div>
 
@@ -477,7 +477,7 @@ const StartHere: React.FC = () => {
                       </div>
                       <div className="flex-grow">
                         <span className="text-sm font-bold text-vmNavy uppercase tracking-tight">Yes—Vision Managers may call/text me to schedule next steps.</span>
-                        <p className="text-xs text-slate-400 mt-1">No spam. You can opt out anytime.</p>
+                        <p className="text-xs text-slate-500 mt-1">No spam. You can opt out anytime.</p>
                       </div>
                     </label>
                   </div>
@@ -516,7 +516,7 @@ const StartHere: React.FC = () => {
             </button>
           </div>
         </form>
-        <p className="mt-6 text-center text-xs text-slate-400">Fields marked with * are required.</p>
+        <p className="mt-6 text-center text-xs text-slate-500">Fields marked with * are required.</p>
       </div>
     </div>
     </>

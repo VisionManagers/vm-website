@@ -182,7 +182,7 @@ const MicButton: React.FC<{ onText: (t: string) => void; className?: string }> =
       className={`shrink-0 w-10 h-10 rounded-sm border flex items-center justify-center transition-all ${
         listening
           ? 'bg-red-50 border-red-300 text-red-600 animate-pulse'
-          : 'bg-white border-slate-200 text-slate-400 hover:text-vmNavy hover:border-vmNavy/40'
+          : 'bg-white border-slate-200 text-slate-500 hover:text-vmNavy hover:border-vmNavy/40'
       } ${className || ''}`}
     >
       <Mic className="w-4 h-4" />
@@ -289,7 +289,7 @@ const IntakeForm: React.FC<{ onStarted: (s: Session) => void }> = ({ onStarted }
             </div>
           </div>
         ) : (
-          <button type="button" onClick={() => setShowOptional(true)} className="text-sm text-slate-400 hover:text-vmNavy transition-colors">
+          <button type="button" onClick={() => setShowOptional(true)} className="text-sm text-slate-500 hover:text-vmNavy transition-colors">
             + Add website or phone (optional — we'll read your website from a business email)
           </button>
         )}
@@ -299,7 +299,7 @@ const IntakeForm: React.FC<{ onStarted: (s: Session) => void }> = ({ onStarted }
           {busy ? <Loader2 className="w-5 h-5 animate-spin" /> : <Sparkles className="w-5 h-5" />}
           Start using the AI
         </button>
-        <p className="text-xs text-slate-400 text-center leading-relaxed">
+        <p className="text-xs text-slate-500 text-center leading-relaxed">
           Free to use. No card, no call required.
         </p>
       </form>
@@ -373,7 +373,7 @@ const ChatTool: React.FC<{
       {intro && <p className="text-sm text-slate-500 leading-relaxed mb-5">{intro}</p>}
       <div ref={scrollRef} className={`${compact ? 'h-64' : 'h-96'} overflow-y-auto bg-vmSlate/40 border border-slate-200 rounded-sm p-4 space-y-3`}>
         {messages.length === 0 && (
-          <p className={`text-sm text-slate-400 italic text-center ${compact ? 'mt-20' : 'mt-32'}`}>{emptyHint}</p>
+          <p className={`text-sm text-slate-500 italic text-center ${compact ? 'mt-20' : 'mt-32'}`}>{emptyHint}</p>
         )}
         {messages.map((m, i) => (
           <div key={i} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
@@ -390,7 +390,7 @@ const ChatTool: React.FC<{
           <div className="flex justify-start">
             <div className="bg-white border border-slate-200 px-4 py-3 rounded-sm flex items-center gap-2">
               <Loader2 className="w-4 h-4 animate-spin text-vmNavy" />
-              {busyHint && <span className="text-xs text-slate-400">{busyHint}</span>}
+              {busyHint && <span className="text-xs text-slate-500">{busyHint}</span>}
             </div>
           </div>
         )}
@@ -554,11 +554,11 @@ const GeneratorTool: React.FC<{
               <p className="text-sm text-vmNavy/70 mt-3 italic transition-all">{progress}</p>
             )}
             {busy ? (
-              <p className="text-xs text-slate-400 mt-1">
+              <p className="text-xs text-slate-500 mt-1">
                 Switch tools freely while this works — it keeps going in the background.
               </p>
             ) : !output && (
-              <p className="text-xs text-slate-400 mt-2">
+              <p className="text-xs text-slate-500 mt-2">
                 The advisor will tell you when it has enough — or build now and it flags anything it had to assume.
               </p>
             )}
@@ -687,7 +687,7 @@ const Workbench: React.FC = () => {
                   </p>
                   <h2 className="text-2xl font-serif text-vmNavy">{session.businessName}</h2>
                 </div>
-                <button onClick={reset} className="inline-flex items-center gap-2 text-sm text-slate-400 hover:text-vmNavy transition-colors">
+                <button onClick={reset} className="inline-flex items-center gap-2 text-sm text-slate-500 hover:text-vmNavy transition-colors">
                   <RotateCcw className="w-4 h-4" /> Different business
                 </button>
               </Reveal>
@@ -736,7 +736,7 @@ const Workbench: React.FC = () => {
                       </div>
                       <div>
                         <h3 className="text-xl font-serif text-vmNavy">{tool.title}</h3>
-                        <p className="text-xs text-slate-400">{tool.tagline}</p>
+                        <p className="text-xs text-slate-500">{tool.tagline}</p>
                       </div>
                     </div>
                     {tool.key === 'scout' ? (

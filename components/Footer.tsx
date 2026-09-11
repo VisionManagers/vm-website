@@ -24,7 +24,7 @@ const Footer: React.FC = () => {
               into systems that drive real outcomes. AI that earns its keep —
               one person accountable. Proven in healthcare, built for anyone.
             </p>
-            <p className="mt-6 text-xs text-slate-400">
+            <p className="mt-6 text-xs text-slate-500">
               <a href="mailto:sukhneet@visionmanagers.com" className="hover:text-vmTeal transition-colors">sukhneet@visionmanagers.com</a>
               <span className="mx-2 text-slate-200">·</span>
               <a href="tel:+14254944489" className="hover:text-vmTeal transition-colors">(425) 494-4489</a>
@@ -63,19 +63,19 @@ const Footer: React.FC = () => {
         </div>
 
         <div className="pt-10 border-t border-slate-50 flex flex-col md:flex-row justify-between items-center gap-6">
-          <div className="text-xs text-slate-400 flex flex-wrap items-center gap-3">
+          <div className="text-xs text-slate-500 flex flex-wrap items-center gap-3">
             <span>© {new Date().getFullYear()} Vision Managers LLC.</span>
             <span className="text-slate-200 hidden sm:inline">|</span>
             <a
                href="https://www.linkedin.com/in/sukhneetsingh/"
                target="_blank"
                rel="noopener noreferrer"
-               className="text-[10px] text-slate-400 font-bold uppercase tracking-widest hover:text-vmTeal transition-colors"
+               className="text-[10px] text-slate-500 font-bold uppercase tracking-widest hover:text-vmTeal transition-colors"
              >
                LinkedIn
              </a>
           </div>
-          <p className="text-[10px] text-slate-300 uppercase tracking-[0.3em]">Structure that holds · growth that lives</p>
+          <p className="text-[10px] text-slate-500 uppercase tracking-[0.3em]">Structure that holds · growth that lives</p>
         </div>
       </div>
     </footer>

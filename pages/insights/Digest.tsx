@@ -67,7 +67,7 @@ function renderMarkdown(md: string): string {
     }
     if (/^source:\s/i.test(trimmed)) {
       closePendingList();
-      htmlParts.push(`<p class="text-xs text-slate-400 mb-6 break-all">${inlineFormat(trimmed)}</p>`);
+      htmlParts.push(`<p class="text-xs text-slate-500 mb-6 break-all">${inlineFormat(trimmed)}</p>`);
       continue;
     }
 
@@ -233,7 +233,7 @@ const Digest: React.FC = () => {
     />
     <div className="pt-40 pb-20 px-6 min-h-screen bg-white">
       <div className="max-w-4xl mx-auto">
-        <Link to="/insights" className="inline-flex items-center gap-2 text-slate-400 hover:text-vmNavy transition-colors mb-12 text-xs font-bold uppercase tracking-widest">
+        <Link to="/insights" className="inline-flex items-center gap-2 text-slate-500 hover:text-vmNavy transition-colors mb-12 text-xs font-bold uppercase tracking-widest">
           <ArrowLeft className="w-4 h-4" /> Back to Insights
         </Link>
 
@@ -247,7 +247,7 @@ const Digest: React.FC = () => {
           <p className="text-xl text-slate-500 font-light max-w-2xl mx-auto mb-4">
             Real-time executive briefing powered by AI web research. The latest AI developments analyzed through the lens of high-trust business operations.
           </p>
-          <p className="text-sm text-slate-400 max-w-xl mx-auto">
+          <p className="text-sm text-slate-500 max-w-xl mx-auto">
             This report is refreshed on-demand. You're viewing the latest digest — click "Generate New Report" to pull the freshest intelligence. Enter your email below the report to download a formatted copy.
           </p>
         </header>
@@ -284,7 +284,7 @@ const Digest: React.FC = () => {
                 </div>
               </div>
               <h3 className="text-xl font-serif text-vmNavy mb-3 italic">Generating your digest...</h3>
-              <p className="text-slate-400 text-sm">Searching the web and analyzing the latest AI developments. This may take 30-60 seconds.</p>
+              <p className="text-slate-500 text-sm">Searching the web and analyzing the latest AI developments. This may take 30-60 seconds.</p>
               <div className="mt-6 flex gap-1.5 h-2 items-center justify-center">
                 {[...Array(12)].map((_, i) => (
                   <div key={i} className="w-1.5 h-full bg-vmTeal rounded-full animate-pulse" style={{ animationDelay: `${i * 100}ms` }} />
@@ -316,7 +316,7 @@ const Digest: React.FC = () => {
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8 gap-4">
               <div>
                 <span className="text-vmTeal font-black text-[10px] uppercase tracking-widest block mb-1">Current Report</span>
-                {formattedDate && <span className="text-xs text-slate-400">{formattedDate}</span>}
+                {formattedDate && <span className="text-xs text-slate-500">{formattedDate}</span>}
               </div>
               <button
                 onClick={generateDigest}

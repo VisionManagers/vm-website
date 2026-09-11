@@ -38,7 +38,7 @@ const Login: React.FC = () => {
         <div className="text-center mb-10">
           <img src={IMAGES.LOGO_CIRCLE} alt="VM" className="w-12 h-12 mx-auto mb-4" />
           <h1 className="text-2xl font-serif text-vmNavy">Admin Access</h1>
-          <p className="text-slate-400 text-sm mt-2">Vision Managers content management</p>
+          <p className="text-slate-500 text-sm mt-2">Vision Managers content management</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-5">

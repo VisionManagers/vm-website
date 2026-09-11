@@ -145,12 +145,12 @@ const PostEditorInner: React.FC = () => {
       <div className="max-w-5xl mx-auto px-6 py-8">
         {/* Top bar */}
         <div className="flex items-center justify-between mb-8">
-          <button onClick={() => navigate('/admin/posts')} className="inline-flex items-center gap-2 text-slate-400 hover:text-vmNavy text-xs font-bold uppercase tracking-widest transition-colors">
+          <button onClick={() => navigate('/admin/posts')} className="inline-flex items-center gap-2 text-slate-500 hover:text-vmNavy text-xs font-bold uppercase tracking-widest transition-colors">
             <ArrowLeft className="w-4 h-4" /> Back to Posts
           </button>
           <div className="flex items-center gap-3">
             {!isNew && (
-              <button onClick={handleDelete} className="p-2 text-slate-400 hover:text-red-500 transition-colors" title="Delete">
+              <button onClick={handleDelete} className="p-2 text-slate-500 hover:text-red-500 transition-colors" title="Delete">
                 <Trash2 className="w-4 h-4" />
               </button>
             )}
@@ -218,7 +218,7 @@ const PostEditorInner: React.FC = () => {
                   className="w-full p-3 border border-slate-200 rounded-sm focus:border-vmTeal focus:outline-none transition-all text-sm"
                   placeholder="post-slug"
                 />
-                <p className="text-[10px] text-slate-400">/insights/{slug || '...'}</p>
+                <p className="text-[10px] text-slate-500">/insights/{slug || '...'}</p>
               </div>
 
               <div className="space-y-2">

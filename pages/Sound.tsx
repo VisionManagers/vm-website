@@ -471,7 +471,7 @@ const Sound: React.FC = () => {
               </Reveal>
             </div>
             <Reveal delay={260}>
-              <p className="mt-10 text-sm text-slate-400">
+              <p className="mt-10 text-sm text-slate-500">
                 Curious how we design conversations for a living?{' '}
                 <Link to="/ai-voice" className="underline underline-offset-4 decoration-vmLeaf/60 text-slate-500 hover:text-vmNavy transition-colors">
                   That story lives here
