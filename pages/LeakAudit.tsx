@@ -1,8 +1,14 @@
-import React from 'react';
+import React, { useMemo, useState } from 'react';
+import { Link } from 'react-router-dom';
 import SEO from '../components/SEO';
-import { Reveal, Eyebrow, buttonPrimary } from '../components/ornaments';
-import { ArrowRight, ArrowDown } from 'lucide-react';
+import { Reveal, Eyebrow, buttonPrimary, buttonSecondary } from '../components/ornaments';
+import { ArrowRight, ArrowLeft, ChevronRight, Check, Search } from 'lucide-react';
 import { BOOKING_URLS } from '../constants';
+import {
+  LEAKS, BIZ_TYPES, SHARED_INPUTS, CATEGORY_LABEL,
+  conservative, money, byId, findBlindSpot,
+} from '../lib/leaks';
+import type { LeakDef, LeakInput, Category as LeakCategory } from '../lib/leaks';
 
 interface Leak {
   n: number;
@@ -214,162 +220,530 @@ const SELECTOR: { type: string; start: string; then: string }[] = [
   { type: 'Wellness / fitness / membership', start: 'Stale-Lead (4) · Offer & retention (10)', then: 'Invisible (12) · Second-Look (5) · Training (9)' },
 ];
 
+/* ─────────────────────────────────────────────────────────────────────
+   The instrument. Everything above is reference content, kept and shown
+   underneath — the page used to be only that, which is why nobody ran it.
+
+   Shape follows the evidence on B2B diagnostic assessments: one question
+   per screen, visible progress, and nothing asked that doesn't change the
+   result. Twelve leaks x three questions would be thirty questions and a
+   dead page; we run the two they already suspect, which is usually five.
+
+   The sequencing is the point:
+     pick -> answer -> SEE THE NUMBER -> see a blind spot -> then the email.
+   Value lands before the gate, so the email buys the written audit rather
+   than paying a toll to find out anything at all.
+
+   Arithmetic runs in the browser: instant, free, no lead required to get an
+   honest answer. The AI writes the long-form audit afterwards through the
+   existing api/lab.ts `deals` generator — whose own prompt already calls it
+   a Revenue Leak Audit — with these answers passed as ground truth.
+   ───────────────────────────────────────────────────────────────────── */
+
+type Step = 'intro' | 'pick' | 'questions' | 'result' | 'sent';
+
+const fieldCls =
+  'w-full px-4 py-3 bg-white border border-slate-300 rounded-sm text-vmNavy ' +
+  'placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-vmTeal focus:border-transparent';
+
 const LeakAudit: React.FC = () => {
+  const [step, setStep] = useState<Step>('intro');
+  const [bizType, setBizType] = useState<string>('');
+  const [picked, setPicked] = useState<string[]>([]);
+  const [values, setValues] = useState<Record<string, number>>({});
+  const [estimated, setEstimated] = useState<Set<string>>(new Set());
+  const [qIndex, setQIndex] = useState(0);
+
+  const [lead, setLead] = useState({ name: '', email: '' });
+  const [sending, setSending] = useState(false);
+  const [sendError, setSendError] = useState('');
+
+  /* Only the inputs the picked leaks actually need, deduped — nobody gets
+     asked twice what a customer is worth. Shared inputs are conditional:
+     the hourly rate is pointless unless a time-based leak is in play. */
+  const questions: LeakInput[] = useMemo(() => {
+    const pickedLeaks = picked.map(byId).filter(Boolean) as LeakDef[];
+    const timeBased = pickedLeaks.some((l) => ['ownerhours', 'repetitive', 'handoff'].includes(l.id));
+    const valueBased = pickedLeaks.some(
+      (l) => !l.qualitative && !['ownerhours', 'repetitive', 'handoff'].includes(l.id),
+    );
+    const seen = new Set<string>();
+    const out: LeakInput[] = [];
+    const push = (i: LeakInput) => { if (!seen.has(i.key)) { seen.add(i.key); out.push(i); } };
+
+    SHARED_INPUTS.forEach((s) => {
+      if (s.key === 'rate' && !timeBased) return;
+      if (s.key === 'value' && !valueBased) return;
+      push(s);
+    });
+    pickedLeaks.forEach((l) => l.inputs.forEach(push));
+    return out;
+  }, [picked]);
+
+  const results = useMemo(() => {
+    return (picked.map(byId).filter(Boolean) as LeakDef[])
+      .filter((l) => l.compute)
+      .map((l) => {
+        const merged: Record<string, number> = { ...values };
+        [...SHARED_INPUTS, ...l.inputs].forEach((i) => {
+          if (merged[i.key] === undefined || Number.isNaN(merged[i.key])) merged[i.key] = i.fallback;
+        });
+        return { leak: l, amount: conservative(l.compute!(merged)), explain: l.explain?.(merged) ?? '' };
+      })
+      .sort((a, b) => b.amount - a.amount);
+  }, [picked, values]);
+
+  const total = results.reduce((s, r) => s + r.amount, 0);
+  const blind = useMemo(() => findBlindSpot(picked, values, bizType), [picked, values, bizType]);
+
+  const toggle = (id: string) =>
+    setPicked((p) => (p.includes(id) ? p.filter((x) => x !== id) : p.length >= 3 ? p : [...p, id]));
+
+  const chooseType = (id: string) => {
+    setBizType(id);
+    const t = BIZ_TYPES.find((b) => b.id === id);
+    if (t) setPicked(t.lead);
+    setStep('pick');
+  };
+
+  const current = questions[qIndex];
+  const next = () => (qIndex + 1 < questions.length ? setQIndex(qIndex + 1) : setStep('result'));
+  const back = () => (qIndex === 0 ? setStep('pick') : setQIndex(qIndex - 1));
+
+  /* Hands the finished audit to the existing lab engine, which writes the
+     long form and emails the designed report — and notifies Suk. */
+  const sendReport = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setSending(true); setSendError('');
+    try {
+      const start = await fetch('/api/lab', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'start', name: lead.name, email: lead.email }),
+      }).then((r) => r.json());
+      if (start?.error) throw new Error(start.error);
+
+      await fetch('/api/lab', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'generate', leadId: start.leadId, tool: 'deals',
+          input: { transcript: [{ role: 'user', content: auditSummary(bizType, results, blind, total, values) }] },
+        }),
+      });
+      setStep('sent');
+    } catch (err) {
+      setSendError(err instanceof Error ? err.message : 'Something went wrong — try again?');
+    } finally {
+      setSending(false);
+    }
+  };
+
+  const grouped = (['A', 'B', 'C', 'D'] as LeakCategory[]).map((c) => ({
+    c, leaks: LEAKS.filter((l) => l.category === c),
+  }));
+
   return (
     <>
       <SEO
-        title="The Leak Audit — 12 Ways Your Business Is Quietly Losing Money"
-        description="A diagnostic for established business owners: twelve leaks across demand, time, knowledge, and strategy — with the questions and the math to run your own numbers."
+        title="The Leak Audit — find what your business is losing, in your own numbers"
+        description="A five-question diagnostic for business owners. Pick the leaks you already suspect, answer a few questions, and see what they cost you a year — plus one you didn't see coming. No email needed for your number."
         path="/leak-audit"
       />
-      {/* Public as of 2026-09-10. Built July as a direct-share asset (noindex);
-          the architecture review reframed it as the self-serve rung between
-          "interesting" and "book a call", which only works if it's findable. */}
 
-      <div className="bg-white" data-aesthetic="solar">
-        {/* ─── HERO ─── */}
-        <section className="relative pt-44 pb-24 px-6 light-wash overflow-hidden">
-          <div className="max-w-4xl mx-auto text-center">
-            <Reveal>
-              <Eyebrow className="text-accent mb-6">The Leak Audit</Eyebrow>
-              <h1 className="font-serif text-4xl md:text-6xl text-vmNavy leading-tight mb-6">
-                Your business is leaking money in twelve places.
-                <br className="hidden md:block" />
-                <span className="text-vmInk/70">Most owners can name two.</span>
-              </h1>
-              <p className="text-lg text-slate-600 max-w-2xl mx-auto mb-4">
-                This is the diagnostic we run with established business owners. Four categories, twelve leaks —
-                each with the questions to ask and the math to run. Use your numbers, round down, and total it.
-                For a real service business the honest answer usually lands in six figures a year.
-              </p>
-              <p className="text-sm text-slate-500 mb-10">
-                You don’t need all twelve. Find your business type in the table below, read your three or four, and run the math.
-              </p>
-              <a href="#selector" className={buttonPrimary}>
-                Find your leaks <ArrowDown size={16} />
-              </a>
-            </Reveal>
-          </div>
-        </section>
+      <div className="bg-vmCream" data-aesthetic="solar">
+        <section className="pt-36 pb-20 px-6">
+          <div className="max-w-3xl mx-auto">
 
-        {/* ─── SELECTOR ─── */}
-        <section id="selector" className="py-20 px-6 bg-vmSlate/40">
-          <div className="max-w-5xl mx-auto">
-            <Reveal className="text-center mb-10">
-              <Eyebrow className="text-accent mb-4">Where to start</Eyebrow>
-              <h2 className="font-serif text-3xl md:text-4xl text-vmNavy">Your first three leaks, by business type</h2>
-            </Reveal>
-            <Reveal>
-              <div className="overflow-x-auto rounded-sm border border-slate-200 bg-white">
-                <table className="w-full text-left text-sm">
-                  <thead>
-                    <tr className="border-b border-slate-200 text-vmNavy">
-                      <th className="px-5 py-4 font-semibold">Business</th>
-                      <th className="px-5 py-4 font-semibold">Start with</th>
-                      <th className="px-5 py-4 font-semibold">Then look at</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {SELECTOR.map((row) => (
-                      <tr key={row.type} className="border-b border-slate-100 last:border-0">
-                        <td className="px-5 py-4 font-medium text-vmNavy">{row.type}</td>
-                        <td className="px-5 py-4 text-slate-600">{row.start}</td>
-                        <td className="px-5 py-4 text-slate-600">{row.then}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </Reveal>
-          </div>
-        </section>
+            {/* ─── INTRO ─── */}
+            {step === 'intro' && (
+              <Reveal>
+                <Eyebrow className="text-accent mb-6">The Leak Audit</Eyebrow>
+                <h1 className="font-serif text-vmNavy text-[2.4rem] md:text-[3.6rem] leading-[1.06] mb-7">
+                  Most owners can name two.
+                  <br />
+                  <span className="italic">There are twelve.</span>
+                </h1>
+                <p className="text-lg text-slate-600 leading-relaxed mb-4 max-w-2xl">
+                  About two minutes. You’ll see what the leaks you already suspect are costing
+                  you a year — your numbers, rounded down — and one you probably haven’t looked at.
+                </p>
+                <p className="text-sm text-slate-500 mb-10">
+                  No email needed to get your number. Nothing is saved unless you ask for the written version.
+                </p>
 
-        {/* ─── THE TWELVE LEAKS ─── */}
-        {CATEGORIES.map((cat) => (
-          <section key={cat.id} className={`py-20 px-6 ${cat.id === 'B' || cat.id === 'D' ? 'bg-vmSlate/40' : ''}`}>
-            <div className="max-w-4xl mx-auto">
-              <Reveal className="mb-12">
-                <Eyebrow className="text-accent mb-3">Category {cat.id}</Eyebrow>
-                <h2 className="font-serif text-3xl md:text-4xl text-vmNavy mb-3">{cat.label}</h2>
-                <p className="text-slate-500 italic">{cat.tagline}</p>
+                <h2 className="text-sm font-semibold text-vmNavy mb-4">First — what kind of business?</h2>
+                <div className="grid sm:grid-cols-2 gap-3">
+                  {BIZ_TYPES.map((t) => (
+                    <button key={t.id} onClick={() => chooseType(t.id)}
+                      className="text-left px-5 py-4 bg-white border border-slate-200 rounded-sm hover:border-vmTeal hover:shadow-sm transition-all text-vmNavy font-medium">
+                      {t.label}
+                    </button>
+                  ))}
+                </div>
               </Reveal>
+            )}
 
-              <div className="space-y-10">
-                {cat.leaks.map((leak, i) => (
-                  <Reveal key={leak.n} delay={i * 60}>
-                    <article id={`leak-${leak.n}`} className="bg-white border border-slate-200 rounded-sm p-7 md:p-9 shadow-sm">
-                      <div className="flex items-baseline gap-4 mb-4">
-                        <span className="font-serif text-3xl text-accent leading-none">{String(leak.n).padStart(2, '0')}</span>
-                        <h3 className="font-serif text-2xl text-vmNavy">
-                          {leak.name}
-                          {leak.sub && <span className="text-slate-500 text-lg ml-2">— {leak.sub}</span>}
-                        </h3>
+            {/* ─── PICK ─── */}
+            {step === 'pick' && (
+              <Reveal>
+                <Eyebrow className="text-accent mb-5">Step one of three</Eyebrow>
+                <h1 className="font-serif text-vmNavy text-[2rem] md:text-[2.9rem] leading-tight mb-5">
+                  Which of these already bother you?
+                </h1>
+                <p className="text-slate-600 mb-2">
+                  Pick up to three. The two most common for your kind of business are already
+                  ticked — change them if they’re wrong.
+                </p>
+                <p className="text-sm text-slate-500 mb-9">
+                  You don’t need all twelve. Two done properly beats twelve done vaguely.
+                </p>
+
+                <div className="flex flex-col gap-8 mb-10">
+                  {grouped.map(({ c, leaks }) => (
+                    <div key={c}>
+                      <p className="eyebrow text-slate-500 mb-3">{CATEGORY_LABEL[c]}</p>
+                      <div className="flex flex-col gap-2">
+                        {leaks.map((l) => {
+                          const on = picked.includes(l.id);
+                          return (
+                            <button key={l.id} onClick={() => toggle(l.id)} aria-pressed={on}
+                              className={`flex items-start gap-3 text-left px-4 py-3 rounded-sm border transition-all ${
+                                on ? 'bg-white border-vmTeal shadow-sm' : 'bg-white/60 border-slate-200 hover:border-slate-300'
+                              }`}>
+                              <span className={`mt-0.5 w-4 h-4 rounded-sm border flex items-center justify-center shrink-0 ${
+                                on ? 'bg-vmTeal border-vmTeal' : 'border-slate-300'
+                              }`}>
+                                {on && <Check className="w-3 h-3 text-white" aria-hidden />}
+                              </span>
+                              <span>
+                                <span className="block text-sm font-semibold text-vmNavy">{l.name}</span>
+                                <span className="block text-sm text-slate-600 leading-snug">{l.symptom}</span>
+                              </span>
+                            </button>
+                          );
+                        })}
                       </div>
+                    </div>
+                  ))}
+                </div>
 
-                      <p className="text-slate-600 leading-relaxed mb-6">{leak.reality}</p>
+                <div className="flex items-center gap-4">
+                  <button onClick={() => { setQIndex(0); setStep('questions'); }}
+                    disabled={picked.length === 0}
+                    className={buttonPrimary + (picked.length === 0 ? ' opacity-40 pointer-events-none' : '')}>
+                    Run the numbers <ChevronRight className="w-4 h-4" />
+                  </button>
+                  <button onClick={() => setStep('intro')} className="text-sm text-slate-500 hover:text-vmNavy">Back</button>
+                </div>
+              </Reveal>
+            )}
 
-                      <div className="mb-6">
-                        <p className="text-xs font-semibold tracking-widest uppercase text-vmNavy/60 mb-3">Ask yourself</p>
-                        <ul className="space-y-2">
-                          {leak.questions.map((q) => (
-                            <li key={q} className="flex gap-3 text-slate-700">
-                              <span className="text-accent mt-1 shrink-0">→</span>
-                              <span>{q}</span>
-                            </li>
-                          ))}
-                        </ul>
+            {/* ─── QUESTIONS ─── */}
+            {step === 'questions' && current && (
+              <Reveal key={current.key}>
+                <div className="mb-10">
+                  <div className="flex justify-between eyebrow text-slate-500 mb-2">
+                    <span>Question {qIndex + 1} of {questions.length}</span>
+                    <span>{Math.round((qIndex / questions.length) * 100)}%</span>
+                  </div>
+                  <div className="h-1 bg-slate-200 rounded-full overflow-hidden">
+                    <div className="h-full bg-vmTeal transition-all duration-300"
+                      style={{ width: `${(qIndex / questions.length) * 100}%` }} />
+                  </div>
+                </div>
+
+                <h1 className="font-serif text-vmNavy text-[1.7rem] md:text-[2.4rem] leading-snug mb-4">
+                  {current.label}
+                </h1>
+                {current.hint && <p className="text-slate-600 mb-7">{current.hint}</p>}
+
+                <div className="flex items-center gap-3 mb-3 max-w-sm">
+                  {current.suffix === '$' && <span className="text-2xl font-serif text-slate-500">$</span>}
+                  <input
+                    className={fieldCls + ' text-xl'} type="number" inputMode="numeric" autoFocus
+                    min={current.min} max={current.max}
+                    value={values[current.key] ?? ''}
+                    placeholder={String(current.fallback)}
+                    onChange={(e) => {
+                      setValues((v) => ({ ...v, [current.key]: Number(e.target.value) }));
+                      setEstimated((p) => { const n = new Set(p); n.delete(current.key); return n; });
+                    }}
+                    onKeyDown={(e) => { if (e.key === 'Enter') next(); }}
+                  />
+                  {current.suffix && current.suffix !== '$' && (
+                    <span className="text-slate-500 whitespace-nowrap">{current.suffix}</span>
+                  )}
+                </div>
+                <button
+                  onClick={() => {
+                    setValues((v) => ({ ...v, [current.key]: current.fallback }));
+                    setEstimated((p) => new Set(p).add(current.key));
+                    next();
+                  }}
+                  className="text-sm text-slate-500 hover:text-vmNavy underline underline-offset-4 mb-9 block">
+                  I don’t know — use a conservative estimate
+                </button>
+
+                <div className="flex items-center gap-4">
+                  <button onClick={next} className={buttonPrimary}>
+                    {qIndex + 1 === questions.length ? 'See what it costs' : 'Next'}
+                    <ChevronRight className="w-4 h-4" />
+                  </button>
+                  <button onClick={back} className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-vmNavy">
+                    <ArrowLeft className="w-4 h-4" /> Back
+                  </button>
+                </div>
+              </Reveal>
+            )}
+
+            {/* ─── RESULT ─── */}
+            {step === 'result' && (
+              <Reveal>
+                <Eyebrow className="text-accent mb-5">Your audit</Eyebrow>
+                <h1 className="font-serif text-vmNavy text-[1.9rem] md:text-[2.6rem] leading-tight mb-3">
+                  Conservatively, this is costing you
+                </h1>
+                <p className="font-serif text-vmNavy text-[3.2rem] md:text-[5rem] leading-none mb-4 tabular-nums">
+                  {money(total)}<span className="text-2xl text-slate-500 font-sans"> a year</span>
+                </p>
+                <p className="text-slate-600 mb-4 max-w-2xl">
+                  {estimated.size === 0
+                    ? 'Every figure is your own number, rounded down. Cut the total in half if you like — if it still bothers you, that’s the audit working.'
+                    : 'Rounded down throughout. Cut the total in half if you like — if it still bothers you, that’s the audit working.'}
+                </p>
+                {estimated.size > 0 && (
+                  <p className="text-sm text-slate-500 mb-12 max-w-2xl p-4 bg-white border-l-2 border-vmMarigold rounded-sm">
+                    <strong className="text-vmNavy">{estimated.size} of these {questions.length} answers
+                    used my estimate, not your number.</strong> Conservative ones — but the figure above is
+                    only worth what you put into it.{' '}
+                    <button onClick={() => { setQIndex(0); setStep('questions'); }}
+                      className="text-vmNavy underline underline-offset-4 hover:text-vmTeal">
+                      Go back and use your own
+                    </button>.
+                  </p>
+                )}
+
+                <div className="flex flex-col gap-5 mb-12">
+                  {results.map((r) => (
+                    <div key={r.leak.id} className="p-6 bg-white border border-slate-200 rounded-sm">
+                      <div className="flex justify-between items-baseline gap-4 mb-2">
+                        <h3 className="font-serif text-lg text-vmNavy">{r.leak.name}</h3>
+                        <span className="font-serif text-2xl text-vmNavy tabular-nums">{money(r.amount)}</span>
                       </div>
+                      <p className="text-sm text-slate-600 leading-relaxed mb-3">{r.explain}</p>
+                      <p className="text-sm text-vmNavy"><strong>The fix:</strong> {r.leak.build}</p>
+                    </div>
+                  ))}
+                </div>
 
-                      <div className="mb-6 bg-vmSlate/60 border-l-2 border-accent px-5 py-4">
-                        <p className="text-xs font-semibold tracking-widest uppercase text-vmNavy/60 mb-1">Your math</p>
-                        <p className="text-vmNavy font-mono text-sm">{leak.math}</p>
+                {blind && (
+                  <div className="p-7 bg-vmNavy rounded-sm mb-12">
+                    <p className="eyebrow text-vmMarigold mb-3">The one you didn’t pick</p>
+                    <h3 className="font-serif text-2xl text-white mb-3">{blind.leak.name}</h3>
+                    <p className="text-white/75 leading-relaxed mb-4">{blind.leak.symptom}</p>
+                    {blind.leak.id === 'invisible' ? (
+                      <div className="flex items-start gap-3 p-4 bg-white/10 rounded-sm mb-4">
+                        <Search className="w-5 h-5 text-vmTeal shrink-0 mt-0.5" aria-hidden />
+                        <p className="text-white/85 text-sm leading-relaxed">
+                          <strong className="text-white">Check it in ten seconds.</strong> Open ChatGPT and ask
+                          for the best {(BIZ_TYPES.find((b) => b.id === bizType)?.label ?? 'business').toLowerCase()} in
+                          your city. Are you in the answer? Who is? That’s the new page two of Google — except
+                          nobody ever scrolls there.
+                        </p>
                       </div>
-
-                      <p className="text-sm text-slate-500">
-                        <span className="font-semibold text-vmNavy">The fix we build: </span>
-                        {leak.fix}
+                    ) : blind.amount > 0 ? (
+                      <p className="text-white/85 mb-4">
+                        On numbers like yours this is worth roughly{' '}
+                        <strong className="text-vmTeal font-serif text-xl">{money(blind.amount)}</strong> a year —
+                        and it wasn’t on your list.
                       </p>
-                    </article>
-                  </Reveal>
-                ))}
-              </div>
-            </div>
-          </section>
-        ))}
+                    ) : null}
+                    <p className="text-white/60 text-sm">{blind.leak.build}</p>
+                  </div>
+                )}
 
-        {/* ─── CLOSE ─── */}
-        <section className="py-24 px-6 bg-vmNavy text-white relative overflow-hidden">
-          <div className="max-w-3xl mx-auto text-center relative z-10">
-            <Reveal>
-              <Eyebrow className="text-vmTeal mb-6">The total</Eyebrow>
-              <h2 className="font-serif text-3xl md:text-5xl leading-tight mb-6">
-                Add up your three or four leaks. Conservatively.
-              </h2>
-              <p className="text-white/80 text-lg leading-relaxed mb-4">
-                Use your own numbers, round everything down, and cut the total in half if you want.
-                If the number still bothers you, that’s the audit working — the status quo is the expensive option.
-              </p>
-              <p className="text-white/60 mb-10">
-                Bring your numbers to a free 20-minute call. We’ll pressure-test the math together, and you’ll
-                leave with the two highest-ROI fixes for your business — whether or not we ever work together.
-              </p>
-              <a
-                href={BOOKING_URLS.DISCOVERY}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 px-10 py-4 bg-vmTeal text-vmNavy text-sm font-bold tracking-wide rounded-sm hover:bg-white transition-all duration-200"
-              >
-                Run your numbers with me <ArrowRight size={16} />
-              </a>
-              <p className="text-white/40 text-xs mt-6">
-                Free, diagnosis only. If the audit finds nothing, you lost twenty minutes.
-              </p>
-            </Reveal>
+                {/* The gate — after the value, never before it */}
+                <div className="p-7 bg-white border-2 border-vmTeal rounded-sm mb-10">
+                  <h3 className="font-serif text-xl text-vmNavy mb-2">Want the written version?</h3>
+                  <p className="text-slate-600 text-sm leading-relaxed mb-5">
+                    My system will write the full audit from your answers — the arithmetic shown, what to
+                    fix first, and the leaks you didn’t pick checked against your business — and email it
+                    as a designed report. That report is also month one of any engagement, so it’s the real thing.
+                  </p>
+                  <form onSubmit={sendReport} className="flex flex-col sm:flex-row gap-3">
+                    <input className={fieldCls} required placeholder="Your name"
+                      value={lead.name} onChange={(e) => setLead({ ...lead, name: e.target.value })} />
+                    <input className={fieldCls} required type="email" placeholder="you@yourbusiness.com"
+                      value={lead.email} onChange={(e) => setLead({ ...lead, email: e.target.value })} />
+                    <button type="submit" disabled={sending} className={buttonPrimary + ' shrink-0'}>
+                      {sending ? 'Writing…' : 'Send it'} <ArrowRight className="w-4 h-4" />
+                    </button>
+                  </form>
+                  {sendError && <p className="text-sm text-red-700 mt-3" role="alert">{sendError}</p>}
+                </div>
+
+                <div className="pt-8 hairline">
+                  <p className="text-slate-600 mb-5">
+                    Or skip ahead — bring these numbers to a 20-minute call and we’ll pressure-test them
+                    together. You’ll leave with the two highest-return fixes whether or not we work together.
+                  </p>
+                  <div className="flex flex-col sm:flex-row gap-4">
+                    <a href={BOOKING_URLS.DISCOVERY} target="_blank" rel="noopener noreferrer" className={buttonPrimary}>
+                      Book the call <ChevronRight className="w-4 h-4" />
+                    </a>
+                    <button onClick={() => { setStep('pick'); setQIndex(0); }} className={buttonSecondary}>
+                      Try different leaks <ArrowRight className="w-4 h-4" />
+                    </button>
+                  </div>
+                </div>
+              </Reveal>
+            )}
+
+            {/* ─── SENT ─── */}
+            {step === 'sent' && (
+              <Reveal>
+                <Eyebrow className="text-accent mb-5">On its way</Eyebrow>
+                <h1 className="font-serif text-vmNavy text-[2rem] md:text-[3rem] leading-tight mb-5">
+                  Check your inbox in a few minutes.
+                </h1>
+                <p className="text-lg text-slate-600 leading-relaxed mb-4 max-w-2xl">
+                  It’s being written now — the full audit against your numbers, the other leaks checked,
+                  and what I’d fix first. It arrives as a designed report you can forward to whoever else
+                  needs to see it.
+                </p>
+                <p className="text-slate-500 mb-10">
+                  If it hasn’t arrived in ten minutes, check spam — then email me directly.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-4">
+                  <a href={BOOKING_URLS.DISCOVERY} target="_blank" rel="noopener noreferrer" className={buttonPrimary}>
+                    Book 20 minutes <ChevronRight className="w-4 h-4" />
+                  </a>
+                  <Link to="/expansion-os" className={buttonSecondary}>
+                    Month one of Expansion OS is this audit <ArrowRight className="w-4 h-4" />
+                  </Link>
+                </div>
+              </Reveal>
+            )}
           </div>
         </section>
+
+        {/* ─── REFERENCE — the full twelve, only on the way in ─── */}
+        {step === 'intro' && (
+          <>
+            <section className="py-16 px-6 bg-white border-t border-slate-200">
+              <div className="max-w-5xl mx-auto">
+                <Reveal className="mb-8">
+                  <Eyebrow className="text-accent mb-3">Where to start</Eyebrow>
+                  <h2 className="font-serif text-2xl md:text-3xl text-vmNavy">Your first leaks, by business type</h2>
+                </Reveal>
+                <Reveal>
+                  <div className="overflow-x-auto rounded-sm border border-slate-200 bg-white">
+                    <table className="w-full text-left text-sm">
+                      <thead>
+                        <tr className="border-b border-slate-200 text-vmNavy">
+                          <th className="px-5 py-4 font-semibold">Business</th>
+                          <th className="px-5 py-4 font-semibold">Start with</th>
+                          <th className="px-5 py-4 font-semibold">Then look at</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {SELECTOR.map((row) => (
+                          <tr key={row.type} className="border-b border-slate-100 last:border-0">
+                            <td className="px-5 py-4 font-medium text-vmNavy">{row.type}</td>
+                            <td className="px-5 py-4 text-slate-600">{row.start}</td>
+                            <td className="px-5 py-4 text-slate-600">{row.then}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </Reveal>
+              </div>
+            </section>
+
+            {CATEGORIES.map((cat) => (
+              <section key={cat.id} className={`py-16 px-6 ${cat.id === 'B' || cat.id === 'D' ? 'bg-vmSlate/40' : 'bg-white'}`}>
+                <div className="max-w-4xl mx-auto">
+                  <Reveal className="mb-10">
+                    <Eyebrow className="text-accent mb-3">Category {cat.id}</Eyebrow>
+                    <h2 className="font-serif text-2xl md:text-3xl text-vmNavy mb-3">{cat.label}</h2>
+                    <p className="text-slate-500 italic">{cat.tagline}</p>
+                  </Reveal>
+
+                  <div className="space-y-8">
+                    {cat.leaks.map((leak, i) => (
+                      <Reveal key={leak.n} delay={i * 50}>
+                        <article id={`leak-${leak.n}`} className="bg-white border border-slate-200 rounded-sm p-6 md:p-8 shadow-sm">
+                          <div className="flex items-baseline gap-4 mb-4">
+                            <span className="font-serif text-3xl text-accent leading-none">{String(leak.n).padStart(2, '0')}</span>
+                            <h3 className="font-serif text-xl md:text-2xl text-vmNavy">
+                              {leak.name}
+                              {leak.sub && <span className="text-slate-500 text-lg ml-2">— {leak.sub}</span>}
+                            </h3>
+                          </div>
+
+                          <p className="text-slate-600 leading-relaxed mb-6">{leak.reality}</p>
+
+                          <div className="mb-6">
+                            <p className="text-xs font-semibold tracking-widest uppercase text-vmNavy/60 mb-3">Ask yourself</p>
+                            <ul className="space-y-2">
+                              {leak.questions.map((q) => (
+                                <li key={q} className="flex gap-3 text-slate-700">
+                                  <span className="text-accent mt-1 shrink-0">→</span>
+                                  <span>{q}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+
+                          <div className="mb-6 bg-vmSlate/60 border-l-2 border-accent px-5 py-4">
+                            <p className="text-xs font-semibold tracking-widest uppercase text-vmNavy/60 mb-1">Your math</p>
+                            <p className="text-vmNavy font-mono text-sm">{leak.math}</p>
+                          </div>
+
+                          <p className="text-sm text-slate-500">
+                            <span className="font-semibold text-vmNavy">The fix we build: </span>
+                            {leak.fix}
+                          </p>
+                        </article>
+                      </Reveal>
+                    ))}
+                  </div>
+                </div>
+              </section>
+            ))}
+          </>
+        )}
       </div>
     </>
   );
 };
+
+/* Everything the writing model needs, in plain language. The lab generator
+   treats the transcript as ground truth, so this reads like the owner
+   talking rather than a form dump. */
+function auditSummary(
+  bizType: string,
+  results: { leak: LeakDef; amount: number; explain: string }[],
+  blind: { leak: LeakDef; amount: number } | null,
+  total: number,
+  values: Record<string, number>,
+): string {
+  const type = BIZ_TYPES.find((b) => b.id === bizType)?.label ?? 'a service business';
+  const lines = results.map((r) => `- ${r.leak.name}: ${money(r.amount)}/yr. ${r.explain}`).join('\n');
+  const inputs = Object.entries(values).map(([k, v]) => `${k}=${v}`).join(', ');
+  return [
+    `I run ${type}. I just completed the Leak Audit on visionmanagers.com — these are my real answers.`,
+    '',
+    'The leaks I picked, and what the calculator made them worth:',
+    lines,
+    '',
+    `Conservative annual total: ${money(total)}.`,
+    blind ? `The blind spot it surfaced: ${blind.leak.name}${blind.amount ? ` (~${money(blind.amount)}/yr)` : ''}.` : '',
+    '',
+    `Raw inputs: ${inputs}.`,
+    '',
+    'Write my full Revenue Leak Audit from this. Use my numbers, round down, show the arithmetic, tell me what to fix first and why, and check the leaks I did not pick against what you can learn about my business.',
+  ].filter(Boolean).join('\n');
+}
 
 export default LeakAudit;
