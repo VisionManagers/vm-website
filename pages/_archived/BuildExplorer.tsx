@@ -29,7 +29,7 @@ const TheLab: React.FC = () => {
     <div className="pt-40 pb-20 px-6 min-h-screen bg-white">
       <div className="max-w-7xl mx-auto">
         <header className="mb-24 text-center max-w-4xl mx-auto">
-          <span className="text-vmTeal font-black tracking-[0.4em] uppercase text-[10px] mb-6 inline-block bg-vmTeal/10 px-4 py-1.5 rounded-full">Vision Managers Interactive</span>
+          <span className="text-vmTeal font-black tracking-[0.4em] uppercase text-xs mb-6 inline-block bg-vmTeal/10 px-4 py-1.5 rounded-full">Vision Managers Interactive</span>
           <h1 className="text-5xl md:text-6xl font-serif text-vmNavy mb-8 leading-tight italic">The Sandbox.</h1>
           <p className="text-slate-600 text-xl font-light">Explore our ongoing R&D in high-trust autonomous operations. We are building the verifiable future, one logic-gate at a time.</p>
         </header>
@@ -47,7 +47,7 @@ const TheLab: React.FC = () => {
                   <button 
                     key={cat}
                     onClick={() => setActiveCategory(cat)}
-                    className={`px-4 py-2 text-[10px] font-bold uppercase tracking-widest rounded-full border transition-all ${
+                    className={`px-4 py-2 text-xs font-bold uppercase tracking-widest rounded-full border transition-all ${
                       activeCategory === cat ? 'bg-vmNavy text-white border-vmNavy' : 'bg-white text-slate-500 border-slate-200 hover:border-vmTeal'
                     }`}
                   >
@@ -79,7 +79,7 @@ const TheLab: React.FC = () => {
                           <Check className="w-4 h-4 text-vmTeal" />
                           {task}
                         </span>
-                        <span className="text-[10px] text-slate-500 uppercase">Beta</span>
+                        <span className="text-xs text-slate-500 uppercase">Beta</span>
                       </div>
                     ))}
                   </div>
@@ -107,7 +107,7 @@ const TheLab: React.FC = () => {
 
                 <div className="space-y-8">
                   <div className="space-y-3">
-                    <label className="text-[10px] font-black text-vmNavy uppercase tracking-[0.2em] block">Monthly Inquiries</label>
+                    <label className="text-xs font-black text-vmNavy uppercase tracking-[0.2em] block">Monthly Inquiries</label>
                     <input 
                       type="number" 
                       value={monthlyCalls}
@@ -117,7 +117,7 @@ const TheLab: React.FC = () => {
                   </div>
 
                   <div className="space-y-3">
-                    <label className="text-[10px] font-black text-vmNavy uppercase tracking-[0.2em] block">Patient/Client Value ($)</label>
+                    <label className="text-xs font-black text-vmNavy uppercase tracking-[0.2em] block">Patient/Client Value ($)</label>
                     <input 
                       type="number" 
                       value={avgValue}
@@ -127,7 +127,7 @@ const TheLab: React.FC = () => {
                   </div>
 
                   <div className="space-y-3">
-                    <label className="text-[10px] font-black text-vmNavy uppercase tracking-[0.2em] block">Missed Call Rate (%)</label>
+                    <label className="text-xs font-black text-vmNavy uppercase tracking-[0.2em] block">Missed Call Rate (%)</label>
                     <input 
                       type="number" 
                       value={missedRate}
@@ -143,22 +143,22 @@ const TheLab: React.FC = () => {
                 <div className="space-y-12 relative z-10">
                   <div className="grid grid-cols-1 gap-12">
                     <div className="space-y-1">
-                      <p className="text-slate-500 text-[10px] font-black uppercase tracking-[0.2em]">Uncaptured Opportunity</p>
+                      <p className="text-slate-500 text-xs font-black uppercase tracking-[0.2em]">Uncaptured Opportunity</p>
                       <h4 className="text-3xl md:text-4xl font-bold text-vmTeal">
                         {unansweredCalls} <span className="text-sm opacity-60 font-light">missed inquiries /mo</span>
                       </h4>
                     </div>
 
                     <div className="space-y-1">
-                      <p className="text-slate-500 text-[10px] font-black uppercase tracking-[0.2em]">Revenue Leakage (Monthly)</p>
+                      <p className="text-slate-500 text-xs font-black uppercase tracking-[0.2em]">Revenue Leakage (Monthly)</p>
                       <h4 className="text-4xl md:text-5xl font-bold text-white">
                         ${monthlyRevenueAtRisk.toLocaleString()}
                       </h4>
-                      <p className="text-[10px] text-vmTeal/60 font-medium italic">Monthly value of inquiries not reaching your team</p>
+                      <p className="text-xs text-vmTeal/60 font-medium italic">Monthly value of inquiries not reaching your team</p>
                     </div>
 
                     <div className="pt-8 border-t border-white/10 space-y-1">
-                      <p className="text-slate-500 text-[10px] font-black uppercase tracking-[0.2em]">Net Annual Impact</p>
+                      <p className="text-slate-500 text-xs font-black uppercase tracking-[0.2em]">Net Annual Impact</p>
                       <h4 className="text-5xl md:text-6xl font-bold text-vmTeal">
                         ${annualImpact.toLocaleString()}
                       </h4>
@@ -188,7 +188,7 @@ const TheLab: React.FC = () => {
           <div className="border-t border-slate-100 pt-32">
             <div className="grid md:grid-cols-2 gap-24 items-center">
               <div>
-                <span className="text-vmTeal font-black text-[10px] uppercase tracking-widest mb-4 block">Safety Standards</span>
+                <span className="text-vmTeal font-black text-xs uppercase tracking-widest mb-4 block">Safety Standards</span>
                 <h2 className="text-4xl font-serif text-vmNavy mb-8 italic">Guardrails, not just code.</h2>
                 <p className="text-slate-600 mb-12 text-lg leading-relaxed font-light">
                   We build brand-aligned and human-first systems that meet your professional standards.
@@ -215,7 +215,7 @@ const TheLab: React.FC = () => {
                  <img src={IMAGES.SKYLINE} alt="Infrastructure" className="w-full h-auto grayscale opacity-40 relative z-10 border border-slate-100 rounded-sm shadow-2xl" />
                  <div className="absolute inset-0 flex items-center justify-center z-20">
                     <div className="p-10 bg-white shadow-2xl rounded-sm border border-slate-50 text-center max-w-xs">
-                      <span className="text-[10px] font-black tracking-widest uppercase text-vmTeal mb-3 block">Guardrail Status</span>
+                      <span className="text-xs font-black tracking-widest uppercase text-vmTeal mb-3 block">Guardrail Status</span>
                       <h4 className="text-2xl font-serif text-vmNavy italic">100% Secure</h4>
                       <div className="mt-6 flex gap-1.5 h-2 items-center justify-center">
                         {[...Array(12)].map((_, i) => <div key={i} className="w-1.5 h-full bg-vmTeal rounded-full animate-pulse" style={{ animationDelay: `${i * 100}ms` }} />)}

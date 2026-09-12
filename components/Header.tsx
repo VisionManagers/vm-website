@@ -217,13 +217,13 @@ const Header: React.FC = () => {
                   href={BOOKING_URLS.DISCOVERY}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block w-full bg-vmNavy text-white py-5 rounded-sm text-center font-bold tracking-[0.2em] uppercase text-[11px] shadow-2xl active:scale-95 hover:bg-vmNavy/95 transition-all"
+                  className="block w-full bg-vmNavy text-white py-5 rounded-sm text-center font-bold tracking-[0.2em] uppercase text-xs shadow-2xl active:scale-95 hover:bg-vmNavy/95 transition-all"
                 >
                   Book a Call
                 </a>
 
                 <div className="mt-12 flex flex-col items-center gap-4 border-t border-slate-100 pt-10">
-                  <p className="text-[10px] text-slate-500 font-bold uppercase tracking-[0.3em] mb-2">Direct Access</p>
+                  <p className="text-xs text-slate-500 font-bold uppercase tracking-[0.3em] mb-2">Direct Access</p>
                   <div className="flex flex-col items-center gap-6">
                     <Link to="/start" className="text-lg font-bold text-vmNavy hover:text-vmTeal transition-colors">Start Here</Link>
                     <Link to="/ci" className="text-lg font-bold text-vmNavy hover:text-vmTeal transition-colors">Casual Intelligence</Link>
@@ -240,7 +240,7 @@ const Header: React.FC = () => {
               }`}
               style={{ transitionDelay: `${350 + navLinks.length * 60}ms` }}
             >
-               <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">© {new Date().getFullYear()} Vision Managers LLC</p>
+               <p className="text-xs text-slate-500 font-bold uppercase tracking-widest">© {new Date().getFullYear()} Vision Managers LLC</p>
             </div>
           </div>
         </div>

@@ -70,12 +70,12 @@ const Footer: React.FC = () => {
                href="https://www.linkedin.com/in/sukhneetsingh/"
                target="_blank"
                rel="noopener noreferrer"
-               className="text-[10px] text-slate-500 font-bold uppercase tracking-widest hover:text-vmTeal transition-colors"
+               className="text-xs text-slate-500 font-bold uppercase tracking-widest hover:text-vmTeal transition-colors"
              >
                LinkedIn
              </a>
           </div>
-          <p className="text-[10px] text-slate-500 uppercase tracking-[0.3em]">Structure that holds · growth that lives</p>
+          <p className="text-xs text-slate-500 uppercase tracking-[0.3em]">Structure that holds · growth that lives</p>
         </div>
       </div>
     </footer>

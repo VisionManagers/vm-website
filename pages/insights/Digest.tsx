@@ -315,13 +315,13 @@ const Digest: React.FC = () => {
             {/* Report header + actions */}
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8 gap-4">
               <div>
-                <span className="text-vmTeal font-black text-[10px] uppercase tracking-widest block mb-1">Current Report</span>
+                <span className="text-vmTeal font-black text-xs uppercase tracking-widest block mb-1">Current Report</span>
                 {formattedDate && <span className="text-xs text-slate-500">{formattedDate}</span>}
               </div>
               <button
                 onClick={generateDigest}
                 disabled={loading}
-                className="inline-flex items-center gap-2 px-5 py-2.5 border border-slate-200 text-slate-500 font-bold uppercase tracking-widest text-[10px] rounded-sm hover:border-vmTeal hover:text-vmNavy transition-all"
+                className="inline-flex items-center gap-2 px-5 py-2.5 border border-slate-200 text-slate-500 font-bold uppercase tracking-widest text-xs rounded-sm hover:border-vmTeal hover:text-vmNavy transition-all"
               >
                 <RefreshCw className="w-3 h-3" /> Generate New Report
               </button>
@@ -362,7 +362,7 @@ const Digest: React.FC = () => {
                     />
                     <button
                       type="submit"
-                      className="px-8 py-4 bg-vmNavy text-white font-bold uppercase tracking-widest text-[10px] rounded-sm hover:bg-vmTeal hover:text-vmNavy transition-all flex items-center justify-center gap-2"
+                      className="px-8 py-4 bg-vmNavy text-white font-bold uppercase tracking-widest text-xs rounded-sm hover:bg-vmTeal hover:text-vmNavy transition-all flex items-center justify-center gap-2"
                     >
                       <Download className="w-4 h-4" /> Download
                     </button>

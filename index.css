@@ -14,6 +14,23 @@
   --color-vmLeaf: #6FA35E;
   --font-sans: 'Inter', sans-serif;
   --font-serif: 'Playfair Display', serif;
+
+  /* ── Type scale, raised for legibility (2026-09-11) ──────────────────
+     The site had 71 elements at 10px, 7 at 11px, 129 at 12px and 332 at
+     14px. Raising the scale here lifts all of them at once and keeps the
+     rhythm intact — far safer than editing 500-odd class names.
+
+     Note on "12pt": 12pt is 16px. A literal 16px floor on every element,
+     including uppercase micro-labels tracked at 0.28em, would be roughly
+     a redesign — those labels would set wider than the headings they sit
+     under. So the floor here is: nothing below 13px anywhere, secondary
+     text at 15px, and real reading copy at 16.5px. If you want the
+     literal 16px-everywhere version, it's this block plus a layout pass. */
+  --text-xs: 0.8125rem;    /* 12px → 13px   · labels, captions, fine print */
+  --text-sm: 0.9375rem;    /* 14px → 15px   · secondary copy (most-used size) */
+  --text-base: 1.03125rem; /* 16px → 16.5px · body */
+  --text-lg: 1.1875rem;    /* 18px → 19px */
+  --text-xl: 1.3125rem;    /* 20px → 21px */
 }
 
 .glass-effect {
@@ -184,8 +201,8 @@
 .eyebrow {
   font-family: var(--font-sans);
   font-weight: 600;
-  font-size: 0.6875rem;
-  letter-spacing: 0.28em;
+  font-size: 0.8125rem;   /* was 0.6875rem (11px) — now 13px, the floor */
+  letter-spacing: 0.24em; /* tracking eased slightly so the wider text still fits */
   text-transform: uppercase;
 }
 
@@ -210,7 +227,7 @@
   writing-mode: vertical-rl;
   letter-spacing: 0.5em;
   text-transform: uppercase;
-  font-size: 0.625rem;
+  font-size: 0.8125rem;
   font-weight: 600;
 }
 
@@ -394,7 +411,7 @@
   /* clears the fixed chat widget, which floats bottom-right of the viewport */
   bottom: 7rem;
   max-width: 20rem;
-  font-size: 0.75rem;
+  font-size: 0.8125rem;
   line-height: 1.55;
   color: var(--color-vmNavy);
   /* small text over a busy painting — keep it legible, not whispered */
@@ -511,7 +528,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 
 /* scroll cue */
 .voice-cue { position: absolute; left: 0; right: 0; bottom: 2.2rem; text-align: center; z-index: 6;
-  font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace; font-size: 0.72rem; letter-spacing: 0.16em;
+  font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace; font-size: 0.8125rem; letter-spacing: 0.16em;
   text-transform: uppercase; color: rgba(11,76,131,0.5); }
 .voice-cue .arrow { display: block; margin-top: 0.5rem; animation: voiceBob 1.8s ease-in-out infinite; }
 @keyframes voiceBob { 0%,100% { transform: translateY(0); opacity: 0.6; } 50% { transform: translateY(5px); opacity: 1; } }
@@ -524,8 +541,8 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   transition: padding-right .25s ease, border-color .2s ease; }
 .voice-sound:hover { border-color: rgba(201,162,75,0.8); padding-right: 0.85rem; }
 .voice-sound .dot { width: 8px; height: 8px; border-radius: 50%; }
-.voice-sound .vlabel { writing-mode: vertical-rl; text-orientation: mixed; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-vmNavy); }
-.voice-sound .cap { writing-mode: vertical-rl; font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace; font-size: 0.6rem; letter-spacing: 0.08em; color: rgba(11,76,131,0.5); }
+.voice-sound .vlabel { writing-mode: vertical-rl; text-orientation: mixed; font-size: 0.8125rem; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-vmNavy); }
+.voice-sound .cap { writing-mode: vertical-rl; font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace; font-size: 0.8125rem; letter-spacing: 0.08em; color: rgba(11,76,131,0.5); }
 
 /* reduced motion: stages stack as plain panels, nothing pins or moves */
 .voice-reduced .voice-scroller { height: auto; }
@@ -543,23 +560,23 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   padding: 1rem 0.6rem; cursor: pointer; -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); transition: border-color .2s ease; }
 .sounddock-tab:hover { border-color: rgba(201,162,75,0.8); }
 .sounddock-tab .dot { width: 8px; height: 8px; border-radius: 50%; }
-.sounddock-tab .vlabel { writing-mode: vertical-rl; text-orientation: mixed; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-vmNavy); }
+.sounddock-tab .vlabel { writing-mode: vertical-rl; text-orientation: mixed; font-size: 0.8125rem; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-vmNavy); }
 .sounddock-panel { width: 232px; align-self: center; background: rgba(255,255,255,0.93); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
   border: 1px solid rgba(201,162,75,0.45); border-right: none; border-radius: 10px 0 0 10px; padding: 1rem; box-shadow: -12px 0 44px rgba(11,76,131,0.12); }
-.sounddock-panel h4 { font-family: ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size: 0.62rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-vmGold); margin-bottom: 0.75rem; }
+.sounddock-panel h4 { font-family: ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size: 0.8125rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-vmGold); margin-bottom: 0.75rem; }
 .sounddock-opt { display: flex; align-items: center; gap: 0.6rem; width: 100%; text-align: left; padding: 0.55rem 0.6rem; border-radius: 4px; font-size: 0.85rem; color: var(--color-vmNavy); cursor: pointer; background: transparent; border: none; transition: background .15s ease; }
 .sounddock-opt:hover { background: rgba(201,162,75,0.10); }
 .sounddock-opt[aria-pressed="true"] { background: rgba(0,194,178,0.12); font-weight: 600; }
 .sounddock-opt .mini { width: 6px; height: 6px; border-radius: 50%; background: var(--color-vmGold); flex-shrink: 0; }
 .sounddock-opt[aria-pressed="true"] .mini { background: var(--color-vmTeal); box-shadow: 0 0 7px var(--color-vmTeal); }
-.sounddock-off { margin-top: 0.5rem; width: 100%; font-family: ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(11,76,131,0.5); background: transparent; border: none; border-top: 1px solid rgba(11,76,131,0.1); padding-top: 0.65rem; margin-top: 0.65rem; cursor: pointer; }
+.sounddock-off { margin-top: 0.5rem; width: 100%; font-family: ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size: 0.8125rem; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(11,76,131,0.5); background: transparent; border: none; border-top: 1px solid rgba(11,76,131,0.1); padding-top: 0.65rem; margin-top: 0.65rem; cursor: pointer; }
 
 /* ── Museum of the Human Voice ── */
 .museum-band { position: relative; min-height: 86vh; display: flex; align-items: center; justify-content: center; overflow: hidden; padding: 6rem 1.5rem; text-align: center; }
 .museum-bg { position: absolute; inset: 0; z-index: 0; background-size: cover; background-position: center; }
 .museum-scrim { position: absolute; inset: 0; z-index: 1; }
 .museum-inner { position: relative; z-index: 2; max-width: 46rem; }
-.museum-placard { font-family: ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size: 0.66rem; letter-spacing: 0.18em; text-transform: uppercase; }
+.museum-placard { font-family: ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size: 0.8125rem; letter-spacing: 0.18em; text-transform: uppercase; }
 
 /* ── Lab Workbench: markdown inside chat bubbles (Deal Scout) ── */
 .chat-md h2 { font-size: 1rem; margin: 0.85rem 0 0.3rem; padding-bottom: 0.25rem; }

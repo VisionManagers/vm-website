@@ -30,7 +30,7 @@ interface Category {
 const CATEGORIES: Category[] = [
   {
     id: 'A',
-    label: 'Demand you already paid for, then lost',
+    label: 'Hot leads you miss',
     tagline: 'Marketing money was spent. The lead exists. Revenue dies in the handling.',
     leaks: [
       {
@@ -100,7 +100,7 @@ const CATEGORIES: Category[] = [
   },
   {
     id: 'B',
-    label: 'Time bought at expert prices, spent on robot work',
+    label: 'Hours lost to manual work',
     tagline: 'Payroll and founder hours doing what software does for free.',
     leaks: [
       {
@@ -145,7 +145,7 @@ const CATEGORIES: Category[] = [
   },
   {
     id: 'C',
-    label: 'Knowledge that leaves, training that never lands',
+    label: 'Knowledge stuck in people’s heads',
     tagline: 'The business runs on what’s in people’s heads — and heads walk out the door.',
     leaks: [
       {

@@ -141,7 +141,7 @@ const StartHere: React.FC = () => {
   const ErrorLabel = ({ message }: { message?: string }) => message ? (
     <div className="flex items-center gap-1.5 mt-2 text-red-500 animate-in fade-in slide-in-from-top-1 duration-200">
       <AlertCircle className="w-3.5 h-3.5" />
-      <span className="text-[11px] font-bold uppercase tracking-wider">{message}</span>
+      <span className="text-xs font-bold uppercase tracking-wider">{message}</span>
     </div>
   ) : null;
 
@@ -339,7 +339,7 @@ const StartHere: React.FC = () => {
                   <div className="grid md:grid-cols-2 gap-8">
                     <div>
                       <label className="block text-sm font-bold text-vmNavy uppercase tracking-widest mb-2">Timeline. *</label>
-                      <p className="text-[10px] text-slate-500 mb-4">When do you want to go live?</p>
+                      <p className="text-xs text-slate-500 mb-4">When do you want to go live?</p>
                       <select 
                         className={`w-full p-4 border outline-none bg-white text-sm rounded-sm ${errors.timeline ? 'border-red-300 bg-red-50' : 'border-slate-200'}`}
                         value={formData.timeline}
@@ -352,7 +352,7 @@ const StartHere: React.FC = () => {
                     </div>
                     <div>
                       <label className="block text-sm font-bold text-vmNavy uppercase tracking-widest mb-2">Allocated budget *</label>
-                      <p className="text-[10px] text-slate-500 mb-4 opacity-0">spacer</p>
+                      <p className="text-xs text-slate-500 mb-4 opacity-0">spacer</p>
                       <select 
                         className={`w-full p-4 border outline-none bg-white text-sm rounded-sm ${errors.budget ? 'border-red-300 bg-red-50' : 'border-slate-200'}`}
                         value={formData.budget}
@@ -428,7 +428,7 @@ const StartHere: React.FC = () => {
                         onChange={(e) => handleFieldChange('company', e.target.value)}
                       />
                       <ErrorLabel message={errors.company} />
-                      <p className="mt-2 text-[10px] text-slate-500">This allows your report to be more accurate and valuable.</p>
+                      <p className="mt-2 text-xs text-slate-500">This allows your report to be more accurate and valuable.</p>
                     </div>
                     <div>
                       <label className="block text-sm font-bold text-vmNavy uppercase tracking-widest mb-2">Website (optional)</label>
@@ -443,7 +443,7 @@ const StartHere: React.FC = () => {
                         onChange={(e) => handleFieldChange('website', e.target.value)}
                       />
                       <ErrorLabel message={errors.website} />
-                      <p className="mt-2 text-[10px] text-slate-500">This allows your report to be more accurate and valuable.</p>
+                      <p className="mt-2 text-xs text-slate-500">This allows your report to be more accurate and valuable.</p>
                     </div>
                   </div>
 

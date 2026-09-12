@@ -50,7 +50,7 @@ const Login: React.FC = () => {
           )}
 
           <div className="space-y-2">
-            <label className="text-[10px] font-black text-vmNavy uppercase tracking-[0.2em] block">Email</label>
+            <label className="text-xs font-black text-vmNavy uppercase tracking-[0.2em] block">Email</label>
             <input
               type="email"
               required
@@ -62,7 +62,7 @@ const Login: React.FC = () => {
           </div>
 
           <div className="space-y-2">
-            <label className="text-[10px] font-black text-vmNavy uppercase tracking-[0.2em] block">Password</label>
+            <label className="text-xs font-black text-vmNavy uppercase tracking-[0.2em] block">Password</label>
             <input
               type="password"
               required
