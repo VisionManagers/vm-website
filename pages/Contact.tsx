@@ -100,7 +100,7 @@ const Contact: React.FC = () => {
           </a>
 
           <div className="space-y-6 pt-8 border-t border-slate-100">
-            <p className="text-[10px] font-black uppercase tracking-widest text-slate-500">Or reach out directly</p>
+            <p className="text-xs font-black uppercase tracking-widest text-slate-500">Or reach out directly</p>
             <div className="flex items-center gap-4">
               <div className="w-10 h-10 bg-vmSlate rounded-full flex items-center justify-center text-vmNavy">
                 <Mail className="w-5 h-5" />
@@ -121,7 +121,7 @@ const Contact: React.FC = () => {
 
           <div className="grid md:grid-cols-2 gap-6">
             <div className="space-y-2">
-              <label className="text-[10px] font-black uppercase tracking-widest text-vmNavy">Your Name</label>
+              <label className="text-xs font-black uppercase tracking-widest text-vmNavy">Your Name</label>
               <input
                 type="text"
                 className="w-full p-4 bg-white border border-slate-200 outline-none focus:border-vmTeal transition-colors"
@@ -131,7 +131,7 @@ const Contact: React.FC = () => {
               />
             </div>
             <div className="space-y-2">
-              <label className="text-[10px] font-black uppercase tracking-widest text-vmNavy">Email <span className="text-red-400">*</span></label>
+              <label className="text-xs font-black uppercase tracking-widest text-vmNavy">Email <span className="text-red-400">*</span></label>
               <input
                 required
                 type="email"
@@ -145,7 +145,7 @@ const Contact: React.FC = () => {
 
           <div className="grid md:grid-cols-2 gap-6">
             <div className="space-y-2">
-              <label className="text-[10px] font-black uppercase tracking-widest text-vmNavy">Practice / Business</label>
+              <label className="text-xs font-black uppercase tracking-widest text-vmNavy">Practice / Business</label>
               <input
                 type="text"
                 className="w-full p-4 bg-white border border-slate-200 outline-none focus:border-vmTeal transition-colors"
@@ -155,7 +155,7 @@ const Contact: React.FC = () => {
               />
             </div>
             <div className="space-y-2">
-              <label className="text-[10px] font-black uppercase tracking-widest text-vmNavy">Website</label>
+              <label className="text-xs font-black uppercase tracking-widest text-vmNavy">Website</label>
               <input
                 type="url"
                 className="w-full p-4 bg-white border border-slate-200 outline-none focus:border-vmTeal transition-colors"
@@ -167,7 +167,7 @@ const Contact: React.FC = () => {
           </div>
 
           <div className="space-y-2">
-            <label className="text-[10px] font-black uppercase tracking-widest text-vmNavy">I'm interested in...</label>
+            <label className="text-xs font-black uppercase tracking-widest text-vmNavy">I'm interested in...</label>
             <select
               className="w-full p-4 bg-white border border-slate-200 outline-none focus:border-vmTeal transition-colors text-slate-600"
               value={formData.interest}
@@ -182,7 +182,7 @@ const Contact: React.FC = () => {
           </div>
 
           <div className="space-y-2">
-            <label className="text-[10px] font-black uppercase tracking-widest text-vmNavy">Anything else?</label>
+            <label className="text-xs font-black uppercase tracking-widest text-vmNavy">Anything else?</label>
             <textarea
               className="w-full p-4 bg-white border border-slate-200 outline-none focus:border-vmTeal transition-colors min-h-[100px]"
               placeholder="Tell us about your situation..."
@@ -198,7 +198,7 @@ const Contact: React.FC = () => {
           <button
             type="submit"
             disabled={submitting}
-            className="w-full py-5 bg-vmNavy text-white font-bold uppercase tracking-widest text-[11px] rounded-sm hover:bg-vmTeal hover:text-vmNavy transition-all flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full py-5 bg-vmNavy text-white font-bold uppercase tracking-widest text-xs rounded-sm hover:bg-vmTeal hover:text-vmNavy transition-all flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {submitting ? 'Sending...' : 'Send Message'} {!submitting && <Send className="w-4 h-4" />}
           </button>

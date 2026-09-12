@@ -76,11 +76,11 @@ const PostListInner: React.FC = () => {
             <table className="w-full">
               <thead>
                 <tr className="border-b border-slate-100 bg-slate-50">
-                  <th className="text-left text-[10px] font-black text-vmNavy uppercase tracking-widest p-4">Title</th>
-                  <th className="text-left text-[10px] font-black text-vmNavy uppercase tracking-widest p-4 hidden md:table-cell">Type</th>
-                  <th className="text-left text-[10px] font-black text-vmNavy uppercase tracking-widest p-4 hidden md:table-cell">Status</th>
-                  <th className="text-left text-[10px] font-black text-vmNavy uppercase tracking-widest p-4 hidden md:table-cell">Date</th>
-                  <th className="text-right text-[10px] font-black text-vmNavy uppercase tracking-widest p-4">Actions</th>
+                  <th className="text-left text-xs font-black text-vmNavy uppercase tracking-widest p-4">Title</th>
+                  <th className="text-left text-xs font-black text-vmNavy uppercase tracking-widest p-4 hidden md:table-cell">Type</th>
+                  <th className="text-left text-xs font-black text-vmNavy uppercase tracking-widest p-4 hidden md:table-cell">Status</th>
+                  <th className="text-left text-xs font-black text-vmNavy uppercase tracking-widest p-4 hidden md:table-cell">Date</th>
+                  <th className="text-right text-xs font-black text-vmNavy uppercase tracking-widest p-4">Actions</th>
                 </tr>
               </thead>
               <tbody>

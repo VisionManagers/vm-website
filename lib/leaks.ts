@@ -45,9 +45,9 @@ export interface LeakDef {
 }
 
 export const CATEGORY_LABEL: Record<Category, string> = {
-  A: 'Demand you already paid for, then lost',
-  B: 'Time bought at expert prices, spent on robot work',
-  C: 'Knowledge that leaves when people do',
+  A: 'Hot leads you miss',
+  B: 'Hours lost to manual work',
+  C: 'Knowledge stuck in people’s heads',
   D: 'Money you never asked for',
 };
 
@@ -87,7 +87,7 @@ export const money = (n: number): string =>
   '$' + Math.round(n).toLocaleString('en-US');
 
 export const LEAKS: LeakDef[] = [
-  /* ── A · Demand you already paid for, then lost ───────────────── */
+  /* ── A · Hot leads you miss ───────────────── */
   {
     n: 1, id: 'phone', category: 'A',
     name: 'The Phone Leak',

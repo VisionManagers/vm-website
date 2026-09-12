@@ -91,11 +91,11 @@ const Insights: React.FC = () => {
             <div className="flex gap-2 mb-2">
               {[...Array(30)].map((_, i) => <div key={i} className="w-[2px] h-10 bg-vmSlate group-hover:bg-vmTeal transition-colors" />)}
             </div>
-            <span className="text-[10px] text-slate-500 font-bold uppercase tracking-[0.3em]">Thought Leadership Archive</span>
+            <span className="text-xs text-slate-500 font-bold uppercase tracking-[0.3em]">Thought Leadership Archive</span>
             <div className="mt-4">
               <Link
                 to={user ? '/admin/posts' : '/admin/login'}
-                className="inline-flex items-center gap-1.5 text-[10px] text-slate-500 hover:text-vmTeal font-bold uppercase tracking-widest transition-colors"
+                className="inline-flex items-center gap-1.5 text-xs text-slate-500 hover:text-vmTeal font-bold uppercase tracking-widest transition-colors"
               >
                 <Lock className="w-3 h-3" /> {user ? 'Manage Posts' : 'Admin'}
               </Link>
@@ -110,7 +110,7 @@ const Insights: React.FC = () => {
         >
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
             <div>
-              <span className="text-vmTeal font-black text-[10px] uppercase tracking-widest mb-2 block">New Tool</span>
+              <span className="text-vmTeal font-black text-xs uppercase tracking-widest mb-2 block">New Tool</span>
               <h3 className="text-2xl font-serif italic">AI Intelligence Digest</h3>
               <p className="text-slate-500 mt-2 text-sm">Generate a real-time executive briefing powered by AI web research.</p>
             </div>
@@ -153,7 +153,7 @@ const Insights: React.FC = () => {
                          <Icon className="w-4 h-4 text-vmTeal" />
                          <span className="text-xs font-bold text-vmTeal uppercase tracking-widest">{typeLabel}</span>
                        </div>
-                       <span className="text-[10px] text-slate-500 font-bold">{formatDate(post.published_at)}</span>
+                       <span className="text-xs text-slate-500 font-bold">{formatDate(post.published_at)}</span>
                     </div>
                     <div className="md:col-span-7">
                       <h2 className="text-2xl font-serif text-vmNavy mb-4 group-hover:text-vmTeal transition-colors">{post.title}</h2>
@@ -193,7 +193,7 @@ const Insights: React.FC = () => {
                 />
                 <button
                   disabled={isSubmitting}
-                  className="px-8 py-5 bg-vmNavy text-white font-bold uppercase tracking-widest text-[10px] rounded-sm hover:bg-vmTeal hover:text-vmNavy transition-all min-w-[160px] flex items-center justify-center gap-2"
+                  className="px-8 py-5 bg-vmNavy text-white font-bold uppercase tracking-widest text-xs rounded-sm hover:bg-vmTeal hover:text-vmNavy transition-all min-w-[160px] flex items-center justify-center gap-2"
                 >
                   {isSubmitting ? <Loader2 className="w-4 h-4 animate-spin" /> : <>Join Briefing <Send className="w-3 h-3" /></>}
                 </button>

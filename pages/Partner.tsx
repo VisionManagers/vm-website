@@ -211,7 +211,7 @@ const Partner: React.FC = () => {
               <Eyebrow className="text-accent mb-5">Don’t buy this if</Eyebrow>
               <ul className="flex flex-col gap-4">
                 {NOT_FOR.map((n) => (
-                  <li key={n} className="text-slate-600 leading-relaxed pl-5 relative text-[15px]">
+                  <li key={n} className="text-slate-600 leading-relaxed pl-5 relative text-sm">
                     <span className="absolute left-0 text-accent" aria-hidden>—</span>
                     {n}
                   </li>

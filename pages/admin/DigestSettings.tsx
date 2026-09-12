@@ -110,7 +110,7 @@ const DigestSettingsInner: React.FC = () => {
 
         {/* Prompt editor */}
         <div className="space-y-2 mb-8">
-          <label className="text-[10px] font-black text-vmNavy uppercase tracking-[0.2em] block">
+          <label className="text-xs font-black text-vmNavy uppercase tracking-[0.2em] block">
             System Prompt
           </label>
           <textarea

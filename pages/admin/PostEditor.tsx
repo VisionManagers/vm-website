@@ -177,7 +177,7 @@ const PostEditorInner: React.FC = () => {
           {/* Main editor column */}
           <div className="lg:col-span-2 space-y-6">
             <div className="space-y-2">
-              <label className="text-[10px] font-black text-vmNavy uppercase tracking-[0.2em] block">Title</label>
+              <label className="text-xs font-black text-vmNavy uppercase tracking-[0.2em] block">Title</label>
               <input
                 type="text"
                 value={title}
@@ -188,7 +188,7 @@ const PostEditorInner: React.FC = () => {
             </div>
 
             <div className="space-y-2">
-              <label className="text-[10px] font-black text-vmNavy uppercase tracking-[0.2em] block">Summary</label>
+              <label className="text-xs font-black text-vmNavy uppercase tracking-[0.2em] block">Summary</label>
               <textarea
                 value={summary}
                 onChange={(e) => setSummary(e.target.value)}
@@ -199,7 +199,7 @@ const PostEditorInner: React.FC = () => {
             </div>
 
             <div className="space-y-2">
-              <label className="text-[10px] font-black text-vmNavy uppercase tracking-[0.2em] block">Content</label>
+              <label className="text-xs font-black text-vmNavy uppercase tracking-[0.2em] block">Content</label>
               <TipTapEditor content={content} onChange={setContent} />
             </div>
           </div>
@@ -210,7 +210,7 @@ const PostEditorInner: React.FC = () => {
               <h3 className="text-sm font-bold text-vmNavy uppercase tracking-widest">Post Settings</h3>
 
               <div className="space-y-2">
-                <label className="text-[10px] font-black text-vmNavy uppercase tracking-[0.2em] block">Slug</label>
+                <label className="text-xs font-black text-vmNavy uppercase tracking-[0.2em] block">Slug</label>
                 <input
                   type="text"
                   value={slug}
@@ -218,11 +218,11 @@ const PostEditorInner: React.FC = () => {
                   className="w-full p-3 border border-slate-200 rounded-sm focus:border-vmTeal focus:outline-none transition-all text-sm"
                   placeholder="post-slug"
                 />
-                <p className="text-[10px] text-slate-500">/insights/{slug || '...'}</p>
+                <p className="text-xs text-slate-500">/insights/{slug || '...'}</p>
               </div>
 
               <div className="space-y-2">
-                <label className="text-[10px] font-black text-vmNavy uppercase tracking-[0.2em] block">Type</label>
+                <label className="text-xs font-black text-vmNavy uppercase tracking-[0.2em] block">Type</label>
                 <select
                   value={postType}
                   onChange={(e) => setPostType(e.target.value)}
@@ -251,7 +251,7 @@ const PostEditorInner: React.FC = () => {
               <h3 className="text-sm font-bold text-vmNavy uppercase tracking-widest">CTA Section</h3>
 
               <div className="space-y-2">
-                <label className="text-[10px] font-black text-vmNavy uppercase tracking-[0.2em] block">Icon</label>
+                <label className="text-xs font-black text-vmNavy uppercase tracking-[0.2em] block">Icon</label>
                 <select
                   value={ctaIcon}
                   onChange={(e) => setCtaIcon(e.target.value)}
@@ -265,7 +265,7 @@ const PostEditorInner: React.FC = () => {
               </div>
 
               <div className="space-y-2">
-                <label className="text-[10px] font-black text-vmNavy uppercase tracking-[0.2em] block">Heading</label>
+                <label className="text-xs font-black text-vmNavy uppercase tracking-[0.2em] block">Heading</label>
                 <input
                   type="text"
                   value={ctaHeading}
@@ -276,7 +276,7 @@ const PostEditorInner: React.FC = () => {
               </div>
 
               <div className="space-y-2">
-                <label className="text-[10px] font-black text-vmNavy uppercase tracking-[0.2em] block">Body</label>
+                <label className="text-xs font-black text-vmNavy uppercase tracking-[0.2em] block">Body</label>
                 <textarea
                   value={ctaBody}
                   onChange={(e) => setCtaBody(e.target.value)}
@@ -287,7 +287,7 @@ const PostEditorInner: React.FC = () => {
               </div>
 
               <div className="space-y-2">
-                <label className="text-[10px] font-black text-vmNavy uppercase tracking-[0.2em] block">Button Text</label>
+                <label className="text-xs font-black text-vmNavy uppercase tracking-[0.2em] block">Button Text</label>
                 <input
                   type="text"
                   value={ctaButtonText}
@@ -298,7 +298,7 @@ const PostEditorInner: React.FC = () => {
               </div>
 
               <div className="space-y-2">
-                <label className="text-[10px] font-black text-vmNavy uppercase tracking-[0.2em] block">Button Link</label>
+                <label className="text-xs font-black text-vmNavy uppercase tracking-[0.2em] block">Button Link</label>
                 <input
                   type="text"
                   value={ctaButtonLink}
@@ -309,7 +309,7 @@ const PostEditorInner: React.FC = () => {
               </div>
 
               <div className="space-y-2">
-                <label className="text-[10px] font-black text-vmNavy uppercase tracking-[0.2em] block">Style</label>
+                <label className="text-xs font-black text-vmNavy uppercase tracking-[0.2em] block">Style</label>
                 <select
                   value={ctaStyle}
                   onChange={(e) => setCtaStyle(e.target.value)}

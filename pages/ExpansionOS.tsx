@@ -261,7 +261,7 @@ const ExpansionOS: React.FC = () => {
                 <h3 className="text-lg font-serif text-vmNavy mb-6">Built for you if</h3>
                 <ul className="flex flex-col gap-4">
                   {FOR.map((f) => (
-                    <li key={f} className="flex items-start gap-3 text-[15px] text-slate-600 leading-relaxed">
+                    <li key={f} className="flex items-start gap-3 text-sm text-slate-600 leading-relaxed">
                       <Check className="w-4 h-4 shrink-0 mt-1 text-accent" aria-hidden />
                       {f}
                     </li>
@@ -272,7 +272,7 @@ const ExpansionOS: React.FC = () => {
                 <h3 className="text-lg font-serif text-vmNavy mb-6">Not built for you if</h3>
                 <ul className="flex flex-col gap-4">
                   {NOT_FOR.map((f) => (
-                    <li key={f} className="flex items-start gap-3 text-[15px] text-slate-500 leading-relaxed">
+                    <li key={f} className="flex items-start gap-3 text-sm text-slate-500 leading-relaxed">
                       <Minus className="w-4 h-4 shrink-0 mt-1 text-slate-300" aria-hidden />
                       {f}
                     </li>
@@ -324,7 +324,7 @@ const ExpansionOS: React.FC = () => {
               </span>
               <ul className="flex flex-col gap-3 mb-8">
                 {INCLUDED.map((inc) => (
-                  <li key={inc} className="flex items-start gap-3 text-[15px] text-slate-700">
+                  <li key={inc} className="flex items-start gap-3 text-sm text-slate-700">
                     <Check className="w-4 h-4 shrink-0 mt-1 text-accent" aria-hidden />
                     {inc}
                   </li>

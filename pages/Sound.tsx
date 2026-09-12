@@ -146,7 +146,7 @@ const Room: React.FC<RoomProps> = ({ num, placard, title, lede, anchor, cite, to
         {annotation && (
           <span
             aria-hidden
-            className="hidden md:block absolute top-6 -right-14 text-[11px] uppercase"
+            className="hidden md:block absolute top-6 -right-14 text-xs uppercase"
             style={{ writingMode: 'vertical-rl', letterSpacing: '0.35em', color: accent, opacity: 0.75 }}
           >
             {annotation}
