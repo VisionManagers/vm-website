@@ -168,7 +168,7 @@ const StartHere: React.FC = () => {
   return (
     <>
     <SEO
-      title="Start Here — Find What Your Data Could Be Doing"
+      title="Start Here — Find What Your Business Is Leaking"
       description="Three steps, about five minutes. Tell Vision Managers where it hurts and how your business runs, and get a custom roadmap — where AI earns its keep, where it doesn’t, and the first move worth making. Proven in healthcare, built for anyone."
       path="/start"
     />
@@ -180,14 +180,14 @@ const StartHere: React.FC = () => {
       <div className="max-w-3xl mx-auto relative z-10">
         <Reveal className="text-center mb-14">
           <Eyebrow className="text-vmTeal mb-6">Start here</Eyebrow>
-          <h1 className="text-4xl md:text-5xl font-serif text-vmNavy mb-6 leading-[1.1]">Let’s find what your data could be doing.</h1>
+          <h1 className="text-4xl md:text-5xl font-serif text-vmNavy mb-6 leading-[1.1]">Tell me where it hurts. I’ll map what it’s costing you.</h1>
           <p className="text-slate-600 max-w-xl mx-auto leading-relaxed mb-6">
             Three steps, about five minutes. Tell me where it hurts and how your business runs, and
             I’ll come back with a custom roadmap — where AI earns its keep, where it doesn’t, and the
             first move worth making. Proven in healthcare, built for anyone.
           </p>
           <p className="eyebrow text-slate-500 mb-8">
-            Find the loss · Map the Cosmos · Build the system · Answer for the result
+            Find the loss · Map the business · Build the system · Answer for the result
           </p>
           <a href={BOOKING_URLS.DISCOVERY} target="_blank" rel="noopener noreferrer"
             className="inline-flex items-center gap-2 text-vmNavy font-semibold hover:text-vmTeal transition-colors text-sm">
@@ -393,7 +393,7 @@ const StartHere: React.FC = () => {
                         name="name"
                         autoComplete="name"
                         className={`w-full p-4 border outline-none text-sm rounded-sm ${errors.name ? 'border-red-300 bg-red-50' : 'border-slate-200'}`}
-                        placeholder="Jeff Bezos"
+                        placeholder="Jane Smith"
                         value={formData.name}
                         onChange={(e) => handleFieldChange('name', e.target.value)}
                       />
@@ -407,7 +407,7 @@ const StartHere: React.FC = () => {
                         autoComplete="email"
                         inputMode="email"
                         className={`w-full p-4 border outline-none text-sm rounded-sm ${errors.email ? 'border-red-300 bg-red-50' : 'border-slate-200'}`}
-                        placeholder="bezos@amazon.com"
+                        placeholder="jane@yourbusiness.com"
                         value={formData.email}
                         onChange={(e) => handleFieldChange('email', e.target.value)}
                       />

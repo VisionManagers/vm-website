@@ -125,20 +125,20 @@ const AIVoice: React.FC = () => {
             {/* Stage 1 — the headline, on its own */}
             <div ref={stage1Ref} className="voice-stage">
               <div className="max-w-4xl">
-                <span className="eyebrow voice-eyebrow text-vmGold mb-9">Conversation IQ — voice, with taste</span>
+                <span className="eyebrow voice-eyebrow text-vmGold mb-9">Voice agents for healthcare &amp; high-trust practices</span>
                 <h1 className="font-serif text-vmNavy" style={{ lineHeight: 1.07, letterSpacing: '-0.01em' }}>
                   <span className="block opacity-90" style={{ fontSize: 'clamp(1.5rem, 4.2vw, 2.8rem)' }}>
                     Everybody’s getting voice AI.
                   </span>
                   <span className="block italic" style={{ fontSize: 'clamp(2.2rem, 6.6vw, 4.9rem)', marginTop: '0.4rem' }}>
-                    But{' '}
+                    What matters is the{' '}
                     <span className="voice-care">
-                      care
+                      conversation
                       <svg viewBox="0 0 120 12" preserveAspectRatio="none" aria-hidden>
                         <path d="M3 7 C 28 2, 92 2, 117 6" />
                       </svg>
                     </span>{' '}
-                    begins when the phone rings.
+                    it runs.
                   </span>
                 </h1>
               </div>
@@ -174,7 +174,7 @@ const AIVoice: React.FC = () => {
               <span className="eyebrow voice-eyebrow text-vmGold mb-6">The difference</span>
               <h2 className="font-serif text-vmNavy text-3xl md:text-5xl leading-tight">
                 A machine can answer the phone.<br />
-                Only a designed conversation can <span className="italic">receive someone</span>.
+                A designed conversation makes the caller <span className="italic">feel taken care of</span>.
               </h2>
             </Reveal>
 
@@ -328,7 +328,7 @@ const AIVoice: React.FC = () => {
             <Reveal>
               <span className="eyebrow voice-eyebrow text-vmGold mb-6">The next call</span>
               <h2 className="font-serif text-vmNavy text-4xl md:text-5xl mb-6 italic">
-                Let’s design the conversation that answers for you.
+                Let’s design the voice that answers your phone.
               </h2>
               <p className="text-lg text-slate-600 mb-3 max-w-2xl mx-auto">
                 In 30 minutes we’ll map where calls are slipping, what a designed conversation would change,

@@ -7,6 +7,7 @@ import { Menu, X, ChevronDown } from 'lucide-react';
 const Header: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isSolutionsOpen, setIsSolutionsOpen] = useState(false);
   const scrollPosRef = useRef(0);
   const location = useLocation();
 
@@ -41,6 +42,12 @@ const Header: React.FC = () => {
   useEffect(() => {
     setIsMenuOpen(false);
   }, [location.pathname]);
+
+  // Collapse the Solutions accordion whenever the overlay closes, so the menu
+  // always reopens in its default state.
+  useEffect(() => {
+    if (!isMenuOpen) setIsSolutionsOpen(false);
+  }, [isMenuOpen]);
 
   // Solutions is a dropdown — AI Voice lives here as a component offer; more
   // solutions slot into this list as we build them out.
@@ -149,69 +156,93 @@ const Header: React.FC = () => {
           </div>
         </button>
 
-        {/* Mobile Menu Overlay - Snappy Circ Reveal */}
+        {/* Mobile Menu Overlay — simple fade + drift. Transforms/opacity only:
+            the old clip-path curtain + animated 100vw blur repainted the whole
+            layer every frame and read as chop on mid-range phones. */}
         <div
-          className={`fixed inset-0 bg-white z-[65] md:hidden flex flex-col transition-all duration-[500ms] ease-[cubic-bezier(0.19,1,0.22,1)] ${
-            isMenuOpen
-              ? 'opacity-100'
-              : 'opacity-0 pointer-events-none'
+          className={`fixed inset-0 bg-white z-[65] md:hidden flex flex-col transition-opacity duration-300 ease-out ${
+            isMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
           }`}
-          style={{
-            clipPath: isMenuOpen ? 'inset(0 0 0 0)' : 'inset(0 0 100% 0)',
-            WebkitClipPath: isMenuOpen ? 'inset(0 0 0 0)' : 'inset(0 0 100% 0)'
-          }}
         >
-          {/* Inner Content - Staggered Entry */}
-          <div className={`flex flex-col h-full w-full transition-all duration-500 ${isMenuOpen ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}`}>
+          <div className={`flex flex-col h-full w-full transition-transform duration-300 ease-out will-change-transform ${isMenuOpen ? 'translate-y-0' : '-translate-y-2'}`}>
 
-            {/* Background Accent */}
+            {/* Background Accent — static; animating a blurred 100vw circle is a GPU killer */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-40">
-              <div className={`absolute -top-20 -right-20 w-[100vw] h-[100vw] bg-vmTeal/10 rounded-full blur-[100px] transition-transform duration-[800ms] ${isMenuOpen ? 'translate-x-0' : 'translate-x-1/2'}`} />
+              <div className="absolute -top-20 -right-20 w-[100vw] h-[100vw] bg-vmTeal/10 rounded-full blur-[60px]" />
             </div>
 
-            {/* Navigation Links Area */}
-            <div className="flex-grow flex flex-col items-center justify-center gap-8 px-8 pt-24 pb-12 overflow-y-auto relative z-10">
-              {/* Solutions + its sub-items */}
+            {/* Navigation Links Area — scroll on the outer div, center via an inner
+                min-h-full wrapper: justify-center directly on a scroll container
+                clips the top once the accordion makes the content taller than the
+                viewport. */}
+            <div className="flex-grow overflow-y-auto relative z-10 px-8 pt-24 pb-12">
+            <div className="min-h-full flex flex-col items-center justify-center gap-8">
+              {/* Solutions — expandable accordion with the full submenu */}
               <div
-                className={`flex flex-col items-center gap-4 transition-all duration-500 transform ${
-                  isMenuOpen ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
+                className={`flex flex-col items-center transition-all duration-300 transform ${
+                  isMenuOpen ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
                 }`}
-                style={{ transitionDelay: '150ms' }}
+                style={{ transitionDelay: isMenuOpen ? '60ms' : '0ms' }}
               >
-                <Link
-                  to="/solutions"
-                  className={`text-3xl font-serif tracking-tight transition-colors ${
-                    location.pathname === '/solutions' ? 'text-vmTeal' : 'text-vmNavy'
+                <button
+                  type="button"
+                  onClick={() => setIsSolutionsOpen((o) => !o)}
+                  aria-expanded={isSolutionsOpen}
+                  aria-controls="mobile-solutions-menu"
+                  className={`flex items-center gap-2 text-3xl font-serif tracking-tight transition-colors ${
+                    solutionsActive ? 'text-vmTeal' : 'text-vmNavy'
                   }`}
                 >
                   Solutions
-                </Link>
-                <Link
-                  to="/ai-voice"
-                  className={`text-lg transition-colors ${isActive('/ai-voice') ? 'text-vmTeal' : 'text-slate-500'} hover:text-vmTeal`}
+                  <ChevronDown
+                    className={`w-6 h-6 transition-transform duration-300 ${isSolutionsOpen ? 'rotate-180' : ''}`}
+                    aria-hidden
+                  />
+                </button>
+                {/* grid-rows 0fr→1fr animates height without measuring it */}
+                <div
+                  id="mobile-solutions-menu"
+                  className={`grid w-full transition-[grid-template-rows,opacity] duration-300 ease-out ${
+                    isSolutionsOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'
+                  }`}
                 >
-                  AI Voice
-                </Link>
+                  <div className="overflow-hidden">
+                    <div className="flex flex-col items-center gap-4 pt-5">
+                      {solutionsMenu.map((item) => (
+                        <Link
+                          key={item.path}
+                          to={item.path}
+                          tabIndex={isSolutionsOpen ? 0 : -1}
+                          className={`text-lg transition-colors ${
+                            isActive(item.path) ? 'text-vmTeal' : 'text-slate-500'
+                          } hover:text-vmTeal`}
+                        >
+                          {item.name}
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                </div>
               </div>
 
               {navLinks.map((link, idx) => (
                 <Link
                   key={link.path}
                   to={link.path}
-                  className={`text-3xl font-serif tracking-tight transition-all duration-500 transform ${
+                  className={`text-3xl font-serif tracking-tight transition-all duration-300 transform ${
                     isActive(link.path) ? 'text-vmTeal' : 'text-vmNavy'
-                  } ${isMenuOpen ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'}`}
-                  style={{ transitionDelay: `${210 + idx * 60}ms` }}
+                  } ${isMenuOpen ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}`}
+                  style={{ transitionDelay: isMenuOpen ? `${100 + idx * 40}ms` : '0ms' }}
                 >
                   {link.name}
                 </Link>
               ))}
 
               <div
-                className={`w-full max-w-sm pt-8 transition-all duration-500 transform ${
-                  isMenuOpen ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
+                className={`w-full max-w-sm pt-8 transition-all duration-300 transform ${
+                  isMenuOpen ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
                 }`}
-                style={{ transitionDelay: `${250 + (navLinks.length + 1) * 60}ms` }}
+                style={{ transitionDelay: isMenuOpen ? `${120 + (navLinks.length + 1) * 40}ms` : '0ms' }}
               >
                 <a
                   href={BOOKING_URLS.DISCOVERY}
@@ -232,13 +263,14 @@ const Header: React.FC = () => {
                 </div>
               </div>
             </div>
+            </div>
 
             {/* Mobile Footer */}
             <div
-              className={`p-8 text-center bg-vmSlate/30 border-t border-slate-100 transition-all duration-500 ${
-                isMenuOpen ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
+              className={`p-8 text-center bg-vmSlate/30 border-t border-slate-100 transition-all duration-300 ${
+                isMenuOpen ? 'translate-y-0 opacity-100' : 'translate-y-2 opacity-0'
               }`}
-              style={{ transitionDelay: `${350 + navLinks.length * 60}ms` }}
+              style={{ transitionDelay: isMenuOpen ? `${160 + navLinks.length * 40}ms` : '0ms' }}
             >
                <p className="text-xs text-slate-500 font-bold uppercase tracking-widest">© {new Date().getFullYear()} Vision Managers LLC</p>
             </div>

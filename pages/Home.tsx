@@ -24,7 +24,7 @@ const STEPS = [
   },
   {
     n: '02',
-    title: 'Map the Cosmos',
+    title: 'Map the business',
     desc: 'We connect your data and relationships — contacts, calls, records — into one living map, so you can finally see how your business actually moves.',
     plate: '/images/art/plate-polyhedra.webp',
     plateAlt: 'Detail from Jost Amman, Perspectiva Corporum Regularium, 1568',
@@ -178,15 +178,15 @@ const Home: React.FC = () => {
                   Most businesses are leaking six figures a year.
                   <br />
                   <span className="italic text-[0.66em] leading-tight inline-block mt-4">
-                    Their owners can name two of the twelve places.
+                    I find the leaks, then build the systems that close them.
                   </span>
                 </h1>
               </Reveal>
               <Reveal delay={160}>
                 <p className="text-lg md:text-xl text-slate-600 leading-relaxed max-w-2xl mb-10">
-                  I find where the money and the hours are actually going — missed demand, work
-                  still done by hand, knowledge trapped in one person’s head — then build the
-                  systems that close the gap. AI is how it gets built.{' '}
+                  The money goes out through missed calls, follow-up that never happens, work still
+                  done by hand, and knowledge trapped in one person’s head. There are twelve places
+                  to check — most owners can name two. AI is how the fix gets built.{' '}
                   <em>It isn’t the point.</em>
                 </p>
               </Reveal>
@@ -256,7 +256,7 @@ const Home: React.FC = () => {
             <Reveal className="max-w-2xl mb-16">
               <Eyebrow className="text-accent mb-4">What actually gets built</Eyebrow>
               <h2 className="text-3xl md:text-4xl font-serif text-vmNavy mb-5 leading-snug">
-                Six things, chosen in that order.
+                The six systems I build most.
               </h2>
               <p className="text-slate-500">
                 Which of these you need is what the audit decides. Most owners guess wrong about
@@ -295,63 +295,11 @@ const Home: React.FC = () => {
               </h2>
               <p className="text-lg text-white/70 leading-relaxed max-w-2xl mx-auto">
                 Every business runs on a hidden network — contacts, calls, records, and the
-                relationships between them. Most of it sits in pieces, unseen and unworked. Connect
-                those points, the way stars become constellations or neurons become a mind, and the
-                picture starts to run itself. That map is what we build. We call it your <span className="text-vmGold italic">Cosmos</span>.
+                relationships between them. Most of it sits in pieces, unseen and unworked.
+                Connected into one map, it shows you where the money is leaking and what to fix
+                first. That map is what we build.
               </p>
             </Reveal>
-          </div>
-        </section>
-
-        {/* ─── AN OLDER MAP — the Cosmos idea, with an object that already did it ─── */}
-        <section className="py-24 bg-white">
-          <div className="max-w-6xl mx-auto px-6">
-            <div className="grid md:grid-cols-12 gap-12 md:gap-16 items-center">
-              <div className="md:col-span-6 md:order-2">
-                <Reveal>
-                  <figure className="art-round max-w-md mx-auto">
-                    <img
-                      src="/images/art/astrological-bowl-round.webp"
-                      alt="A 12th-century Persian mina'i bowl: a gold sun at the centre, ringed by roundels of zodiac figures, ringed again by mounted courtiers"
-                      loading="lazy"
-                    />
-                  </figure>
-                </Reveal>
-              </div>
-
-              <div className="md:col-span-6 md:order-1">
-                <Reveal>
-                  <Eyebrow className="text-accent mb-5">An older map</Eyebrow>
-                  <h2 className="text-3xl md:text-4xl font-serif text-vmNavy mb-6 leading-snug">
-                    The idea is eight
-                    <br />
-                    <span className="italic">hundred years old.</span>
-                  </h2>
-                  <p className="text-lg text-slate-600 leading-relaxed mb-6">
-                    A potter in Iran put the sun at the centre of this bowl, ringed it with the
-                    signs of the heavens, and ringed that with the court. Everything that mattered
-                    on one surface, arranged by how the parts stood in relation to each other.
-                  </p>
-                  <p className="text-slate-500 leading-relaxed mb-8">
-                    It isn’t decoration — it’s a working diagram of a world. That’s what a Cosmos
-                    is: your contacts, calls and records drawn in one place, where the relationships
-                    between them are the whole point. Different century, same instinct.
-                  </p>
-                  <figcaption className="art-placard">
-                    <p className="eyebrow text-slate-500 mb-2">From the collection</p>
-                    <p className="text-sm text-vmNavy placard-title">
-                      Bowl with Courtly and Astrological Motifs
-                    </p>
-                    <p className="text-sm text-slate-500 mt-0.5">
-                      Central or Northern Iran, late 12th–early 13th century · mina’i ware
-                    </p>
-                    <p className="text-xs text-slate-500 mt-1.5">
-                      The Metropolitan Museum of Art · Public domain
-                    </p>
-                  </figcaption>
-                </Reveal>
-              </div>
-            </div>
           </div>
         </section>
 
@@ -421,7 +369,7 @@ const Home: React.FC = () => {
             <Reveal className="max-w-2xl mb-14">
               <Eyebrow className="text-accent mb-4">How people work with me</Eyebrow>
               <h2 className="text-3xl md:text-4xl font-serif text-vmNavy mb-5 leading-snug">
-                Start where the evidence is. Grow when it’s earned.
+                Start small. Expand when the numbers prove it.
               </h2>
               <p className="text-slate-500">
                 Two of these cost nothing. Most people start at $500 and expand only once the
@@ -621,7 +569,7 @@ const Home: React.FC = () => {
           <div className="max-w-4xl mx-auto px-6 text-center">
             <Reveal>
               <VineDivider className="mx-auto mb-12 text-accent" />
-              <h2 className="text-4xl md:text-5xl font-serif text-vmNavy mb-6 italic">Let’s find what your data could be doing.</h2>
+              <h2 className="text-4xl md:text-5xl font-serif text-vmNavy mb-6 italic">Let’s find where your business is leaking.</h2>
               <p className="text-lg text-slate-600 mb-3 max-w-2xl mx-auto">
                 In 30 minutes we’ll map where you’re losing money, what it would take to fix it, and
                 whether I’m the right person to build it with you.

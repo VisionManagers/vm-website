@@ -30,6 +30,7 @@ const TIERS = [
     desc: 'The top items from your Quick-Start, built: voice agents, automation, websites, data systems. Every build ships with a monthly report showing what it actually recovered — that report is how the next decision gets made.',
     includes: ['Fixed scope and price before work starts', 'VM Voice from $1,000 setup + $300–400/mo (Practice tier ~$2,500 + $750/mo)', 'Monthly recovered-revenue report', 'Training so your team runs it without us'],
     featured: true,
+    more: { to: '/expansion-os', label: 'Prefer to build it yourself, with guidance? Expansion OS — $7,500, six months' },
   },
   {
     name: 'AI Partner',
@@ -113,7 +114,7 @@ const Solutions: React.FC = () => {
         <section className="px-6 py-20 bg-vmCream">
           <div className="max-w-3xl mx-auto text-center">
             <Reveal>
-              <h2 className="text-3xl font-serif text-vmNavy mb-6">The expensive version of doing nothing</h2>
+              <h2 className="text-3xl font-serif text-vmNavy mb-6">What doing nothing actually costs</h2>
               <p className="text-slate-600 leading-relaxed text-lg">
                 Without an owner, AI shows up anyway: staff paste sensitive data into free chatbots,
                 vendors oversell tools nobody verifies, and pilots die quietly because nobody measured
@@ -138,9 +139,11 @@ const Solutions: React.FC = () => {
                   One workflow, deployed under the same discipline every engagement gets: find the
                   loss, map it, build it, measure it. Trusted to build for Emerald Health and Nexus Health ID.
                 </p>
+                {/* No written case study exists yet — claiming one costs more
+                    credibility than it buys (same ruling as the homepage). */}
                 <Link to="/ai-voice"
                   className="inline-flex items-center gap-2 text-vmNavy font-semibold hover:text-vmTeal transition-colors text-sm mt-6">
-                  Read the case study <ArrowRight className="w-4 h-4" />
+                  How the voice work is built <ArrowRight className="w-4 h-4" />
                 </Link>
               </ColumnFlank>
             </Reveal>
@@ -157,9 +160,14 @@ const Solutions: React.FC = () => {
                 Opportunity Snapshot</span> arrives in writing: your #1 opportunity, sized in dollars —
                 whether or not we ever work together.
               </p>
-              <Link to="/ai" className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-vmNavy hover:text-vmTeal transition-colors">
-                How the call works <ArrowRight className="w-4 h-4" />
-              </Link>
+              <div className="mt-4 flex flex-col sm:flex-row items-center justify-center gap-x-8 gap-y-2">
+                <Link to="/ai" className="inline-flex items-center gap-2 text-sm font-semibold text-vmNavy hover:text-vmTeal transition-colors">
+                  How the call works <ArrowRight className="w-4 h-4" />
+                </Link>
+                <Link to="/leak-audit" className="inline-flex items-center gap-2 text-sm font-semibold text-vmNavy hover:text-vmTeal transition-colors">
+                  Or run the twelve-leak audit on your own <ArrowRight className="w-4 h-4" />
+                </Link>
+              </div>
             </Reveal>
           </div>
         </section>
@@ -263,7 +271,7 @@ const Solutions: React.FC = () => {
           <div className="max-w-3xl mx-auto text-center">
             <Reveal>
               <Eyebrow className="text-accent mb-4">Who you’re working with</Eyebrow>
-              <h2 className="text-3xl font-serif text-vmNavy mb-6">Pattern recognition, earned the long way.</h2>
+              <h2 className="text-3xl font-serif text-vmNavy mb-6">Operator experience, research discipline.</h2>
               <p className="text-slate-600 leading-relaxed mb-8">
                 Sukh has run user research at Facebook and CVS Health, managed a 117-bed nursing home
                 through the height of COVID, grown an optometry practice 200% in ten months, and built
@@ -327,7 +335,7 @@ const Solutions: React.FC = () => {
           <div className="max-w-3xl mx-auto text-center">
             <Reveal>
               <VineDivider className="mx-auto mb-10 text-accent" />
-              <h2 className="text-4xl font-serif text-vmNavy mb-6 italic">Let’s find what your data could be doing.</h2>
+              <h2 className="text-4xl font-serif text-vmNavy mb-6 italic">Let’s find where your business is leaking.</h2>
               <p className="text-slate-600 mb-10 max-w-xl mx-auto">
                 Thirty minutes. We map where you’re losing money, what it would take to fix it, and
                 whether I’m the right person to build it with you. A working session, not a sales pitch.

@@ -59,7 +59,7 @@ const Partner: React.FC = () => {
               <h1 className="font-serif text-vmNavy text-[2.6rem] md:text-[4.2rem] leading-[1.06] mb-8 max-w-4xl">
                 Some businesses don’t need a project.
                 <br />
-                <span className="italic">They need a seat.</span>
+                <span className="italic">They need a standing partner.</span>
               </h1>
             </Reveal>
             <Reveal delay={160}>

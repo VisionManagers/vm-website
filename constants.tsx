@@ -21,25 +21,6 @@ export const BOOKING_URLS = {
   BOOK: "https://visionmanagers.com/book",
 };
 
-export const SOLUTIONS = [
-  {
-    title: "AI Guardrails",
-    who: "Clinics & Healthcare Practices",
-    replaces: "Missed calls, manual follow-ups, and fragmented booking",
-    includes: ["24/7 Voice Reception", "Auto-Reschedule Engine", "Insurance Verification"],
-    timeline: "14-Day Install",
-    description: "Start small with a pilot, then scale safely. We automate the friction so your staff can focus on the patient."
-  },
-  {
-    title: "Strategic Decision Layer",
-    who: "Multi-Location Practices",
-    replaces: "Organization-wide labor bottlenecks and reporting lag",
-    includes: ["Synthesis Engine", "Predictive Guardrails", "Safety Standards Monitoring"],
-    timeline: "90-Day Deployment",
-    description: "Deploy autonomous agents that adhere to your specific standards while improving response speed across all locations."
-  }
-];
-
 /* Testimonials.
    `sourceUrl` / `sourceLabel` are optional but strongly preferred: NN/g's
    research finds visitors discount on-site proof by default ("the website
