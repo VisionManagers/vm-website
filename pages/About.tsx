@@ -116,7 +116,7 @@ const About: React.FC = () => {
               <Reveal className="md:col-span-4">
                 <SectionNumber n="02" />
                 <h2 className="font-serif text-2xl md:text-3xl text-vmNavy mt-4 leading-snug">
-                  Why I call it a Cosmos.
+                  Why I start with a map.
                 </h2>
               </Reveal>
               <div className="md:col-span-8">
