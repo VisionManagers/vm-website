@@ -8,8 +8,44 @@ import {
 } from '../components/ornaments';
 import {
   ChevronRight, ArrowRight, ArrowUpRight,
-  Stethoscope, Rocket, Handshake, GraduationCap, Star,
+  Stethoscope, Hammer, Handshake, Star,
 } from 'lucide-react';
+import { LEAKS, CATEGORY_LABEL } from '../lib/leaks';
+import type { Category as LeakCategory } from '../lib/leaks';
+
+/* 60–90s founder story video (hook → authority → optometry story → the 12 leaks
+   → CTA → risk reversal). Set to e.g. '/videos/hero-story.mp4' once recorded —
+   the poster ships first so the layout doesn't wait on the asset, and no play
+   affordance renders until there is something to play. */
+const HERO_STORY_VIDEO = '';
+
+const HeroPoster: React.FC<{ className?: string }> = ({ className = '' }) => (
+  <figure className={className}>
+    {HERO_STORY_VIDEO ? (
+      <div className="rounded-sm overflow-hidden shadow-xl aspect-[4/5]">
+        <video
+          src={HERO_STORY_VIDEO}
+          poster="/images/vm/sukh-portrait.jpg"
+          autoPlay
+          muted
+          loop
+          playsInline
+          controls
+          className="w-full h-full object-cover"
+        />
+      </div>
+    ) : (
+      <div className="duotone-vm rounded-sm aspect-[4/5] shadow-xl">
+        <img src="/images/vm/sukh-portrait.jpg" alt="Sukhneet Virk, founder of Vision Managers" loading="eager" />
+      </div>
+    )}
+    <figcaption className="mt-3 text-xs text-slate-500 leading-snug">
+      Sukhneet Virk — the one person accountable for the result.
+    </figcaption>
+  </figure>
+);
+
+const LEAKS_NUMBERED = LEAKS.map((l, i) => ({ ...l, n: i + 1 }));
 
 /* Each step carries a plate from the age of scientific illustration — observe,
    map, construct, record. Ornament, not illustration: they're cropped to
@@ -67,11 +103,11 @@ const BUILDS = [
   },
   {
     title: 'Voice agents that answer and book',
-    desc: 'Every call answered, every hour, in your language — with the compliance posture healthcare demands. Strong capability. Rarely the first thing you need.',
+    desc: 'Every call answered, every hour, in your language — with the compliance posture healthcare demands. Whether it’s your first fix or your fifth is what the audit decides.',
   },
   {
     title: 'Vendor and spend audits',
-    desc: 'What you’re paying for phones, connectivity and services, re-quoted through my supplier lanes. You pay nothing — the supplier pays me.',
+    desc: 'What you’re paying for phones, connectivity and services, re-quoted through my supplier lanes. The audit is free — the supplier pays me — and any setup costs are quoted up front.',
   },
 ];
 
@@ -79,32 +115,46 @@ const BUILDS = [
    Rule 8: the website renders prices, it never defines them. */
 const LADDER = [
   { price: 'Free', name: 'The Leak Audit', desc: 'Twelve leaks, your numbers, on your own.', to: '/leak-audit' },
-  { price: '$0', name: 'Vendor & spend audit', desc: 'I re-quote what you already pay. The supplier pays me, not you.', to: '/solutions' },
+  { price: 'Free', name: 'Vendor & spend audit', desc: 'I re-quote what you already pay — my fee comes from the supplier. Setup costs, if any, quoted up front.', to: '/solutions' },
   { price: '$500', name: 'AI Quick-Start', desc: 'One week. Dollar math, and one fix already live.', to: '/solutions' },
   { price: '$7,500', name: 'Expansion OS', desc: 'Six months, eight seats. You build two systems with me.', to: '/expansion-os' },
   { price: '$5,000/mo', name: 'Strategic AI Partner', desc: 'A weekly seat and a named roadmap. The whole picture.', to: '/partner' },
 ];
 
-const AUDIENCES = [
+/* Three lanes, each in that owner's language, each pointing at the leak they
+   already feel. Replaces the flat industry list — the generic list is what made
+   a GC reading cold ask "what's your trade?" twice (Justin brief, 9/13).
+   Rule for these cards: no I-led sentences. */
+const LANES = [
   {
-    Icon: Rocket,
-    title: 'Founders & operators',
-    desc: 'You’re drowning in tools and tabs. I turn the scattered data your business already runs on into systems that compound.',
-  },
-  {
-    Icon: Handshake,
-    title: 'Partners & dealmakers',
-    desc: 'Relationships are data too. I map networks, surface the connections worth making, and structure the introductions that move deals.',
-  },
-  {
-    Icon: GraduationCap,
-    title: 'Teams that want it in-house',
-    desc: 'Hands-on training applied to your actual roles — from zero to working output in an afternoon, not a curriculum.',
+    Icon: Hammer,
+    title: 'Trades & home services',
+    lines: [
+      'Measurements in, formatted bids out — in your layout, not a generic one.',
+      'The call that rings Friday at 6pm sits until Monday — and the job goes to whoever answered.',
+    ],
+    to: '/leak-audit',
+    label: 'Run the trades numbers',
   },
   {
     Icon: Stethoscope,
-    title: 'Regulated and high-trust work',
-    desc: 'Clinics, and anyone whose first question is about compliance. HIPAA posture, BAAs, and data rules written before anything is deployed — the depth that makes the rest of this safe to buy.',
+    title: 'Clinics & practices',
+    lines: [
+      'After-hours calls go to voicemail — and the patient books with the next practice on the list.',
+      'Every call answered, with the compliance posture healthcare demands: $4,300 of appointments booked within days for one practice, no staff added.',
+    ],
+    to: '/ai-voice',
+    label: 'See the practice fixes',
+  },
+  {
+    Icon: Handshake,
+    title: 'Recruiting, agencies & professional services',
+    lines: [
+      'Follow-up that never happens. Reporting rebuilt by hand every month.',
+      'The process that lives in one person’s head — and walks out the door when they do.',
+    ],
+    to: '/leak-audit',
+    label: 'Run your numbers',
   },
 ];
 
@@ -113,7 +163,7 @@ const Home: React.FC = () => {
     <>
       <SEO
         title="Vision Managers — Find What Your Business Is Leaking"
-        description="Most businesses leak six figures a year and their owners can name two of the twelve places. I find where the money and the hours are going, then build the systems that close the gap — data, automation, knowledge, marketing, voice. AI is how it gets built, not the point."
+        description="Most businesses are leaking $100K+ a year — missed calls, follow-up that never happens, work still done by hand, knowledge trapped in one person's head. There are 12 places to check; most owners can name 2. See yours in your own numbers — free, no email needed."
         path="/"
         jsonLd={{
           '@context': 'https://schema.org',
@@ -169,13 +219,18 @@ const Home: React.FC = () => {
             </figcaption>
           </figure>
           <div className="max-w-7xl mx-auto px-6 w-full relative z-10">
+            <div className="lg:flex lg:items-center lg:gap-16">
             <div className="max-w-3xl">
               <Reveal>
                 <Eyebrow className="text-vmTeal mb-8">Vision Managers · systems that pay for themselves</Eyebrow>
               </Reveal>
               <Reveal delay={80}>
+                {/* "Most businesses", not "your business" (Sukh ruling 9/14): a claim
+                    about THE reader gets judged instantly — a "no" verdict opens with
+                    distrust. Population-level reads as true+surprising and makes them
+                    curious about their own number. $100K+ derivation: numbers-ledger.md. */}
                 <h1 className="font-serif text-vmNavy text-[2.6rem] md:text-[4.5rem] leading-[1.05] mb-8 text-balance">
-                  Most businesses are leaking six figures a year.
+                  Most businesses are leaking $100K+ a year.
                   <br />
                   <span className="italic text-[0.66em] leading-tight inline-block mt-4">
                     I find the leaks, then build the systems that close them.
@@ -183,10 +238,13 @@ const Home: React.FC = () => {
                 </h1>
               </Reveal>
               <Reveal delay={160}>
+                {/* The self-identification paragraph: names their problem so specifically
+                    they recognize themselves (Sukh ruling 9/14 — this beats a category
+                    statement; Justin was self-identifying line by line as he read). */}
                 <p className="text-lg md:text-xl text-slate-600 leading-relaxed max-w-2xl mb-10">
                   The money goes out through missed calls, follow-up that never happens, work still
-                  done by hand, and knowledge trapped in one person’s head. There are twelve places
-                  to check — most owners can name two. AI is how the fix gets built.{' '}
+                  done by hand, and knowledge trapped in one person’s head. There are 12 places to
+                  check — most owners can name 2. AI is how the fix gets built.{' '}
                   <em>It isn’t the point.</em>
                 </p>
               </Reveal>
@@ -201,21 +259,63 @@ const Home: React.FC = () => {
                     <ArrowRight className="w-4 h-4" />
                   </a>
                 </div>
+                {/* Risk reversal lives beside the primary CTA, not buried in step 04 */}
                 <p className="text-xs text-slate-500">
-                  Twelve leaks, your numbers, no call required. Or book a working session — not a
-                  sales pitch, and you leave with two concrete next steps.
-                </p>
-              </Reveal>
-
-              <Reveal className="mt-16 pt-8 hairline" delay={100}>
-                <p className="eyebrow text-slate-500">
-                  Working with <span className="text-vmNavy">recruiters</span> ·{' '}
-                  <span className="text-vmNavy">agencies</span> · <span className="text-vmNavy">law firms</span> ·{' '}
-                  <span className="text-vmNavy">clinics</span> · <span className="text-vmNavy">trades</span> ·{' '}
-                  <span className="text-vmNavy">founders</span>
+                  12 leaks, your numbers, no email required. And if we build: it shows up on your
+                  P&amp;L, or it doesn’t ship.
                 </p>
               </Reveal>
             </div>
+            {/* Poster removed 9/14 (Sukh: the arch artwork holds the space until the
+                60–90s video exists). To wire the video in: set HERO_STORY_VIDEO and
+                render <HeroPoster className="hidden lg:block w-72 shrink-0" /> here
+                plus a lg:hidden instance above the CTAs. */}
+            </div>
+          </div>
+        </section>
+
+        {/* ─── THE 12 PLACES — the leak map, right under the claim that names them.
+               Dollar ranges per leak wait on sourced figures (numbers-ledger.md);
+               names + symptoms ship now, the audit does the math in their numbers. ─── */}
+        <section className="py-20 bg-white border-t border-slate-100">
+          <div className="max-w-6xl mx-auto px-6">
+            {/* Names only — the full symptoms and math live on /leak-audit. A dense
+                text block right under the hero read as "a lot, all at once"
+                (Sukh 9/14); this is the visual shortcut, not the reference. */}
+            <Reveal className="max-w-2xl mb-10">
+              <Eyebrow className="text-accent mb-4">The 12 places</Eyebrow>
+              <h2 className="text-3xl md:text-4xl font-serif text-vmNavy mb-4 leading-snug">
+                Where the money goes.
+              </h2>
+              <p className="text-slate-500">
+                Tap any of them — the free audit runs the math in your own numbers, rounded down.
+              </p>
+            </Reveal>
+
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-8">
+              {(['A', 'B', 'C', 'D'] as LeakCategory[]).map((c) => (
+                <div key={c}>
+                  <p className="eyebrow text-slate-500 mb-3">{CATEGORY_LABEL[c]}</p>
+                  <ul className="space-y-2">
+                    {LEAKS_NUMBERED.filter((l) => l.category === c).map((l) => (
+                      <li key={l.id}>
+                        <Link to="/leak-audit"
+                          className="group inline-flex items-baseline gap-1.5 text-sm font-medium text-vmNavy hover:text-vmTeal transition-colors">
+                          <span className="text-accent tabular-nums text-xs">{String(l.n).padStart(2, '0')}</span>
+                          {l.name}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+
+            <Reveal className="mt-10">
+              <Link to="/leak-audit" className={buttonPrimary}>
+                Run your numbers — free <ChevronRight className="w-4 h-4" />
+              </Link>
+            </Reveal>
           </div>
         </section>
 
@@ -225,18 +325,20 @@ const Home: React.FC = () => {
             <Reveal className="text-center mb-14">
               <Eyebrow className="text-accent mb-4">Proof</Eyebrow>
               <h2 className="text-4xl md:text-5xl font-serif text-vmNavy leading-tight">
-                Trusted to build for
+                Built for Emerald Health —
                 <br />
-                <span className="italic">Emerald Health · Nexus Health ID.</span>
+                <span className="italic">and the practices whose phones we answer.</span>
               </h2>
             </Reveal>
 
             <Reveal className="max-w-2xl mx-auto text-center">
+              {/* $4,300 is a WIN with internal records behind it — use the number
+                  (numbers-ledger.md). Nexus removed sitewide per Sukh 9/14. */}
               <p className="text-slate-600 leading-relaxed mb-8">
-                And for the practices whose phones we answer. When a Seattle-area optometry
-                practice was losing after-hours calls to voicemail, we mapped where patients
-                were being lost and deployed a voice concierge that books straight into the
-                schedule — new patients on the books within days of going live, no staff added.
+                When a Seattle-area optometry practice was losing after-hours calls to voicemail,
+                we mapped where patients were being lost and deployed a voice agent that books
+                straight into the schedule — <strong className="text-vmNavy">$4,300 of booked
+                appointments within days of going live</strong>, no staff added.
               </p>
               {/* Was "Read the case study" → /ai-voice, where no case study exists.
                   Claiming one you don't have costs more credibility than it buys
@@ -347,16 +449,21 @@ const Home: React.FC = () => {
           <div className="max-w-7xl mx-auto px-6">
             <Reveal className="text-center mb-16 max-w-2xl mx-auto">
               <Eyebrow className="text-accent mb-4">Who it’s for</Eyebrow>
-              <h2 className="text-4xl md:text-5xl font-serif text-vmNavy mb-5">If it runs on data and relationships, it can run better.</h2>
-              <p className="text-slate-500">Healthcare is where it’s proven. It’s far from where it stops.</p>
+              <h2 className="text-4xl md:text-5xl font-serif text-vmNavy mb-5">Which one is you?</h2>
+              <p className="text-slate-500">Three kinds of businesses, the same 12 leaks — yours just leak in a different order.</p>
             </Reveal>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-              {AUDIENCES.map((a, i) => (
-                <Reveal key={a.title} delay={i * 80} className="p-8 bg-vmCream/70 border border-slate-100 rounded-sm flex flex-col">
-                  <a.Icon className="w-8 h-8 text-vmNavy mb-6" aria-hidden strokeWidth={1.4} />
-                  <h3 className="text-xl font-serif text-vmNavy mb-3">{a.title}</h3>
-                  <p className="text-sm text-slate-600 leading-relaxed">{a.desc}</p>
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+              {LANES.map((lane, i) => (
+                <Reveal key={lane.title} delay={i * 80} className="p-8 bg-vmCream/70 border border-slate-100 rounded-sm flex flex-col">
+                  <lane.Icon className="w-8 h-8 text-vmNavy mb-6" aria-hidden strokeWidth={1.4} />
+                  <h3 className="text-xl font-serif text-vmNavy mb-4">{lane.title}</h3>
+                  {lane.lines.map((line) => (
+                    <p key={line} className="text-sm text-slate-600 leading-relaxed mb-3">{line}</p>
+                  ))}
+                  <Link to={lane.to} className="mt-auto pt-3 inline-flex items-center gap-2 text-sm font-semibold text-vmNavy hover:text-vmTeal transition-colors">
+                    {lane.label} <ArrowRight className="w-4 h-4" />
+                  </Link>
                 </Reveal>
               ))}
             </div>
@@ -453,7 +560,7 @@ const Home: React.FC = () => {
               <h2 className="text-4xl font-serif text-vmNavy">From the people who’ve worked with me.</h2>
             </Reveal>
 
-            <div className="grid md:grid-cols-3 gap-8">
+            <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
               {TESTIMONIALS.map((t, i) => (
                 <Reveal key={t.name} delay={i * 100} className="p-10 bg-white rounded-sm border border-slate-100 flex flex-col">
                   <div className="flex gap-1 mb-6" aria-label="5 star review">
@@ -501,15 +608,16 @@ const Home: React.FC = () => {
               <div className="absolute inset-0 bg-gradient-to-r from-vmNavy via-vmNavy/88 to-vmNavy/25" />
               <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8 p-10 md:p-12">
                 <div>
-                  <Eyebrow className="text-vmMarigold mb-3">Every Wednesday</Eyebrow>
+                  <Eyebrow className="text-vmMarigold mb-3">Season 2 · starts Sept 30</Eyebrow>
                   <h3 className="text-2xl font-serif text-white mb-2">Casual Intelligence</h3>
                   <p className="text-white/60 text-sm max-w-md leading-relaxed">
-                    A weekly roundtable where operators show how they actually use AI — live builds,
-                    real workflows, no sales pitches. Free to attend.
+                    The Wednesday roundtable where operators show the systems they actually run —
+                    live builds, real numbers, no pitches. Season 2 is a founding membership:
+                    $79/mo, first ten seats locked for life.
                   </p>
                 </div>
                 <Link to="/ci" className={buttonTealOnNavy}>
-                  Join the roundtable <ArrowRight className="w-4 h-4" />
+                  See Season 2 <ArrowRight className="w-4 h-4" />
                 </Link>
               </div>
             </Reveal>

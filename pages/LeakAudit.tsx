@@ -49,7 +49,7 @@ const CATEGORIES: Category[] = [
         n: 2,
         name: 'The Speed Leak',
         reality:
-          'Responding to a lead within 5 minutes vs. 30 makes you dramatically more likely to reach and qualify them (MIT/InsideSales research). After an hour, the odds collapse.',
+          'Responding to a lead within 5 minutes vs. 30 makes you dramatically more likely to reach and qualify them (Oldroyd Lead Response Management study, MIT/InsideSales). After an hour, the odds collapse.',
         questions: [
           'A form comes in Saturday 9am — when does a human respond?',
           'What happened to last month’s unreturned inquiries?',

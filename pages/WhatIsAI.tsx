@@ -191,7 +191,8 @@ const WhatIsAI: React.FC = () => {
                 <Link to="/ci" className="block border border-slate-200/70 rounded-sm p-6 hover:border-vmLeaf/60 transition-colors">
                   <h4 className="font-serif text-lg">Join the room</h4>
                   <p className="mt-2 text-sm text-vmNavy/65 leading-relaxed">
-                    Casual Intelligence, Wednesdays. Free, casual, real conversations about using AI well.
+                    Casual Intelligence, Wednesdays. Real conversations about using AI well —
+                    Season 2 founding seats open now.
                   </p>
                 </Link>
               </Reveal>

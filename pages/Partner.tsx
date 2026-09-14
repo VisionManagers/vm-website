@@ -231,7 +231,7 @@ const Partner: React.FC = () => {
             <Reveal>
               <Eyebrow className="text-accent mb-5">Proof</Eyebrow>
               <h2 className="text-3xl md:text-4xl font-serif text-vmNavy mb-8 leading-snug">
-                Built for <span className="italic">Emerald Health · Nexus Health ID.</span>
+                Built for <span className="italic">Emerald Health.</span>
               </h2>
               <p className="text-slate-600 leading-relaxed mb-6">
                 The seat isn’t theoretical — it’s how the deepest engagements already run. They
