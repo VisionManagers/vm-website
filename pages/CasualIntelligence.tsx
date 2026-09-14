@@ -42,7 +42,7 @@ const CasualIntelligence: React.FC = () => {
     <>
     <SEO
       title="Casual Intelligence — Weekly AI Roundtable"
-      description="A free weekly roundtable where operators show how they actually use AI — live builds, real workflows, no sales pitches. Wednesdays, hosted by Vision Managers."
+      description="The weekly roundtable where operators show how they actually use AI — live builds, real workflows, no sales pitches. Season 2 starts Sept 30: founding membership $79/mo, first ten seats locked for life. Wednesdays, hosted by Vision Managers."
       path="/ci"
       jsonLd={{
         '@context': 'https://schema.org',
@@ -64,14 +64,18 @@ const CasualIntelligence: React.FC = () => {
         <div className="relative max-w-3xl mx-auto px-6 text-center">
           <Reveal>
             <LotusMark className="w-14 mx-auto mb-8 text-accent" />
-            <Eyebrow className="text-accent mb-6">Wednesdays · one hour · free</Eyebrow>
+            <Eyebrow className="text-accent mb-6">Season 2 · Wednesdays · starts Sept 30</Eyebrow>
             <h1 className="font-serif text-vmNavy text-4xl md:text-6xl leading-[1.08] mb-8">
               Casual Intelligence.
             </h1>
-            <p className="text-lg md:text-xl text-slate-600 leading-relaxed mb-10 max-w-xl mx-auto">
+            <p className="text-lg md:text-xl text-slate-600 leading-relaxed mb-6 max-w-xl mx-auto">
               Every Wednesday, one operator opens up a system they actually run
               and shows the room how it works. Real builds, honest numbers, no
               pitches. You leave with something to try before Friday.
+            </p>
+            <p className="text-slate-600 mb-10 max-w-xl mx-auto">
+              Season 2 is a founding membership: <strong className="text-vmNavy">$79/mo — the
+              first ten seats keep that rate for life.</strong>
             </p>
             <div className="flex flex-col items-center justify-center gap-3">
               <a href="#upcoming" className={buttonPrimary}>
