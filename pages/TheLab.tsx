@@ -27,6 +27,11 @@ const CASE_STUDIES: CaseStudy[] = [];
 /* Honest pipeline — things being grown right now. No fake proof. */
 const GREENHOUSE = [
   {
+    title: 'PhoenixLog',
+    desc: 'The founder’s own self-tracking system — 2,000+ days of daily data and counting — being shaped into a tool coaches run with clients: a one-minute check-in from the client’s phone, digested by AI into a one-page brief before each session. Walk in knowing, not guessing.',
+    status: 'Built · in validation',
+  },
+  {
     title: 'AI Readiness Score',
     desc: 'An 8-question assessment that scores how prepared your practice is for AI — and exactly where the gaps are.',
     status: 'In development',

@@ -9,7 +9,7 @@ Every new figure added to the site gets a row here first.
 
 | Figure | Where on site | Type | Source / derivation |
 |---|---|---|---|
-| **$100K+ leaking per year** | Home hero, meta description | Claim (derived) | Conservative composite of the leak math the audit itself runs: the Owner-Hours leak alone (10–15 hrs/wk of delegatable owner work × ~$200/hr effective × 50 wks ≈ $100–150K) reaches it without the other eleven; phone + follow-up + stale-list leaks compound it. Framed as the population-level pattern the audit tests against the reader's own numbers, rounded down. Vault: `10-Strategy/offers/leak-audit.md`. |
+| **$100K+ leaking per year** | Home hero, meta description | Claim (derived) | Conservative composite of the leak math the audit itself runs: the Owner-Hours leak alone (10–15 hrs/wk of delegatable owner work × ~$200/hr effective × 50 wks ≈ $100–150K) reaches it without the other eleven; phone + follow-up + stale-list leaks compound it. **Framing rule (Sukh 9/14): always "Most businesses…", never "Your business…"** — a claim about the reader gets judged instantly and a "no" opens with distrust; population-level reads as true + surprising and the audit tests it against their own numbers. Vault: `10-Strategy/offers/leak-audit.md`. |
 | **2 of the 12 places** | Home hero, LeakAudit hero | Claim (positioning) | The 12-leak taxonomy (`10-Strategy/offers/leak-audit.md` v2); "owners can name two" is the observed pattern across discovery calls — positioning language, not a measured statistic, and never presented with a % or citation. |
 | **$4,300 booked within days · 5 appointments · 2 days live** | Home proof, AIVoice proof, Solutions pull-quote, Partner proof | **WIN** | Advanced Eyecare Solutions voice agent ("Jessica") deployment, Aug 2026 — internal booking records; canonical entry in vault `80-Content/proof-library.md` §B. 5 appointments × avg visit value ≥ $4,300 total, first 2 days live. Say "within days," never "first week." |
 | **~38% of calls live-answered by small businesses** | LeakAudit (Phone Leak) | STAT | 411 Locals study of SMB call answering. |
@@ -33,6 +33,21 @@ Every new figure added to the site gets a row here first.
 | **$120,000 contract won with an AI-built proposal (Nate, electrician)** | WIN with permission GRANTED — but only in the corrected telling (`80-Content/proof-library.md` §B, correction of 2026-09-11: no "underbid by 30%" claim, no "4 hrs saved per estimate") | Already usable; not yet placed on the site. Candidate for the trades lane. Credit for the win goes to him, out loud. |
 | **Bid bot: 40-hour estimate → 1 day** (Justin, GC — "40 hours to put together a $100k estimate") | BUILD — engagement forming 9/13; nothing delivered | Never present as a result until delivered and measured. The 40-hour figure is his description of his current process (VoC), usable as pain language with no outcome attached. |
 | **11 appointment requests in ~28 hrs (AES)** | WIN with caveat — 6 of 11 captured no patient name (call volume, not bookings) | Usable only with the caveat attached; currently kept off the site in favor of the clean $4,300 figure. |
+
+## Added 2026-09-14 (testimonial swap — permissioned entries only)
+
+| Figure | Where | Type | Source |
+|---|---|---|---|
+| **$120,000 contract (Nate)** | Home testimonial card title | WIN (client's own result, honest credit) | proof-library §B, permission GRANTED for name + profession, corrected telling of 9/10-11 — he won it; AI helped him build the proposal. Quote joins marked with ellipsis. |
+| **"13 to 15 months → did it in two" (David V)** | Home testimonial quote | Client's own claim, on recorded video | proof-library §A, permission GRANTED ("Make me look good"), Zoom cloud recording 8/31. |
+| **2,000+ days of tracking data (PhoenixLog)** | The Lab greenhouse | Internal dataset, labeled in-progress | Founder's own daily tracking corpus; productization = Client Pulse (landing-page-factory, stage-6 built, deploy-gated). Never presented as a client outcome. |
+
+## Removed / corrected on 2026-09-14
+
+- Nexus Health ID removed sitewide (Sukh: not being built — don't talk about it).
+- Bland Alignable testimonial trio (Kymm/Melissa/Devin) → replaced by the two GRANTED entries above; Piilani reserved as third pending her queued permission ask (late-Sept call).
+- Hero subhead reverted to the self-identification paragraph (with numerals); leak map compacted to names-only.
+- ⚠️ Justin's 9/13 call is not in Granola (searched 9/12–9/15) — his VoC verbatims remain brief-sourced until the recording syncs.
 
 ## Removed / corrected on 2026-09-13
 

@@ -137,8 +137,7 @@ const Solutions: React.FC = () => {
                 <p className="eyebrow text-slate-500">Voice AI pilot · Seattle-area optometry practice</p>
                 <p className="text-sm text-slate-500 mt-4 max-w-md mx-auto">
                   One workflow, deployed under the same discipline every engagement gets: find the
-                  loss, map it, build it, measure it. Built for Emerald Health — and for our own
-                  venture, Nexus Health ID.
+                  loss, map it, build it, measure it. Built for Emerald Health.
                 </p>
                 {/* No written case study exists yet — claiming one costs more
                     credibility than it buys (same ruling as the homepage). */}
