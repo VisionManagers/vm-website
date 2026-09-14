@@ -71,7 +71,7 @@ const BUILDS = [
   },
   {
     title: 'Vendor and spend audits',
-    desc: 'What you’re paying for phones, connectivity and services, re-quoted through my supplier lanes. You pay nothing — the supplier pays me.',
+    desc: 'What you’re paying for phones, connectivity and services, re-quoted through my supplier lanes. The audit is free — the supplier pays me — and any setup costs are quoted up front.',
   },
 ];
 
@@ -79,7 +79,7 @@ const BUILDS = [
    Rule 8: the website renders prices, it never defines them. */
 const LADDER = [
   { price: 'Free', name: 'The Leak Audit', desc: 'Twelve leaks, your numbers, on your own.', to: '/leak-audit' },
-  { price: '$0', name: 'Vendor & spend audit', desc: 'I re-quote what you already pay. The supplier pays me, not you.', to: '/solutions' },
+  { price: 'Free', name: 'Vendor & spend audit', desc: 'I re-quote what you already pay — my fee comes from the supplier. Setup costs, if any, quoted up front.', to: '/solutions' },
   { price: '$500', name: 'AI Quick-Start', desc: 'One week. Dollar math, and one fix already live.', to: '/solutions' },
   { price: '$7,500', name: 'Expansion OS', desc: 'Six months, eight seats. You build two systems with me.', to: '/expansion-os' },
   { price: '$5,000/mo', name: 'Strategic AI Partner', desc: 'A weekly seat and a named roadmap. The whole picture.', to: '/partner' },
