@@ -212,10 +212,7 @@ const Home: React.FC = () => {
               alt="Hubert Robert, The Return of the Cattle, about 1773 — warm evening light through a great stone arch, with people and their cattle settling in for the evening beneath it."
               loading="eager"
             />
-            {/* Caption hidden while the founder poster/video occupies this zone —
-                two captions stacked in the same corner read as noise. The arch
-                stays as ground; restore the placard if the poster ever moves. */}
-            <figcaption className="hero-art-caption hidden">
+            <figcaption className="hero-art-caption">
               <span className="placard-title">The Return of the Cattle</span> · Hubert Robert,
               c. 1773 — someone built the arch. Centuries on, people still live their evenings
               beneath it without once thinking about it. The best systems end up invisible.
@@ -251,9 +248,6 @@ const Home: React.FC = () => {
                   <em>It isn’t the point.</em>
                 </p>
               </Reveal>
-              <Reveal delay={200} className="lg:hidden mb-10">
-                <HeroPoster className="w-52" />
-              </Reveal>
               <Reveal delay={240}>
                 <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5 mb-5">
                   <Link to="/leak-audit" className={buttonPrimary}>
@@ -272,9 +266,10 @@ const Home: React.FC = () => {
                 </p>
               </Reveal>
             </div>
-            <Reveal delay={300} className="hidden lg:block shrink-0">
-              <HeroPoster className="w-72" />
-            </Reveal>
+            {/* Poster removed 9/14 (Sukh: the arch artwork holds the space until the
+                60–90s video exists). To wire the video in: set HERO_STORY_VIDEO and
+                render <HeroPoster className="hidden lg:block w-72 shrink-0" /> here
+                plus a lg:hidden instance above the CTAs. */}
             </div>
           </div>
         </section>
