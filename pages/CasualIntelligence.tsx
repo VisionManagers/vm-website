@@ -244,12 +244,15 @@ const CasualIntelligence: React.FC = () => {
               />
               <div className="text-center md:text-left">
                 <Eyebrow className="text-accent mb-4">Why this room exists</Eyebrow>
+                {/* Suk's real words, from session transcripts (May 11 + May 27, 2026) —
+                    joined with an ellipsis, never rewritten. Provenance:
+                    vault 45-Casual-Intelligence/room-quotes.md. */}
                 <p className="text-slate-600 leading-relaxed mb-4">
-                  "The most useful AI advice I ever got came from another operator
-                  showing me their screen. Not a feed, not a keynote. A screen share
-                  and an honest 'here's what broke.' So that's the whole format.
-                  And the no-pitching rule applies to me too: Vision Managers
-                  doesn't sell from this room."
+                  "I joined a few other people's meetings and very much felt like cult of
+                  personality — like, I'm here to tell you stuff. I kind of framed it as
+                  just an open place to talk. And I just invited people I liked&hellip;
+                  This isn't just a place where we want to gas each other up. This is a
+                  place to challenge ideas and push back as well."
                 </p>
                 <p className="text-sm text-vmNavy font-semibold">Sukhneet Virk</p>
                 <p className="text-xs text-slate-500">Host · Vision Managers</p>
