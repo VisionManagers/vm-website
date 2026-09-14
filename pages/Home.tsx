@@ -133,8 +133,8 @@ const LANES = [
       'Measurements in, formatted bids out — in your layout, not a generic one.',
       'The call that rings Friday at 6pm sits until Monday — and the job goes to whoever answered.',
     ],
-    to: '/solutions',
-    label: 'See the trades fixes',
+    to: '/leak-audit',
+    label: 'Run the trades numbers',
   },
   {
     Icon: Stethoscope,
@@ -153,8 +153,8 @@ const LANES = [
       'Follow-up that never happens. Reporting rebuilt by hand every month.',
       'The process that lives in one person’s head — and walks out the door when they do.',
     ],
-    to: '/solutions',
-    label: 'See the office fixes',
+    to: '/leak-audit',
+    label: 'Run your numbers',
   },
 ];
 
@@ -163,7 +163,7 @@ const Home: React.FC = () => {
     <>
       <SEO
         title="Vision Managers — Find What Your Business Is Leaking"
-        description="Your business is leaking $100K+ a year — missed calls, dead follow-up, manual work, knowledge stuck in one head. You can name 2 of the 12 places; see the other 10 in your own numbers, free, no email needed. AI phone answering, bid automation, and back-office systems for owner-run service businesses."
+        description="Most businesses are leaking $100K+ a year — missed calls, follow-up that never happens, work still done by hand, knowledge trapped in one person's head. There are 12 places to check; most owners can name 2. See yours in your own numbers — free, no email needed."
         path="/"
         jsonLd={{
           '@context': 'https://schema.org',
@@ -228,21 +228,27 @@ const Home: React.FC = () => {
                 <Eyebrow className="text-vmTeal mb-8">Vision Managers · systems that pay for themselves</Eyebrow>
               </Reveal>
               <Reveal delay={80}>
-                {/* You-voice, numerals, dollar figure — the reader is the subject
-                    (Justin brief 9/13). Derivation of $100K+ lives in numbers-ledger.md. */}
+                {/* "Most businesses", not "your business" (Sukh ruling 9/14): a claim
+                    about THE reader gets judged instantly — a "no" verdict opens with
+                    distrust. Population-level reads as true+surprising and makes them
+                    curious about their own number. $100K+ derivation: numbers-ledger.md. */}
                 <h1 className="font-serif text-vmNavy text-[2.6rem] md:text-[4.5rem] leading-[1.05] mb-8 text-balance">
-                  Your business is leaking $100K+ a year.
+                  Most businesses are leaking $100K+ a year.
                   <br />
                   <span className="italic text-[0.66em] leading-tight inline-block mt-4">
-                    You can name 2 of the 12 places. Here are the other 10.
+                    I find the leaks, then build the systems that close them.
                   </span>
                 </h1>
               </Reveal>
               <Reveal delay={160}>
-                {/* Category subhead — so a GC can file this in five seconds. Two lines, no more. */}
+                {/* The self-identification paragraph: names their problem so specifically
+                    they recognize themselves (Sukh ruling 9/14 — this beats a category
+                    statement; Justin was self-identifying line by line as he read). */}
                 <p className="text-lg md:text-xl text-slate-600 leading-relaxed max-w-2xl mb-10">
-                  AI phone answering, estimate &amp; bid automation, and back-office systems for
-                  owner-run service businesses. AI is how it gets built — <em>it isn’t the point.</em>
+                  The money goes out through missed calls, follow-up that never happens, work still
+                  done by hand, and knowledge trapped in one person’s head. There are 12 places to
+                  check — most owners can name 2. AI is how the fix gets built.{' '}
+                  <em>It isn’t the point.</em>
                 </p>
               </Reveal>
               <Reveal delay={200} className="lg:hidden mb-10">
@@ -278,30 +284,30 @@ const Home: React.FC = () => {
                names + symptoms ship now, the audit does the math in their numbers. ─── */}
         <section className="py-20 bg-white border-t border-slate-100">
           <div className="max-w-6xl mx-auto px-6">
-            <Reveal className="max-w-2xl mb-12">
+            {/* Names only — the full symptoms and math live on /leak-audit. A dense
+                text block right under the hero read as "a lot, all at once"
+                (Sukh 9/14); this is the visual shortcut, not the reference. */}
+            <Reveal className="max-w-2xl mb-10">
               <Eyebrow className="text-accent mb-4">The 12 places</Eyebrow>
               <h2 className="text-3xl md:text-4xl font-serif text-vmNavy mb-4 leading-snug">
-                Where your money goes.
+                Where the money goes.
               </h2>
               <p className="text-slate-500">
-                Pick the ones that already bother you — the free audit runs the math in your own
-                numbers, rounded down.
+                Tap any of them — the free audit runs the math in your own numbers, rounded down.
               </p>
             </Reveal>
 
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-10">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-8">
               {(['A', 'B', 'C', 'D'] as LeakCategory[]).map((c) => (
                 <div key={c}>
-                  <p className="eyebrow text-slate-500 mb-4">{CATEGORY_LABEL[c]}</p>
-                  <ul className="space-y-4">
+                  <p className="eyebrow text-slate-500 mb-3">{CATEGORY_LABEL[c]}</p>
+                  <ul className="space-y-2">
                     {LEAKS_NUMBERED.filter((l) => l.category === c).map((l) => (
                       <li key={l.id}>
-                        <Link to="/leak-audit" className="group block">
-                          <span className="block text-sm font-semibold text-vmNavy group-hover:text-vmTeal transition-colors">
-                            <span className="text-accent tabular-nums mr-1.5">{String(l.n).padStart(2, '0')}</span>
-                            {l.name}
-                          </span>
-                          <span className="block text-xs text-slate-500 leading-snug mt-1">{l.symptom}</span>
+                        <Link to="/leak-audit"
+                          className="group inline-flex items-baseline gap-1.5 text-sm font-medium text-vmNavy hover:text-vmTeal transition-colors">
+                          <span className="text-accent tabular-nums text-xs">{String(l.n).padStart(2, '0')}</span>
+                          {l.name}
                         </Link>
                       </li>
                     ))}
@@ -310,7 +316,7 @@ const Home: React.FC = () => {
               ))}
             </div>
 
-            <Reveal className="mt-12">
+            <Reveal className="mt-10">
               <Link to="/leak-audit" className={buttonPrimary}>
                 Run your numbers — free <ChevronRight className="w-4 h-4" />
               </Link>
@@ -332,14 +338,12 @@ const Home: React.FC = () => {
 
             <Reveal className="max-w-2xl mx-auto text-center">
               {/* $4,300 is a WIN with internal records behind it — use the number
-                  (numbers-ledger.md). Nexus is our own venture, labeled as such:
-                  a diligent buyer who checks reads an unlabeled logo as padding. */}
+                  (numbers-ledger.md). Nexus removed sitewide per Sukh 9/14. */}
               <p className="text-slate-600 leading-relaxed mb-8">
                 When a Seattle-area optometry practice was losing after-hours calls to voicemail,
                 we mapped where patients were being lost and deployed a voice agent that books
                 straight into the schedule — <strong className="text-vmNavy">$4,300 of booked
-                appointments within days of going live</strong>, no staff added. The same builds
-                run our own health-records venture, Nexus Health ID.
+                appointments within days of going live</strong>, no staff added.
               </p>
               {/* Was "Read the case study" → /ai-voice, where no case study exists.
                   Claiming one you don't have costs more credibility than it buys
@@ -561,7 +565,7 @@ const Home: React.FC = () => {
               <h2 className="text-4xl font-serif text-vmNavy">From the people who’ve worked with me.</h2>
             </Reveal>
 
-            <div className="grid md:grid-cols-3 gap-8">
+            <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
               {TESTIMONIALS.map((t, i) => (
                 <Reveal key={t.name} delay={i * 100} className="p-10 bg-white rounded-sm border border-slate-100 flex flex-col">
                   <div className="flex gap-1 mb-6" aria-label="5 star review">

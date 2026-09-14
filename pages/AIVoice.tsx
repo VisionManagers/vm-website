@@ -315,8 +315,8 @@ const AIVoice: React.FC = () => {
 
             <Reveal className="mt-12 text-center">
               <p className="eyebrow text-slate-500">
-                Built for <span className="text-vmNavy">Emerald Health</span> · and our own{' '}
-                <span className="text-vmNavy">Nexus Health ID</span>
+                Built for <span className="text-vmNavy">Emerald Health</span> — and the practices
+                whose phones we answer
               </p>
             </Reveal>
           </div>
