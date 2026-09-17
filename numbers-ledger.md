@@ -25,6 +25,16 @@ Every new figure added to the site gets a row here first.
 | **117-bed nursing home through COVID · research shaping experiences for 1M+ monthly users (Facebook, CVS Health)** | About, Solutions | Biography | Sukh's employment/operating history. |
 | **8 Quick-Starts per month capacity** | (available, not currently rendered) | True capacity | Sukh 9/1 (`offer-ladder.md` Rung 1): "sayable while it stays true; if the calendar changes, update the ladder FIRST, then the words." Honest-urgency candidate for Solutions. |
 
+## Added 2026-09-17 (Wolf & Wolf case study — Lab card + Home proof paragraph + Home testimonial)
+
+| Figure | Where | Type | Source |
+|---|---|---|---|
+| **745 bids read end to end (2023–2026)** | Lab case-study metric, Home proof paragraph | Build fact (ours) | `wolf-bid-tool/RULES.md` + README — the measured corpus. (The vault's earlier "750" was the Dropbox file count; 745 is the bid count. Corrected in proof-library 9/17.) Client cleared the number for public use on the 9/17 recording. |
+| **4.7% median pricing error across 80 of his roof bids (199 priced lines), +0.0% signed median** | Lab case-study results | Build fact (ours, verifiable) | Validation run during the build, 9/13 — `wolf-bid-tool` calculator vs his own sent bids; proof-library §B. |
+| **10–15 min per roof bid · up to 1 hr complicated · 5–8 bids/week** | Lab challenge, Home proof paragraph | Client's own BEFORE (VoC) | Chris Wolf, 9/17 recording, asked "for my own records." Usable as pain language; **no time-saved claim until his after-number lands (check-in 9/24).** |
+| **20-minute walkthrough; first bid built live** | Lab results | Observed on the call | Granola 9/17 (~20 min); Test 1 (Alan Wong roof) built and downloaded on-screen. |
+| **Chris Wolf testimonial (verbatim)** | Home testimonial card (third), Lab results | Client quote, permission GRANTED (name + company) | 9/17 recording: "Absolutely" to website use + "I'll say this explicitly for your customer reviews…" — proof-library §A. |
+
 ## PENDING — real, not yet allowed on the site
 
 | Figure | Status | Converts to WIN when |
@@ -32,6 +42,7 @@ Every new figure added to the site gets a row here first.
 | **~$14K/yr vendor savings** (Alliance West: $6,000/yr phones, 54% cut + ~$8,000/yr AI service) | Verbal YES on both quotes (9/1); client away until 9/18; review call w/ decision-makers late Sept; switch not executed | The switch closes and first invoices confirm the delta. Until then it may be described in conversation as "found," never on the site as "saved." |
 | **$120,000 contract won with an AI-built proposal (Nate, electrician)** | WIN with permission GRANTED — but only in the corrected telling (`80-Content/proof-library.md` §B, correction of 2026-09-11: no "underbid by 30%" claim, no "4 hrs saved per estimate") | Already usable; not yet placed on the site. Candidate for the trades lane. Credit for the win goes to him, out loud. |
 | **Bid bot: 40-hour estimate → 1 day** (Justin, GC — "40 hours to put together a $100k estimate") | BUILD — engagement forming 9/13; nothing delivered | Never present as a result until delivered and measured. The 40-hour figure is his description of his current process (VoC), usable as pain language with no outcome attached. |
+| **Wolf & Wolf time saved per bid** | Delivered 9/17; baseline banked; after-number not collected | Chris reports minutes on real bids (check-in 9/24). Until then the card says what was built and what he said, not what it saved. |
 | **11 appointment requests in ~28 hrs (AES)** | WIN with caveat — 6 of 11 captured no patient name (call volume, not bookings) | Usable only with the caveat attached; currently kept off the site in favor of the clean $4,300 figure. |
 
 ## Added 2026-09-14 (testimonial swap — permissioned entries only)

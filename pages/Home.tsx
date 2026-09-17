@@ -299,6 +299,20 @@ const Home: React.FC = () => {
                 className="inline-flex items-center gap-2 text-vmNavy font-semibold hover:text-vmTeal transition-colors text-sm">
                 How the voice work is built <ArrowRight className="w-4 h-4" />
               </Link>
+              {/* Second proof, trades lane. Every figure here is in numbers-ledger.md;
+                  permission GRANTED on the recording (proof-library §A/§B, 9/17). The
+                  time-saved number is deliberately absent — not collected yet. */}
+              <p className="text-slate-600 leading-relaxed mt-10 mb-8">
+                And when an Eastside roofing contractor was typing every bid by hand — ten to
+                fifteen minutes for a roof, up to an hour for the complicated ones — we read all
+                745 of his bids and rebuilt his estimating inside his own ChatGPT.{' '}
+                <strong className="text-vmNavy">His first bid came out in the walkthrough</strong>,
+                in his own format, off his own rates.
+              </p>
+              <Link to="/lab#case-studies"
+                className="inline-flex items-center gap-2 text-vmNavy font-semibold hover:text-vmTeal transition-colors text-sm">
+                Read the bid-writer case study <ArrowRight className="w-4 h-4" />
+              </Link>
             </Reveal>
           </div>
         </section>
@@ -511,7 +525,7 @@ const Home: React.FC = () => {
               <h2 className="text-4xl font-serif text-vmNavy">From the people who’ve worked with me.</h2>
             </Reveal>
 
-            <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
               {TESTIMONIALS.map((t, i) => (
                 <Reveal key={t.name} delay={i * 100} className="p-10 bg-white rounded-sm border border-slate-100 flex flex-col">
                   <div className="flex gap-1 mb-6" aria-label="5 star review">
