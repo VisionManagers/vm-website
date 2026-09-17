@@ -22,7 +22,28 @@ import type { CaseStudy } from '../types';
 //   metric: 'The headline number (e.g. "$4,300+", "87%", "5")',
 //   metricLabel: 'Short label for the metric (e.g. "Revenue Booked Week One")',
 // }
-const CASE_STUDIES: CaseStudy[] = [];
+const CASE_STUDIES: CaseStudy[] = [
+  {
+    // Wolf & Wolf bid writer — delivered 2026-09-17. Permission GRANTED (name +
+    // company + bid count) on the recording; every number is in numbers-ledger.md.
+    // No time-saved claim: his after-number isn't collected yet (check-in 9/24).
+    id: 'wolf-and-wolf-bid-writer',
+    title: 'A bid writer built from 745 of his own bids',
+    client: 'Chris Wolf, Wolf & Wolf — Eastside, WA',
+    industry: 'Roofing & exteriors',
+    challenge:
+      'Every bid was typed by hand in Word: ten to fifteen minutes for a roof, up to an hour for the complicated ones, five to eight a week. ChatGPT and Copilot had both broken his formatting, so he’d stopped booking jobs on the spot.',
+    solution:
+      'Read all 745 of his bids from 2023–2026, rebuilt his estimating on his own rate card, and installed it inside his own ChatGPT. It shows the arithmetic first, refuses to price anything it has no rate for, and hands back a Word bid in his house format.',
+    results: [
+      'Pricing checked against 80 of his own roof bids: 4.7% median error, no lean high or low',
+      'Installed in a 20-minute walkthrough with him driving; the first bid built live from a two-line description',
+      '“This was a very easy process. I’m impressed with your professionalism and I’m excited to use my new AI helper.”',
+    ],
+    metric: '745',
+    metricLabel: 'of his bids, read end to end',
+  },
+];
 
 /* Honest pipeline — things being grown right now. No fake proof. */
 const GREENHOUSE = [
@@ -153,7 +174,7 @@ const TheLab: React.FC = () => {
 
           {/* Case Studies — renders only when real case studies exist */}
           {CASE_STUDIES.length > 0 && (
-          <section>
+          <section id="case-studies" className="scroll-mt-28">
             <Reveal className="text-center mb-16">
               <Eyebrow className="text-accent mb-4">Proven results</Eyebrow>
               <h2 className="text-4xl font-serif text-vmNavy mb-4">Case Studies</h2>

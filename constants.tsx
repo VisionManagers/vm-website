@@ -41,4 +41,13 @@ export const TESTIMONIALS = [
     sourceUrl: "",
     sourceLabel: "",
   },
+  {
+    // Said on the hand-over call, 2026-09-17, after he asked to pay his balance.
+    // Permission GRANTED (name + company) on the recording — proof-library §A.
+    name: "Chris Wolf",
+    title: "Owner, Wolf & Wolf — roofing & exteriors contractor",
+    quote: "This was a very easy process. I'm impressed with your professionalism and I'm excited to use my new AI helper.",
+    sourceUrl: "",
+    sourceLabel: "",
+  },
 ];
