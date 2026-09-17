@@ -10,8 +10,6 @@ import {
   ChevronRight, ArrowRight, ArrowUpRight,
   Stethoscope, Hammer, Handshake, Star,
 } from 'lucide-react';
-import { LEAKS, CATEGORY_LABEL } from '../lib/leaks';
-import type { Category as LeakCategory } from '../lib/leaks';
 
 /* 60–90s founder story video (hook → authority → optometry story → the 12 leaks
    → CTA → risk reversal). Set to e.g. '/videos/hero-story.mp4' once recorded —
@@ -44,8 +42,6 @@ const HeroPoster: React.FC<{ className?: string }> = ({ className = '' }) => (
     </figcaption>
   </figure>
 );
-
-const LEAKS_NUMBERED = LEAKS.map((l, i) => ({ ...l, n: i + 1 }));
 
 /* Each step carries a plate from the age of scientific illustration — observe,
    map, construct, record. Ornament, not illustration: they're cropped to
@@ -274,53 +270,8 @@ const Home: React.FC = () => {
           </div>
         </section>
 
-        {/* ─── THE 12 PLACES — the leak map, right under the claim that names them.
-               Dollar ranges per leak wait on sourced figures (numbers-ledger.md);
-               names + symptoms ship now, the audit does the math in their numbers. ─── */}
-        <section className="py-20 bg-white border-t border-slate-100">
-          <div className="max-w-6xl mx-auto px-6">
-            {/* Names only — the full symptoms and math live on /leak-audit. A dense
-                text block right under the hero read as "a lot, all at once"
-                (Sukh 9/14); this is the visual shortcut, not the reference. */}
-            <Reveal className="max-w-2xl mb-10">
-              <Eyebrow className="text-accent mb-4">The 12 places</Eyebrow>
-              <h2 className="text-3xl md:text-4xl font-serif text-vmNavy mb-4 leading-snug">
-                Where the money goes.
-              </h2>
-              <p className="text-slate-500">
-                Tap any of them — the free audit runs the math in your own numbers, rounded down.
-              </p>
-            </Reveal>
-
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-8">
-              {(['A', 'B', 'C', 'D'] as LeakCategory[]).map((c) => (
-                <div key={c}>
-                  <p className="eyebrow text-slate-500 mb-3">{CATEGORY_LABEL[c]}</p>
-                  <ul className="space-y-2">
-                    {LEAKS_NUMBERED.filter((l) => l.category === c).map((l) => (
-                      <li key={l.id}>
-                        <Link to="/leak-audit"
-                          className="group inline-flex items-baseline gap-1.5 text-sm font-medium text-vmNavy hover:text-vmTeal transition-colors">
-                          <span className="text-accent tabular-nums text-xs">{String(l.n).padStart(2, '0')}</span>
-                          {l.name}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-            </div>
-
-            <Reveal className="mt-10">
-              <Link to="/leak-audit" className={buttonPrimary}>
-                Run your numbers — free <ChevronRight className="w-4 h-4" />
-              </Link>
-            </Reveal>
-          </div>
-        </section>
-
         {/* ─── PROOF — the names, the pointer ─── */}
-        <section className="py-28 bg-white">
+        <section className="py-28 bg-white border-t border-slate-100">
           <div className="max-w-5xl mx-auto px-6">
             <Reveal className="text-center mb-14">
               <Eyebrow className="text-accent mb-4">Proof</Eyebrow>
