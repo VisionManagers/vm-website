@@ -225,6 +225,56 @@ const Solutions: React.FC = () => {
           </div>
         </section>
 
+        {/* ─── PRODUCTIZED STARTS — named builds with the price on them ───
+             Prices render pricing-rules v1.7 (Bid Bot pain bands · Market Test
+             founding cohort). Change the card first, then this display. */}
+        <section className="px-6 py-20 bg-white">
+          <div className="max-w-5xl mx-auto">
+            <Reveal className="mb-12 max-w-2xl">
+              <p className="eyebrow text-vmNavy/60 mb-4">Productized builds</p>
+              <h2 className="text-3xl font-serif text-vmNavy mb-4">
+                Two ways to start with the price already on it.
+              </h2>
+              <p className="text-slate-600">
+                Fixed scope, named price, built in days — each with a one-pager you can send to
+                the person you’re thinking of.
+              </p>
+            </Reveal>
+            <div className="grid md:grid-cols-2 gap-8">
+              <Reveal>
+                <Link to="/bid-bot" className="block h-full p-8 bg-vmCream/70 border border-slate-200 rounded-sm hover:border-vmNavy/30 transition-colors">
+                  <p className="eyebrow text-slate-500 mb-3">For trades &amp; home services</p>
+                  <h3 className="text-xl font-serif text-vmNavy mb-3">Your Bid Bot</h3>
+                  <p className="text-sm text-slate-600 leading-relaxed mb-5">
+                    A bid writer trained on your own past bids and rate sheet. Talk the job in from
+                    the truck; the formal bid comes back in your format, your prices — you approve
+                    every number. Built for you in about a week.
+                  </p>
+                  <p className="text-sm font-semibold text-vmNavy mb-5">From $750 per document type</p>
+                  <span className="inline-flex items-center gap-2 text-sm font-semibold text-vmNavy">
+                    Bids by dinner, not midnight <ArrowRight className="w-4 h-4" />
+                  </span>
+                </Link>
+              </Reveal>
+              <Reveal delay={90}>
+                <Link to="/market-test" className="block h-full p-8 bg-vmCream/70 border border-slate-200 rounded-sm hover:border-vmNavy/30 transition-colors">
+                  <p className="eyebrow text-slate-500 mb-3">For builders &amp; founders</p>
+                  <h3 className="text-xl font-serif text-vmNavy mb-3">The 72-Hour Market Test</h3>
+                  <p className="text-sm text-slate-600 leading-relaxed mb-5">
+                    Market-test an idea before you build it: real demand, your customers’ exact
+                    words, competitor gaps, what to charge — and a GO / REFRAME / KILL verdict,
+                    guaranteed, in 72 hours.
+                  </p>
+                  <p className="text-sm font-semibold text-vmNavy mb-5">$2,500 · founding cohort $1,250 (next 4)</p>
+                  <span className="inline-flex items-center gap-2 text-sm font-semibold text-vmNavy">
+                    Know before you build <ArrowRight className="w-4 h-4" />
+                  </span>
+                </Link>
+              </Reveal>
+            </div>
+          </div>
+        </section>
+
         {/* ─── FIT / NOT FIT ─── */}
         <section className="px-6 py-20 bg-white">
           <div className="max-w-4xl mx-auto">

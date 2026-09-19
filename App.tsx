@@ -15,6 +15,8 @@ import AIVoice from './pages/AIVoice';
 import Sound from './pages/Sound';
 import CasualIntelligence from './pages/CasualIntelligence';
 import WhatIsAI from './pages/WhatIsAI';
+import BidBot from './pages/BidBot';
+import MarketTest from './pages/MarketTest';
 import Header from './components/Header';
 import Footer from './components/Footer';
 
@@ -58,6 +60,8 @@ const App: React.FC = () => {
               <Route path="/" element={<Home />} />
               <Route path="/start" element={<StartHere />} />
               <Route path="/solutions" element={<Solutions />} />
+              <Route path="/bid-bot" element={<BidBot />} />
+              <Route path="/market-test" element={<MarketTest />} />
               <Route path="/partner" element={<Partner />} />
               <Route path="/expansion-os" element={<ExpansionOS />} />
               <Route path="/lab" element={<TheLab />} />
