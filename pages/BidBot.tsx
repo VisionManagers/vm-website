@@ -15,7 +15,7 @@ import { ArrowRight, ChevronRight, Check, Minus, Download } from 'lucide-react';
    implied to be VM clients). The Chris Wolf quote is proof-library §A GRANTED.
 
    Prices RENDER vault canon: pricing-rules.md v1.7 (Document Generation pain
-   bands: Standard $750 · Heavy $1,500 · Anchor $2,250+). Rule: the website
+   bands v1.9: Standard $1,000 · Heavy $1,500 · Anchor $2,250+). Rule: the website
    renders prices, it never defines them. Bid Desk deliberately carries NO
    price — not on the card yet (research running, 9/18). */
 
@@ -62,7 +62,7 @@ const MARKET_VOICES = [
 
 /* Renders pricing-rules.md v1.7 — the pain bands. */
 const BANDS = [
-  { band: 'Standard', cost: 'A bid takes you up to a couple of hours today', price: '$750' },
+  { band: 'Standard', cost: 'A bid takes you up to a couple of hours today', price: '$1,000' },
   { band: 'Heavy', cost: 'Half a day to a couple of days each', price: '$1,500' },
   { band: 'Anchor', cost: '20–40+ hours each — the document your business lives on', price: 'from $2,250' },
 ];
@@ -83,7 +83,7 @@ const BidBot: React.FC = () => {
     <>
       <SEO
         title="Your Bid Bot — Same-Day Formal Bids, In Your Prices"
-        description="A bid writer trained on your own past bids and rate sheet. Talk the job in from the truck; a formal bid in your format comes back in minutes. You approve every number. Built for you in about a week, from $750."
+        description="A bid writer trained on your own past bids and rate sheet. Talk the job in from the truck; a formal bid in your format comes back in minutes. You approve every number. Built for you in about a week, from $1,000."
         path="/bid-bot"
       />
       <div className="w-full bg-vmCream" data-aesthetic="roman">
@@ -231,7 +231,7 @@ const BidBot: React.FC = () => {
                 — Chris Wolf, Wolf &amp; Wolf (roofing &amp; exteriors, Eastside)
               </p>
               <p className="text-sm text-slate-500">
-                His bid writer was built from and tested against 600+ of his own past bids.
+                His bid writer was built from and tested against 745 of his own past bids.
               </p>
             </Reveal>
           </div>
@@ -243,7 +243,7 @@ const BidBot: React.FC = () => {
             <Reveal className="mb-12 max-w-2xl">
               <Eyebrow className="text-accent mb-4">What it costs</Eyebrow>
               <h2 className="text-3xl md:text-4xl font-serif text-vmNavy mb-5 leading-snug">
-                From <span className="italic">$750</span> per document type.
+                From <span className="italic">$1,000</span> per document type.
               </h2>
               <p className="text-slate-600 leading-relaxed">
                 A “type” is one kind of document — roof bids, remodel bids, proposals, change

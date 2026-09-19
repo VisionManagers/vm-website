@@ -250,7 +250,7 @@ const Solutions: React.FC = () => {
                     the truck; the formal bid comes back in your format, your prices — you approve
                     every number. Built for you in about a week.
                   </p>
-                  <p className="text-sm font-semibold text-vmNavy mb-5">From $750 per document type</p>
+                  <p className="text-sm font-semibold text-vmNavy mb-5">From $1,000 per document type</p>
                   <span className="inline-flex items-center gap-2 text-sm font-semibold text-vmNavy">
                     Bids by dinner, not midnight <ArrowRight className="w-4 h-4" />
                   </span>
