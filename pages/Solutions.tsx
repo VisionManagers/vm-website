@@ -77,11 +77,11 @@ const Solutions: React.FC = () => {
         jsonLd={{
           '@context': 'https://schema.org',
           '@type': 'Service',
-          name: 'AI Strategy & Systems — Fractional AI Officer',
+          name: 'AI Strategy & Systems — One Accountable Partner',
           provider: { '@type': 'Organization', name: 'Vision Managers' },
-          description: 'Capability-led AI engagements: readiness audits, ongoing fractional AI leadership, and hands-on implementation. Data and relationship systems, automation, and voice AI. Proven in healthcare, built for any business.',
+          description: 'Leak-led AI engagements: readiness audits, ongoing accountable AI leadership, and hands-on implementation. Data and relationship systems, automation, and voice AI. Proven in healthcare, built for any business.',
           url: 'https://visionmanagers.com/solutions',
-          serviceType: ['AI Strategy & Advisory', 'Fractional AI Officer', 'AI Readiness Audit', 'AI Governance', 'Data & Relationship Systems'],
+          serviceType: ['AI Strategy & Advisory', 'AI Readiness Audit', 'AI Governance', 'Data & Relationship Systems', 'Business Process Automation'],
         }}
       />
       <div className="bg-vmCream" data-aesthetic="solar">

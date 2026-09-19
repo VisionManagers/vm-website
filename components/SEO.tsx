@@ -11,7 +11,7 @@ interface SEOProps {
 
 const SITE_NAME = 'Vision Managers';
 const SITE_URL = 'https://visionmanagers.com';
-const DEFAULT_DESCRIPTION = 'AI for high-trust businesses. We build secure AI systems for intake, follow-up, and data — helping dentists, optometrists, and real estate agents recover revenue.';
+const DEFAULT_DESCRIPTION = 'Most businesses are leaking $100K+ a year — missed calls, follow-up that never happens, work still done by hand. Vision Managers finds the leaks and builds the systems that fix them, with one person accountable.';
 const DEFAULT_IMAGE = 'https://storage.googleapis.com/vm-website/web%20images/logo-social.png';
 
 const SEO: React.FC<SEOProps> = ({
@@ -22,7 +22,7 @@ const SEO: React.FC<SEOProps> = ({
   type = 'website',
   jsonLd,
 }) => {
-  const fullTitle = title ? `${title} | ${SITE_NAME}` : `${SITE_NAME} | AI for High-Trust Businesses`;
+  const fullTitle = title ? `${title} | ${SITE_NAME}` : `${SITE_NAME} | Find What Your Business Is Leaking`;
   const canonicalUrl = `${SITE_URL}${path}`;
 
   const defaultJsonLd = {
@@ -39,10 +39,11 @@ const SEO: React.FC<SEOProps> = ({
     ],
     areaServed: 'US',
     serviceType: [
-      'AI Voice Agents',
-      'AI Consulting',
-      'AI Audit',
+      'AI Strategy & Advisory',
       'Business Process Automation',
+      'Bid & Estimate Automation',
+      'Market Research & Idea Validation',
+      'AI Voice Agents',
     ],
   };
 

@@ -69,6 +69,24 @@ const MarketTest: React.FC = () => {
         title="The 72-Hour Market Test — Know Before You Build"
         description="Market-test your idea in 72 hours: real demand, your customers' exact words, and a GO / REFRAME / KILL verdict you can trust — before you spend a dollar building. Founding cohort pricing for the next 4."
         path="/market-test"
+        jsonLd={{
+          '@context': 'https://schema.org',
+          '@type': 'Service',
+          name: 'The 72-Hour Market Test',
+          provider: { '@type': 'Organization', name: 'Vision Managers', url: 'https://visionmanagers.com' },
+          serviceType: ['Market Research & Idea Validation'],
+          audience: { '@type': 'BusinessAudience', name: 'Founders and business owners validating a product or idea' },
+          areaServed: 'US',
+          description:
+            'A 72-hour market test for a business idea: demand evidence, competitor teardown, 20–30 verbatim customer quotes, pricing corridors, a same-week sales kit, and a GO / REFRAME / KILL verdict. Guarantee: a clear verdict and 20+ sourced quotes, or you don’t pay.',
+          offers: {
+            '@type': 'Offer',
+            priceCurrency: 'USD',
+            price: '2500',
+            description: 'Founding-cohort pricing currently available for the next four seats.',
+          },
+          url: 'https://visionmanagers.com/market-test',
+        }}
       />
       <div className="w-full bg-vmCream" data-aesthetic="nihon">
 

@@ -1,42 +1,52 @@
 # Vision Managers
 
-> AI for High-Trust Businesses
+> Most businesses are leaking $100K+ a year — missed calls, follow-up that never happens, work still done by hand, knowledge trapped in one person's head. Vision Managers finds the leaks and builds the systems that fix them: marketing, operations and knowledge made clearer and more scalable, using AI as the implementation tool, not the headline.
 
-Vision Managers builds and deploys Voice AI concierge systems for healthcare practices, offers hands-on AI training for individuals and teams, and helps businesses discover where AI and automation create the most value.
+Vision Managers is a Seattle-area consultancy run by Sukh Virk (ex-Meta, ex-CVS Health conversation design and UX research). Work arrives mostly by referral. One person is accountable for the result; every engagement starts with a free rung.
 
-## Services
+## Start free
 
-- **Voice AI Concierge** (Primary): 24/7 AI-powered phone reception for healthcare practices. Answers every call, books appointments, handles patient FAQs, and escalates to staff. HIPAA-conscious, natural-sounding, live in 10–14 days. Flat monthly fee, no per-call charges.
-- **AI Training**: Practical, hands-on AI training that takes people from zero to AI-native in 3 hours. 1-on-1, group workshops, or corporate training. Guaranteed outcomes.
-- **Free Discovery Call**: 20-minute call to map your workflows, identify where AI saves time and money, and get a clear next step. No commitment.
+- **The Leak Audit** (https://visionmanagers.com/leak-audit): self-serve — pick your business type, see where money is leaking, in your own numbers. ~3 minutes, no email needed.
+- **Vendor & Spend Audit**: what you pay for phones, connectivity and services, re-quoted through supplier lanes. Free to the client (the supplier pays the fee); any switching costs are quoted up front.
+- **Free 20-minute discovery call**: a working session, not a pitch. Within a day you get an AI Opportunity Snapshot — your biggest opportunity, sized in dollars, in writing.
 
-## Industries Served
+## Services & pricing (fixed, published)
 
-- Dental practices
-- Optometry practices
-- Chiropractic offices
-- Med spas and dermatology
-- Other healthcare practices
-- Individuals and teams seeking AI training
+- **AI Quick-Start — $500, one week**: where AI makes or saves you money, with dollar math, and one quick win implemented the same week.
+- **Your Bid Bot — from $1,000 per document type** (https://visionmanagers.com/bid-bot): a bid/estimate writer for trades and home services, trained on the owner's own past bids and rate sheet. Formal bids in their format, their prices, same day; the owner approves every number. Built done-for-you in about a week. Priced by what a document costs today: Standard $1,000 · Heavy $1,500 · Anchor from $2,250.
+- **Bid Desk — $650/month, month-to-month**: automated follow-up (email + text) on every estimate sent, in the owner's voice, with a monthly won/lost review. The reported metric is jobs the system won.
+- **The 72-Hour Market Test — $2,500** (https://visionmanagers.com/market-test): market-test a business idea in 72 hours — demand evidence, competitor teardown, 20–30 verbatim customer quotes, pricing corridors, a same-week sales kit, and a GO / REFRAME / KILL verdict. Guarantee: a clear verdict and 20+ sourced quotes, or you don't pay. Founding-cohort pricing currently available.
+- **Build Sprint — $1,500–$4,500 fixed**: voice agents, automation, websites, data systems; ships with a monthly recovered-revenue report.
+- **Expansion OS — $7,500, six months, 8 seats** (https://visionmanagers.com/expansion-os): a hands-on build cohort; owners ship two working systems with weekly guidance.
+- **AI Partner — from $1,000/month · Strategic AI Partner — from $5,000/month** (https://visionmanagers.com/partner): ongoing accountable ownership of the AI roadmap.
+- **Voice AI agents — from $1,000 setup + $300–400/month**: every call answered and booked, with the compliance posture healthcare demands. A shown capability, deployed when the audit points to it.
+- **Casual Intelligence** (https://visionmanagers.com/ci): a weekly community for business owners learning to use AI well.
 
-## Proven Results
+## Who it serves
 
-- Seattle-area optometry practice: 5 new patient appointments booked in week one, $4,300+ in scheduled visit value
+Owners and operators of real, revenue-generating businesses across verticals — trades and home services, agencies, recruiting, legal, insurance, software, healthcare practices, franchises. Healthcare depth is compliance credibility (HIPAA-aware architectures), not a limitation.
 
-## Key Pages
+## Proven results (permissioned)
 
-- [Home](https://visionmanagers.com/): Overview of Voice AI, training, and discovery services
-- [What is AI?](https://visionmanagers.com/ai): Plain-English guide for business owners + the free 20-minute discovery call (leave with your AI Opportunity Snapshot: your #1 AI opportunity sized in dollars, in writing, the next day)
-- [AI Voice](https://visionmanagers.com/ai-voice): Voice AI concierge product details
-- [Solutions](https://visionmanagers.com/solutions): Engagement model (Audit → Pilot → Deploy → Maintain)
-- [About](https://visionmanagers.com/about): Company background and founder
-- [The Lab](https://visionmanagers.com/lab): ROI calculator and AI guardrails
-- [Insights](https://visionmanagers.com/insights): Thought leadership and executive briefings
-- [Contact](https://visionmanagers.com/contact): Book a discovery call or send a message
+- Optometry practice, Seattle area: 5 new-patient appointments and $4,300+ in scheduled visit value within days of the voice agent going live.
+- Wolf & Wolf (roofing & exteriors, Eastside): a custom bid writer built from and tested against 745 of the owner's own past bids — "This was a very easy process. I'm impressed with your professionalism and I'm excited to use my new AI helper."
+
+## Key pages
+
+- [Home](https://visionmanagers.com/): the leak-led overview and the offer ladder
+- [Leak Audit](https://visionmanagers.com/leak-audit): free self-diagnosis in your own numbers
+- [Your Bid Bot](https://visionmanagers.com/bid-bot): bids for trades — same day, their prices (one-pager: https://visionmanagers.com/downloads/your-bid-bot.pdf)
+- [72-Hour Market Test](https://visionmanagers.com/market-test): know before you build (one-pager: https://visionmanagers.com/downloads/72-hour-market-test.pdf)
+- [Solutions](https://visionmanagers.com/solutions): the engagement ladder — Quick-Start, Build Sprint, AI Partner
+- [Expansion OS](https://visionmanagers.com/expansion-os): the six-month build cohort
+- [Partner](https://visionmanagers.com/partner): the Strategic AI Partner seat
+- [What is AI?](https://visionmanagers.com/ai): plain-English guide for business owners
+- [The Lab](https://visionmanagers.com/lab): working demos, case studies, and tools
+- [Insights](https://visionmanagers.com/insights): essays and briefings
+- [About](https://visionmanagers.com/about) · [Contact](https://visionmanagers.com/contact)
 
 ## Contact
 
 - Email: sukhneet@visionmanagers.com
 - Phone: (425) 494-4489
-- Website: https://visionmanagers.com
-- Book a call: https://api.leadconnectorhq.com/widget/booking/Fl8PjcBk3EG88tCPMwbn
+- Book a call: https://api.leadconnectorhq.com/widget/booking/u9ITLagwSXqANxwjhaAS

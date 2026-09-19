@@ -84,6 +84,25 @@ const BidBot: React.FC = () => {
         title="Your Bid Bot — Same-Day Formal Bids, In Your Prices"
         description="A bid writer trained on your own past bids and rate sheet. Talk the job in from the truck; a formal bid in your format comes back in minutes. You approve every number. Built for you in about a week, from $1,000."
         path="/bid-bot"
+        jsonLd={{
+          '@context': 'https://schema.org',
+          '@type': 'Service',
+          name: 'Your Bid Bot — custom bid & estimate writer',
+          provider: { '@type': 'Organization', name: 'Vision Managers', url: 'https://visionmanagers.com' },
+          serviceType: ['Bid & Estimate Automation', 'Document Generation'],
+          audience: { '@type': 'BusinessAudience', name: 'Trades and home-services businesses' },
+          areaServed: 'US',
+          description:
+            'A done-for-you bid writer trained on the owner’s own past bids and rate sheet. Formal bids in their format and prices, same day, with every number owner-approved. Built in about a week.',
+          offers: {
+            '@type': 'AggregateOffer',
+            priceCurrency: 'USD',
+            lowPrice: '1000',
+            offerCount: '3',
+            description: 'Per document type, priced by current time cost: Standard $1,000 · Heavy $1,500 · Anchor from $2,250. Bid Desk follow-up service $650/month.',
+          },
+          url: 'https://visionmanagers.com/bid-bot',
+        }}
       />
       <div className="w-full bg-vmCream" data-aesthetic="roman">
 
