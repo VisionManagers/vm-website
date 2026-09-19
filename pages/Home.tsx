@@ -129,8 +129,8 @@ const LANES = [
       'Measurements in, formatted bids out — in your layout, not a generic one.',
       'The call that rings Friday at 6pm sits until Monday — and the job goes to whoever answered.',
     ],
-    to: '/leak-audit',
-    label: 'Run the trades numbers',
+    to: '/bid-bot',
+    label: 'See the bid bot',
   },
   {
     Icon: Stethoscope,
