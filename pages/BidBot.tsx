@@ -14,10 +14,9 @@ import { ArrowRight, ChevronRight, Check, Minus, Download } from 'lucide-react';
    language — quoted on-page as market voices with honest source labels, never
    implied to be VM clients). The Chris Wolf quote is proof-library §A GRANTED.
 
-   Prices RENDER vault canon: pricing-rules.md v1.7 (Document Generation pain
-   bands v1.9: Standard $1,000 · Heavy $1,500 · Anchor $2,250+). Rule: the website
-   renders prices, it never defines them. Bid Desk deliberately carries NO
-   price — not on the card yet (research running, 9/18). */
+   Prices RENDER vault canon: pricing-rules.md v1.9 (pain bands: Standard $1,000
+   · Heavy $1,500 · Anchor $2,250+; Bid Desk $650/mo ratified 9/18). Rule: the
+   website renders prices, it never defines them. */
 
 const STEPS = [
   {
@@ -60,7 +59,7 @@ const MARKET_VOICES = [
   },
 ];
 
-/* Renders pricing-rules.md v1.7 — the pain bands. */
+/* Renders pricing-rules.md v1.9 — the pain bands. */
 const BANDS = [
   { band: 'Standard', cost: 'A bid takes you up to a couple of hours today', price: '$1,000' },
   { band: 'Heavy', cost: 'Half a day to a couple of days each', price: '$1,500' },
