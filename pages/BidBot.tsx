@@ -268,19 +268,29 @@ const BidBot: React.FC = () => {
           </div>
         </section>
 
-        {/* ─── BID DESK TEASER (no price — not on the card yet) ─── */}
+        {/* ─── BID DESK — renders pricing-rules v1.8 ($650/mo ratified 9/18) ─── */}
         <section className="py-20 bg-white">
           <div className="max-w-3xl mx-auto px-6">
             <Reveal>
-              <Eyebrow className="text-accent mb-5">Coming next</Eyebrow>
+              <Eyebrow className="text-accent mb-5">Once the bids are going out</Eyebrow>
               <h2 className="text-2xl md:text-3xl font-serif text-vmNavy mb-5 leading-snug">
                 The Bid Desk — none of your bids <span className="italic">die in silence.</span>
               </h2>
               <p className="text-slate-600 leading-relaxed mb-4">
-                Most estimates don’t lose — they get ghosted. The Bid Desk follows up on every
-                bid you send, in your voice, and reports one number a month: jobs it won you.
+                Most estimates don’t lose — they get ghosted. One study of 2,241 companies found
+                the average business takes 42 hours to respond to a lead, and 23% never respond at
+                all. The Bid Desk follows up on every bid you send — polite, persistent, in your
+                voice — and reports one number a month: <strong className="text-vmNavy">jobs it
+                won you.</strong>
               </p>
-              <p className="text-sm text-slate-500">Ask about it on the call.</p>
+              <p className="text-slate-600 leading-relaxed mb-5">
+                <strong className="text-vmNavy">$650 a month, month to month.</strong> No annual
+                contract, no metered surprises. At trades margins, one recovered job covers it —
+                everything after that is yours.
+              </p>
+              <p className="text-sm text-slate-500">
+                Best fit at 15+ estimates a month. Ask about it on the call.
+              </p>
             </Reveal>
           </div>
         </section>
