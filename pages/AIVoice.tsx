@@ -297,7 +297,8 @@ const AIVoice: React.FC = () => {
                   Their after-hours calls were going to voicemail — and walking out the door. We mapped where
                   patients were being lost, then deployed a voice concierge that answers every call and books
                   straight into the schedule. Five new appointments within days of going live, no staff added —
-                  and 752 calls answered since January 2026 that would otherwise have gone to voicemail.
+                  and over 700 calls answered since January 2026 — about 90 potential patients a month who would
+                  otherwise have gone to voicemail.
                 </p>
                 <div className="flex flex-wrap gap-x-8 gap-y-3">
                   <a href={BOOKING_URLS.DISCOVERY} target="_blank" rel="noopener noreferrer"
@@ -311,7 +312,7 @@ const AIVoice: React.FC = () => {
                 </div>
               </div>
               <div className="grid grid-cols-3 gap-6">
-                {[['752', 'Calls answered'], ['$4,300+', 'Booked in 2 days'], ['5', 'Appointments']].map(([num, label]) => (
+                {[['~90', 'Potential patients / mo'], ['$4,300+', 'Booked in 2 days'], ['700+', 'Calls so far']].map(([num, label]) => (
                   <div key={label} className="text-center">
                     <div className="font-serif text-3xl md:text-4xl text-vmTeal mb-2">{num}</div>
                     <p className="eyebrow text-slate-500">{label}</p>

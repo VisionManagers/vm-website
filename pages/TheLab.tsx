@@ -25,8 +25,10 @@ import type { CaseStudy } from '../types';
 const CASE_STUDIES: CaseStudy[] = [
   {
     // Bellevue eye care practice — voice agent live since late January 2026 (first real
-    // call notifications 1/26–1/28; a ~20-email test batch on 1/2 precedes them). 752
-    // calls = Suk's count of the notification stream, 9/25 (one email per call). The
+    // call notifications 1/26–1/28; a ~20-email test batch on 1/2 precedes them). Suk's
+    // count of the notification stream 9/25 = 752 (~730 without the test batch) → rendered
+    // as "over 700 so far" and ≈90 a month (730–752 ÷ 8 months). "Potential patients" is
+    // Suk's framing (9/25) — not every caller is a patient, hence "potential" + "about". The
     // practice is deliberately unnamed (Suk 9/25: "an anonymous practice in the Bellevue
     // area"); never name it on any public surface. $4,300 / 5 appts / 2 days are the WIN
     // row in numbers-ledger.md. "Within days," never "first week."
@@ -39,13 +41,13 @@ const CASE_STUDIES: CaseStudy[] = [
     solution:
       'Mapped where patients were being lost, then designed and deployed a voice agent that answers every call, captures who is calling and when they want to be seen, and books straight into the schedule — handing off to staff when a caller needs a person.',
     results: [
-      '752 calls answered since going live in January 2026 — calls the front desk would otherwise have missed',
+      'Over 700 calls answered so far since going live in January 2026 — about 90 a month, each one a potential patient the front desk would otherwise have missed',
       '5 appointments booked in the first 2 days live — $4,300+ in scheduled visit value',
       'Every appointment request lands in the front desk’s inbox automatically, with the transcript, no callback queue',
       'Answering live patient calls every day, with no staff added',
     ],
-    metric: '752',
-    metricLabel: 'calls answered since January 2026',
+    metric: '~90',
+    metricLabel: 'potential patients reached every month',
   },
   {
     // Wolf & Wolf bid writer — delivered 2026-09-17. Permission GRANTED (name +

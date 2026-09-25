@@ -104,3 +104,5 @@ Every new figure added to the site gets a row here first.
 | **Wolf & Wolf after-number** | (still off the site) | PENDING | Suk 9/25: Chris hasn't used the bot himself yet; a new employee will run estimates with it; Suk is writing a one-page checklist for that employee. No time-saved claim until real-bid data lands. |
 
 **Sarah Reinholtz quote** — still held; Suk is asking her directly.
+
+| **"Over 700 calls so far" · "about 90 potential patients a month"** (replaces the bare 752) | Lab card (eye care) metric + first result, Home, AIVoice + stat trio, llms.txt | WIN, understated + MATH | Suk 9/25: "make the card say over 700 so far" — deliberate understatement that also absorbs the 1/2 test-batch question (730 or 752, both "over 700"). Per-month: 730–752 ÷ 8 months (live 2026-01-26 → 09-25) = 91–94 → "about 90." "Potential patients" is Suk's framing; callers include some non-patients (pharmacies, spam, the front desk itself, repeat callers), which is why it's "about" and "potential," never "90 new patients." Refresh the 700+ each Lab pass; the monthly rate is the stable number. |
