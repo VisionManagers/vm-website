@@ -90,3 +90,17 @@ Every new figure added to the site gets a row here first.
 | **Ownership moving into her own account** | Lab card (Joni) | In motion | Gmail 9/4–9/16 thread "Joni's website transfer" (remix into Melissa Jordan's / Joni's Lovable account, not yet executed). Rendered as "moving," not "moved." |
 
 **Held off the site (permission not asked):** Joni's "I love the upgrades, Thank You So Much!!!" (Gmail 5/20) · Sarah's "I think that my website is getting better and better" (Gmail 3/31) · Senthil's "You understood the process completely right" (8/6). One-line asks unlock all three as quote lines on their cards.
+
+## Corrections + additions 2026-09-25 (evening, Suk's review of round 2)
+
+| Figure | Where on site | Type | Source / derivation |
+|---|---|---|---|
+| **752 calls answered since January 2026** | Lab card (eye care) metric + first result, Home proof, AIVoice proof + stat trio, llms.txt | WIN (owner-counted) | Suk's count 9/25 of the agent's notification stream (`agent@visionmanagers.com` → one "New Appointment Request" email per call, cc the practice). Gmail check the same day: first real-call emails 2026-01-26 → 01-28 (to Suk only; practice cc'd from ~Feb 6); a ~20-email burst on 2026-01-02 to Suk alone is a test batch. ⚠️ If Suk's 752 includes the 1/2 test batch, the clean number is ~730 — his call whether to understate to "730+". Framing "calls the front desk would otherwise have missed" is Suk's (9/25). **Refresh on every Lab pass** — it grows ~3–5/day. |
+| **Live since January 2026** (replaces "since August 2026") | Lab card, Home, AIVoice, llms.txt | Correction | Ledger row of 9/25 morning said "since August" on the strength of the 8/12 sample; Gmail shows live traffic from late January. The $4,300 / 2-day figure keeps its own date (August deployment of the booking flow, per proof-library). |
+| **Sunny Sarah: one ~1-hour training session → self-publishing** | Lab card (Sunny Sarah) metric + result | Build fact (Suk 9/25) | Suk: "I trained her over a single session… literally a 1-hour-long session." Replaces the "within three months" framing (true but misleading — the three months were calendar, not effort). Kickoff→live 5-week figure stays as a result line. |
+| **Emerald: off AT&T onto Nextiva, signed September 2026** | Lab card (Emerald), llms.txt | Client decision (Suk 9/25) | Suk 9/25: "Emerald is signing up for Nextiva… transferring from AT&T." Signed ≠ ported — no savings figure, no "switched" until the port lands and invoices confirm. |
+| **Senthil quotes (verbatim)** | Lab card (Emerald) 4th result | Client quote, permission GRANTED (Suk 9/25: "we've got permission there") | 8/6 working session, `60-CRM/Touchpoints/2026-08-06-emerald-health.md` — "you understood the process completely right… That's the right way to do" · "You asked the right question… that was really well made." |
+| **Joni quote (verbatim)** | Lab card (Joni) 4th result | Client quote, permission GRANTED (Suk 9/25: "Joni has told me that it's okay to quote her testimonials") | Gmail 2026-05-20, "I love the upgrades, Thank You So Much!!!" |
+| **Wolf & Wolf after-number** | (still off the site) | PENDING | Suk 9/25: Chris hasn't used the bot himself yet; a new employee will run estimates with it; Suk is writing a one-page checklist for that employee. No time-saved claim until real-bid data lands. |
+
+**Sarah Reinholtz quote** — still held; Suk is asking her directly.

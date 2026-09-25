@@ -289,7 +289,9 @@ const Home: React.FC = () => {
                 When a Bellevue-area eye care practice was losing after-hours calls to voicemail,
                 we mapped where patients were being lost and deployed a voice agent that books
                 straight into the schedule — <strong className="text-vmNavy">$4,300 of booked
-                appointments within days of going live</strong>, no staff added.
+                appointments within days of going live</strong>, no staff added. Since January it
+                has answered <strong className="text-vmNavy">752 calls</strong> the front desk would
+                otherwise have missed.
               </p>
               {/* The written case study exists on /lab as of 9/25 — link to it, not to
                   the sales page. The practice stays unnamed (Suk 9/25). */}

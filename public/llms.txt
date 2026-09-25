@@ -21,8 +21,8 @@ Vision Managers builds and deploys Voice AI concierge systems for healthcare pra
 
 ## Proven Results
 
-- Bellevue-area eye care practice (unnamed): voice agent booked 5 appointments in its first 2 days live, $4,300+ in scheduled visit value; answering live patient calls daily since August 2026
-- Emerald Health (medical billing, 15+ practices): website rebuild, client interviews turned into video testimonials (one led to a new credentialing contract for Emerald), phone migration scoped across five carriers
+- Bellevue-area eye care practice (unnamed): voice agent live since January 2026, 752 calls answered that the front desk would otherwise have missed; 5 appointments in its first 2 days live, $4,300+ in scheduled visit value
+- Emerald Health (medical billing, 15+ practices): website rebuild, client interviews turned into video testimonials (one led to a new credentialing contract for Emerald), phone migration off AT&T onto Nextiva signed September 2026 after comparing five carriers
 - Phoenix Log (phnxlog.com, Vision Managers' own product): daily log + AI coach rebuilt on its own stack in 11 days; 17 beta testers in the first 11 days
 - Sunny Sarah (sunnysarah.net) and My Better Life Mentor (mybetterlifementor.com): website rebuilds handed to the owners with editor access; full case studies at https://visionmanagers.com/lab#case-studies
 

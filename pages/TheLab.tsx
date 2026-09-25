@@ -24,10 +24,12 @@ import type { CaseStudy } from '../types';
 // }
 const CASE_STUDIES: CaseStudy[] = [
   {
-    // Bellevue eye care practice — voice agent live since Aug 2026. The practice is
-    // deliberately unnamed (Suk 9/25: "an anonymous practice in the Bellevue area");
-    // never name it on any public surface. $4,300 / 5 appts / 2 days are the WIN row in
-    // numbers-ledger.md. "Within days," never "first week."
+    // Bellevue eye care practice — voice agent live since late January 2026 (first real
+    // call notifications 1/26–1/28; a ~20-email test batch on 1/2 precedes them). 752
+    // calls = Suk's count of the notification stream, 9/25 (one email per call). The
+    // practice is deliberately unnamed (Suk 9/25: "an anonymous practice in the Bellevue
+    // area"); never name it on any public surface. $4,300 / 5 appts / 2 days are the WIN
+    // row in numbers-ledger.md. "Within days," never "first week."
     id: 'bellevue-eyecare-voice-agent',
     title: 'A voice agent that books straight into the schedule',
     client: 'An eye care practice — Bellevue, WA (name withheld)',
@@ -37,12 +39,13 @@ const CASE_STUDIES: CaseStudy[] = [
     solution:
       'Mapped where patients were being lost, then designed and deployed a voice agent that answers every call, captures who is calling and when they want to be seen, and books straight into the schedule — handing off to staff when a caller needs a person.',
     results: [
+      '752 calls answered since going live in January 2026 — calls the front desk would otherwise have missed',
       '5 appointments booked in the first 2 days live — $4,300+ in scheduled visit value',
-      'Every appointment request lands in the front desk’s inbox automatically, no callback queue',
-      'Answering live patient calls every day since August 2026, with no staff added',
+      'Every appointment request lands in the front desk’s inbox automatically, with the transcript, no callback queue',
+      'Answering live patient calls every day, with no staff added',
     ],
-    metric: '$4,300+',
-    metricLabel: 'booked within days of going live',
+    metric: '752',
+    metricLabel: 'calls answered since January 2026',
   },
   {
     // Wolf & Wolf bid writer — delivered 2026-09-17. Permission GRANTED (name +
@@ -67,8 +70,10 @@ const CASE_STUDIES: CaseStudy[] = [
   {
     // Emerald Health — the compounding account. Delivered facts only: website (with a
     // dev partner), client interviews → video testimonials, phone audit + migration scope.
-    // The physician is anonymized (her permission covers Emerald's use, not ours). The
-    // phone port and reporting dashboard are NOT results yet — add lines when they land.
+    // The physician is anonymized (her permission covers Emerald's use, not ours).
+    // Nextiva SIGNED 9/25 (Suk) — the port itself is still ahead; say "signed," not
+    // "switched," and no savings figure until invoices. Senthil's quotes: permission
+    // confirmed by Suk 9/25 ("Keep Senthil's praise quotes. We've got permission there").
     id: 'emerald-health-compounding-account',
     title: 'One billing company, three systems, one accountable builder',
     client: 'Emerald Health — medical billing (RCM) for 15+ practices',
@@ -79,8 +84,9 @@ const CASE_STUDIES: CaseStudy[] = [
       'Started with the website. Then ran the client interviews ourselves — research-grade, on camera — and cut them into testimonials. Then audited the phone stack against five carriers and scoped the migration. Each piece paid for the next conversation.',
     results: [
       'A physician client’s interview became a video testimonial — and that practice then signed a credentialing contract with Emerald',
-      'Phone migration scoped and the provider chosen: 9 numbers to 12 lines, texting unblocked, five carriers compared on the client’s own call data',
+      'Off AT&T and onto Nextiva, signed September 2026: 9 numbers to 12 lines, texting unblocked, five carriers compared on the client’s own call data',
       'Reporting across 7–8 billing systems mapped next, so team leads stop spending 1–2 days a month per client assembling it by hand',
+      '“You understood the process completely right… that’s the right way to do.” And on the interview: “You asked the right question… that was really well made.” — Senthil, operations',
     ],
     metric: '3',
     metricLabel: 'systems, one client, one builder',
@@ -106,8 +112,9 @@ const CASE_STUDIES: CaseStudy[] = [
     metricLabel: 'days from blank repo to live product',
   },
   {
-    // Sunny Sarah — website build, Feb 19 → Mar 27, 2026 (Granola). Build facts only;
-    // her verbatims are in proof-library with permission not-asked, so none are here.
+    // Sunny Sarah — website build, Feb 19 → Mar 27, 2026 (Granola). Handoff training was
+    // ONE ~1-hour session (Suk 9/25) — that's the metric. Build facts only; her verbatims
+    // are in proof-library with permission not-asked (Suk is asking), so none are here.
     id: 'sunny-sarah-website',
     title: 'A wellness site the owner now runs herself',
     client: 'Sunny Sarah — whole-food nutrition & wellness (sunnysarah.net)',
@@ -118,16 +125,17 @@ const CASE_STUDIES: CaseStudy[] = [
       'Rebuilt the site on a platform she can edit herself: her story, products, a downloadable guide, a quiz with personalized results, a booking link at every contact point, blog and newsletter. Then trained her to publish her own updates.',
     results: [
       'Kicked off February 19, live on her own domain March 27, 2026',
-      'Editing and publishing her own pages and newsletter within three months of launch',
+      'One hour of training, one session — she has published her own pages and newsletter since',
       'Monthly maintenance retired on purpose — the site is hers to run',
     ],
-    metric: '5 wks',
-    metricLabel: 'from kickoff to live on her domain',
+    metric: '1 hr',
+    metricLabel: 'of training to run her own site',
   },
   {
     // My Better Life Mentor — full rebuild off a broken WordPress site, kicked off
     // Mar 4, 2026; May revision + team access; ownership transfer to her own account
-    // in progress (Sept). Build facts only; her verbatims are permission not-asked.
+    // in progress (Sept). Her quote is cleared — Suk 9/25: "Joni has told me that it's
+    // okay to quote her testimonials" (Gmail 2026-05-20, verbatim).
     id: 'my-better-life-mentor-website',
     title: 'A broken WordPress site replaced with one that says what she does',
     client: 'Joni Johnson, My Better Life Mentor — life coach, Navarre, FL (mybetterlifementor.com)',
@@ -140,6 +148,7 @@ const CASE_STUDIES: CaseStudy[] = [
       'Kicked off March 4, 2026; first revision round shipped in May with team access handed over',
       'Google Business Profile and local search pointed at the new site',
       'Ownership moving into her own account — the way every build we do is meant to end',
+      '“I love the upgrades, Thank You So Much!!!” — Joni, on the May revision',
     ],
     metric: 'Hers',
     metricLabel: 'editable, transferable, owned by the client',
