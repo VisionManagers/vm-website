@@ -292,19 +292,26 @@ const AIVoice: React.FC = () => {
 
             <Reveal className="grid md:grid-cols-2 gap-12 items-center border border-slate-200 rounded-sm bg-white p-8 md:p-14">
               <div>
-                <p className="eyebrow text-slate-500 mb-5">Voice AI — Seattle-area optometry practice</p>
+                <p className="eyebrow text-slate-500 mb-5">Voice AI — Bellevue-area eye care practice</p>
                 <p className="text-slate-600 leading-relaxed mb-8">
                   Their after-hours calls were going to voicemail — and walking out the door. We mapped where
                   patients were being lost, then deployed a voice concierge that answers every call and books
-                  straight into the schedule. Five new appointments in the first week, no staff added.
+                  straight into the schedule. Five new appointments within days of going live, no staff added —
+                  and 752 calls answered since January 2026 that would otherwise have gone to voicemail.
                 </p>
-                <a href={BOOKING_URLS.DISCOVERY} target="_blank" rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 text-vmNavy font-semibold hover:text-vmTeal transition-colors text-sm">
-                  Find what you’re losing <ArrowRight className="w-4 h-4" />
-                </a>
+                <div className="flex flex-wrap gap-x-8 gap-y-3">
+                  <a href={BOOKING_URLS.DISCOVERY} target="_blank" rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 text-vmNavy font-semibold hover:text-vmTeal transition-colors text-sm">
+                    Find what you’re losing <ArrowRight className="w-4 h-4" />
+                  </a>
+                  <Link to="/lab#case-studies"
+                    className="inline-flex items-center gap-2 text-vmNavy font-semibold hover:text-vmTeal transition-colors text-sm">
+                    Read the case study <ArrowRight className="w-4 h-4" />
+                  </Link>
+                </div>
               </div>
               <div className="grid grid-cols-3 gap-6">
-                {[['5', 'Appointments'], ['$4,300+', 'Visit value'], ['2', 'Days live']].map(([num, label]) => (
+                {[['752', 'Calls answered'], ['$4,300+', 'Booked in 2 days'], ['5', 'Appointments']].map(([num, label]) => (
                   <div key={label} className="text-center">
                     <div className="font-serif text-3xl md:text-4xl text-vmTeal mb-2">{num}</div>
                     <p className="eyebrow text-slate-500">{label}</p>

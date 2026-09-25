@@ -134,16 +134,15 @@ const Solutions: React.FC = () => {
                 <p className="font-serif text-2xl md:text-3xl text-vmNavy italic leading-snug mb-6">
                   "New patients on the schedule within days of going live."
                 </p>
-                <p className="eyebrow text-slate-500">Voice AI pilot · Seattle-area optometry practice</p>
+                <p className="eyebrow text-slate-500">Voice AI pilot · Bellevue-area eye care practice</p>
                 <p className="text-sm text-slate-500 mt-4 max-w-md mx-auto">
                   One workflow, deployed under the same discipline every engagement gets: find the
                   loss, map it, build it, measure it. Built for Emerald Health.
                 </p>
-                {/* No written case study exists yet — claiming one costs more
-                    credibility than it buys (same ruling as the homepage). */}
-                <Link to="/ai-voice"
+                {/* Written case study on /lab since 9/25 — link to it. */}
+                <Link to="/lab#case-studies"
                   className="inline-flex items-center gap-2 text-vmNavy font-semibold hover:text-vmTeal transition-colors text-sm mt-6">
-                  How the voice work is built <ArrowRight className="w-4 h-4" />
+                  Read the case study <ArrowRight className="w-4 h-4" />
                 </Link>
               </ColumnFlank>
             </Reveal>
