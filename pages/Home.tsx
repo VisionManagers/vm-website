@@ -286,18 +286,16 @@ const Home: React.FC = () => {
               {/* $4,300 is a WIN with internal records behind it — use the number
                   (numbers-ledger.md). Nexus removed sitewide per Sukh 9/14. */}
               <p className="text-slate-600 leading-relaxed mb-8">
-                When a Seattle-area optometry practice was losing after-hours calls to voicemail,
+                When a Bellevue-area eye care practice was losing after-hours calls to voicemail,
                 we mapped where patients were being lost and deployed a voice agent that books
                 straight into the schedule — <strong className="text-vmNavy">$4,300 of booked
                 appointments within days of going live</strong>, no staff added.
               </p>
-              {/* Was "Read the case study" → /ai-voice, where no case study exists.
-                  Claiming one you don't have costs more credibility than it buys
-                  (NN/g: visitors already discount on-site proof). Points at what's
-                  actually there until a written case study exists. */}
-              <Link to="/ai-voice"
+              {/* The written case study exists on /lab as of 9/25 — link to it, not to
+                  the sales page. The practice stays unnamed (Suk 9/25). */}
+              <Link to="/lab#case-studies"
                 className="inline-flex items-center gap-2 text-vmNavy font-semibold hover:text-vmTeal transition-colors text-sm">
-                How the voice work is built <ArrowRight className="w-4 h-4" />
+                Read the voice-agent case study <ArrowRight className="w-4 h-4" />
               </Link>
               {/* Second proof, trades lane. Every figure here is in numbers-ledger.md;
                   permission GRANTED on the recording (proof-library §A/§B, 9/17). The

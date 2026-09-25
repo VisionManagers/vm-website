@@ -66,3 +66,27 @@ Every new figure added to the site gets a row here first.
 - "new patients on the books within days" → replaced with the real figure ($4,300).
 - "six figures" → "$100K+" (Home hero + meta).
 - CI "free to attend" → Season 2 founding membership, $79/mo, starts Sept 30 (Home band, /ci, /ai doors card).
+
+## Added 2026-09-25 (case-studies round 2 — five new Lab cards + anonymization sweep)
+
+**Anonymity ruling (Suk, 2026-09-25):** the $4,300 voice-agent practice is never named on any public surface — it renders as "a Bellevue-area eye care practice (name withheld)." "Emerald Health" (the billing company) stays named as before. "Seattle-area optometry practice" replaced sitewide (Home, AIVoice, Solutions, llms.txt).
+
+| Figure | Where on site | Type | Source / derivation |
+|---|---|---|---|
+| **5 appointments · first 2 days · $4,300+** (restated on the card) | Lab card (eye care), AIVoice, Home, Solutions, llms.txt | WIN | Same row as above (2026-09-13). AIVoice copy "first week" corrected to "within days" per the ledger's own framing rule. |
+| **Answering live patient calls every day since August 2026** | Lab card (eye care) results, llms.txt | Observed (ours) | Proof-library §B "Jessica" entry: booking requests emailed to the practice daily (8/12–8/13 sample; 11 requests 9/3–9/4). Volume claim only — no booking count beyond the 5 (capture gap noted in proof-library). |
+| **Emerald Health: 15+ practices** | Lab card client line, llms.txt | Client fact | Vault `60-CRM/Companies/emerald-health.md` ("supporting 15+ medical practices"). |
+| **Physician interview → video testimonial → that practice signed a credentialing contract with Emerald** | Lab card (Emerald) results, llms.txt | Client-reported outcome | Senthil/Sanjay on the 8/6 working session (`60-CRM/Touchpoints/2026-08-06-emerald-health.md`); proof-library §B Ojile entry. Physician anonymized — her grant covers Emerald's use, not ours. |
+| **9 numbers → 12 lines, texting unblocked, five carriers compared** | Lab card (Emerald) results | Scope fact (ours) | Migration spec locked 8/6 (9 numbers → 12 lines, SMS on every number); carriers ranked 9/24 (Nextiva, Dialpad, Vonage, Zoom, RingCentral — Granola 9/24). **Provider chosen ≠ ported.** No savings or "switched" claim until the port lands and first invoices confirm. |
+| **Reporting across 7–8 systems · team leads 1–2 days/month per client** | Lab card (Emerald) third result | Client's own BEFORE (VoC) | Senthil, 8/6 session. Framed as "mapped next" — scoped, not delivered, no fee/date set. |
+| **Phoenix Log: rebuilt and live in 11 days** | Lab card (Phoenix Log) metric + results, llms.txt | Build fact (ours) | Own-stack rebuild shipped 2026-09-14 (`phnxlog-app/docs/changelog.md`); phnxlog.com live 9/17; Tally tab 9/24 = 11 days of releases from first ship to the latest. |
+| **235 of the founder's entries imported on day one** | Lab card (Phoenix Log) | Build fact | `phnxlog-app/docs/changelog.md` 2026-09-14 ("All 235 of Suk's entries imported"). |
+| **17 beta testers in the first 11 days · 5 logged this week** | Lab card (Phoenix Log), llms.txt | Live DB query, 2026-09-25 | `auth.users` excluding the founder: 17 signups; 5 with a submitted daily log dated within the last 7 days. **Moves weekly — refresh on every Lab pass** (query in `phnxlog-app/docs/metrics.md`). |
+| **60 AI coach reads since the rebuild (42 daily + 18 field reports)** | Lab card (Phoenix Log) | Live DB query, 2026-09-25 | `daily_entries.ai_analysis` created ≥ 2026-09-14 (42) + `game_entries.ai_analysis` (18). Excludes reads on imported historical entries. Refresh with the row above. |
+| **2,000+ days of founder tracking data** | Lab card (Phoenix Log) challenge | Internal dataset | Same row as 2026-09-14 (moved from the greenhouse card to the case-study card). |
+| **Sunny Sarah: kickoff Feb 19 → live on her domain Mar 27, 2026 (≈5 weeks)** | Lab card (Sunny Sarah) metric + results | Build fact | Granola: 2/19 kickoff ($500 down, build started that weekend); 3/27 launch on sunnysarah.net (HostGator DNS → Lovable). Gmail 3/13 "Update!" (first preview link) corroborates. |
+| **Editing and publishing her own pages within three months** | Lab card (Sunny Sarah) | Observed | Granola 6/8 strategy call: editor access granted, preview → publish workflow used by her; `60-CRM/People/sarah-reinholtz.md`. Monthly $99 maintenance discontinued by Suk (his call), rendered as "retired on purpose." |
+| **My Better Life Mentor: kickoff Mar 4, 2026; May revision + team access** | Lab card (Joni) results | Build fact | Granola 3/4 (full rebuild off broken WordPress agreed); Gmail 5/19 ("all the changes are in" + team-member access for edits/analytics + new testimonials page). **Price ($1,200) deliberately not rendered** — not in pricing-rules and website builds aren't a published lane. |
+| **Ownership moving into her own account** | Lab card (Joni) | In motion | Gmail 9/4–9/16 thread "Joni's website transfer" (remix into Melissa Jordan's / Joni's Lovable account, not yet executed). Rendered as "moving," not "moved." |
+
+**Held off the site (permission not asked):** Joni's "I love the upgrades, Thank You So Much!!!" (Gmail 5/20) · Sarah's "I think that my website is getting better and better" (Gmail 3/31) · Senthil's "You understood the process completely right" (8/6). One-line asks unlock all three as quote lines on their cards.
