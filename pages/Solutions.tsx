@@ -324,8 +324,9 @@ const Solutions: React.FC = () => {
               <h2 className="text-3xl font-serif text-vmNavy mb-6">Operator experience, research discipline.</h2>
               <p className="text-slate-600 leading-relaxed mb-8">
                 Suk has run user research at Facebook and CVS Health — work that shaped experiences
-                for over a million monthly users — led a 117-bed nursing home through COVID, and grown
-                a family optometry practice 200% in ten months. That range is the point:
+                for over a million monthly users — led a 117-bed nursing home through COVID, grown
+                a family optometry practice 200% in ten months, and built sales systems for companies
+                from startups to $1.5B in revenue. That range is the point:
                 a vertical consultant knows your industry’s habits — cross-vertical experience spots
                 which ones are quietly costing you.
               </p>
