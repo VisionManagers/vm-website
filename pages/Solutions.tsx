@@ -18,7 +18,7 @@ const TIERS = [
     role: 'The entry point',
     price: '$500 fixed',
     cadence: 'One week · start here',
-    desc: 'A one-week look at your business: where AI makes or saves you money, with real dollar math — and one quick win implemented before the week is out. If the report doesn’t surface at least $500 a month of opportunity, don’t pay.',
+    desc: 'A one-week look at your business: where AI makes or saves you money, with real dollar math — and one quick win implemented before the week is out. If the week doesn’t end with a written map of your three biggest leaks and what each costs you, you don’t pay.',
     includes: ['90-minute working session', 'Opportunity report with dollar math', 'One quick win implemented the same week', 'A priced recommendation for what’s next'],
     featured: false,
   },
