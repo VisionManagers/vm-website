@@ -251,7 +251,7 @@ const Home: React.FC = () => {
                     <ChevronRight className="w-4 h-4" />
                   </Link>
                   <a href={BOOKING_URLS.DISCOVERY} target="_blank" rel="noopener noreferrer" className={buttonSecondary}>
-                    Book a call
+                    Book 20 minutes
                     <ArrowRight className="w-4 h-4" />
                   </a>
                 </div>
@@ -280,6 +280,7 @@ const Home: React.FC = () => {
                 <br />
                 <span className="italic">and the practices whose phones we answer.</span>
               </h2>
+              <p className="text-sm text-slate-500 mt-5">Emerald Health is a medical billing company serving 15+ practices.</p>
             </Reveal>
 
             <Reveal className="max-w-2xl mx-auto text-center">
@@ -303,7 +304,7 @@ const Home: React.FC = () => {
                   permission GRANTED on the recording (proof-library §A/§B, 9/17). The
                   time-saved number is deliberately absent — not collected yet. */}
               <p className="text-slate-600 leading-relaxed mt-10 mb-8">
-                And when an Eastside roofing contractor was typing every bid by hand — ten to
+                And when a roofing contractor on Seattle’s Eastside was typing every bid by hand — ten to
                 fifteen minutes for a roof, up to an hour for the complicated ones — we read all
                 745 of his bids and rebuilt his estimating inside his own ChatGPT.{' '}
                 <strong className="text-vmNavy">His first bid came out in the walkthrough</strong>,
@@ -487,7 +488,7 @@ const Home: React.FC = () => {
             <div className="grid md:grid-cols-12 gap-12 items-center">
               <Reveal className="md:col-span-5">
                 <div className="duotone-vm rounded-sm aspect-[4/5] max-w-sm mx-auto md:mx-0 shadow-xl">
-                  <img src="/images/vm/sukh-portrait.jpg" alt="Sukhneet, founder of Vision Managers" loading="lazy" />
+                  <img src="/images/vm/sukh-portrait.jpg" alt="Sukhneet Virk, founder of Vision Managers" loading="lazy" />
                 </div>
               </Reveal>
               <div className="md:col-span-7">
@@ -644,12 +645,13 @@ const Home: React.FC = () => {
               <VineDivider className="mx-auto mb-12 text-accent" />
               <h2 className="text-4xl md:text-5xl font-serif text-vmNavy mb-6 italic">Let’s find where your business is leaking.</h2>
               <p className="text-lg text-slate-600 mb-3 max-w-2xl mx-auto">
-                In 30 minutes we’ll map where you’re losing money, what it would take to fix it, and
-                whether I’m the right person to build it with you.
+                In 20 minutes we’ll map where you’re losing money, what it would take to fix it, and
+                whether I’m the right person to build it with you. You leave knowing your #1 leak
+                and what it’s worth.
               </p>
               <p className="text-sm text-slate-500 mb-12">A working session, not a sales pitch.</p>
               <a href={BOOKING_URLS.DISCOVERY} target="_blank" rel="noopener noreferrer" className={buttonPrimary}>
-                Book your call <ChevronRight className="w-4 h-4" />
+                Book 20 minutes <ChevronRight className="w-4 h-4" />
               </a>
               <p className="mt-8 text-xs text-slate-500">
                 Or call directly:{' '}

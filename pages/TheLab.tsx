@@ -55,7 +55,7 @@ const CASE_STUDIES: CaseStudy[] = [
     // No time-saved claim: his after-number isn't collected yet (check-in 9/24).
     id: 'wolf-and-wolf-bid-writer',
     title: 'A bid writer built from 745 of his own bids',
-    client: 'Chris Wolf, Wolf & Wolf — Eastside, WA',
+    client: 'Chris Wolf, Wolf & Wolf — Seattle’s Eastside, WA',
     industry: 'Roofing & exteriors',
     challenge:
       'Every bid was typed by hand in Word: ten to fifteen minutes for a roof, up to an hour for the complicated ones, five to eight a week. ChatGPT and Copilot had both broken his formatting, so he’d stopped booking jobs on the spot.',
@@ -532,8 +532,8 @@ const TheLab: React.FC = () => {
 
           {/* ─── ONE CTA ─── */}
           <Reveal className="text-center pt-8">
-            <a href={BOOKING_URLS.BOOK} target="_blank" rel="noopener noreferrer" className={buttonPrimary}>
-              Book your 20-minute discovery call <ArrowRight className="w-4 h-4" />
+            <a href={BOOKING_URLS.DISCOVERY} target="_blank" rel="noopener noreferrer" className={buttonPrimary}>
+              Book 20 minutes <ArrowRight className="w-4 h-4" />
             </a>
           </Reveal>
         </div>

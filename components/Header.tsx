@@ -136,7 +136,7 @@ const Header: React.FC = () => {
             rel="noopener noreferrer"
             className="bg-vmNavy text-white px-8 py-3 rounded-sm text-sm font-semibold hover:bg-vmNavy/90 transition-all hover:shadow-lg active:scale-95"
           >
-            Book a Call
+            Book 20 minutes
           </a>
         </nav>
 
@@ -250,7 +250,7 @@ const Header: React.FC = () => {
                   rel="noopener noreferrer"
                   className="block w-full bg-vmNavy text-white py-5 rounded-sm text-center font-bold tracking-[0.2em] uppercase text-xs shadow-2xl active:scale-95 hover:bg-vmNavy/95 transition-all"
                 >
-                  Book a Call
+                  Book 20 minutes
                 </a>
 
                 <div className="mt-12 flex flex-col items-center gap-4 border-t border-slate-100 pt-10">

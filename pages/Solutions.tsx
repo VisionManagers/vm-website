@@ -18,7 +18,7 @@ const TIERS = [
     role: 'The entry point',
     price: '$500 fixed',
     cadence: 'One week · start here',
-    desc: 'A one-week look at your business: where AI makes or saves you money, with real dollar math — and one quick win implemented before the week is out. If the report doesn’t surface at least $500 a month of opportunity, don’t pay.',
+    desc: 'A one-week look at your business: where AI makes or saves you money, with real dollar math — and one quick win implemented before the week is out. If the week doesn’t end with a written map of your three biggest leaks and what each costs you, you don’t pay.',
     includes: ['90-minute working session', 'Opportunity report with dollar math', 'One quick win implemented the same week', 'A priced recommendation for what’s next'],
     featured: false,
   },
@@ -33,14 +33,16 @@ const TIERS = [
     more: { to: '/expansion-os', label: 'Prefer to build it yourself, with guidance? Expansion OS — $7,500, six months' },
   },
   {
-    name: 'AI Partner',
+    // pricing-rules v2.0 (2026-09-30): the $1,000–2,000/mo AI Partner is retired;
+    // $5,000/mo is the only ongoing seat rendered anywhere public.
+    name: 'Strategic AI Partner',
     role: 'One accountable partner, ongoing',
-    price: 'From $1,000 / month',
-    cadence: 'Monthly · expands only on documented results',
-    desc: 'Ongoing ownership: implementation support, advisory, and your roadmap maintained month over month. Deeper strategic partnerships — data systems, cross-team outcomes, a weekly strategy seat — grow from here on evidence, not ambition.',
-    includes: ['Working block, or advisory + build at $2,000/mo', 'Roadmap owned and maintained', 'Monthly executive readout', 'A clear path to a full strategic partnership'],
+    price: '$5,000 / month',
+    cadence: 'Weekly seat · named roadmap · expands only on documented results',
+    desc: 'Ongoing ownership of the whole picture: a weekly strategic block, a named quarterly roadmap, and the work coming off it month over month — measured, reported, and expanded on evidence, not ambition.',
+    includes: ['Weekly 90-minute strategic block', 'Named quarterly roadmap, owned and maintained', 'Monthly executive readout', 'Async access, 48-hour turnaround'],
     featured: false,
-    more: { to: '/partner', label: 'See the Strategic AI Partner seat — from $5,000/mo' },
+    more: { to: '/partner', label: 'See the Strategic AI Partner seat' },
   },
 ];
 
@@ -59,7 +61,7 @@ const FAQS = [
   },
   {
     q: 'What does it cost?',
-    a: 'You can start for $500 — the Quick-Start — and most clients do. Builds are fixed-price ($1,500–$4,500; voice agents from $1,000 setup plus $300–400 a month). Ongoing partnership starts at $1,000 a month and expands only when documented results justify it. For scale: a full-time AI executive runs $250,000+ a year. This ladder exists so you never pay for more conviction than the evidence supports.',
+    a: 'You can start for $500 — the Quick-Start — and most clients do. Builds are fixed-price ($1,500–$4,500; voice agents from $1,000 setup plus $300–400 a month). Ongoing partnership is the Strategic AI Partner seat at $5,000 a month — a weekly seat and a named roadmap — and it expands only when documented results justify it. For scale: a full-time AI executive runs $250,000+ a year. This ladder exists so you never pay for more conviction than the evidence supports.',
   },
   {
     q: 'What happens after the call?',
@@ -72,14 +74,14 @@ const Solutions: React.FC = () => {
     <>
       <SEO
         title="Work With Me — AI Systems That Earn Their Keep"
-        description="Vision Managers turns the data and relationships your business already runs on into systems that drive outcomes — AI strategy, automation, and voice, with one person accountable. Start with a $500 Quick-Start; fixed-price builds; an accountable AI partner from $1,000/month. Proven in healthcare, built for anyone."
+        description="Vision Managers turns the data and relationships your business already runs on into systems that drive outcomes — AI strategy, automation, and voice, with one person accountable. Start with a $500 Quick-Start; fixed-price builds; the Strategic AI Partner seat at $5,000/month."
         path="/solutions"
         jsonLd={{
           '@context': 'https://schema.org',
           '@type': 'Service',
           name: 'AI Strategy & Systems — Fractional AI Officer',
           provider: { '@type': 'Organization', name: 'Vision Managers' },
-          description: 'Capability-led AI engagements: readiness audits, ongoing fractional AI leadership, and hands-on implementation. Data and relationship systems, automation, and voice AI. Proven in healthcare, built for any business.',
+          description: 'Capability-led AI engagements: readiness audits, ongoing fractional AI leadership, and hands-on implementation. Data and relationship systems, automation, and voice AI.',
           url: 'https://visionmanagers.com/solutions',
           serviceType: ['AI Strategy & Advisory', 'Fractional AI Officer', 'AI Readiness Audit', 'AI Governance', 'Data & Relationship Systems'],
         }}
@@ -100,12 +102,11 @@ const Solutions: React.FC = () => {
                 Most AI shows up as another tool nobody owns. I work the other way: find what’s
                 quietly costing you, map the data and relationships your business already runs on,
                 and build the systems that fix it — including knowing when <em>not</em> to use AI.
-                Proven in healthcare, built for anyone.
               </p>
               <a href={BOOKING_URLS.DISCOVERY} target="_blank" rel="noopener noreferrer" className={buttonPrimary}>
-                Book a call <ChevronRight className="w-4 h-4" />
+                Book 20 minutes <ChevronRight className="w-4 h-4" />
               </a>
-              <p className="mt-4 text-xs text-slate-500">No prep needed. You leave with two concrete next steps.</p>
+              <p className="mt-4 text-xs text-slate-500">No prep needed. You leave knowing your #1 leak and what it’s worth.</p>
             </Reveal>
           </div>
         </section>
@@ -137,7 +138,7 @@ const Solutions: React.FC = () => {
                 <p className="eyebrow text-slate-500">Voice AI pilot · Bellevue-area eye care practice</p>
                 <p className="text-sm text-slate-500 mt-4 max-w-md mx-auto">
                   One workflow, deployed under the same discipline every engagement gets: find the
-                  loss, map it, build it, measure it. Built for Emerald Health.
+                  loss, map it, build it, measure it. Built for Emerald Health, a medical billing company serving 15+ practices.
                 </p>
                 {/* Written case study on /lab since 9/25 — link to it. */}
                 <Link to="/lab#case-studies"
@@ -322,9 +323,10 @@ const Solutions: React.FC = () => {
               <Eyebrow className="text-accent mb-4">Who you’re working with</Eyebrow>
               <h2 className="text-3xl font-serif text-vmNavy mb-6">Operator experience, research discipline.</h2>
               <p className="text-slate-600 leading-relaxed mb-8">
-                Sukh has run user research at Facebook and CVS Health, managed a 117-bed nursing home
-                through the height of COVID, grown an optometry practice 200% in ten months, and built
-                sales systems for companies from startups to $1.5B in revenue. That range is the point:
+                Suk has run user research at Facebook and CVS Health — work that shaped experiences
+                for over a million monthly users — led a 117-bed nursing home through COVID, grown
+                a family optometry practice 200% in ten months, and built sales systems for companies
+                from startups to $1.5B in revenue. That range is the point:
                 a vertical consultant knows your industry’s habits — cross-vertical experience spots
                 which ones are quietly costing you.
               </p>
@@ -386,11 +388,12 @@ const Solutions: React.FC = () => {
               <VineDivider className="mx-auto mb-10 text-accent" />
               <h2 className="text-4xl font-serif text-vmNavy mb-6 italic">Let’s find where your business is leaking.</h2>
               <p className="text-slate-600 mb-10 max-w-xl mx-auto">
-                Thirty minutes. We map where you’re losing money, what it would take to fix it, and
-                whether I’m the right person to build it with you. A working session, not a sales pitch.
+                Twenty minutes. We map where you’re losing money, what it would take to fix it, and
+                whether I’m the right person to build it with you. You leave knowing your #1 leak and
+                what it’s worth. A working session, not a sales pitch.
               </p>
               <a href={BOOKING_URLS.DISCOVERY} target="_blank" rel="noopener noreferrer" className={buttonPrimary}>
-                Book the call <ChevronRight className="w-4 h-4" />
+                Book 20 minutes <ChevronRight className="w-4 h-4" />
               </a>
             </Reveal>
           </div>

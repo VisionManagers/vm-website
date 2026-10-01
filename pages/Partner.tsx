@@ -87,8 +87,8 @@ const Partner: React.FC = () => {
 
             <Reveal delay={280}>
               <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5">
-                <a href={BOOKING_URLS.STRATEGY_CALL} target="_blank" rel="noopener noreferrer" className={buttonPrimary}>
-                  Book a strategy call
+                <a href={BOOKING_URLS.DISCOVERY} target="_blank" rel="noopener noreferrer" className={buttonPrimary}>
+                  Book 20 minutes
                   <ChevronRight className="w-4 h-4" />
                 </a>
                 <Link to="/solutions" className={buttonSecondary}>
@@ -233,6 +233,7 @@ const Partner: React.FC = () => {
               <h2 className="text-3xl md:text-4xl font-serif text-vmNavy mb-8 leading-snug">
                 Built for <span className="italic">Emerald Health.</span>
               </h2>
+              <p className="text-sm text-slate-500 mb-6">Emerald Health is a medical billing company serving 15+ practices.</p>
               <p className="text-slate-600 leading-relaxed mb-6">
                 The seat isn’t theoretical — it’s how the deepest engagements already run. They
                 started as something small and specific, and expanded because the reporting made
@@ -263,8 +264,8 @@ const Partner: React.FC = () => {
               <p className="text-sm text-slate-500 mb-12">
                 If it isn’t a fit, I’ll say so on the call and point you at what is.
               </p>
-              <a href={BOOKING_URLS.STRATEGY_CALL} target="_blank" rel="noopener noreferrer" className={buttonPrimary}>
-                Book a strategy call <ChevronRight className="w-4 h-4" />
+              <a href={BOOKING_URLS.DISCOVERY} target="_blank" rel="noopener noreferrer" className={buttonPrimary}>
+                Book 20 minutes <ChevronRight className="w-4 h-4" />
               </a>
               <p className="mt-8 text-xs text-slate-500">
                 Or call directly:{' '}
