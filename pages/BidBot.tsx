@@ -228,10 +228,10 @@ const BidBot: React.FC = () => {
                 excited to use my new AI helper.”
               </blockquote>
               <p className="text-sm text-slate-600 mb-2">
-                — Chris Wolf, Wolf &amp; Wolf (roofing &amp; exteriors, Eastside)
+                — Chris Wolf, Wolf &amp; Wolf (roofing &amp; exteriors, Seattle&rsquo;s Eastside)
               </p>
               <p className="text-sm text-slate-500">
-                His bid writer was built from and tested against 600+ of his own past bids.
+                His bid writer was built from all 745 of his past bids and tested against 80 of them.
               </p>
             </Reveal>
           </div>
