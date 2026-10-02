@@ -37,8 +37,8 @@ const Insights: React.FC = () => {
     e.preventDefault();
     setIsSubmitting(true);
     try {
-      const webhookUrl = 'https://services.leadconnectorhq.com/hooks/q4adJN1peFzHlHvxv37q/webhook-trigger/5f2a6926-db9d-45df-bc6f-2bc97f872458';
-      const response = await fetch(webhookUrl, {
+      // Airtable CRM via our own route (replaced the GoHighLevel inbound webhook, 2026-09-30)
+      const response = await fetch('/api/subscribe', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
