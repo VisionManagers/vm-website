@@ -9,6 +9,39 @@ import {
 import { Calculator, Check, ArrowRight, Sprout } from 'lucide-react';
 import type { CaseStudy } from '../types';
 
+/* THE COLLECTION — the three paintings that used to hang on the sales pages (Home,
+   /partner, /expansion-os). Moved here 2026-10-05 on Suk's ruling (9/30): the craft
+   stays on every page; the wall text belongs in the Lab. Nothing deleted. */
+const PAINTINGS = [
+  {
+    src: '/images/art/grande-jatte.webp',
+    alt: 'Georges Seurat, A Sunday on La Grande Jatte — 1884: Parisians at rest on an island in the Seine, painted in fine dots of colour',
+    eyebrow: 'The longer view',
+    title: 'The point was never the technology.',
+    p1: 'A Sunday afternoon on an island in the Seine. Ordinary people doing nothing in particular — and a painter free to spend two years rendering them, dot by dot, because someone decided that was worth the time. It hangs in Chicago still.',
+    p2: 'That’s the world worth building toward: people whose hours belong to them, work made freely, and the good of it kept for whoever comes next. Automation is a means. The end is the time it hands back.',
+    work: 'A Sunday on La Grande Jatte — 1884', artist: 'Georges Seurat, 1884–86', museum: 'Art Institute of Chicago · Public domain',
+  },
+  {
+    src: '/images/art/ancient-rome.webp',
+    alt: "Giovanni Paolo Panini, Ancient Rome — a picture gallery whose walls are covered with paintings of Rome's monuments, with figures studying them",
+    eyebrow: 'Why the seat, and not a project',
+    title: 'Panini painted the whole room at once.',
+    p1: 'Every monument in Rome, gathered onto four walls so a visitor could stand in one place and see how it all related. Nobody could get that view by walking the city. Someone had to assemble it deliberately, and then you needed a guide who had already spent years in the room.',
+    p2: 'A project gives you one monument. The ongoing seat gives you the room — and someone standing in it with you every week, who remembers what you decided last quarter and why.',
+    work: 'Ancient Rome', artist: 'Giovanni Paolo Panini, 1757', museum: 'The Metropolitan Museum of Art · Public domain',
+  },
+  {
+    src: '/images/art/painting-party.webp',
+    alt: 'Kawanabe Kyōsai, Calligraphy and Painting Party, 1880 — a crowded room of artists making work side by side',
+    eyebrow: 'Why a room, and not a course',
+    title: 'Everyone here is making something.',
+    p1: 'In 1880 Kyōsai painted a calligraphy and painting party: a room full of artists working side by side, watching each other, borrowing what worked. Nobody is spectating. That is the whole difference between a room and an audience.',
+    p2: 'Expansion OS is eight seats, and you watch seven other businesses get built alongside yours. Half the education is seeing someone else solve a problem you haven’t hit yet.',
+    work: 'Calligraphy and Painting Party', artist: 'Kawanabe Kyōsai, 1880', museum: 'Cleveland Museum of Art · Public domain',
+  },
+];
+
 // Case studies — add real engagements here as they're completed.
 // Template:
 // {
@@ -464,6 +497,36 @@ const TheLab: React.FC = () => {
                   ) : (
                     <p className="eyebrow text-slate-500">{item.hint}</p>
                   )}
+                </Reveal>
+              ))}
+            </div>
+          </section>
+
+          {/* ─── THE COLLECTION — three paintings, and why the work matters ─── */}
+          <section id="collection" className="scroll-mt-28">
+            <Reveal className="text-center mb-14">
+              <Eyebrow className="text-accent mb-4">The collection</Eyebrow>
+              <h2 className="text-3xl md:text-4xl font-serif text-vmNavy mb-4">Three paintings, and why the work matters.</h2>
+              <p className="text-slate-500 max-w-xl mx-auto">
+                These used to hang on the sales pages. They live here now, on purpose: the craft
+                stays on every page; the wall text belongs in the Lab.
+              </p>
+            </Reveal>
+            <div className="grid md:grid-cols-3 gap-10">
+              {PAINTINGS.map((a, i) => (
+                <Reveal key={a.work} delay={i * 100} className="flex flex-col">
+                  <figure className="art-framed mb-6">
+                    <img src={a.src} alt={a.alt} loading="lazy" />
+                  </figure>
+                  <Eyebrow className="text-accent mb-3">{a.eyebrow}</Eyebrow>
+                  <h3 className="text-xl font-serif text-vmNavy mb-4 leading-snug">{a.title}</h3>
+                  <p className="text-sm text-slate-600 leading-relaxed mb-3">{a.p1}</p>
+                  <p className="text-sm text-slate-500 leading-relaxed mb-5">{a.p2}</p>
+                  <figcaption className="art-placard mt-auto">
+                    <p className="text-sm text-vmNavy placard-title">{a.work}</p>
+                    <p className="text-sm text-slate-500 mt-0.5">{a.artist}</p>
+                    <p className="text-xs text-slate-500 mt-1.5">{a.museum}</p>
+                  </figcaption>
                 </Reveal>
               ))}
             </div>

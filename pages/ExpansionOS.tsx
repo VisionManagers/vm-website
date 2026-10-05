@@ -205,48 +205,6 @@ const ExpansionOS: React.FC = () => {
           </div>
         </section>
 
-        {/* ─── THE ROOM — Kyōsai ─── */}
-        <section className="py-24 bg-vmCream">
-          <div className="max-w-6xl mx-auto px-6">
-            <div className="grid md:grid-cols-12 gap-12 md:gap-16 items-center">
-              <Reveal className="md:col-span-5">
-                <figure className="art-framed">
-                  <img
-                    src="/images/art/painting-party.webp"
-                    alt="Kawanabe Kyōsai, Calligraphy and Painting Party, 1880 — a crowded room of artists making work side by side"
-                    loading="lazy"
-                  />
-                </figure>
-              </Reveal>
-              <div className="md:col-span-7">
-                <Reveal>
-                  <Eyebrow className="text-accent mb-5">Why a room, and not a course</Eyebrow>
-                  <h2 className="text-3xl md:text-4xl font-serif text-vmNavy mb-6 leading-snug">
-                    Everyone here is
-                    <br />
-                    <span className="italic">making something.</span>
-                  </h2>
-                  <p className="text-lg text-slate-600 leading-relaxed mb-6">
-                    In 1880 Kyōsai painted a calligraphy and painting party: a room full of artists
-                    working side by side, watching each other, borrowing what worked. Nobody is
-                    spectating. That is the whole difference between a room and an audience.
-                  </p>
-                  <p className="text-slate-500 leading-relaxed mb-8">
-                    Eight seats, and you watch seven other businesses get built alongside yours.
-                    Half the education is seeing someone else solve a problem you haven’t hit yet.
-                  </p>
-                  <figcaption className="art-placard">
-                    <p className="eyebrow text-slate-500 mb-2">From the collection</p>
-                    <p className="text-sm text-vmNavy placard-title">Calligraphy and Painting Party</p>
-                    <p className="text-sm text-slate-500 mt-0.5">Kawanabe Kyōsai, 1880</p>
-                    <p className="text-xs text-slate-500 mt-1.5">Cleveland Museum of Art · Public domain</p>
-                  </figcaption>
-                </Reveal>
-              </div>
-            </div>
-          </div>
-        </section>
-
         {/* ─── FIT ─── */}
         <section className="py-24 bg-white">
           <div className="max-w-5xl mx-auto px-6">

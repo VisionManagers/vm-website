@@ -2,8 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import SEO from '../components/SEO';
 import { BOOKING_URLS } from '../constants';
-import { Reveal, buttonPrimary, buttonTealOnNavy } from '../components/ornaments';
-import SoundDock from '../components/SoundDock';
+import { Reveal, buttonPrimary, } from '../components/ornaments';
 import { ChevronRight, ArrowRight, PhoneCall, TrendingUp, Music } from 'lucide-react';
 
 /* Drop the licensed/commissioned choir clip in /public and set this to its path
@@ -104,9 +103,6 @@ const AIVoice: React.FC = () => {
       />
 
       <div ref={rootRef} data-aesthetic="solar" className="bg-vmCream">
-
-        {/* Opt-in soundscape chooser (shared with the Museum) */}
-        <SoundDock />
 
         {/* ─── Staged hero — the homage to the human voice ─── */}
         <section ref={scrollerRef} className="voice-scroller">
@@ -246,35 +242,6 @@ const AIVoice: React.FC = () => {
 
             <Reveal className="text-center mt-10">
               <p className="text-sm text-slate-500">Coaching, not therapy — we keep that line clear.</p>
-            </Reveal>
-          </div>
-        </section>
-
-        {/* ─── Doorway into the Museum of Sound ─── */}
-        <section className="relative dark-chapter overflow-hidden">
-          <img
-            src="/images/vm/cathedral-dome.jpg"
-            alt=""
-            aria-hidden
-            className="chapter-img absolute inset-0 w-full h-full object-cover"
-            loading="lazy"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-[#0A1722]/80 via-[#0A1722]/72 to-[#0A1722]/88" />
-          <div className="relative z-10 max-w-4xl mx-auto px-6 py-28 md:py-36 text-center">
-            <Reveal>
-              <span className="eyebrow voice-eyebrow text-vmGold mb-6">The thinking behind the work</span>
-              <h2 className="font-serif text-vmCream text-3xl md:text-5xl leading-tight mb-6">
-                We take the human voice seriously —<br />
-                <span className="italic text-white">seriously enough to build it a museum.</span>
-              </h2>
-              <p className="text-white/70 leading-relaxed max-w-2xl mx-auto mb-10">
-                From Gregorian chant to birdsong to the model that now speaks back: a short walk through
-                where voice comes from, and how everything we’ve learned from it flows into the
-                conversations we design. Including the ones that answer your phone.
-              </p>
-              <Link to="/sound" className={buttonTealOnNavy}>
-                Step into the Museum of Sound <ChevronRight className="w-4 h-4" />
-              </Link>
             </Reveal>
           </div>
         </section>

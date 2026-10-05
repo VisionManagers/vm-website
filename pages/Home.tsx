@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 import SEO from '../components/SEO';
 import { TESTIMONIALS, BOOKING_URLS } from '../constants';
 import {
-  Reveal, Eyebrow, LeafMark, VineDivider, LaurelSprig, SectionNumber, Constellation,
-  buttonPrimary, buttonSecondary, buttonTealOnNavy,
+  Reveal, Eyebrow, VineDivider, LaurelSprig, SectionNumber, Constellation,
+  buttonPrimary, buttonSecondary,
 } from '../components/ornaments';
 import {
   ChevronRight, ArrowRight, ArrowUpRight,
@@ -77,44 +77,14 @@ const STEPS = [
   },
 ];
 
-/* Capabilities are SHOWN, never led with (offer-ladder positioning, rev. 2026-09-10).
-   Voice sits among the others deliberately: it's a strong capability and a poor
-   front door — commoditized, and not the work worth being hired for. */
-const BUILDS = [
-  {
-    title: 'Data and reporting systems',
-    desc: 'The numbers assembled once, automatically, instead of rebuilt by hand every month. One team lead was losing one to two full days a month to that.',
-  },
-  {
-    title: 'Automation for the repetitive work',
-    desc: 'Measurements in, formatted bids out — in your layout, not a generic one. Intake, qualification, CRM updates, the follow-up that never happens.',
-  },
-  {
-    title: 'Knowledge out of people’s heads',
-    desc: 'The SOPs, the training, the answers that currently live in one person and walk out when they do. Turned into something the whole team can ask.',
-  },
-  {
-    title: 'Marketing that converts what you already get',
-    desc: 'Most sites lose the visitor before the form. Fixing the buying journey usually beats buying more traffic — and it’s cheaper.',
-  },
-  {
-    title: 'Voice agents that answer and book',
-    desc: 'Every call answered, every hour, in your language — with the compliance posture healthcare demands. Whether it’s your first fix or your fifth is what the audit decides.',
-  },
-  {
-    title: 'Vendor and spend audits',
-    desc: 'What you’re paying for phones, connectivity and services, re-quoted through my supplier lanes. The audit is free — the supplier pays me — and any setup costs are quoted up front.',
-  },
-];
-
-/* Renders the vault ladder (offer-ladder.md + pricing-rules.md v1.3).
-   Rule 8: the website renders prices, it never defines them. */
+/* Renders the vault ladder (offer-ladder.md + pricing-rules.md v2.1).
+   Rule 8: the website renders prices, it never defines them. Three rows only
+   (audit §2, 9/30): free → $500 (the recommended first step, with its guarantee)
+   → the ongoing seat. Vendor audit + Expansion OS live on /solutions. */
 const LADDER = [
-  { price: 'Free', name: 'The Leak Audit', desc: 'Twelve leaks, your numbers, on your own.', to: '/leak-audit' },
-  { price: 'Free', name: 'Vendor & spend audit', desc: 'I re-quote what you already pay — my fee comes from the supplier. Setup costs, if any, quoted up front.', to: '/solutions' },
-  { price: '$500', name: 'AI Quick-Start', desc: 'One week. Dollar math, and one fix already live.', to: '/solutions' },
-  { price: '$7,500', name: 'Expansion OS', desc: 'Six months, eight seats. You build two systems with me.', to: '/expansion-os' },
-  { price: '$5,000/mo', name: 'Strategic AI Partner', desc: 'A weekly seat and a named roadmap. The whole picture.', to: '/partner' },
+  { price: 'Free', name: 'The Leak Audit', desc: 'Twelve leaks, your numbers, on your own. No email required.', to: '/leak-audit' },
+  { price: '$500', name: 'AI Quick-Start — the first step most people take', desc: 'One week: dollar math on paper and one fix already live. If it doesn’t end with a written map of your three biggest leaks and what each costs you, you don’t pay.', to: '/solutions' },
+  { price: '$5,000/mo', name: 'Strategic AI Partner', desc: 'A weekly seat and a named roadmap. The whole picture, owned.', to: '/partner' },
 ];
 
 /* Three lanes, each in that owner's language, each pointing at the leak they
@@ -262,10 +232,8 @@ const Home: React.FC = () => {
                 </p>
               </Reveal>
             </div>
-            {/* Poster removed 9/14 (Sukh: the arch artwork holds the space until the
-                60–90s video exists). To wire the video in: set HERO_STORY_VIDEO and
-                render <HeroPoster className="hidden lg:block w-72 shrink-0" /> here
-                plus a lg:hidden instance above the CTAs. */}
+            {/* The person above the fold (audit §2/§7, 9/30): for a solo practice the person is the product. */}
+            <HeroPoster className="hidden lg:block w-72 shrink-0" />
             </div>
           </div>
         </section>
@@ -317,56 +285,32 @@ const Home: React.FC = () => {
           </div>
         </section>
 
-        {/* ─── WHAT GETS BUILT — capability, shown not led with ─── */}
-        <section className="py-24 bg-vmCream">
-          <div className="max-w-6xl mx-auto px-6">
-            <Reveal className="max-w-2xl mb-16">
-              <Eyebrow className="text-accent mb-4">What actually gets built</Eyebrow>
-              <h2 className="text-3xl md:text-4xl font-serif text-vmNavy mb-5 leading-snug">
-                The six systems I build most.
-              </h2>
-              <p className="text-slate-500">
-                Which of these you need is what the audit decides. Most owners guess wrong about
-                their own list — it’s almost never the thing they came in asking for.
-              </p>
+        {/* ─── WHO IT'S FOR — the wider door, on a Morris ground ─── */}
+        <section
+          className="py-28 bg-white art-ground"
+          style={{ '--art-ground-img': "url('/images/art/windrush.webp')" } as React.CSSProperties}
+        >
+          <div className="max-w-7xl mx-auto px-6">
+            <Reveal className="text-center mb-16 max-w-2xl mx-auto">
+              <Eyebrow className="text-accent mb-4">Who it’s for</Eyebrow>
+              <h2 className="text-4xl md:text-5xl font-serif text-vmNavy mb-5">Which one is you?</h2>
+              <p className="text-slate-500">Three kinds of businesses, the same 12 leaks — yours just leak in a different order.</p>
             </Reveal>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-11">
-              {BUILDS.map((b, i) => (
-                <Reveal key={b.title} delay={(i % 3) * 80}>
-                  <LeafMark className="w-5 h-5 text-accent mb-4" />
-                  <h3 className="text-lg font-serif text-vmNavy mb-3 leading-snug">{b.title}</h3>
-                  <p className="text-sm text-slate-600 leading-relaxed">{b.desc}</p>
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+              {LANES.map((lane, i) => (
+                <Reveal key={lane.title} delay={i * 80} className="p-8 bg-vmCream/70 border border-slate-100 rounded-sm flex flex-col">
+                  <lane.Icon className="w-8 h-8 text-vmNavy mb-6" aria-hidden strokeWidth={1.4} />
+                  <h3 className="text-xl font-serif text-vmNavy mb-4">{lane.title}</h3>
+                  {lane.lines.map((line) => (
+                    <p key={line} className="text-sm text-slate-600 leading-relaxed mb-3">{line}</p>
+                  ))}
+                  <Link to={lane.to} className="mt-auto pt-3 inline-flex items-center gap-2 text-sm font-semibold text-vmNavy hover:text-vmTeal transition-colors">
+                    {lane.label} <ArrowRight className="w-4 h-4" />
+                  </Link>
                 </Reveal>
               ))}
             </div>
-          </div>
-        </section>
-
-        {/* ─── DARK CHAPTER — the reframe, over the cathedral ─── */}
-        <section className="relative dark-chapter overflow-hidden">
-          <img
-            src="/images/vm/cathedral-dome.jpg"
-            alt="The frescoed dome of Santa Maria Maggiore, Rome"
-            className="chapter-img absolute inset-0 w-full h-full object-cover"
-            loading="lazy"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-[#0A1722]/85 via-[#0A1722]/70 to-[#0A1722]/92" />
-          <div className="relative z-10 max-w-4xl mx-auto px-6 py-32 md:py-44 text-center">
-            <Reveal>
-              <Eyebrow className="text-vmGold mb-8">The shift</Eyebrow>
-              <h2 className="font-serif text-3xl md:text-5xl text-vmCream leading-[1.18] mb-10">
-                You don’t have an AI problem.
-                <br />
-                <span className="italic text-white">You have an unconnected-data problem.</span>
-              </h2>
-              <p className="text-lg text-white/70 leading-relaxed max-w-2xl mx-auto">
-                Every business runs on a hidden network — contacts, calls, records, and the
-                relationships between them. Most of it sits in pieces, unseen and unworked.
-                Connected into one map, it shows you where the money is leaking and what to fix
-                first. That map is what we build.
-              </p>
-            </Reveal>
           </div>
         </section>
 
@@ -406,35 +350,6 @@ const Home: React.FC = () => {
           </div>
         </section>
 
-        {/* ─── WHO IT'S FOR — the wider door, on a Morris ground ─── */}
-        <section
-          className="py-28 bg-white art-ground"
-          style={{ '--art-ground-img': "url('/images/art/windrush.webp')" } as React.CSSProperties}
-        >
-          <div className="max-w-7xl mx-auto px-6">
-            <Reveal className="text-center mb-16 max-w-2xl mx-auto">
-              <Eyebrow className="text-accent mb-4">Who it’s for</Eyebrow>
-              <h2 className="text-4xl md:text-5xl font-serif text-vmNavy mb-5">Which one is you?</h2>
-              <p className="text-slate-500">Three kinds of businesses, the same 12 leaks — yours just leak in a different order.</p>
-            </Reveal>
-
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-              {LANES.map((lane, i) => (
-                <Reveal key={lane.title} delay={i * 80} className="p-8 bg-vmCream/70 border border-slate-100 rounded-sm flex flex-col">
-                  <lane.Icon className="w-8 h-8 text-vmNavy mb-6" aria-hidden strokeWidth={1.4} />
-                  <h3 className="text-xl font-serif text-vmNavy mb-4">{lane.title}</h3>
-                  {lane.lines.map((line) => (
-                    <p key={line} className="text-sm text-slate-600 leading-relaxed mb-3">{line}</p>
-                  ))}
-                  <Link to={lane.to} className="mt-auto pt-3 inline-flex items-center gap-2 text-sm font-semibold text-vmNavy hover:text-vmTeal transition-colors">
-                    {lane.label} <ArrowRight className="w-4 h-4" />
-                  </Link>
-                </Reveal>
-              ))}
-            </div>
-          </div>
-        </section>
-
         {/* ─── THE LADDER — how people actually work with me ─── */}
         <section className="py-24 bg-white">
           <div className="max-w-5xl mx-auto px-6">
@@ -444,7 +359,7 @@ const Home: React.FC = () => {
                 Start small. Expand when the numbers prove it.
               </h2>
               <p className="text-slate-500">
-                Two of these cost nothing. Most people start at $500 and expand only once the
+                The first one costs nothing. Most people start at $500 and expand only once the
                 numbers say so — nobody signs the top rung cold.
               </p>
             </Reveal>
@@ -475,7 +390,8 @@ const Home: React.FC = () => {
             <Reveal className="mt-10">
               <p className="text-sm text-slate-500 max-w-2xl leading-relaxed">
                 Prices are what they are on every call — you shouldn’t have to get on the phone to
-                find out whether you can afford to talk to me.
+                find out whether you can afford to talk to me. Fixed-price builds, the free vendor
+                audit and Expansion OS are on the <Link to="/solutions" className="text-vmNavy font-semibold hover:text-vmTeal">work-with-me page</Link>.
               </p>
             </Reveal>
           </div>
@@ -553,86 +469,6 @@ const Home: React.FC = () => {
                   </div>
                 </Reveal>
               ))}
-            </div>
-          </div>
-        </section>
-
-        {/* ─── CASUAL INTELLIGENCE BAND ─── */}
-        <section className="py-20 bg-white">
-          <div className="max-w-5xl mx-auto px-6">
-            <Reveal className="relative overflow-hidden bg-vmNavy rounded-sm">
-              {/* Hokusai's Prussian blue sits almost exactly on the VM palette —
-                  used here as texture inside the navy, not as a picture. */}
-              <img
-                src="/images/art/great-wave.webp"
-                alt=""
-                aria-hidden
-                loading="lazy"
-                className="absolute inset-0 w-full h-full object-cover opacity-[0.24] mix-blend-screen"
-              />
-              <div className="absolute inset-0 bg-gradient-to-r from-vmNavy via-vmNavy/88 to-vmNavy/25" />
-              <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8 p-10 md:p-12">
-                <div>
-                  <Eyebrow className="text-vmMarigold mb-3">Season 2 · starts Sept 30</Eyebrow>
-                  <h3 className="text-2xl font-serif text-white mb-2">Casual Intelligence</h3>
-                  <p className="text-white/60 text-sm max-w-md leading-relaxed">
-                    The Wednesday roundtable where operators show the systems they actually run —
-                    live builds, real numbers, no pitches. Season 2 is a founding membership:
-                    $79/mo, first ten seats locked for life.
-                  </p>
-                </div>
-                <Link to="/ci" className={buttonTealOnNavy}>
-                  See Season 2 <ArrowRight className="w-4 h-4" />
-                </Link>
-              </div>
-            </Reveal>
-          </div>
-        </section>
-
-        {/* ─── THE LONGER VIEW — a featured work, and why the work matters ─── */}
-        <section className="py-28 bg-vmCream">
-          <div className="max-w-6xl mx-auto px-6">
-            <div className="grid md:grid-cols-12 gap-12 md:gap-16 items-center">
-              <Reveal className="md:col-span-7">
-                <figure className="art-framed">
-                  <img
-                    src="/images/art/grande-jatte.webp"
-                    alt="Georges Seurat, A Sunday on La Grande Jatte — 1884: Parisians at rest on an island in the Seine, painted in fine dots of colour"
-                    loading="lazy"
-                  />
-                </figure>
-              </Reveal>
-
-              <div className="md:col-span-5">
-                <Reveal>
-                  <Eyebrow className="text-accent mb-5">The longer view</Eyebrow>
-                  <h2 className="text-3xl md:text-4xl font-serif text-vmNavy mb-6 leading-snug">
-                    The point was never
-                    <br />
-                    <span className="italic">the technology.</span>
-                  </h2>
-                  <p className="text-lg text-slate-600 leading-relaxed mb-6">
-                    A Sunday afternoon on an island in the Seine. Ordinary people doing nothing in
-                    particular — and a painter free to spend two years rendering them, dot by dot,
-                    because someone decided that was worth the time. It hangs in Chicago still.
-                  </p>
-                  <p className="text-slate-500 leading-relaxed mb-8">
-                    That’s the world worth building toward: people whose hours belong to them, work
-                    made freely, and the good of it kept for whoever comes next. Automation is a
-                    means. The end is the time it hands back.
-                  </p>
-                  <figcaption className="art-placard">
-                    <p className="eyebrow text-slate-500 mb-2">From the collection</p>
-                    <p className="text-sm text-vmNavy placard-title">
-                      A Sunday on La Grande Jatte — 1884
-                    </p>
-                    <p className="text-sm text-slate-500 mt-0.5">Georges Seurat, 1884–86</p>
-                    <p className="text-xs text-slate-500 mt-1.5">
-                      Art Institute of Chicago · Public domain
-                    </p>
-                  </figcaption>
-                </Reveal>
-              </div>
             </div>
           </div>
         </section>
