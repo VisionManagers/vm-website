@@ -1,23 +1,19 @@
 # Vision Managers
 
-> AI for High-Trust Businesses
+> Most businesses are leaking $100K+ a year. Vision Managers finds the leaks, then builds the systems that close them — one person accountable.
 
-Vision Managers builds and deploys Voice AI concierge systems for healthcare practices, offers hands-on AI training for individuals and teams, and helps businesses discover where AI and automation create the most value.
+Vision Managers (Suk Virk, Seattle's Eastside) works with owners of real, revenue-generating businesses — practices, trades, agencies, recruiting, legal, insurance, coaching, and portfolio operators. The money goes out through missed calls, follow-up that never happens, work still done by hand, and knowledge trapped in one person's head. AI is how the fix gets built; it isn't the point.
 
-## Services
+## How to work with us (prices as published on the site)
 
-- **Voice AI Concierge** (Primary): 24/7 AI-powered phone reception for healthcare practices. Answers every call, books appointments, handles patient FAQs, and escalates to staff. HIPAA-conscious, natural-sounding, live in 10–14 days. Flat monthly fee, no per-call charges.
-- **AI Training**: Practical, hands-on AI training that takes people from zero to AI-native in 3 hours. 1-on-1, group workshops, or corporate training. Guaranteed outcomes.
-- **Free Discovery Call**: 20-minute call to map your workflows, identify where AI saves time and money, and get a clear next step. No commitment.
-
-## Industries Served
-
-- Dental practices
-- Optometry practices
-- Chiropractic offices
-- Med spas and dermatology
-- Other healthcare practices
-- Individuals and teams seeking AI training
+- **The Leak Audit** (free, self-serve): twelve leaks, your numbers, no email required. https://visionmanagers.com/leak-audit
+- **Vendor & spend audit** (free to the client): phones, software, AI services re-quoted; the fee comes from the supplier; any setup costs quoted up front.
+- **AI Quick-Start** ($500, one week): a 90-minute working session, an opportunity report with dollar math, and one quick win implemented the same week. Guarantee: if the week doesn't end with a written map of your three biggest leaks and what each costs you, you don't pay.
+- **Build Sprint** ($1,500–$4,500 fixed): voice agents, bid writers, automation, websites, data systems — every build ships with a monthly recovered-revenue report.
+- **Expansion OS** ($7,500, six months, eight seats): build two systems yourself, with guidance. https://visionmanagers.com/expansion-os
+- **Strategic AI Partner** ($5,000/month, the only ongoing seat): a weekly strategic block, a named quarterly roadmap, monthly executive readout. https://visionmanagers.com/partner
+- **Casual Intelligence** ($79/month founding membership): the weekly roundtable where operators show how they actually use AI. https://visionmanagers.com/ci
+- **Book 20 minutes** (free): leave knowing your #1 leak and what it's worth. A working session, not a sales pitch.
 
 ## Proven Results
 
@@ -28,18 +24,22 @@ Vision Managers builds and deploys Voice AI concierge systems for healthcare pra
 
 ## Key Pages
 
-- [Home](https://visionmanagers.com/): Overview of Voice AI, training, and discovery services
-- [What is AI?](https://visionmanagers.com/ai): Plain-English guide for business owners + the free 20-minute discovery call (leave with your AI Opportunity Snapshot: your #1 AI opportunity sized in dollars, in writing, the next day)
-- [AI Voice](https://visionmanagers.com/ai-voice): Voice AI concierge product details
-- [Solutions](https://visionmanagers.com/solutions): Engagement model (Audit → Pilot → Deploy → Maintain)
-- [About](https://visionmanagers.com/about): Company background and founder
-- [The Lab](https://visionmanagers.com/lab): ROI calculator and AI guardrails
-- [Insights](https://visionmanagers.com/insights): Thought leadership and executive briefings
-- [Contact](https://visionmanagers.com/contact): Book a discovery call or send a message
+- [Home](https://visionmanagers.com/): the leak-first overview, proof, and the ladder of ways to work together
+- [The Leak Audit](https://visionmanagers.com/leak-audit): the free twelve-leak self-audit
+- [Work With Me](https://visionmanagers.com/solutions): Quick-Start → Build Sprint → Strategic AI Partner, with prices
+- [AI Voice](https://visionmanagers.com/ai-voice): designed voice agents for practices that miss calls when they're chairside
+- [Your Bid Bot](https://visionmanagers.com/bid-bot): a bid writer built from a contractor's own past bids
+- [72-Hour Market Test](https://visionmanagers.com/market-test): GO / REFRAME / KILL on a product idea, argued on evidence
+- [Strategic AI Partner](https://visionmanagers.com/partner): the $5,000/month ongoing seat
+- [Expansion OS](https://visionmanagers.com/expansion-os): the six-month build-it-yourself cohort
+- [The Lab](https://visionmanagers.com/lab): case studies, the workbench, and what we build in the open
+- [About](https://visionmanagers.com/about): the person accountable
+- [Insights](https://visionmanagers.com/insights): field notes written from engagements
+- [Contact](https://visionmanagers.com/contact): book 20 minutes or send a message
 
 ## Contact
 
 - Email: sukhneet@visionmanagers.com
 - Phone: (425) 494-4489
 - Website: https://visionmanagers.com
-- Book a call: https://api.leadconnectorhq.com/widget/booking/Fl8PjcBk3EG88tCPMwbn
+- Book 20 minutes: https://api.leadconnectorhq.com/widget/booking/u9ITLagwSXqANxwjhaAS

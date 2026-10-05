@@ -58,7 +58,7 @@ const Contact: React.FC = () => {
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-8 py-4 bg-vmNavy text-white rounded-sm font-semibold hover:shadow-xl transition-all group"
           >
-            Book a Call Now <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+            Book 20 minutes <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
           </a>
         </div>
       </div>
@@ -69,7 +69,7 @@ const Contact: React.FC = () => {
     <>
     <SEO
       title="Contact"
-      description="Book a free discovery call with Vision Managers. Learn how Voice AI can help your healthcare practice capture more patients. Email sukhneet@visionmanagers.com or call (425) 494-4489."
+      description="Book 20 minutes with Vision Managers and leave knowing your #1 revenue leak and what it’s worth. Email sukhneet@visionmanagers.com or call (425) 494-4489."
       path="/contact"
       jsonLd={{
         '@context': 'https://schema.org',
@@ -82,9 +82,9 @@ const Contact: React.FC = () => {
       <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-20">
         <div>
           <span className="eyebrow text-accent mb-6 block">Let's talk</span>
-          <h1 className="text-5xl font-serif text-vmNavy mb-8 leading-tight">Book a <br /><span className="italic">strategy call.</span></h1>
+          <h1 className="text-5xl font-serif text-vmNavy mb-8 leading-tight">Book <br /><span className="italic">20 minutes.</span></h1>
           <p className="text-xl text-slate-600 font-light leading-relaxed mb-8">
-            In 30 minutes we'll map your situation, show you where AI creates the most value, and give you a clear next step. A working session, not a sales pitch.
+            In 20 minutes we'll map where you're losing money, what it would take to fix it, and give you a clear next step. You leave knowing your #1 leak and what it's worth. A working session, not a sales pitch.
           </p>
 
           {/* Primary CTA — Booking */}
@@ -136,7 +136,7 @@ const Contact: React.FC = () => {
                 required
                 type="email"
                 className="w-full p-4 bg-white border border-slate-200 outline-none focus:border-vmTeal transition-colors"
-                placeholder="jane@yourpractice.com"
+                placeholder="jane@yourcompany.com"
                 value={formData.email}
                 onChange={(e) => setFormData({...formData, email: e.target.value})}
               />
@@ -174,9 +174,10 @@ const Contact: React.FC = () => {
               onChange={(e) => setFormData({...formData, interest: e.target.value})}
             >
               <option value="">Select one (optional)</option>
-              <option value="voice-ai">Voice AI for my practice</option>
-              <option value="ai-training">AI Training (for me or my team)</option>
-              <option value="automation">AI & automation strategy</option>
+              <option value="practice">A practice — we miss calls when we're chairside</option>
+              <option value="trades">A trades or construction business — bids and follow-up</option>
+              <option value="firm">A firm — agency, recruiting, legal, insurance, coaching</option>
+              <option value="portfolio">Several businesses — I run a group or portfolio</option>
               <option value="unsure">Not sure yet — help me figure it out</option>
             </select>
           </div>
