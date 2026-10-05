@@ -145,52 +145,6 @@ const Partner: React.FC = () => {
           </div>
         </section>
 
-        {/* ─── THE LONG VIEW — Panini ─── */}
-        <section className="py-24 bg-vmCream">
-          <div className="max-w-6xl mx-auto px-6">
-            <div className="grid md:grid-cols-12 gap-12 md:gap-16 items-center">
-              <Reveal className="md:col-span-7">
-                <figure className="art-framed">
-                  <img
-                    src="/images/art/ancient-rome.webp"
-                    alt="Giovanni Paolo Panini, Ancient Rome — a picture gallery whose walls are covered with paintings of Rome's monuments, with figures studying them"
-                    loading="lazy"
-                  />
-                </figure>
-              </Reveal>
-              <div className="md:col-span-5">
-                <Reveal>
-                  <Eyebrow className="text-accent mb-5">Why the seat, and not a project</Eyebrow>
-                  <h2 className="text-3xl md:text-4xl font-serif text-vmNavy mb-6 leading-snug">
-                    Panini painted the
-                    <br />
-                    <span className="italic">whole room at once.</span>
-                  </h2>
-                  <p className="text-lg text-slate-600 leading-relaxed mb-6">
-                    Every monument in Rome, gathered onto four walls so a visitor could stand in
-                    one place and see how it all related. Nobody could get that view by walking
-                    the city. Someone had to assemble it deliberately, and then you needed a guide
-                    who had already spent years in the room.
-                  </p>
-                  <p className="text-slate-500 leading-relaxed mb-8">
-                    A project gives you one monument. This gives you the room — and someone
-                    standing in it with you every week, who remembers what you decided last
-                    quarter and why.
-                  </p>
-                  <figcaption className="art-placard">
-                    <p className="eyebrow text-slate-500 mb-2">From the collection</p>
-                    <p className="text-sm text-vmNavy placard-title">Ancient Rome</p>
-                    <p className="text-sm text-slate-500 mt-0.5">Giovanni Paolo Panini, 1757</p>
-                    <p className="text-xs text-slate-500 mt-1.5">
-                      The Metropolitan Museum of Art · Public domain
-                    </p>
-                  </figcaption>
-                </Reveal>
-              </div>
-            </div>
-          </div>
-        </section>
-
         {/* ─── WHO IT'S FOR / NOT FOR ─── */}
         <section className="py-24 bg-white">
           <div className="max-w-5xl mx-auto px-6 grid md:grid-cols-2 gap-14">
