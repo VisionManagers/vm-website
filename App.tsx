@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from 'react-router-dom';
+import { Analytics } from './lib/track';
 import Home from './pages/Home';
 import StartHere from './pages/StartHere';
 import Solutions from './pages/Solutions';
@@ -47,6 +48,7 @@ const App: React.FC = () => {
   return (
     <Router>
       <ScrollToTop />
+      <Analytics />
       <div className="flex flex-col min-h-screen relative">
         <Header />
 

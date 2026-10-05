@@ -33,7 +33,7 @@
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-    gtag('config', 'G-F5HM4G07JF');
+    gtag('config', 'G-F5HM4G07JF', { send_page_view: false }); // SPA page_view is sent on each route change (lib/track.ts)
   </script>
 
   <!-- LeadConnector Chat Widget -->
