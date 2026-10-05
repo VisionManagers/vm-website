@@ -1,6 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import SEO from '../components/SEO';
+import { track } from '../lib/track';
 import { Reveal, Eyebrow, buttonPrimary, buttonSecondary } from '../components/ornaments';
 import { ArrowRight, ArrowLeft, ChevronRight, Check, Search } from 'lucide-react';
 import { BOOKING_URLS } from '../constants';
@@ -304,10 +305,15 @@ const LeakAudit: React.FC = () => {
     const t = BIZ_TYPES.find((b) => b.id === id);
     if (t) setPicked(t.lead);
     setStep('pick');
+    track('leak_audit_start', { biz_type: id });
   };
 
   const current = questions[qIndex];
-  const next = () => (qIndex + 1 < questions.length ? setQIndex(qIndex + 1) : setStep('result'));
+  const next = () => {
+    if (qIndex + 1 < questions.length) return setQIndex(qIndex + 1);
+    setStep('result');
+    track('leak_audit_complete', { biz_type: bizType, total: Math.round(total), leaks: picked.length });
+  };
   const back = () => (qIndex === 0 ? setStep('pick') : setQIndex(qIndex - 1));
 
   /* Hands the finished audit to the existing lab engine, which writes the
@@ -330,6 +336,7 @@ const LeakAudit: React.FC = () => {
         }),
       });
       setStep('sent');
+      track('leak_audit_sent', { biz_type: bizType, total: Math.round(total) });
     } catch (err) {
       setSendError(err instanceof Error ? err.message : 'Something went wrong — try again?');
     } finally {
