@@ -237,6 +237,25 @@ const BidBot: React.FC = () => {
           </div>
         </section>
 
+        {/* ─── RUN A BID — the lane's free tool (lead-magnets-plan #1) ─── */}
+        <section className="py-20 bg-white">
+          <div className="max-w-5xl mx-auto px-6">
+            <Reveal className="p-8 md:p-10 bg-vmCream border border-slate-200 rounded-sm md:flex md:items-center md:justify-between md:gap-10">
+              <div className="max-w-xl">
+                <Eyebrow className="text-accent mb-3">Free · under a minute</Eyebrow>
+                <h2 className="text-2xl md:text-3xl font-serif text-vmNavy mb-3 leading-snug">Is your last bid making you money?</h2>
+                <p className="text-slate-600 leading-relaxed">
+                  Type one real bid in from the truck. You get what it actually earns, what it should have gone
+                  out at, and how many hours a year bids like it are eating. No email needed for your number.
+                </p>
+              </div>
+              <Link to="/tools/bid-calculator" className={buttonPrimary + ' mt-6 md:mt-0 shrink-0'}>
+                Run a bid <ChevronRight className="w-4 h-4" />
+              </Link>
+            </Reveal>
+          </div>
+        </section>
+
         {/* ─── PRICE ─── */}
         <section className="py-24 bg-vmCream">
           <div className="max-w-5xl mx-auto px-6">

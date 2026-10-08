@@ -107,3 +107,12 @@ Every new figure added to the site gets a row here first.
 
 | **"Over 700 calls so far" · "about 90 potential patients a month"** (replaces the bare 752) | Lab card (eye care) metric + first result, Home, AIVoice + stat trio, llms.txt | WIN, understated + MATH | Suk 9/25: "make the card say over 700 so far" — deliberate understatement that also absorbs the 1/2 test-batch question (730 or 752, both "over 700"). Per-month: 730–752 ÷ 8 months (live 2026-01-26 → 09-25) = 91–94 → "about 90." "Potential patients" is Suk's framing; callers include some non-patients (pharmacies, spam, the front desk itself, repeat callers), which is why it's "about" and "potential," never "90 new patients." Refresh the 700+ each Lab pass; the monthly rate is the stable number. |
 | **Your Bid Bot — Standard band from $1,000** (was $750 on the page; Heavy $1,500 · Anchor $2,250+ unchanged) | /bid-bot band table, closing line, SEO description | PRICE | `10-Strategy/pricing-rules.md` **v1.9** (Suk 2026-09-18: "the baseline for bid bot is 1000 starting"). Wolf & Wolf's $750 stands as the delivered founding price (Lab card). ⚠️ `public/downloads/your-bid-bot.pdf` still prints $750 — regenerate from its source before linking it again. |
+
+## Added 2026-10-07 (the Bid Calculator — /tools/bid-calculator)
+
+| Figure | Where | Type | Source |
+|---|---|---|---|
+| **50% gross-profit floor** | Bid Calculator verdict + "charge this" cards | STAT (benchmark, credited) | The Contractor Fight, "What Should You Charge" (thecontractorfight.com/what-should-you-charge) — named on the page as a rule of thumb, not a law. |
+| **Per-trade fallback numbers** (e.g. roof replacement: $9,000 materials · 60 crew hours · $55/hr · $500 subs; overhead $18,000/mo) | `lib/bid.ts` TRADES — only used when the visitor clicks "I don't know" and then **labelled as ours** on the result | MATH (illustrative fallbacks) | Order-of-magnitude defaults chosen so the math runs; never presented as market facts. The visitor's own numbers always win (leak-audit rule). Revisit once n≥30 real runs exist. |
+| **745 bids · within 4.7%** (the bridge line) | Bid Calculator result | Build fact (ours) | Existing rows (Wolf & Wolf, 9/17). |
+| **"ten to fifteen minutes each, up to an hour"** | Bid Calculator result | Client's own BEFORE (VoC) | Existing row (Chris Wolf, 9/17). |
