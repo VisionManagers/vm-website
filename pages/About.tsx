@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import SEO from '../components/SEO';
 import { BOOKING_URLS } from '../constants';
 import {
@@ -43,7 +44,7 @@ const About: React.FC = () => {
                 </Reveal>
                 <Reveal delay={160}>
                   <p className="text-lg text-slate-600 leading-relaxed max-w-xl">
-                    I’m Sukhneet — Sukh. I sit on your side of the table, learn how your business
+                    I’m Sukhneet — everyone calls me Suk. I sit on your side of the table, learn how your business
                     actually moves, and stay accountable from the first call to the number at the
                     end. If AI isn’t the answer, I’ll tell you that too.
                   </p>
@@ -51,7 +52,7 @@ const About: React.FC = () => {
               </div>
               <Reveal className="md:col-span-5" delay={260}>
                 <div className="duotone-vm rounded-sm aspect-[4/5] max-w-xs mx-auto shadow-xl">
-                  <img src="/images/vm/sukh-portrait.jpg" alt="Sukhneet, founder of Vision Managers" loading="lazy" />
+                  <img src="/images/vm/sukh-portrait.jpg" alt="Sukhneet Virk, founder of Vision Managers" loading="lazy" />
                 </div>
               </Reveal>
             </div>
@@ -95,8 +96,8 @@ const About: React.FC = () => {
                     My research career runs through <span className="text-vmNavy font-medium">Facebook</span> and{' '}
                     <span className="text-vmNavy font-medium">CVS Health</span>, where my work shaped
                     experiences for over a million monthly users. My operating career is less typical:
-                    I’ve run a fire-mitigation company, led a nursing home through COVID, and grown a
-                    family optometry practice 200% in under a year.
+                    I’ve run a fire-mitigation company, led a 117-bed nursing home through COVID, and grown a
+                    family optometry practice 200% in ten months.
                   </p>
                   <p className="text-slate-600 leading-relaxed">
                     That combination is the whole point. Enterprise-grade method, applied by someone
@@ -151,7 +152,7 @@ const About: React.FC = () => {
           <div className="relative z-10 max-w-3xl mx-auto px-6 py-28 md:py-36 text-center">
             <Reveal>
               <p className="font-serif text-2xl md:text-4xl text-vmCream italic leading-snug">
-                “Working with Sukh is discovering value you didn’t know
+                “Working with Suk is discovering value you didn’t know
                 was sitting in your own business.”
               </p>
               <span className="block eyebrow not-italic text-vmGold mt-8">How past clients describe it</span>
@@ -183,16 +184,17 @@ const About: React.FC = () => {
               <VineDivider className="mx-auto mb-10 text-accent" />
               <h2 className="font-serif text-3xl md:text-4xl text-vmNavy italic mb-6">Let’s start a conversation.</h2>
               <p className="text-slate-600 mb-10 max-w-xl mx-auto">
-                Thirty minutes to map where you’re losing money, what it would take to fix it, and
-                whether I’m the right person to build it with you.
+                Twenty minutes to map where you’re losing money, what it would take to fix it, and
+                whether I’m the right person to build it with you. You leave knowing your #1 leak
+                and what it’s worth.
               </p>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                 <a href={BOOKING_URLS.DISCOVERY} target="_blank" rel="noopener noreferrer" className={buttonPrimary}>
-                  Start a conversation <ChevronRight className="w-4 h-4" />
+                  Book 20 minutes <ChevronRight className="w-4 h-4" />
                 </a>
-                <a href="/solutions" className={buttonSecondary}>
+                <Link to="/solutions" className={buttonSecondary}>
                   See how it works <ArrowRight className="w-4 h-4" />
-                </a>
+                </Link>
               </div>
               <p className="mt-6 text-xs text-slate-500">A working session, not a sales pitch.</p>
             </Reveal>

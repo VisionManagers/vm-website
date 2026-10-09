@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import SEO from '../components/SEO';
-import { ChevronRight, FileText, ClipboardList, PenTool, CheckCircle2, Loader2, Send, Lock } from 'lucide-react';
+import { ChevronRight, FileText, ClipboardList, PenTool, CheckCircle2, Loader2, Send } from 'lucide-react';
 import { getPublishedPosts } from '../lib/posts';
-import { useAuth } from '../lib/AuthContext';
 import type { InsightPost } from '../types';
 import type { LucideIcon } from 'lucide-react';
 
@@ -20,7 +19,6 @@ const TYPE_LABELS: Record<string, string> = {
 };
 
 const Insights: React.FC = () => {
-  const { user } = useAuth();
   const [email, setEmail] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -76,7 +74,7 @@ const Insights: React.FC = () => {
     <>
     <SEO
       title="Insights"
-      description="Executive-level intelligence on AI for high-trust businesses. Curated briefings, field notes, and analysis grounding AI in business reality."
+      description="Field notes on AI for business owners: what actually works, written from real engagements, not imagination."
       path="/insights"
     />
     <div className="pt-32 pb-20 px-6 min-h-screen bg-white" data-aesthetic="solar">
@@ -85,21 +83,14 @@ const Insights: React.FC = () => {
           <div className="max-w-2xl">
             <span className="eyebrow text-accent mb-6 block">Field notes &amp; briefings</span>
             <h1 className="text-5xl font-serif text-vmNavy mb-8 leading-tight">Insights.</h1>
-            <p className="text-xl text-slate-600 font-light">AI for high-trust businesses, grounded in what actually works. Written from engagements, not imagination.</p>
+            <p className="text-xl text-slate-600 font-light">AI for business owners, grounded in what actually works. Written from engagements, not imagination.</p>
           </div>
           <div className="hidden md:block text-right">
             <div className="flex gap-2 mb-2">
               {[...Array(30)].map((_, i) => <div key={i} className="w-[2px] h-10 bg-vmSlate group-hover:bg-vmTeal transition-colors" />)}
             </div>
-            <span className="text-xs text-slate-500 font-bold uppercase tracking-[0.3em]">Thought Leadership Archive</span>
-            <div className="mt-4">
-              <Link
-                to={user ? '/admin/posts' : '/admin/login'}
-                className="inline-flex items-center gap-1.5 text-xs text-slate-500 hover:text-vmTeal font-bold uppercase tracking-widest transition-colors"
-              >
-                <Lock className="w-3 h-3" /> {user ? 'Manage Posts' : 'Admin'}
-              </Link>
-            </div>
+            <span className="text-xs text-slate-500 font-bold uppercase tracking-[0.3em]">Field Notes</span>
+            {/* Admin entry removed from the public page (audit §8, 2026-09-30) — /admin/login still works by URL. */}
           </div>
         </header>
 

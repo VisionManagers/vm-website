@@ -199,9 +199,9 @@ const CapNotice: React.FC = () => (
       The bench resets tomorrow — or skip the wait and see these tools uncapped,
       wired into your real phone line, calendar, and numbers.
     </p>
-    <a href={BOOKING_URLS.BOOK} target="_blank" rel="noopener noreferrer"
+    <a href={BOOKING_URLS.DISCOVERY} target="_blank" rel="noopener noreferrer"
       className="inline-flex items-center gap-2 text-sm font-bold text-vmNavy hover:text-vmTeal transition-colors">
-      Book your 20-minute discovery call <ArrowRight className="w-4 h-4" />
+      Book 20 minutes <ArrowRight className="w-4 h-4" />
     </a>
   </div>
 );
@@ -800,8 +800,8 @@ const Workbench: React.FC = () => {
                     what runs every day.
                   </p>
                 </div>
-                <a href={BOOKING_URLS.BOOK} target="_blank" rel="noopener noreferrer" className={buttonPrimary}>
-                  Book your 20-minute discovery call <ArrowRight className="w-4 h-4" />
+                <a href={BOOKING_URLS.DISCOVERY} target="_blank" rel="noopener noreferrer" className={buttonPrimary}>
+                  Book 20 minutes <ArrowRight className="w-4 h-4" />
                 </a>
               </Reveal>
             </div>

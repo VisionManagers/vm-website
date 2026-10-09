@@ -1,5 +1,6 @@
 
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import SEO from '../components/SEO';
 import { ChevronRight, ArrowLeft, ArrowRight, Send, CheckCircle2, Loader2, AlertCircle } from 'lucide-react';
 import { Reveal, Eyebrow, Constellation } from '../components/ornaments';
@@ -154,12 +155,9 @@ const StartHere: React.FC = () => {
           </div>
           <h2 className="text-3xl font-serif text-vmNavy mb-4">Got it — your assessment is on its way.</h2>
           <p className="text-slate-600 mb-8">Watch your email for your custom roadmap. Talk soon.</p>
-          <button 
-            onClick={() => window.location.hash = '/'}
-            className="text-vmNavy font-bold hover:text-vmTeal transition-colors"
-          >
+          <Link to="/" className="text-vmNavy font-bold hover:text-vmTeal transition-colors">
             Return Home
-          </button>
+          </Link>
         </div>
       </div>
     );
@@ -191,7 +189,7 @@ const StartHere: React.FC = () => {
           </p>
           <a href={BOOKING_URLS.DISCOVERY} target="_blank" rel="noopener noreferrer"
             className="inline-flex items-center gap-2 text-vmNavy font-semibold hover:text-vmTeal transition-colors text-sm">
-            Prefer to just talk? Book a call <ArrowRight className="w-4 h-4" />
+            Prefer to just talk? Book 20 minutes <ArrowRight className="w-4 h-4" />
           </a>
         </Reveal>
 

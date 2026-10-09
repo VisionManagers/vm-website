@@ -22,7 +22,7 @@ const Footer: React.FC = () => {
             <p className="text-sm text-slate-500 leading-relaxed max-w-sm">
               Turning the data and relationships your business already runs on
               into systems that drive real outcomes. AI that earns its keep —
-              one person accountable. Proven in healthcare, built for anyone.
+              one person accountable. Based on Seattle’s Eastside, working with owners anywhere.
             </p>
             <p className="mt-6 text-xs text-slate-500">
               <a href="mailto:sukhneet@visionmanagers.com" className="hover:text-vmTeal transition-colors">sukhneet@visionmanagers.com</a>

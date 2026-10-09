@@ -450,7 +450,7 @@ const Sound: React.FC = () => {
                   <h3 className="font-serif text-xl text-vmNavy mb-3">Join the conversation</h3>
                   <p className="text-sm text-slate-600 leading-relaxed mb-4">
                     Casual Intelligence — a weekly room where owners and builders talk AI in plain
-                    English. Free, Wednesdays, genuinely useful.
+                    English. Wednesdays, $79 a month, genuinely useful.
                   </p>
                   <span className="inline-flex items-center gap-2 text-sm font-semibold text-vmNavy">
                     See upcoming sessions <ArrowRight className="w-4 h-4" />

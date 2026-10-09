@@ -155,7 +155,7 @@ const AIVoice: React.FC = () => {
                 </p>
                 <div className="mt-10">
                   <a href={BOOKING_URLS.DISCOVERY} target="_blank" rel="noopener noreferrer" className={buttonPrimary}>
-                    Book a call <ChevronRight className="w-4 h-4" />
+                    Book 20 minutes <ChevronRight className="w-4 h-4" />
                   </a>
                 </div>
               </div>
@@ -290,8 +290,8 @@ const AIVoice: React.FC = () => {
 
             <Reveal className="mt-12 text-center">
               <p className="eyebrow text-slate-500">
-                Built for <span className="text-vmNavy">Emerald Health</span> — and the practices
-                whose phones we answer
+                Built for <span className="text-vmNavy">Emerald Health</span> (a medical billing company
+                serving 15+ practices) — and the practices whose phones we answer
               </p>
             </Reveal>
           </div>
@@ -306,12 +306,13 @@ const AIVoice: React.FC = () => {
                 Let’s design the voice that answers your phone.
               </h2>
               <p className="text-lg text-slate-600 mb-3 max-w-2xl mx-auto">
-                In 30 minutes we’ll map where calls are slipping, what a designed conversation would change,
-                and whether we’re the right ones to build it with you.
+                In 20 minutes we’ll map where calls are slipping, what a designed conversation would change,
+                and whether we’re the right ones to build it with you. You leave knowing your #1 leak
+                and what it’s worth.
               </p>
               <p className="text-sm text-slate-500 mb-10">A working session, not a sales pitch.</p>
               <a href={BOOKING_URLS.DISCOVERY} target="_blank" rel="noopener noreferrer" className={buttonPrimary}>
-                Book a call <ChevronRight className="w-4 h-4" />
+                Book 20 minutes <ChevronRight className="w-4 h-4" />
               </a>
               <p className="mt-8 text-xs text-slate-500">
                 Or call directly:{' '}
