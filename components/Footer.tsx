@@ -56,6 +56,7 @@ const Footer: React.FC = () => {
               <h5 className="text-xs font-semibold text-vmNavy uppercase tracking-[0.2em] mb-8">Firm</h5>
               <ul className="space-y-4">
                 <li><Link to="/about" className="text-sm text-slate-600 hover:text-vmTeal transition-colors">About</Link></li>
+                <li><Link to="/bni" className="text-sm text-slate-600 hover:text-vmTeal transition-colors">For BNI members</Link></li>
                 <li><Link to="/privacy" className="text-sm text-slate-600 hover:text-vmTeal transition-colors">Privacy Policy</Link></li>
               </ul>
             </div>

@@ -1,5 +1,6 @@
 
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import SEO from '../components/SEO';
 import { BOOKING_URLS } from '../constants';
 import { Send, CheckCircle2, Phone, Mail, ArrowRight, CalendarCheck } from 'lucide-react';
@@ -118,6 +119,7 @@ const Contact: React.FC = () => {
 
         <form onSubmit={handleSubmit} className="bg-vmSlate p-10 rounded-sm border border-slate-100 shadow-sm space-y-6">
           <p className="text-xs text-slate-500 mb-2">Prefer to send a message? All fields optional except email.</p>
+          <p className="text-sm text-slate-500 mt-4">In my BNI chapter? Everything you need is on <Link to="/bni" className="text-vmNavy font-semibold hover:text-vmTeal">one page</Link>.</p>
 
           <div className="grid md:grid-cols-2 gap-6">
             <div className="space-y-2">

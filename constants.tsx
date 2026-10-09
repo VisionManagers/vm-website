@@ -20,7 +20,16 @@ export const BOOKING_URLS = {
   // Airtable through /api/booking-webhook. The clean alias visionmanagers.com/book (vercel.json)
   // 302s here and is what the Lab report emails print — it is not a second link.
   DISCOVERY: "https://calendly.com/sukhneet-visionmanagers/strategy-call-with-suk",
+  // The 60-minute BNI 1-to-1 (members only). Empty until the Calendly event exists —
+  // create it with `CALENDLY_PAT=… node scripts/calendly-event.mjs create-121`, paste the link here.
+  BNI_121: "https://calendly.com/sukhneet-visionmanagers/bni-1-1-with-suk" as string,  // 60-min BNI 1-to-1 (Suk, 10/9)
 };
+
+/* /bni — the BNI members' page (vault 50-Website/pages/bni.md) */
+export const REFERRAL_TEXT_NUMBER = "(425) 830-5678";           // from the 10/5 "Who to Send Me" handout
+export const REFERRAL_TEXT_TEL = "+14258305678";
+export const VOICE_DEMO_NUMBER: string = "(425) 494-4489";          // the VM Voice demo line (Suk, 10/9) — the agent answers the main number                              // the VM Voice demo line — empty until Suk supplies it
+export const AI_COACH_URL = "https://phnxlog.com";
 
 /* Testimonials — permissioned only (80-Content/proof-library.md gate: nothing
    ships without permission GRANTED). The old Alignable trio read as generic
