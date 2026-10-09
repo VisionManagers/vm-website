@@ -15,10 +15,11 @@ export const COLORS = {
 };
 
 export const BOOKING_URLS = {
-  DISCOVERY: "https://api.leadconnectorhq.com/widget/booking/u9ITLagwSXqANxwjhaAS",
-  STRATEGY_CALL: "https://api.leadconnectorhq.com/widget/booking/Rblry3wONPt5B5yvAy0u",
-  // Clean public booking link — /book redirects straight to the discovery-call scheduler
-  BOOK: "https://visionmanagers.com/book",
+  // The ONE booking link sitewide (simplification audit §3, 2026-09-30): 20 minutes,
+  // labeled "Book 20 minutes". Calendly since 2026-10-05 (GHL exit); bookings land in
+  // Airtable through /api/booking-webhook. The clean alias visionmanagers.com/book (vercel.json)
+  // 302s here and is what the Lab report emails print — it is not a second link.
+  DISCOVERY: "https://calendly.com/sukhneet-visionmanagers/strategy-call-with-suk",
 };
 
 /* Testimonials — permissioned only (80-Content/proof-library.md gate: nothing

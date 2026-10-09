@@ -68,10 +68,15 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   // Send email notification (non-blocking — don't fail the submission if email fails)
   if (RESEND_API_KEY) {
     const interestLabel: Record<string, string> = {
+      'practice': 'A practice (missed calls)',
+      'trades': 'Trades / construction (bids, follow-up)',
+      'firm': 'A firm (agency, recruiting, legal, insurance, coaching)',
+      'portfolio': 'Several businesses (group / portfolio)',
+      'unsure': 'Not sure yet',
+      // legacy values from the pre-2026-09-30 form, still mapped so old links label cleanly
       'voice-ai': 'Voice AI for my practice',
       'ai-training': 'AI Training',
       'automation': 'AI & automation strategy',
-      'unsure': 'Not sure yet',
     };
 
     const htmlBody = `

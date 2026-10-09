@@ -2,8 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import SEO from '../components/SEO';
 import { Reveal, Eyebrow, VineDivider, LeafMark, buttonPrimary } from '../components/ornaments';
-
-const BOOKING_URL = 'https://api.leadconnectorhq.com/widget/booking/u9ITLagwSXqANxwjhaAS';
+import { BOOKING_URLS } from '../constants';
 
 const FAQS: { q: string; a: string }[] = [
   {
@@ -40,8 +39,8 @@ const faqJsonLd = {
 
 const BookButton: React.FC<{ id: string }> = ({ id }) => (
   <div id={id} className="flex flex-col items-center gap-3">
-    <a href={BOOKING_URL} target="_blank" rel="noreferrer" className={buttonPrimary}>
-      Book a 20-minute discovery call
+    <a href={BOOKING_URLS.DISCOVERY} target="_blank" rel="noreferrer" className={buttonPrimary}>
+      Book 20 minutes
     </a>
     <p className="text-sm text-vmNavy/60 max-w-md text-center leading-relaxed">
       Free, no pitch. If AI isn&rsquo;t worth it for you yet, we&rsquo;ll say so &mdash; and you
@@ -87,7 +86,7 @@ const WhatIsAI: React.FC = () => {
                 <Link to="/ci" className="underline decoration-vmLeaf/50 underline-offset-4 hover:text-vmNavy">
                   Casual Intelligence
                 </Link>
-                , the Eastside&rsquo;s weekly AI roundtable &mdash; working with clients like Emerald Health.
+                , the weekly AI roundtable on Seattle&rsquo;s Eastside &mdash; working with clients like Emerald Health, a medical billing company serving 15+ practices.
               </p>
             </Reveal>
           </div>
