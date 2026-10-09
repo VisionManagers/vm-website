@@ -125,6 +125,27 @@ const BNI: React.FC = () => {
           </div>
         </section>
 
+        {/* ─── FEATURED: THE BID CALCULATOR — the tool to send contractors (Suk, 10/9) ─── */}
+        <section className="py-16 px-6 bg-vmNavy text-white">
+          <div className="max-w-6xl mx-auto md:grid md:grid-cols-5 md:gap-12 items-center">
+            <Reveal className="md:col-span-3">
+              <Eyebrow className="text-vmMarigold mb-3">Know a contractor? Send them this.</Eyebrow>
+              <h2 className="text-3xl md:text-4xl font-serif leading-snug mb-4">The Bid Calculator: is their last bid making them money?</h2>
+              <p className="text-white/75 leading-relaxed mb-3">
+                They type one real bid in from the truck and get three numbers back: what it actually earned, what it should
+                have gone out at, and how many hours a year bids like it are eating. Free, under a minute, no email needed.
+                It’s useful on its own — and it’s the easiest introduction to me there is.
+              </p>
+              <p className="text-white/60 text-sm">Text them the link, or run one together at the next 1-to-1.</p>
+            </Reveal>
+            <Reveal className="md:col-span-2 mt-8 md:mt-0 flex flex-col gap-3">
+              <Link to="/tools/bid-calculator" className="inline-flex items-center justify-center gap-2 px-6 py-4 bg-vmTeal text-white rounded-sm font-semibold hover:bg-vmTeal/90 transition-colors"><Calculator className="w-4 h-4" /> Open the Bid Calculator</Link>
+              <a href={`sms:?&body=${encodeURIComponent('Useful if you write bids: visionmanagers.com/tools/bid-calculator — type one bid in, see if it’s making you money. Free, no email. (From Suk at Vision Managers.)')}`} className="inline-flex items-center justify-center gap-2 px-6 py-3 border border-white/30 text-white rounded-sm font-semibold hover:border-white transition-colors"><MessageSquare className="w-4 h-4" /> Text it to a contractor</a>
+              <button type="button" onClick={() => { navigator.clipboard?.writeText('https://visionmanagers.com/tools/bid-calculator'); track('bni_tool_share', { tool: 'bid-calculator' }); }} className="text-sm text-white/70 hover:text-white underline underline-offset-4">Copy the link: visionmanagers.com/tools/bid-calculator</button>
+            </Reveal>
+          </div>
+        </section>
+
         {/* ─── SEND A REFERRAL (the form) ─── */}
         <section id="refer" className="py-20 px-6 scroll-mt-28">
           <div className="max-w-3xl mx-auto">
@@ -190,7 +211,7 @@ const BNI: React.FC = () => {
               <Reveal className="p-7 bg-vmCream/70 border border-slate-100 rounded-sm flex flex-col">
                 <Calculator className="w-6 h-6 text-vmTeal mb-4" aria-hidden />
                 <h3 className="text-lg font-serif text-vmNavy mb-2">The Bid Calculator</h3>
-                <p className="text-sm text-slate-600 leading-relaxed mb-6">For anyone in the trades: type one real bid in and see whether it’s making them money. Free, under a minute, no email.</p>
+                <p className="text-sm text-slate-600 leading-relaxed mb-6">Featured above — the tool to send anyone in the trades. One bid in, three numbers out.</p>
                 <Link to="/tools/bid-calculator" className="mt-auto inline-flex items-center gap-2 text-sm font-semibold text-vmNavy hover:text-vmTeal">Run a bid <ArrowRight className="w-4 h-4" /></Link>
               </Reveal>
               <Reveal className="p-7 bg-vmCream/70 border border-slate-100 rounded-sm flex flex-col">
