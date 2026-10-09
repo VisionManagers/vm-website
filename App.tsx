@@ -34,6 +34,7 @@ const Digest = React.lazy(() => import('./pages/insights/Digest'));
 const Workbench = React.lazy(() => import('./pages/lab/Workbench'));
 // Lazy-load the tools (lead magnets — vault 50-Website/lead-magnets-plan.md)
 const BidCalculator = React.lazy(() => import('./pages/tools/BidCalculator'));
+const BNI = React.lazy(() => import('./pages/BNI'));
 
 // Hidden page — direct-link sharing only (no nav links, not in sitemap/prerender, noindex)
 const LeakAudit = React.lazy(() => import('./pages/LeakAudit'));
@@ -71,6 +72,7 @@ const App: React.FC = () => {
               <Route path="/lab" element={<TheLab />} />
               <Route path="/lab/workbench" element={<Workbench />} />
               <Route path="/tools/bid-calculator" element={<BidCalculator />} />
+              <Route path="/bni" element={<BNI />} />
               <Route path="/insights" element={<Insights />} />
               <Route path="/insights/digest" element={<Digest />} />
               <Route path="/insights/:slug" element={<PostDetail />} />
