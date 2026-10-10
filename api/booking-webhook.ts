@@ -8,7 +8,7 @@
  */
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { createHmac, timingSafeEqual } from 'node:crypto';
-import { handleCalendlyEvent } from './_lib/booking';
+import { handleCalendlyEvent } from './_lib/booking.js';
 
 export const config = { api: { bodyParser: false } };
 

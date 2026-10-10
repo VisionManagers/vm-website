@@ -8,7 +8,7 @@
 import {
   PEOPLE, TOUCHPOINTS, PEOPLE_KEY, TOUCHPOINT_KEY,
   findPersonByEmail, findPersonBySlug, findTouchpointBySlug, upsert, updateById, listAdd,
-} from './airtable';
+} from './airtable.js';
 
 export type CalendlyEvent = {
   event: 'invitee.created' | 'invitee.canceled' | string;

@@ -4,8 +4,8 @@
  * `insights-subscriber`. Nothing else: no email is sent from here.
  */
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { PEOPLE, PEOPLE_KEY, findPersonByEmail, findPersonBySlug, upsert, updateById, listAdd } from './_lib/airtable';
-import { slugify } from './_lib/booking';
+import { PEOPLE, PEOPLE_KEY, findPersonByEmail, findPersonBySlug, upsert, updateById, listAdd } from './_lib/airtable.js';
+import { slugify } from './_lib/booking.js';
 
 const rate = new Map<string, { n: number; reset: number }>();
 function limited(ip: string) {

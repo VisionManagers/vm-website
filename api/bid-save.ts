@@ -3,8 +3,8 @@
  * tags them in the Airtable CRM (bid-calculator), and tells Suk. One email, no drip.
  */
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { PEOPLE, PEOPLE_KEY, findPersonByEmail, findPersonBySlug, upsert, updateById, listAdd } from './_lib/airtable';
-import { slugify } from './_lib/booking';
+import { PEOPLE, PEOPLE_KEY, findPersonByEmail, findPersonBySlug, upsert, updateById, listAdd } from './_lib/airtable.js';
+import { slugify } from './_lib/booking.js';
 
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
 const NOTIFY_EMAIL = 'sukhneet@visionmanagers.com';
