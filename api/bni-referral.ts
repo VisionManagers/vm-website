@@ -1,8 +1,8 @@
 /** POST /api/bni-referral — a BNI member sends Suk a referral. Email to Suk + Airtable person (status cold, source bni). */
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { sendMail, esc, NOTIFY_EMAIL } from './_lib/mail';
-import { PEOPLE, PEOPLE_KEY, findPersonByEmail, findPersonBySlug, upsert, updateById, listAdd } from './_lib/airtable';
-import { slugify } from './_lib/booking';
+import { sendMail, esc, NOTIFY_EMAIL } from './_lib/mail.js';
+import { PEOPLE, PEOPLE_KEY, findPersonByEmail, findPersonBySlug, upsert, updateById, listAdd } from './_lib/airtable.js';
+import { slugify } from './_lib/booking.js';
 
 const rate = new Map<string, { n: number; reset: number }>();
 function limited(ip: string) { const now = Date.now(); const e = rate.get(ip); if (!e || now > e.reset) { rate.set(ip, { n: 1, reset: now + 3600_000 }); return false; } if (e.n >= 10) return true; e.n++; return false; }
