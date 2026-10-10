@@ -23,7 +23,7 @@ const HeroPoster: React.FC<{ className?: string }> = ({ className = '' }) => (
       <div className="rounded-sm overflow-hidden shadow-xl aspect-[4/5]">
         <video
           src={HERO_STORY_VIDEO}
-          poster="/images/vm/sukh-portrait.jpg"
+          poster="/images/vm/suk-portrait-2026.jpg"
           autoPlay
           muted
           loop
@@ -34,7 +34,7 @@ const HeroPoster: React.FC<{ className?: string }> = ({ className = '' }) => (
       </div>
     ) : (
       <div className="duotone-vm rounded-sm aspect-[4/5] shadow-xl">
-        <img src="/images/vm/sukh-portrait.jpg" alt="Sukhneet Virk, founder of Vision Managers" loading="eager" />
+        <img src="/images/vm/suk-portrait-2026.jpg" alt="Sukhneet Virk, founder of Vision Managers" loading="eager" />
       </div>
     )}
     <figcaption className="mt-3 text-xs text-slate-500 leading-snug">
@@ -166,24 +166,7 @@ const Home: React.FC = () => {
         {/* ─── HERO — the Cosmos ─── */}
         <section className="relative min-h-[92vh] flex items-center overflow-hidden pt-36 pb-24 cosmos-wash">
           <Constellation />
-          {/* Hubert Robert's arch, read the right way round: nobody in the
-              painting is looking at it. They're getting on with their evening,
-              held up by something they never have to think about. Deliberately
-              NOT "the system dwarfs the people" — in an AI context that reads
-              as the machine being bigger than you, which is the fear, not the
-              pitch. Masked into the ground so it's depth, not a picture. */}
-          <figure className="hero-art hidden lg:block">
-            <img
-              src="/images/art/roman-arch.webp"
-              alt="Hubert Robert, The Return of the Cattle, about 1773 — warm evening light through a great stone arch, with people and their cattle settling in for the evening beneath it."
-              loading="eager"
-            />
-            <figcaption className="hero-art-caption">
-              <span className="placard-title">The Return of the Cattle</span> · Hubert Robert,
-              c. 1773 — someone built the arch. Centuries on, people still live their evenings
-              beneath it without once thinking about it. The best systems end up invisible.
-            </figcaption>
-          </figure>
+          {/* The arch painting came out 2026-10-09 (Suk: it reads as art, not sales — "what the hell is this and why is it here"). */}
           <div className="max-w-7xl mx-auto px-6 w-full relative z-10">
             <div className="lg:flex lg:items-center lg:gap-16">
             <div className="max-w-3xl">
@@ -404,7 +387,7 @@ const Home: React.FC = () => {
             <div className="grid md:grid-cols-12 gap-12 items-center">
               <Reveal className="md:col-span-5">
                 <div className="duotone-vm rounded-sm aspect-[4/5] max-w-sm mx-auto md:mx-0 shadow-xl">
-                  <img src="/images/vm/sukh-portrait.jpg" alt="Sukhneet Virk, founder of Vision Managers" loading="lazy" />
+                  <img src="/images/vm/suk-portrait-2026.jpg" alt="Sukhneet Virk, founder of Vision Managers" loading="lazy" />
                 </div>
               </Reveal>
               <div className="md:col-span-7">
